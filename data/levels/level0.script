@@ -7,8 +7,8 @@ function initMap() {
   game = new Game() ;
 
   game.addPortal(2,15) ;
-  game.addCrystal(18,5,210) ;
-  game.addCrystal(14,17,120) ;
+  game.addCrystal(18,5,270) ;
+  game.addCrystal(14,17,180) ;
   game.addEnemy1(16,1) ;
   game.addEnemy1(17,7) ;
   game.addUnicorn(5,14) ;
