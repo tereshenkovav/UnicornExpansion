@@ -1,0 +1,11 @@
+{
+  "Unicorn":
+  {
+    "InitialHP": 50,
+    "InitialV": 200
+  },
+  "Portal":
+  {
+    "HP": 500
+  }
+}

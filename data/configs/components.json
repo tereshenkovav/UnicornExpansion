@@ -1,0 +1,27 @@
+{
+  "Harvester": {
+     "Value": 5,
+     "UpgradeStep": 2,
+     "Distance": 200
+   },
+  "Attacker": {
+     "Value": 10,
+     "UpgradeStep": 5,
+     "Distance": 200
+   },
+  "Healer": {
+     "Value": 7,
+     "UpgradeStep": 3,
+     "Distance": 200,
+     "Cost": 15
+   },
+  "MeleeEnemy": {
+    "ViewDistance": 300
+  },
+  "Portal": {
+    "InitialUnicornCount": 3
+  },
+  "Lair": {
+    "SpawnInterval": 30
+  }
+}

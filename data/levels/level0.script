@@ -1,0 +1,30 @@
+var game ;
+var UNICORN_TASK ;
+
+function initMap() {
+  UNICORN_TASK = 4 ;
+
+  game = new Game() ;
+
+  game.addPortal(2,15) ;
+  game.addCrystal(18,5,210) ;
+  game.addCrystal(14,17,120) ;
+  game.addEnemy1(16,1) ;
+  game.addEnemy1(17,7) ;
+  game.addUnicorn(5,14) ;
+
+  game.incEnergy(300) ;
+  game.setTaskText(String::format("Увеличьте отряд до {0}-х единорогов",UNICORN_TASK)) ;
+
+  return true ;
+}
+
+function isVictory() {
+  return (game.getCountByComponent("Unicorn")>=UNICORN_TASK) ;
+}
+
+function isDefeat() {
+  if ((game.getCountByComponent("Unicorn")==0)&&
+      (game.getCountByComponent("Portal")==0)) { return true ; }
+  return false ;
+}

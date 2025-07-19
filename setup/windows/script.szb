@@ -1,0 +1,9 @@
+SetCompressor LZMA
+SetCompressionLevel 9
+ZipFile UnicornExpansion-%VERSION%-Win64.zip
+
+Files ..\..\UnicornExpansion\x64\Release\sfml-*.dll
+File ..\..\UnicornExpansion\x64\Release\UnicornExpansion.exe
+
+Dir ..\..\data .
+

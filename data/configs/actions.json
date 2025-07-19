@@ -1,0 +1,49 @@
+{
+    "UpgradeUnicornHP": {
+        "Price": [200, 400],
+        "Time": [30, 45],
+        "Value": 20
+    },
+    "IncreaseUnicornCount": {
+        "Price": [150, 300],
+        "Time": [40, 55],
+        "Value": 2
+    },
+    "BuildUnicorn": {
+        "Price": 100,
+        "Time": 20
+    },
+    "MakeHarvester": {
+        "Price": 40,
+        "Time": 10
+    },
+    "MakeAttacker": {
+        "Price": 60,
+        "Time": 15
+    },
+    "MakeHealer": {
+        "Price": 50,
+        "Time": 12
+    },
+    "MakeRadar": {
+        "Price": 30,
+        "Time": 7
+    },
+    "UpgradeHarvester": {
+        "Price": [50, 75],
+        "Time": [20, 35]
+    },
+    "UpgradeAttacker": {
+        "Price": [70, 100],
+        "Time": [25, 40]
+    },
+    "UpgradeHealer": {
+        "Price": [60, 90],
+        "Time": [22, 37]
+    },
+    "DoRadar": {
+        "Price": 30,
+        "Time": 3,
+        "Distance": 14
+    }
+}

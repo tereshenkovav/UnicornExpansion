@@ -1,0 +1,47 @@
+var game ;
+var MANA_TASK ;
+var TIME_LIMIT ;
+ 
+function initMap() {
+  game = new Game() ;
+
+  MANA_TASK = 3000 ;
+  TIME_LIMIT = 7 ;
+
+  game.addPortal(13,2) ;
+  game.addUnicorn(16,2) ;
+  game.addUnicorn(17,6) ;
+  game.addCrystal(22,7,210) ;
+  game.addCrystal(1,8,240) ;
+  game.addCrystal(9,9,250) ;
+  game.addCrystal(18,11,370) ;
+  game.addCrystal(15,12,340) ;
+  game.addCrystal(12,14,450) ;
+  game.addCrystal(13,18,230) ;
+  game.addCrystal(9,20,410) ;
+  game.addCrystal(17,21,580) ;
+  game.addCrystal(19,23,590) ;
+  game.addEnemy1(14,15) ;
+  game.addEnemy1(8,21) ;
+  game.addEnemy1(14,20) ;
+  game.addEnemy2(19,22) ;
+
+  game.incEnergy(200) ;
+  game.setTaskText(String::format("Соберите {0} магии за {1} минут.",
+    MANA_TASK,TIME_LIMIT)) ;
+
+  game.startTimer(TIME_LIMIT*60) ;
+
+  return true ;
+}
+
+function isVictory() {
+  return (game.getEnergy()>=MANA_TASK) ;
+}
+
+function isDefeat() {
+  if ((game.getCountByComponent("Unicorn")==0)&&
+      (game.getCountByComponent("Portal")==0)) { return true ; }
+  if (game.getTimer()<=0) { return true ; }
+  return false ;
+}

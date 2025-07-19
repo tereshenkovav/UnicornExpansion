@@ -1,0 +1,36 @@
+var game ;
+
+function initMap() {
+  game = new Game() ;
+  game.addPortal(4,12) ;
+  game.addUnicorn(5,9) ;
+  game.addUnicorn(3,10) ;
+  game.addCrystal(10,10,1200) ;
+  game.addCrystal(2,23,1000) ;
+  game.addCrystal(27,24,1100) ;
+  game.addEnemy1(20,2) ;
+  game.addEnemy1(24,4) ;
+  game.addEnemy1(27,6) ;
+  game.addEnemy1(25,10) ;
+  game.addEnemy2(23,14) ;
+  game.addEnemy2(18,18) ;
+  game.addEnemy2(12,22) ;
+  game.addEnemy3(14,26) ;
+  game.addEnemy3(18,30) ;
+  game.addLair(23,36,"ab") ;
+
+  game.incEnergy(400) ;
+  game.setTaskText("Уничтожьте врагов и их логово") ;
+
+  return true ;
+}
+
+function isVictory() {
+  return (game.getCountByComponent("Enemy")==0) ;
+}
+
+function isDefeat() {
+  if ((game.getCountByComponent("Unicorn")==0)&&
+      (game.getCountByComponent("Portal")==0)) { return true ; }
+  return false ;
+}

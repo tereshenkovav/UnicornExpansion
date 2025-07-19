@@ -1,0 +1,21 @@
+{
+  "Enemy1":
+  { "HP": 40,
+    "Speed": 300,
+    "Attack" : 10
+  },
+  "Enemy2":
+  { "HP": 70,
+    "Speed": 180,
+    "Attack" : 15
+  },
+  "Enemy3":
+  { "HP": 120,
+    "Speed": 100,
+    "Attack" : 30
+  },
+  "Lair":
+  {
+    "HP": 1000
+  }
+}
