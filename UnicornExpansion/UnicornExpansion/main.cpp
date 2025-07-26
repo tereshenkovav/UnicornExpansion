@@ -56,8 +56,7 @@ Texts texts;
 Game game;
 TreeBuilder treebuilder;
 // Номер выделенного юнита
-int selected_uid;
-bool isselected;
+std::optional<int> selected_uid;
 int started_galop_uid;
 sf::Countdown counter_endgame;
 
@@ -160,7 +159,7 @@ void loadGame(int leveln) {
     game.update(0.0); // Первичная инициализация для тумана войны
     view.setCenter({ (float)game.getInitialView().x * BLOCKW, (float)game.getInitialView().y * BLOCKH });
 
-    isselected = false;
+    selected_uid = std::nullopt;
 
     minimap.prepareMiniMap(8, 768 - 192 + 8, 192 - 16, 192 - 16, game.getWidth(), game.getHeight(),
         VIEW_SIZE_X, VIEW_SIZE_Y, game.getWidth() * BLOCKW, game.getHeight() * BLOCKH);
@@ -502,37 +501,36 @@ while (window.isOpen())
                         if (game.findUnitAt(worldpos.x, worldpos.y, &uid))
                             if (!game.isFog(game.getUnitByUID(uid).getXY().x, game.getUnitByUID(uid).getXY().y)) {
                                 selected_uid = uid;
-                                isselected = true;
                             }
                     }
 
                     // Команда движения юнита
                     if (mousePressed->button == sf::Mouse::Button::Right)
                     {
-                        if (isselected)
-                            if (game.getUnitByUID(selected_uid).isComponent<ComponentUnicorn>()) {
-                                game.setTargetToUnit(selected_uid, worldpos.x / BLOCKW, worldpos.y / BLOCKH);
+                        if (selected_uid)
+                            if (game.getUnitByUID(*selected_uid).isComponent<ComponentUnicorn>()) {
+                                game.setTargetToUnit(*selected_uid, worldpos.x / BLOCKW, worldpos.y / BLOCKH);
                                 effect_start.play();
-                                started_galop_uid = selected_uid;
+                                started_galop_uid = *selected_uid;
                             }
                     }
                 }
                 // Зона действий
                 else {
-                    if (isselected) {
+                    if (selected_uid) {
                         std::string msgcode = "";
                         // Разрешаем действия только если юнит не работает над действием в данный момент
-                        if (!game.getUnitByUID(selected_uid).isWorkingTask()) {
-                            auto actions = game.getUnitByUID(selected_uid).getActions();
+                        if (!game.getUnitByUID(*selected_uid).isWorkingTask()) {
+                            auto actions = game.getUnitByUID(*selected_uid).getActions();
                             for (int i = 0; i < actions.size(); i++) {
                                 spr_but_action.setPosition(getActionButtonPos(i));
                                 if (spr_but_action.getGlobalBounds().contains({ (float)mousePressed->position.x, (float)mousePressed->position.y })) {
-                                    if (!game.getUnitByUID(selected_uid).canSendAction(actions[i], &msgcode)) {
+                                    if (!game.getUnitByUID(*selected_uid).canSendAction(actions[i], &msgcode)) {
                                         text_action.setString(texts.getSfmlStr(msgcode));
                                         counter_errmsg.upset(1.0f);
                                     }
                                     else
-                                        game.sendUnitAction(selected_uid, actions[i]);
+                                        game.sendUnitAction(*selected_uid, actions[i]);
                                 }
                             }
                         }
@@ -563,7 +561,7 @@ while (window.isOpen())
 
         laser_apply.update(dt);
         game.update(dt);
-        if (!game.isUnitExist(selected_uid)) isselected = false;
+        if (!game.isUnitExist(*selected_uid)) selected_uid = std::nullopt;
 
         updateMiniMap(game);
     }
@@ -671,17 +669,17 @@ while (window.isOpen())
             for (int i = 0; i < game.getLaserCount(); i++)
                 drawLaserFromTo(window, laser, game.getLaser(i), laser_apply);
 
-            if (isselected) {
-                if (game.getUnitByUID(selected_uid).isComponent<ComponentResource>())
+            if (selected_uid) {
+                if (game.getUnitByUID(*selected_uid).isComponent<ComponentResource>())
                     selector.setOutlineColor(sf::Color::Blue);
                 else
-                    if (game.getUnitByUID(selected_uid).isComponent<ComponentEnemy>())
+                    if (game.getUnitByUID(*selected_uid).isComponent<ComponentEnemy>())
                         selector.setOutlineColor(sf::Color::Red);
                     else
                         selector.setOutlineColor(sf::Color::Green);
-                selector.setPosition(game.getUnitByUID(selected_uid).getView());
-                selector.setSize(game.getUnitByUID(selected_uid).getSizeView());
-                selector.setOrigin(game.getUnitByUID(selected_uid).getSizeView() / 2.0f);
+                selector.setPosition(game.getUnitByUID(*selected_uid).getView());
+                selector.setSize(game.getUnitByUID(*selected_uid).getSizeView());
+                selector.setOrigin(game.getUnitByUID(*selected_uid).getSizeView() / 2.0f);
                 window.draw(selector);
             }
 
@@ -705,13 +703,13 @@ while (window.isOpen())
             text_resource.setFillColor(sf::Color::White);
             window.draw(text_resource);
 
-            if (isselected) {
+            if (selected_uid) {
                 // Информация по юниту
                 textback.setSize({ 240, 192 });
                 textback.setPosition({ 512 - textback.getSize().x/2 - 64, 768 - textback.getSize().y });
                // window.draw(textback);
 
-                const GameUnit& selunit = game.getUnitByUID(selected_uid);
+                const GameUnit& selunit = game.getUnitByUID(*selected_uid);
                 rect_health.setFillColor(getColorByHPNorm(selunit.getHealthPerMax()));
                 rect_health.setPosition({ textback.getPosition().x + 12, textback.getPosition().y + 64 });
                 rect_health.setSize({ 48 * selunit.getHealthPerMax(), 8 });
