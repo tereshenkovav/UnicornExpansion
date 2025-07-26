@@ -16,28 +16,19 @@ void MiniMap::prepareMiniMap(int px, int py, int renderw, int renderh, int world
     this->h = renderh;
     this->worldw = worldw;
     this->worldh = worldh;
-    this->windoww = windoww;
-    this->windowh = windowh;
     this->fullw = fullw;
     this->fullh = fullh;
-
+        
     // Здесь идут вычисления с учетом пропорций карты, окна и мира
-    float scalex = (float)w / worldw;
-    float scaley = (float)h / worldh;
-    float scale = (scalex < scaley)?scalex:scaley;
-
-    rect_w = (float)(worldw * scale) * windoww / fullw;
-    rect_h = (float)(worldh * scale) * windowh / fullh;
-    kx = 1.0f;
-    ky = 1.0f;
-    if (scalex < scaley)
-        ky = scalex / scaley;
-    else
-        kx = scaley / scalex;
-    minimap_current.setSize({ rect_w - 4, rect_h - 4 });
+    scalex = (float)w / worldw;
+    scaley = (float)h / worldh;
+    scale = (scalex < scaley) ? scalex : scaley;
 
     if (worldw > worldh) y += 0.5f * h * (1.0f - (float)fullh / fullw);
     if (worldw < worldh) x += 0.5f * w * (1.0f - (float)fullw / fullh);
+
+    // Вызов после всех прочих вычислений
+    setWindowSize(windoww, windowh);
 
     // Заливка примитивами треугольников мини-карты
     minimap.setPrimitiveType(sf::PrimitiveType::Triangles);
@@ -53,6 +44,22 @@ void MiniMap::prepareMiniMap(int px, int py, int renderw, int renderh, int world
             minimap[p + 5].position = { x + (i + 1) * scale, y + (j + 1) * scale };
             p += 6;
         }
+}
+
+void MiniMap::setWindowSize(int windoww, int windowh)
+{
+    this->windoww = windoww;
+    this->windowh = windowh;
+
+    rect_w = (float)(worldw * scale) * windoww / fullw;
+    rect_h = (float)(worldh * scale) * windowh / fullh;
+    kx = 1.0f;
+    ky = 1.0f;
+    if (scalex < scaley)
+        ky = scalex / scaley;
+    else
+        kx = scaley / scalex;
+    minimap_current.setSize({ rect_w - 4, rect_h - 4 });
 }
 
 void MiniMap::setCellColor(int i, int j, const sf::Color & c)

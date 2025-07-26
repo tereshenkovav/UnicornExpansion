@@ -21,6 +21,9 @@ private:
 	// Вычисляемые коэффициенты
 	float kx;
 	float ky;
+	float scalex;
+	float scaley;
+	float scale;
 	float rect_w;
 	float rect_h;
 public:
@@ -28,6 +31,7 @@ public:
 	// Установка свойств мини-карту - размеры самого рендера и параметры мира для отображения, включая размер видимой части (камеры)
     void prepareMiniMap(int px, int py, int renderw, int renderh, int worldw, int worldh,
 		int windoww, int windowh, int fullw, int fullh);
+	void setWindowSize(int windoww, int windowh);
 	// Установить цвет точки карты
 	void setCellColor(int i, int j, const sf::Color & c);
 	// Установка центра камеры

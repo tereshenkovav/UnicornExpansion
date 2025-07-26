@@ -37,8 +37,6 @@
 const int SCROLLSPEED = 10;
 const float VIEW_SIZE_X = 1024.0f;
 const float VIEW_SIZE_Y = 576.0f;
-const float VIEW_SIZE_X_2 = 1024.0f / 2.0f;
-const float VIEW_SIZE_Y_2 = 576.0f / 2.0f;
 
 // Все данные игры, спрайты, тексты, массивы территорий и цветов
 std::vector <std::unique_ptr<sf::Texture>> textures;
@@ -59,6 +57,7 @@ TreeBuilder treebuilder;
 std::optional<int> selected_uid;
 int started_galop_uid;
 sf::Countdown counter_endgame;
+int tekscale;
 
 // Переключатели сцен
 enum class Scene { Menu, Task, Game };
@@ -158,6 +157,19 @@ void drawLaserFromTo(sf::RenderWindow & window, sf::RectangleShape & laser, cons
     }
 }
 
+void fixCameraPosition() {
+    if (view.getCenter().x < view.getSize().x / 2.0f) view.setCenter({ view.getSize().x / 2.0f, view.getCenter().y });
+    if (view.getCenter().x > game.getWidth() * BLOCKW - view.getSize().x / 2.0f) view.setCenter({ game.getWidth() * BLOCKW - view.getSize().x / 2.0f, view.getCenter().y });
+    if (view.getCenter().y < view.getSize().y / 2.0f) view.setCenter({ view.getCenter().x, view.getSize().y / 2.0f });
+    if (view.getCenter().y > game.getHeight() * BLOCKH - view.getSize().y / 2.0f) view.setCenter({ view.getCenter().x, game.getHeight() * BLOCKH - view.getSize().y / 2.0f });
+}
+
+void updateScale() {
+    view.setSize({ VIEW_SIZE_X * (0.5f + tekscale * 0.25f), VIEW_SIZE_Y * (0.5f + tekscale * 0.25f) });
+    minimap.setWindowSize(view.getSize().x, view.getSize().y);
+    fixCameraPosition();
+}
+
 // Загрузчик игры из файлов
 void loadGame(int leveln) {
     bool paramok = game.loadConfigs();
@@ -165,6 +177,8 @@ void loadGame(int leveln) {
     bool scriptok = game.loadScript("levels\\level" + std::to_string(leveln) + ".script");
     
     game.update(0.0); // Первичная инициализация для тумана войны
+    tekscale = 2.0;
+    updateScale();
     view.setCenter({ (float)game.getInitialView().x * BLOCKW, (float)game.getInitialView().y * BLOCKH });
 
     selected_uid = std::nullopt;
@@ -484,6 +498,18 @@ while (window.isOpen())
                 effect_start.stop();
                 scene = Scene::Menu;
             }
+            if (keyPressed->scancode == sf::Keyboard::Scancode::NumpadMinus) {
+                if (tekscale < 6) {
+                    tekscale++;
+                    updateScale();
+                }
+            }
+            if (keyPressed->scancode == sf::Keyboard::Scancode::NumpadPlus) {
+                if (tekscale > 0) {
+                    tekscale--;
+                    updateScale();
+                }
+            }
         };
         // Для диалога завершения игры - выход к сцене меню
         if (modeendgame) {
@@ -552,19 +578,19 @@ while (window.isOpen())
         // Прокрутка карты
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Left)) {
             view.move({ -SCROLLSPEED * BLOCKW * dt, 0 });
-            if (view.getCenter().x < VIEW_SIZE_X_2) view.setCenter({ VIEW_SIZE_X_2, view.getCenter().y });
+            fixCameraPosition();
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Right)) {
             view.move({ +SCROLLSPEED * BLOCKW * dt, 0 });
-            if (view.getCenter().x > game.getWidth() * BLOCKW - VIEW_SIZE_X_2) view.setCenter({ game.getWidth() * BLOCKW - VIEW_SIZE_X_2, view.getCenter().y });
+            fixCameraPosition();
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up)) {
             view.move({ 0, -SCROLLSPEED * BLOCKH * dt });
-            if (view.getCenter().y < VIEW_SIZE_Y_2) view.setCenter({ view.getCenter().x, VIEW_SIZE_Y_2 });
+            fixCameraPosition();
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Down)) {
             view.move({ 0, SCROLLSPEED * BLOCKH * dt });
-            if (view.getCenter().y > game.getHeight() * BLOCKH - VIEW_SIZE_Y_2) view.setCenter({ view.getCenter().x, game.getHeight() * BLOCKH - VIEW_SIZE_Y_2 });
+            fixCameraPosition();
         }
 
         laser_apply.update(dt);
