@@ -113,9 +113,17 @@ void updateMiniMap(const Game & game) {
         for (int dx = 0; dx < game.getUnit(i).getSize().x; dx++)
             for (int dy = 0; dy < game.getUnit(i).getSize().y; dy++) {
                 if (game.isFog(game.getUnit(i).getXY().x + dx, game.getUnit(i).getXY().y + dy)) continue;
-                sf::Color color = sf::Color::Green;
-                if (game.getUnit(i).isComponent<ComponentResource>()) color = sf::Color::Blue;
-                if (game.getUnit(i).isComponent<ComponentEnemy>()) color = sf::Color::Red;
+                sf::Color color;
+                if (game.getUnit(i).getUID() == *selected_uid) {
+                    color = sf::Color::Green;
+                    if (game.getUnit(i).isComponent<ComponentResource>()) color = sf::Color::Blue;
+                    if (game.getUnit(i).isComponent<ComponentEnemy>()) color = sf::Color::Red;
+                }
+                else {
+                    color = sf::Color{ 0,192,0 };
+                    if (game.getUnit(i).isComponent<ComponentResource>()) color = sf::Color{ 0,0,192 };
+                    if (game.getUnit(i).isComponent<ComponentEnemy>()) color = sf::Color{ 192,0,0 };
+                }
                 minimap.setCellColor(game.getUnit(i).getXY().x + dx, game.getUnit(i).getXY().y + dy, color);
             }
 
