@@ -58,6 +58,7 @@ std::optional<int> selected_uid;
 int started_galop_uid;
 sf::Countdown counter_endgame;
 int tekscale;
+sf::RectangleShape rect_health;
 
 // Переключатели сцен
 enum class Scene { Menu, Task, Game };
@@ -168,6 +169,15 @@ void updateScale() {
     view.setSize({ VIEW_SIZE_X * (0.5f + tekscale * 0.25f), VIEW_SIZE_Y * (0.5f + tekscale * 0.25f) });
     minimap.setWindowSize(view.getSize().x, view.getSize().y);
     fixCameraPosition();
+}
+
+void drawHealthRectAt(sf::RenderWindow& window, float hperc, float basew, float x, float y) {
+    rect_health.setFillColor(getColorByHPNorm(hperc));
+    int cntrect = ((int)(basew * hperc) / (rect_health.getSize().x + 2)) + 1;
+    for (int j = 0; j < cntrect; j++) {
+        rect_health.setPosition({ x + j * (rect_health.getSize().x + 2), y });
+        window.draw(rect_health);
+    }
 }
 
 // Загрузчик игры из файлов
@@ -323,8 +333,9 @@ rect_progress.setOutlineThickness(0);
 rect_progress.setPosition(rect_progress_border.getPosition());
 rect_progress.setFillColor(sf::Color(217, 138, 255));
 
-sf::RectangleShape rect_health;
-rect_health.setOutlineThickness(0);
+rect_health.setSize({ 4, 4 });
+rect_health.setOutlineThickness(1);
+rect_health.setOutlineColor(sf::Color{ 64,64,64 });
 
 sf::RectangleShape textback;
 textback.setOutlineThickness(1);
@@ -690,14 +701,11 @@ while (window.isOpen())
                         }
 
             // Полоски здоровья выводим после юнитов
-            for (int i = 0; i < game.getUnitCount(); i++)
-                if (!game.isFog(game.getUnit(i).getXY().x, game.getUnit(i).getXY().y)) {
-                    rect_health.setFillColor(getColorByHPNorm(game.getUnit(i).getHealthPerMax()));
-                    rect_health.setPosition({ game.getUnit(i).getView().x - game.getUnit(i).getSizeView().x / 2.0f,
-                        game.getUnit(i).getView().y - game.getUnit(i).getSizeView().y / 2.0f - 10 });
-                    rect_health.setSize({ game.getUnit(i).getSizeView().x * game.getUnit(i).getHealthPerMax(), 4 });
-                    window.draw(rect_health);
-                }
+                for (int i = 0; i < game.getUnitCount(); i++)
+                    if (!game.isFog(game.getUnit(i).getXY().x, game.getUnit(i).getXY().y))
+                        drawHealthRectAt(window, game.getUnit(i).getHealthPerMax(), game.getUnit(i).getSizeView().x,
+                            game.getUnit(i).getView().x - game.getUnit(i).getSizeView().x / 2.0f,
+                            game.getUnit(i).getView().y - game.getUnit(i).getSizeView().y / 2.0f - 10);
 
             // Лазеры выводим после всего
             for (int i = 0; i < game.getLaserCount(); i++)
@@ -744,10 +752,7 @@ while (window.isOpen())
                // window.draw(textback);
 
                 const GameUnit& selunit = game.getUnitByUID(*selected_uid);
-                rect_health.setFillColor(getColorByHPNorm(selunit.getHealthPerMax()));
-                rect_health.setPosition({ textback.getPosition().x + 12, textback.getPosition().y + 64 });
-                rect_health.setSize({ 48 * selunit.getHealthPerMax(), 8 });
-                window.draw(rect_health);
+                drawHealthRectAt(window, selunit.getHealthPerMax(), 48, textback.getPosition().x + 12, textback.getPosition().y + 64);
 
                 if (spr_icons.count(selunit.getCode()) > 0) {
                     spr_icons[selunit.getCode()]->setPosition({ textback.getPosition().x + 12 + 48 / 2, textback.getPosition().y + 34 });
