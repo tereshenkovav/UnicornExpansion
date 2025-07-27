@@ -361,6 +361,9 @@ effect_fire.play();
 sf::SoundBuffer effect_start_buffer("sounds\\start.ogg");
 sf::Sound effect_start(effect_start_buffer);
 
+sf::SoundBuffer effect_teleport_buffer("sounds\\teleport.ogg");
+sf::Sound effect_teleport(effect_teleport_buffer);
+
 addTerrainSprite(Terrain::Ground, "images\\terrain_ground.png");
 addTerrainSprite(Terrain::Water, "images\\terrain_water.png");
 addTerrainSprite(Terrain::Forest, "images\\terrain_forest.png");
@@ -629,6 +632,7 @@ while (window.isOpen())
         current_teleportation_effect = teleportation;
         (*current_teleportation_effect).setPosition(*new_effect);
         (*current_teleportation_effect).playOneTime();
+        effect_teleport.play();
     }
 
     // Обработка эффекта телепортации
