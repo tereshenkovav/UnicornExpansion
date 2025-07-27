@@ -5,6 +5,7 @@ ComponentHealer::ComponentHealer(Game* game) :UnitComponent(game)
 {
 	heal_rate = game->getConfigComponent()["Healer"]["Value"].asInt();
 	tek_upgrade_pos = 0;
+	locked_left = 0.0f;
 }
 
 int ComponentHealer::getHealerRate() const
@@ -55,4 +56,30 @@ std::string ComponentHealer::getCodePostfix() const
 int ComponentHealer::getOrder() const
 {
 	return 3;
+}
+
+void ComponentHealer::update(float dt)
+{
+	if (locked_left > 0.0f) locked_left -= dt;
+}
+
+bool ComponentHealer::isActive() const
+{
+	return isactive;
+}
+
+void ComponentHealer::setActive(bool value)
+{
+	isactive = value;
+}
+
+void ComponentHealer::LockTemporary()
+{
+	isactive = false;
+	locked_left = 0.5f;
+}
+
+bool ComponentHealer::isLocked() const
+{
+	return locked_left > 0.0f;
 }

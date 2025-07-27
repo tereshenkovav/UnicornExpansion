@@ -379,7 +379,7 @@ void Game::update(float dt)
 				}
 			}
 		}
-		if (const auto* healer = units[i].getComponent<ComponentHealer>()) {
+		if (auto* healer = units[i].getComponent<ComponentHealer>()) {
 			if ((!units[i].isWorkingTask()) && (!units[i].isTargeted())) {
 				FinderByBestDistance finder(healer->getHealerDistance(), units[i].getView());
 				for (int j = 0; j < units.size(); j++)
@@ -389,10 +389,16 @@ void Game::update(float dt)
 								finder.addPos(units[j].getView(), j);
 				if (auto res_idx = finder.getBestIndex()) {
 					if (energy >= healer->getHealerEnergyCost() * dt) {
-						energy -= healer->getHealerEnergyCost() * dt;
-						units[*res_idx].incHealth(healer->getHealerRate() * dt);
-						lasers.push_back({ units[i].getView() + (units[i].getLastMoving() == Moving::Left ? laserfixleft : laserfixright),
-							units[*res_idx].getView(), LaserType::Heal });
+						if (!healer->isLocked()) {
+							energy -= healer->getHealerEnergyCost() * dt;
+							healer->setActive(true);
+							units[*res_idx].incHealth(healer->getHealerRate() * dt);
+							lasers.push_back({ units[i].getView() + (units[i].getLastMoving() == Moving::Left ? laserfixleft : laserfixright),
+								units[*res_idx].getView(), LaserType::Heal });
+						}
+					}
+					else {
+						if (healer->isActive()) healer->LockTemporary();
 					}
 				}
 			}
