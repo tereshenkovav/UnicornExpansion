@@ -22,6 +22,8 @@ function initMap() {
   game.incEnergy(400) ;
   game.setTaskText("Уничтожьте врагов и их логово") ;
 
+  game.setNewViewPoint(8,10) ;
+
   return true ;
 }
 

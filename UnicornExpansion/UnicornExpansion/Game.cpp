@@ -57,17 +57,7 @@ bool Game::loadMap(const std::string& filename) {
 	line = prepLine(line);
 	if (!isStringNumber(line)) return false;
 	height = std::stoi(line);
-
-	if (!std::getline(fin, line)) return false;
-	line = prepLine(line);
-	if (!isStringNumber(line)) return false;
-	initial_x = std::stoi(line);
-
-	if (!std::getline(fin, line)) return false;
-	line = prepLine(line);
-	if (!isStringNumber(line)) return false;
-	initial_y = std::stoi(line);
-
+		
 	map.resize(width);
 	for (int j = 0; j < width; j++)
 		map[j].resize(height);
@@ -553,6 +543,15 @@ bool Game::isFail() const
 	return isfail;
 }
 
-sf::Vector2i Game::getInitialView() const {
-	return { initial_x, initial_y };
+std::optional<sf::Vector2i> Game::getOnceNewViewPoint() {
+	if (new_viewpoint) {
+		sf::Vector2i buf = *new_viewpoint;
+		new_viewpoint = std::nullopt;
+		return buf;
+	}
+	return std::nullopt;
+}
+
+void Game::setNewViewPoint(int x, int y) {
+	new_viewpoint = { x, y };
 }

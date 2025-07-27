@@ -27,8 +27,7 @@ class Game
 private:
 	int width;
 	int height;
-	int initial_x;
-	int initial_y;
+	std::optional<sf::Vector2i> new_viewpoint;
 	float energy;
 	std::vector<std::vector<Terrain>> map;
 	std::vector<GameUnit> units;
@@ -61,8 +60,9 @@ public:
 	// Размеры карты
 	int getWidth() const;
 	int getHeight() const;
-	// Получить точку начальной камеры
-	sf::Vector2i getInitialView() const;
+	// Получить новую точку камеры и сброс новой точки
+	std::optional<sf::Vector2i> getOnceNewViewPoint();
+	void setNewViewPoint(int x, int y);
 	// Получение типа территории
 	Terrain getMap(int i, int j) const;
 	bool isFog(int i, int j) const;

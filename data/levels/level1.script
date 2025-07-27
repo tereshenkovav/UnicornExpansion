@@ -32,6 +32,8 @@ function initMap() {
 
   game.startTimer(TIME_LIMIT*60) ;
 
+  game.setNewViewPoint(12,6) ;
+
   return true ;
 }
 

@@ -189,7 +189,10 @@ void loadGame(int leveln) {
     game.update(0.0); // Первичная инициализация для тумана войны
     tekscale = 2.0;
     updateScale();
-    view.setCenter({ (float)game.getInitialView().x * BLOCKW, (float)game.getInitialView().y * BLOCKH });
+
+    // Обновление камеры здесь дублировано для того, чтобы установить её до вызова основного цикла, пока показано задание
+    if (auto newvp = game.getOnceNewViewPoint())
+        view.setCenter({ (float)(*newvp).x * BLOCKW, (float)(*newvp).y * BLOCKH });
 
     selected_uid = std::nullopt;
 
@@ -624,6 +627,10 @@ while (window.isOpen())
         effect_fire.setVolume(0.0f);
         effect_start.stop();
     }
+
+    // Обновление камеры если нужно
+    if (auto newvp = game.getOnceNewViewPoint())
+        view.setCenter({ (float)(*newvp).x * BLOCKW, (float)(*newvp).y * BLOCKH });
 
     if (!modeendgame)
         if (game.isGameOver())
