@@ -569,6 +569,12 @@ while (window.isOpen())
                             }
                     }
                 }
+                else
+                // Зона карты
+                if (minimap.isXYonMap(mousePressed->position)) {
+                    view.setCenter(minimap.getWorldPosByMapPos(mousePressed->position.x, mousePressed->position.y));
+                    fixCameraPosition();
+                }
                 // Зона действий
                 else {
                     if (selected_uid) {

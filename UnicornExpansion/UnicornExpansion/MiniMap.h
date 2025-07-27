@@ -36,6 +36,8 @@ public:
 	void setCellColor(int i, int j, const sf::Color & c);
 	// Установка центра камеры
 	void setCenter(int cx, int cy);
+	sf::Vector2f getWorldPosByMapPos(float mx, float my) const;
+	bool isXYonMap(sf::Vector2i pos) const;
 	// Вывод карты в рендер
 	void drawTo(sf::RenderTarget* target) const;
 };

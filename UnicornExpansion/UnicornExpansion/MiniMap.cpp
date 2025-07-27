@@ -75,6 +75,15 @@ void MiniMap::setCenter(int cx, int cy)
         (float)(y + ky * h * cy / fullh - rect_h / 2 + 2 )});
 }
 
+sf::Vector2f MiniMap::getWorldPosByMapPos(float mx, float my) const {
+    return { ((mx - x) * fullw) / (kx * w), ((my - y) * fullh) / (ky * h) };
+}
+
+bool MiniMap::isXYonMap(sf::Vector2i pos) const
+{
+    return (x < pos.x) && (y < pos.y) && (pos.x < x + worldw * scale) && (pos.y < y + worldh * scale);
+}
+
 void MiniMap::drawTo(sf::RenderTarget* target) const
 {
     target->draw(minimap);
