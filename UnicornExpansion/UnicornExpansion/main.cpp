@@ -144,6 +144,10 @@ sf::Vector2f getActionButtonPos(int i) {
     return { (float)(1024 - 400 + 8 + (i % ACTION_COL_COUNT) * 76), (float)(768 - 192 + 10 + (i / ACTION_COL_COUNT) * 76) };
 }
 
+float getScale05per20() {
+    return 0.5f + tekscale * 0.25f;
+}
+
 // Рисование лазера и его анимации в точке приложения
 void drawLaserFromTo(sf::RenderWindow & window, sf::RectangleShape & laser, const Laser & laz, Animation & laser_anim) {
     laser_anim.setColor(color_lasers[laz.type]);
@@ -168,7 +172,7 @@ void fixCameraPosition() {
 }
 
 void updateScale() {
-    view.setSize({ VIEW_SIZE_X * (0.5f + tekscale * 0.25f), VIEW_SIZE_Y * (0.5f + tekscale * 0.25f) });
+    view.setSize({ VIEW_SIZE_X * getScale05per20(), VIEW_SIZE_Y * getScale05per20() });
     minimap.setWindowSize(view.getSize().x, view.getSize().y);
     fixCameraPosition();
 }
@@ -605,19 +609,19 @@ while (window.isOpen())
     if (!modeendgame) {
         // Прокрутка карты
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Left)) {
-            view.move({ -SCROLLSPEED * BLOCKW * dt, 0 });
+            view.move({ -SCROLLSPEED * BLOCKW * getScale05per20() * dt, 0 });
             fixCameraPosition();
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Right)) {
-            view.move({ +SCROLLSPEED * BLOCKW * dt, 0 });
+            view.move({ +SCROLLSPEED * BLOCKW * getScale05per20() * dt, 0 });
             fixCameraPosition();
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up)) {
-            view.move({ 0, -SCROLLSPEED * BLOCKH * dt });
+            view.move({ 0, -SCROLLSPEED * BLOCKH * getScale05per20() * dt });
             fixCameraPosition();
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Down)) {
-            view.move({ 0, SCROLLSPEED * BLOCKH * dt });
+            view.move({ 0, SCROLLSPEED * BLOCKH * getScale05per20() * dt });
             fixCameraPosition();
         }
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)&& mouseholdedonmap) {
