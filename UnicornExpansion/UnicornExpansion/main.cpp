@@ -60,6 +60,7 @@ sf::Countdown counter_endgame;
 int tekscale;
 sf::RectangleShape rect_health;
 std::optional<Animation> current_teleportation_effect;
+bool mouseholdedonmap = false;
 
 // Переключатели сцен
 enum class Scene { Menu, Task, Game };
@@ -574,6 +575,7 @@ while (window.isOpen())
                 if (minimap.isXYonMap(mousePressed->position)) {
                     view.setCenter(minimap.getWorldPosByMapPos(mousePressed->position.x, mousePressed->position.y));
                     fixCameraPosition();
+                    mouseholdedonmap = true;
                 }
                 // Зона действий
                 else {
@@ -618,6 +620,12 @@ while (window.isOpen())
             view.move({ 0, SCROLLSPEED * BLOCKH * dt });
             fixCameraPosition();
         }
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)&& mouseholdedonmap) {
+            view.setCenter(minimap.getWorldPosByMapPos(mousePos.x, mousePos.y));
+            fixCameraPosition();
+        }
+        else
+            mouseholdedonmap = false;
 
         laser_apply.update(dt);
         game.update(dt);
