@@ -59,6 +59,7 @@ int started_galop_uid;
 sf::Countdown counter_endgame;
 int tekscale;
 sf::RectangleShape rect_health;
+std::optional<Animation> current_teleportation_effect;
 
 // Переключатели сцен
 enum class Scene { Menu, Task, Game };
@@ -401,6 +402,8 @@ color_lasers[LaserType::Heal] = sf::Color(240, 255, 0);
 Animation laser_apply("images\\laser_apply.png", 30, 34, 16, 16);
 laser_apply.setOrigin({ 15,17 });
 laser_apply.play();
+Animation teleportation("images\\teleportation.png", 96, 96, 9, 9);
+teleportation.setOrigin({ 48, 48 });
 
 // Шейдеры яркости и обесцвечивания
 sf::Shader shader_gray;
@@ -621,6 +624,19 @@ while (window.isOpen())
         if (game.isUnitExist(started_galop_uid))
             if (!game.getUnitByUID(started_galop_uid).isTargeted()) effect_start.stop();
 
+    // Добавление эффекта телепортации
+    if (auto new_effect = game.getOnceTeleportationEffect()) {
+        current_teleportation_effect = teleportation;
+        (*current_teleportation_effect).setPosition(*new_effect);
+        (*current_teleportation_effect).playOneTime();
+    }
+
+    // Обработка эффекта телепортации
+    if (current_teleportation_effect) {
+        (*current_teleportation_effect).update(dt);
+        if (!(*current_teleportation_effect).isPlayed()) current_teleportation_effect = std::nullopt;
+    }
+
     if (counter_endgame.onceReachNol()) {
         // Инициализация механизма завершения уровня - отключение звуковых эффектов
         modeendgame = true;
@@ -731,6 +747,9 @@ while (window.isOpen())
                 selector.setOrigin(game.getUnitByUID(*selected_uid).getSizeView() / 2.0f);
                 window.draw(selector);
             }
+
+            // Эффект телепортации
+            if (current_teleportation_effect) window.draw(*current_teleportation_effect);
 
             window.setView(window.getDefaultView());
             // Далее рисуем управлющие элементы панели

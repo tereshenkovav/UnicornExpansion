@@ -297,6 +297,21 @@ void Game::setTaskText(const std::string & task)
 	tasktext = task;
 }
 
+void Game::addTeleportationEffect(float x, float y)
+{
+	teleportation_effect = { x,y };
+}
+
+std::optional<sf::Vector2f> Game::getOnceTeleportationEffect()
+{
+	if (teleportation_effect) {
+		auto buf = teleportation_effect;
+		teleportation_effect = std::nullopt;
+		return buf;
+	}
+	return std::nullopt;
+}
+
 void Game::addComponentToUnitByUID(int uid, UnitComponent* component)
 {
 	for (int i = 0; i < units.size(); i++)
@@ -470,7 +485,13 @@ void Game::update(float dt)
 	// Удаление уничтоженных юнитов
 	int i = 0;
 	while (i < units.size())
-		if (units[i].isKilled()) units.erase(units.begin() + i); else i++;
+		if (units[i].isKilled()) {
+			// При удалении единорога дать эффект вспышки
+			if (units[i].isComponent<ComponentUnicorn>())
+				addTeleportationEffect(units[i].getView().x, units[i].getView().y);
+			units.erase(units.begin() + i);
+		}
+		else i++;
 
 	try {
 		if (!isGameOver()) iswin = funcvictory();

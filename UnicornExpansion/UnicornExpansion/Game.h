@@ -9,6 +9,7 @@
 #include <SFML/Graphics.hpp>
 #include <zetscript.h>
 #include <json/json.h>
+#include <optional>
 
 // Перечисления территорий и типов лазера
 enum class Terrain { Ground, Forest, Water, Road };
@@ -45,6 +46,7 @@ private:
 	zetscript::ScriptEngine script_engine;
 	std::function<bool()> funcvictory;
 	std::function<bool()> funcdefeat;
+	std::optional<sf::Vector2f> teleportation_effect;
 	static bool canWalkOnTerrain(Terrain terr);
 public:
 	Game();
@@ -107,6 +109,8 @@ public:
 	// Текст игровой задачи
 	std::string getTaskText() const;
 	void setTaskText(const std::string & value);
+	void addTeleportationEffect(float x, float y);
+	std::optional<sf::Vector2f> getOnceTeleportationEffect();
 	// Обновление игры
 	void update(float dt);
 	// Шаблонный метод - поиск юнитов по компонентам

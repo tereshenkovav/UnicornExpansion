@@ -33,6 +33,7 @@ bool ComponentPortal::applyAction(const UnitAction& action)
 		if (pos) {
 			UnitFactory factory(game);
 			factory.addUnicorn((*pos).x, (*pos).y, unicorn_hp);
+			game->addTeleportationEffect((*pos).x * BLOCKW + BLOCKW / 2, (*pos).y * BLOCKH + BLOCKH / 2);
 		}
 		return true;
 	}
