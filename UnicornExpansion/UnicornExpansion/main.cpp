@@ -49,6 +49,8 @@ std::map<Terrain, sf::Color> color_terrains;
 std::map<LaserType, sf::Color> color_lasers;
 std::map<LaserType, Animation*> anim_lasers;
 std::map<TerrainSubType, std::unique_ptr<sf::Sprite>> spr_trees;
+std::vector<std::unique_ptr<sf::SoundBuffer>> buf_unicorn_clicks;
+std::vector<std::unique_ptr<sf::Sound>> snd_unicorn_clicks;
 sf::View view;
 sf::Countdown counter_errmsg;
 MiniMap minimap;
@@ -366,6 +368,13 @@ sf::Sound effect_start(effect_start_buffer);
 sf::SoundBuffer effect_teleport_buffer("sounds\\teleport.ogg");
 sf::Sound effect_teleport(effect_teleport_buffer);
 
+for (int i = 0; i <= 2; i++) {
+    buf_unicorn_clicks.push_back(std::make_unique<sf::SoundBuffer>("sounds\\unicorn_click_"+std::to_string(i)+".ogg"));
+    snd_unicorn_clicks.push_back(std::make_unique<sf::Sound>(*buf_unicorn_clicks.back()));
+}
+
+int last_unicorn_click_idx = -1;
+
 addTerrainSprite(Terrain::Ground, "images\\terrains\\ground.png");
 addTerrainSprite(Terrain::Water, "images\\terrains\\water.png");
 addTerrainSprite(Terrain::Forest, "images\\terrains\\forest.png");
@@ -566,6 +575,14 @@ while (window.isOpen())
                         if (game.findUnitAt(worldpos.x, worldpos.y, &uid))
                             if (!game.isFog(game.getUnitByUID(uid).getXY().x, game.getUnitByUID(uid).getXY().y)) {
                                 selected_uid = uid;
+                                if (game.getUnitByUID(*selected_uid).isComponent<ComponentUnicorn>()) {
+                                    // Запуск для единорога новой реплики, не совпадающей со старой
+                                    int new_unicorn_click_idx = last_unicorn_click_idx;
+                                    while (new_unicorn_click_idx == last_unicorn_click_idx)
+                                        new_unicorn_click_idx = rand() % snd_unicorn_clicks.size();
+                                    snd_unicorn_clicks[new_unicorn_click_idx]->play();
+                                    last_unicorn_click_idx = new_unicorn_click_idx;
+                                }
                             }
                     }
 
