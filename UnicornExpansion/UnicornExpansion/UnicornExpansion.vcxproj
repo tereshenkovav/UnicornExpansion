@@ -169,7 +169,7 @@
     <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="SfmlTools.cpp" />
     <ClCompile Include="Texts.cpp" />
-    <ClCompile Include="TreeBuilder.cpp" />
+    <ClCompile Include="SubTerrainBuilder.cpp" />
     <ClCompile Include="UnitComponent.cpp" />
     <ClCompile Include="UnitFactory.cpp" />
     <ClCompile Include="UnitMover.cpp" />
@@ -197,7 +197,7 @@
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="SfmlTools.h" />
     <ClInclude Include="Texts.h" />
-    <ClInclude Include="TreeBuilder.h" />
+    <ClInclude Include="SubTerrainBuilder.h" />
     <ClInclude Include="UnitComponent.h" />
     <ClInclude Include="UnitFactory.h" />
     <ClInclude Include="UnitMover.h" />

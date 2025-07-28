@@ -4,17 +4,17 @@
 #include <optional>
 #include "Game.h"
 
-enum TreeType { Bottom, BottomLeft, BottomRight, Top, TopLeft, TopRight, Left, Right,
+enum TerrainSubType { TreeBottom, TreeBottomLeft, TreeBottomRight, TreeTop, TreeTopLeft, TreeTopRight, TreeLeft, TreeRight,
   WaterTopLeft, WaterTop, WaterTopRight, WaterLeft, WaterRight, WaterBottomLeft, WaterBottom, WaterBottomRight,
   RoadHorz, RoadVert, RoadTopLeft, RoadTopRight, RoadBottomLeft, RoadBottomRight};
 
-class TreeBuilder {
+class SubTerrainBuilder {
 private:
 	int width ;
 	int height ;
-	std::vector<std::vector<std::optional<TreeType>>> map ;
+	std::vector<std::vector<std::optional<TerrainSubType>>> map ;
 public:
-	TreeBuilder() ;
+	SubTerrainBuilder() ;
 	void updateByGame(const Game & game) ;
-	std::optional<TreeType> getTreeType(int x, int y) const ;
+	std::optional<TerrainSubType> getTerrainSubType(int x, int y) const ;
 } ;

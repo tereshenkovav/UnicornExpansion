@@ -93,7 +93,7 @@
     <ClCompile Include="ComponentRadar.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="TreeBuilder.cpp">
+    <ClCompile Include="SubTerrainBuilder.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -176,7 +176,7 @@
     <ClInclude Include="ComponentRadar.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="TreeBuilder.h">
+    <ClInclude Include="SubTerrainBuilder.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

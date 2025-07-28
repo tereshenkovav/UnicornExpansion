@@ -23,7 +23,7 @@
 #include "ComponentEnemy.h"
 #include "ComponentResource.h"
 #include "ComponentHarvester.h"
-#include "TreeBuilder.h"
+#include "SubTerrainBuilder.h"
 #include "CppTools.h"
 
 #pragma comment (lib, "sfml-graphics.lib")
@@ -47,13 +47,13 @@ std::map<std::string, std::unique_ptr<sf::Sprite>> spr_actions;
 std::map<Terrain, std::unique_ptr<sf::Sprite>> spr_terrains;
 std::map<Terrain, sf::Color> color_terrains;
 std::map<LaserType, sf::Color> color_lasers;
-std::map<TreeType, std::unique_ptr<sf::Sprite>> spr_trees;
+std::map<TerrainSubType, std::unique_ptr<sf::Sprite>> spr_trees;
 sf::View view;
 sf::Countdown counter_errmsg;
 MiniMap minimap;
 Texts texts;
 Game game;
-TreeBuilder treebuilder;
+SubTerrainBuilder stbuilder;
 // Номер выделенного юнита
 std::optional<int> selected_uid;
 int started_galop_uid;
@@ -83,7 +83,7 @@ void addUnitSprite(const std::string& code, const std::string& filename) {
     addUnitSpriteFromLastTexture(code);
 }
 
-void addTreeSprite(TreeType ttype, const std::string& filename) {
+void addSubTerrainSprite(TerrainSubType ttype, const std::string& filename) {
     textures.push_back(std::make_unique<sf::Texture>(filename));
     spr_trees[ttype] = std::make_unique<sf::Sprite>(*textures.back());
 }
@@ -207,7 +207,7 @@ void loadGame(int leveln) {
         VIEW_SIZE_X, VIEW_SIZE_Y, game.getWidth() * BLOCKW, game.getHeight() * BLOCKH);
     updateMiniMap(game);
 
-    treebuilder.updateByGame(game);
+    stbuilder.updateByGame(game);
 }
 
 int main(int argc, char * argv[])
@@ -372,28 +372,28 @@ addTerrainSprite(Terrain::Water, "images\\terrain_water.png");
 addTerrainSprite(Terrain::Forest, "images\\terrain_forest.png");
 addTerrainSprite(Terrain::Road, "images\\terrain_road.png");
 
-addTreeSprite(TreeType::Bottom, "images\\tree_bottom.png");
-addTreeSprite(TreeType::BottomLeft, "images\\tree_bottom_left.png");
-addTreeSprite(TreeType::BottomRight, "images\\tree_bottom_right.png");
-addTreeSprite(TreeType::Top, "images\\tree_top.png");
-addTreeSprite(TreeType::TopLeft, "images\\tree_top_left.png");
-addTreeSprite(TreeType::TopRight, "images\\tree_top_right.png");
-addTreeSprite(TreeType::Left, "images\\tree_left.png");
-addTreeSprite(TreeType::Right, "images\\tree_right.png");
-addTreeSprite(TreeType::WaterTopLeft, "images\\water_top_left.png");
-addTreeSprite(TreeType::WaterTop, "images\\water_top.png");
-addTreeSprite(TreeType::WaterTopRight, "images\\water_top_right.png");
-addTreeSprite(TreeType::WaterLeft, "images\\water_left.png");
-addTreeSprite(TreeType::WaterRight, "images\\water_right.png");
-addTreeSprite(TreeType::WaterBottomLeft, "images\\water_bottom_left.png");
-addTreeSprite(TreeType::WaterBottom, "images\\water_bottom.png");
-addTreeSprite(TreeType::WaterBottomRight, "images\\water_bottom_right.png");
-addTreeSprite(TreeType::RoadHorz, "images\\road_horz.png");
-addTreeSprite(TreeType::RoadVert, "images\\road_vert.png");
-addTreeSprite(TreeType::RoadTopLeft, "images\\road_top_left.png");
-addTreeSprite(TreeType::RoadTopRight, "images\\road_top_right.png");
-addTreeSprite(TreeType::RoadBottomLeft, "images\\road_bottom_left.png");
-addTreeSprite(TreeType::RoadBottomRight, "images\\road_bottom_right.png");
+addSubTerrainSprite(TerrainSubType::TreeBottom, "images\\tree_bottom.png");
+addSubTerrainSprite(TerrainSubType::TreeBottomLeft, "images\\tree_bottom_left.png");
+addSubTerrainSprite(TerrainSubType::TreeBottomRight, "images\\tree_bottom_right.png");
+addSubTerrainSprite(TerrainSubType::TreeTop, "images\\tree_top.png");
+addSubTerrainSprite(TerrainSubType::TreeTopLeft, "images\\tree_top_left.png");
+addSubTerrainSprite(TerrainSubType::TreeTopRight, "images\\tree_top_right.png");
+addSubTerrainSprite(TerrainSubType::TreeLeft, "images\\tree_left.png");
+addSubTerrainSprite(TerrainSubType::TreeRight, "images\\tree_right.png");
+addSubTerrainSprite(TerrainSubType::WaterTopLeft, "images\\water_top_left.png");
+addSubTerrainSprite(TerrainSubType::WaterTop, "images\\water_top.png");
+addSubTerrainSprite(TerrainSubType::WaterTopRight, "images\\water_top_right.png");
+addSubTerrainSprite(TerrainSubType::WaterLeft, "images\\water_left.png");
+addSubTerrainSprite(TerrainSubType::WaterRight, "images\\water_right.png");
+addSubTerrainSprite(TerrainSubType::WaterBottomLeft, "images\\water_bottom_left.png");
+addSubTerrainSprite(TerrainSubType::WaterBottom, "images\\water_bottom.png");
+addSubTerrainSprite(TerrainSubType::WaterBottomRight, "images\\water_bottom_right.png");
+addSubTerrainSprite(TerrainSubType::RoadHorz, "images\\road_horz.png");
+addSubTerrainSprite(TerrainSubType::RoadVert, "images\\road_vert.png");
+addSubTerrainSprite(TerrainSubType::RoadTopLeft, "images\\road_top_left.png");
+addSubTerrainSprite(TerrainSubType::RoadTopRight, "images\\road_top_right.png");
+addSubTerrainSprite(TerrainSubType::RoadBottomLeft, "images\\road_bottom_left.png");
+addSubTerrainSprite(TerrainSubType::RoadBottomRight, "images\\road_bottom_right.png");
 
 // Цвета территорий и лазеров
 color_terrains[Terrain::Ground] = sf::Color(105, 149, 19);
@@ -702,9 +702,9 @@ while (window.isOpen())
                 for (int i = 0; i < game.getWidth(); i++)
                     for (int j = 0; j < game.getHeight(); j++)
                         if (!game.isFog(i, j)) {
-                            if (auto treeblock = treebuilder.getTreeType(i, j)) {
+                            if (auto treeblock = stbuilder.getTerrainSubType(i, j)) {
                                 // Этот трюк нужен, чтобы сначала вывелись территории и фрагменты леса нижние, а потом - верхние, закрывающие пони
-                                if (!((*treeblock == TreeType::Top) || (*treeblock == TreeType::TopLeft) || (*treeblock == TreeType::TopRight))) {
+                                if (!((*treeblock == TerrainSubType::TreeTop) || (*treeblock == TerrainSubType::TreeTopLeft) || (*treeblock == TerrainSubType::TreeTopRight))) {
                                     spr_trees[*treeblock]->setPosition(sf::Vector2f(i * BLOCKW, j * BLOCKH));
                                     window.draw(*spr_trees[*treeblock]);
                                 }
@@ -735,8 +735,8 @@ while (window.isOpen())
                 for (int i = 0; i < game.getWidth(); i++)
                     for (int j = 0; j < game.getHeight(); j++)
                         if (!game.isFog(i, j)) {
-                            if (auto treeblock = treebuilder.getTreeType(i, j)) {
-                                if ((*treeblock == TreeType::Top) || (*treeblock == TreeType::TopLeft) || (*treeblock == TreeType::TopRight)) {
+                            if (auto treeblock = stbuilder.getTerrainSubType(i, j)) {
+                                if ((*treeblock == TerrainSubType::TreeTop) || (*treeblock == TerrainSubType::TreeTopLeft) || (*treeblock == TerrainSubType::TreeTopRight)) {
                                     spr_trees[*treeblock]->setPosition(sf::Vector2f(i * BLOCKW, j * BLOCKH));
                                     window.draw(*spr_trees[*treeblock]);
                                 }

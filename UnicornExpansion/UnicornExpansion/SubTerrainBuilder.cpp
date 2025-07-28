@@ -1,9 +1,9 @@
-#include "TreeBuilder.h"
+#include "SubTerrainBuilder.h"
 
-TreeBuilder::TreeBuilder() {
+SubTerrainBuilder::SubTerrainBuilder() {
 }
 
-void TreeBuilder::updateByGame(const Game & game) {
+void SubTerrainBuilder::updateByGame(const Game & game) {
 	this->width = game.getWidth() ;
 	this->height = game.getHeight() ;
 	map.resize(width) ;
@@ -15,30 +15,30 @@ void TreeBuilder::updateByGame(const Game & game) {
 			if (game.getMap(i, j) == Terrain::Ground) {
 				if (game.getMap(i, j - 1) == Terrain::Forest) {
 					if (game.getMap(i + 1, j) == Terrain::Forest)
-						map[i][j] = TreeType::BottomLeft;
+						map[i][j] = TerrainSubType::TreeBottomLeft;
 					else
 					if (game.getMap(i - 1, j) == Terrain::Forest)
-						map[i][j] = TreeType::BottomRight;
+						map[i][j] = TerrainSubType::TreeBottomRight;
 					else
-						map[i][j] = TreeType::Bottom;
+						map[i][j] = TerrainSubType::TreeBottom;
 				}
 				else
 				if (game.getMap(i, j + 1) == Terrain::Forest) {
 					if (game.getMap(i + 1, j) == Terrain::Forest)
-						map[i][j] = TreeType::TopLeft;
+						map[i][j] = TerrainSubType::TreeTopLeft;
 					else
 					if (game.getMap(i - 1, j) == Terrain::Forest)
-						map[i][j] = TreeType::TopRight;
+						map[i][j] = TerrainSubType::TreeTopRight;
 					else
-						map[i][j] = TreeType::Top;
+						map[i][j] = TerrainSubType::TreeTop;
 				}
 				else
 				if (game.getMap(i + 1, j) == Terrain::Forest) {
-					map[i][j] = TreeType::Left;
+					map[i][j] = TerrainSubType::TreeLeft;
 				}
 				else
 				if (game.getMap(i - 1, j) == Terrain::Forest) {
-					map[i][j] = TreeType::Right;
+					map[i][j] = TerrainSubType::TreeRight;
 				}
 			}
 			if (game.getMap(i, j) == Terrain::Water) {
@@ -47,20 +47,20 @@ void TreeBuilder::updateByGame(const Game & game) {
 				bool gtop = (game.getMap(i, j - 1) == Terrain::Ground) && (j > 0);
 				bool gbottom = (game.getMap(i, j + 1) == Terrain::Ground) && (j < game.getHeight() - 1);
 				if (gtop) {
-					if (gleft) map[i][j] = TreeType::WaterTopLeft; else
-					if (gright) map[i][j] = TreeType::WaterTopRight; else
-						map[i][j] = TreeType::WaterTop;
+					if (gleft) map[i][j] = TerrainSubType::WaterTopLeft; else
+					if (gright) map[i][j] = TerrainSubType::WaterTopRight; else
+						map[i][j] = TerrainSubType::WaterTop;
 				}
 				else
 				if (gbottom) {
-					if (gleft) map[i][j] = TreeType::WaterBottomLeft; else
-					if (gright) map[i][j] = TreeType::WaterBottomRight; else
-						map[i][j] = TreeType::WaterBottom;
+					if (gleft) map[i][j] = TerrainSubType::WaterBottomLeft; else
+					if (gright) map[i][j] = TerrainSubType::WaterBottomRight; else
+						map[i][j] = TerrainSubType::WaterBottom;
 				}
 				else
-				if (gleft) map[i][j] = TreeType::WaterLeft;
+				if (gleft) map[i][j] = TerrainSubType::WaterLeft;
 				else
-				if (gright) map[i][j] = TreeType::WaterRight;
+				if (gright) map[i][j] = TerrainSubType::WaterRight;
 			}
 			if (game.getMap(i, j) == Terrain::Road) {
 				bool rleft = (game.getMap(i - 1, j) == Terrain::Road) || (i == 0);
@@ -68,18 +68,18 @@ void TreeBuilder::updateByGame(const Game & game) {
 				bool rtop = (game.getMap(i, j - 1) == Terrain::Road) || (j == 0);
 				bool rbottom = (game.getMap(i, j + 1) == Terrain::Road) || (j == game.getHeight() - 1);
 				if ((rleft ? 1 : 0) + (rright ? 1 : 0) + (rtop ? 1 : 0) + (rbottom ? 1 : 0) == 2) {
-					if (rleft && rright) map[i][j] = TreeType::RoadHorz; else
-					if (rtop && rbottom) map[i][j] = TreeType::RoadVert; else
-					if (rtop && rleft) map[i][j] = TreeType::RoadTopLeft; else
-					if (rtop && rright) map[i][j] = TreeType::RoadTopRight; else
-					if (rbottom && rleft) map[i][j] = TreeType::RoadBottomLeft; else
-					if (rbottom && rright) map[i][j] = TreeType::RoadBottomRight;
+					if (rleft && rright) map[i][j] = TerrainSubType::RoadHorz; else
+					if (rtop && rbottom) map[i][j] = TerrainSubType::RoadVert; else
+					if (rtop && rleft) map[i][j] = TerrainSubType::RoadTopLeft; else
+					if (rtop && rright) map[i][j] = TerrainSubType::RoadTopRight; else
+					if (rbottom && rleft) map[i][j] = TerrainSubType::RoadBottomLeft; else
+					if (rbottom && rright) map[i][j] = TerrainSubType::RoadBottomRight;
 				}
 			}
 		}
 }
 
-std::optional<TreeType> TreeBuilder::getTreeType(int x, int y) const {
+std::optional<TerrainSubType> SubTerrainBuilder::getTerrainSubType(int x, int y) const {
 	if (x<0) return std::nullopt;
 	if (x>=width) return std::nullopt;
 	if (y<0) return std::nullopt;
