@@ -247,36 +247,37 @@ int main(int argc, char * argv[])
     const sf::Texture texture4("images\\cursor_my.png");
     sf::Sprite cursor_my(texture4);
     
-    // Перечисление всех типов танков с учетом порядка их компонент
-    addUnitSprite("unicorn", "images\\unicorn.png");
-    addUnitSprite("unicorn_attacker", "images\\unicorn.png");
-    addUnitSprite("unicorn_harvester", "images\\unicorn.png");
-    addUnitSprite("unicorn_healer", "images\\unicorn.png");
-    addUnitSprite("unicorn_radar", "images\\unicorn.png");
+    // Перечисление всех типов единорогов с учетом порядка их компонент
+    addUnitSprite("unicorn_attacker", "images\\units\\unicorn.png");
+    addUnitSprite("unicorn_harvester", "images\\units\\unicorn.png");
+    addUnitSprite("unicorn_healer", "images\\units\\unicorn.png");
+    addUnitSprite("unicorn_radar", "images\\units\\unicorn.png");
 
-    addUnitSprite("unicorn_harvesterattacker", "images\\unicorn.png");
-    addUnitSprite("unicorn_harvesterhealer", "images\\unicorn.png");
-    addUnitSprite("unicorn_attackerhealer", "images\\unicorn.png");
-    addUnitSprite("unicorn_harvesterradar", "images\\unicorn.png");
-    addUnitSprite("unicorn_healerradar", "images\\unicorn.png");
-    addUnitSprite("unicorn_attackerradar", "images\\unicorn.png");
+    addUnitSprite("unicorn_harvesterattacker", "images\\units\\unicorn.png");
+    addUnitSprite("unicorn_harvesterhealer", "images\\units\\unicorn.png");
+    addUnitSprite("unicorn_attackerhealer", "images\\units\\unicorn.png");
+    addUnitSprite("unicorn_harvesterradar", "images\\units\\unicorn.png");
+    addUnitSprite("unicorn_healerradar", "images\\units\\unicorn.png");
+    addUnitSprite("unicorn_attackerradar", "images\\units\\unicorn.png");
 
-    addUnitSprite("unicorn_harvesterattackerhealer", "images\\unicorn.png");
-    addUnitSprite("unicorn_harvesterhealerradar", "images\\unicorn.png");
-    addUnitSprite("unicorn_harvesterattackerradar", "images\\unicorn.png");
-    addUnitSprite("unicorn_attackerhealerradar", "images\\unicorn.png");
+    addUnitSprite("unicorn_harvesterattackerhealer", "images\\units\\unicorn.png");
+    addUnitSprite("unicorn_harvesterhealerradar", "images\\units\\unicorn.png");
+    addUnitSprite("unicorn_harvesterattackerradar", "images\\units\\unicorn.png");
+    addUnitSprite("unicorn_attackerhealerradar", "images\\units\\unicorn.png");
 
-    addUnitSprite("unicorn_harvesterattackerhealerradar", "images\\unicorn.png");
+    addUnitSprite("unicorn_harvesterattackerhealerradar", "images\\units\\unicorn.png");
 
-    addUnitSprite("portal", "images\\portal.png");
-    addUnitSprite("crystal", "images\\crystal.png");
-    addUnitSprite("monster1", "images\\monster1.png");
-    addUnitSprite("monster2", "images\\monster2.png");
-    addUnitSprite("monster3", "images\\monster3.png");
-    addUnitSprite("lair", "images\\lair.png");
-    
     // Используется загрузка каталога в целом, можно вынести как процедуру
-    std::string pathload = "images\\actions\\";
+    std::string pathload = "images\\units\\";
+    for (auto& filename : std::filesystem::directory_iterator(pathload)) {
+        auto str = filename.path().string();
+        replaceFirstString(str, pathload, "");
+        replaceFirstString(str, ".png", "");
+        addUnitSprite(str, filename.path().string());
+    }
+
+    // Используется загрузка каталога в целом, можно вынести как процедуру
+    pathload = "images\\actions\\";
     for (auto & filename : std::filesystem::directory_iterator(pathload)) {
         auto str = filename.path().string();
         replaceFirstString(str, pathload, "");
