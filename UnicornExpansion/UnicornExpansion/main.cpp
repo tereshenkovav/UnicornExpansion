@@ -47,6 +47,7 @@ std::map<std::string, std::unique_ptr<sf::Sprite>> spr_actions;
 std::map<Terrain, std::unique_ptr<sf::Sprite>> spr_terrains;
 std::map<Terrain, sf::Color> color_terrains;
 std::map<LaserType, sf::Color> color_lasers;
+std::map<LaserType, Animation*> anim_lasers;
 std::map<TerrainSubType, std::unique_ptr<sf::Sprite>> spr_trees;
 sf::View view;
 sf::Countdown counter_errmsg;
@@ -150,19 +151,17 @@ float getScale05per20() {
 }
 
 // Рисование лазера и его анимации в точке приложения
-void drawLaserFromTo(sf::RenderWindow & window, sf::RectangleShape & laser, const Laser & laz, Animation & laser_anim) {
-    laser_anim.setColor(color_lasers[laz.type]);
-    laser_anim.setPosition(laz.pos2);
-    window.draw(laser_anim);
+void drawLaserFromTo(sf::RenderWindow& window, sf::RectangleShape& laser, const Laser& laz) {
+    anim_lasers[laz.type]->setColor(color_lasers[laz.type]);
+    anim_lasers[laz.type]->setPosition(laz.pos2);
+    window.draw(*anim_lasers[laz.type]);
 
-    if ((laser_anim.getFrame() > 1) && (laser_anim.getFrame() < 14)) {
-        sf::Vector2f dir = laz.pos2 - laz.pos1;
-        laser.setFillColor(color_lasers[laz.type]);
-        laser.setSize({ dir.length(), 3 });
-        laser.setPosition(laz.pos1);
-        laser.setRotation(dir.angle());
-        window.draw(laser);
-    }
+    sf::Vector2f dir = laz.pos2 - laz.pos1;
+    laser.setFillColor(color_lasers[laz.type]);
+    laser.setSize({ dir.length(), 3 });
+    laser.setPosition(laz.pos1);
+    laser.setRotation(dir.angle());
+    window.draw(laser);
 }
 
 void fixCameraPosition() {
@@ -405,9 +404,18 @@ color_lasers[LaserType::Harvest] = sf::Color(0, 255, 255);
 color_lasers[LaserType::Attack] = sf::Color(255, 0, 0);
 color_lasers[LaserType::Heal] = sf::Color(240, 255, 0);
 
-Animation laser_apply("images\\laser_apply.png", 30, 34, 16, 16);
+Animation laser_apply("images\\laser_apply.png", 30, 34, 12, 12);
 laser_apply.setOrigin({ 15,17 });
 laser_apply.play();
+
+Animation aura("images\\aura_default.png", 86, 80, 12, 12);
+aura.setOrigin({ 43, 40 });
+aura.play();
+
+anim_lasers[LaserType::Harvest] = &aura;
+anim_lasers[LaserType::Attack] = &laser_apply;
+anim_lasers[LaserType::Heal] = &aura;
+
 Animation teleportation("images\\teleportation.png", 96, 96, 9, 9);
 teleportation.setOrigin({ 48, 48 });
 
@@ -630,6 +638,7 @@ while (window.isOpen())
             mouseholdedonmap = false;
 
         laser_apply.update(dt);
+        aura.update(dt);
         game.update(dt);
         if (!game.isUnitExist(*selected_uid)) selected_uid = std::nullopt;
 
@@ -752,7 +761,7 @@ while (window.isOpen())
 
             // Лазеры выводим после всего
             for (int i = 0; i < game.getLaserCount(); i++)
-                drawLaserFromTo(window, laser, game.getLaser(i), laser_apply);
+                drawLaserFromTo(window, laser, game.getLaser(i));
 
             if (selected_uid) {
                 if (game.getUnitByUID(*selected_uid).isComponent<ComponentResource>())
