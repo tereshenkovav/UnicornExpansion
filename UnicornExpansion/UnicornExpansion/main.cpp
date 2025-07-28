@@ -49,8 +49,9 @@ std::map<Terrain, sf::Color> color_terrains;
 std::map<LaserType, sf::Color> color_lasers;
 std::map<LaserType, Animation*> anim_lasers;
 std::map<TerrainSubType, std::unique_ptr<sf::Sprite>> spr_trees;
-std::vector<std::unique_ptr<sf::SoundBuffer>> buf_unicorn_clicks;
+std::vector<std::unique_ptr<sf::SoundBuffer>> soundbuffers;
 std::vector<std::unique_ptr<sf::Sound>> snd_unicorn_clicks;
+std::map<AudioEffect, std::unique_ptr<sf::Sound>> snd_audioeffects;
 sf::View view;
 sf::Countdown counter_errmsg;
 MiniMap minimap;
@@ -365,13 +366,20 @@ effect_fire.play();
 sf::SoundBuffer effect_start_buffer("sounds\\start.ogg");
 sf::Sound effect_start(effect_start_buffer);
 
-sf::SoundBuffer effect_teleport_buffer("sounds\\teleport.ogg");
-sf::Sound effect_teleport(effect_teleport_buffer);
-
 for (int i = 0; i <= 2; i++) {
-    buf_unicorn_clicks.push_back(std::make_unique<sf::SoundBuffer>("sounds\\unicorn_click_"+std::to_string(i)+".ogg"));
-    snd_unicorn_clicks.push_back(std::make_unique<sf::Sound>(*buf_unicorn_clicks.back()));
+    soundbuffers.push_back(std::make_unique<sf::SoundBuffer>("sounds\\unicorn_click_"+std::to_string(i)+".ogg"));
+    snd_unicorn_clicks.push_back(std::make_unique<sf::Sound>(*soundbuffers.back()));
 }
+
+soundbuffers.push_back(std::make_unique<sf::SoundBuffer>("sounds\\teleport.ogg"));
+snd_audioeffects[AudioEffect::Teleport] = std::make_unique<sf::Sound>(*soundbuffers.back());
+// В файле finish_teleport добавлена пауза в начале, чтобы можно было использовать совместно с эффектом телепортации
+soundbuffers.push_back(std::make_unique<sf::SoundBuffer>("sounds\\finish_teleport.ogg"));
+snd_audioeffects[AudioEffect::FinishTeleport]=std::make_unique<sf::Sound>(*soundbuffers.back());
+soundbuffers.push_back(std::make_unique<sf::SoundBuffer>("sounds\\finish_research.ogg"));
+snd_audioeffects[AudioEffect::FinishResearch] = std::make_unique<sf::Sound>(*soundbuffers.back());
+soundbuffers.push_back(std::make_unique<sf::SoundBuffer>("sounds\\finish_upgrade.ogg"));
+snd_audioeffects[AudioEffect::FinishUpgrade] = std::make_unique<sf::Sound>(*soundbuffers.back());
 
 int last_unicorn_click_idx = -1;
 
@@ -674,7 +682,6 @@ while (window.isOpen())
         current_teleportation_effect = teleportation;
         (*current_teleportation_effect).setPosition(*new_effect);
         (*current_teleportation_effect).playOneTime();
-        effect_teleport.play();
     }
 
     // Обработка эффекта телепортации
@@ -682,6 +689,10 @@ while (window.isOpen())
         (*current_teleportation_effect).update(dt);
         if (!(*current_teleportation_effect).isPlayed()) current_teleportation_effect = std::nullopt;
     }
+
+    // Обработка разных эффектов
+    for (auto effect : game.getOnceAudioEffects())
+        snd_audioeffects[effect]->play();
 
     if (counter_endgame.onceReachNol()) {
         // Инициализация механизма завершения уровня - отключение звуковых эффектов

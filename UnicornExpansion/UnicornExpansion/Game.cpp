@@ -302,6 +302,11 @@ void Game::addTeleportationEffect(float x, float y)
 	teleportation_effect = { x,y };
 }
 
+void Game::addAudioEffect(AudioEffect effect)
+{
+	audioeffects.push_back(effect);
+}
+
 std::optional<sf::Vector2f> Game::getOnceTeleportationEffect()
 {
 	if (teleportation_effect) {
@@ -310,6 +315,13 @@ std::optional<sf::Vector2f> Game::getOnceTeleportationEffect()
 		return buf;
 	}
 	return std::nullopt;
+}
+
+std::vector<AudioEffect> Game::getOnceAudioEffects()
+{
+	auto buf = audioeffects;
+	audioeffects.clear();
+	return buf;
 }
 
 void Game::addComponentToUnitByUID(int uid, UnitComponent* component)
@@ -487,8 +499,10 @@ void Game::update(float dt)
 	while (i < units.size())
 		if (units[i].isKilled()) {
 			// При удалении единорога дать эффект вспышки
-			if (units[i].isComponent<ComponentUnicorn>())
+			if (units[i].isComponent<ComponentUnicorn>()) {
 				addTeleportationEffect(units[i].getView().x, units[i].getView().y);
+				addAudioEffect(AudioEffect::Teleport);
+			}
 			units.erase(units.begin() + i);
 		}
 		else i++;

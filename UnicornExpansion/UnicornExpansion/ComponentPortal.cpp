@@ -34,17 +34,21 @@ bool ComponentPortal::applyAction(const UnitAction& action)
 			UnitFactory factory(game);
 			factory.addUnicorn((*pos).x, (*pos).y, unicorn_hp);
 			game->addTeleportationEffect((*pos).x * BLOCKW + BLOCKW / 2, (*pos).y * BLOCKH + BLOCKH / 2);
+			game->addAudioEffect(AudioEffect::Teleport);
+			game->addAudioEffect(AudioEffect::FinishTeleport);
 		}
 		return true;
 	}
 	if (action.code == "upgrade_hp") {
 		unicorn_hp += game->getConfigAction()["UpgradeUnicornHP"]["Value"].asInt();
 		tek_upgrade_pos++;
+		game->addAudioEffect(AudioEffect::FinishUpgrade);
 		return true;
 	}
 	if (action.code == "upgrade_count") {
 		max_unicorn_count += game->getConfigAction()["IncreaseUnicornCount"]["Value"].asInt();
 		tek_increase_pos++;
+		game->addAudioEffect(AudioEffect::FinishUpgrade);
 		return true;
 	}
 	return false;

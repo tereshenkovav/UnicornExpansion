@@ -31,6 +31,7 @@ bool ComponentHarvester::applyAction(const UnitAction& action)
 	if (action.code == "upgrade_harvester") {
 		harvest_rate += game->getConfigComponent()["Harvester"]["UpgradeStep"].asInt();
 		tek_upgrade_pos++;
+		game->addAudioEffect(AudioEffect::FinishUpgrade);
 		return true;
 	}
 	return false;

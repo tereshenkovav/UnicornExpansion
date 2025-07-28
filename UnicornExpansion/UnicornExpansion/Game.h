@@ -14,6 +14,7 @@
 // Перечисления территорий и типов лазера
 enum class Terrain { Ground, Forest, Water, Road };
 enum class LaserType { Harvest, Attack, Heal };
+enum class AudioEffect { Teleport, FinishTeleport, FinishResearch, FinishUpgrade };
 
 // Запись для лазера
 struct Laser {
@@ -47,6 +48,7 @@ private:
 	std::function<bool()> funcvictory;
 	std::function<bool()> funcdefeat;
 	std::optional<sf::Vector2f> teleportation_effect;
+	std::vector<AudioEffect> audioeffects;
 	static bool canWalkOnTerrain(Terrain terr);
 public:
 	Game();
@@ -110,7 +112,9 @@ public:
 	std::string getTaskText() const;
 	void setTaskText(const std::string & value);
 	void addTeleportationEffect(float x, float y);
+	void addAudioEffect(AudioEffect effect);
 	std::optional<sf::Vector2f> getOnceTeleportationEffect();
+	std::vector<AudioEffect> getOnceAudioEffects();
 	// Обновление игры
 	void update(float dt);
 	// Шаблонный метод - поиск юнитов по компонентам

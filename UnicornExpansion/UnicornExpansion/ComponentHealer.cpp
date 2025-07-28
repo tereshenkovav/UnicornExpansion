@@ -38,6 +38,7 @@ bool ComponentHealer::applyAction(const UnitAction& action)
 	if (action.code == "upgrade_healer") {		
 		heal_rate += game->getConfigComponent()["Healer"]["UpgradeStep"].asInt();
 		tek_upgrade_pos++;
+		game->addAudioEffect(AudioEffect::FinishUpgrade);
 		return true;
 	}
 	return false;
