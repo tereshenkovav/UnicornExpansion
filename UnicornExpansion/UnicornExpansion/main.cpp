@@ -66,6 +66,8 @@ int tekscale;
 sf::RectangleShape rect_health;
 std::optional<Animation> current_teleportation_effect;
 bool mouseholdedonmap = false;
+int counter_click = 0;
+int last_clicked_uid = -1;
 
 // Переключатели сцен
 enum class Scene { Menu, Task, Game };
@@ -366,6 +368,9 @@ effect_fire.play();
 sf::SoundBuffer effect_start_buffer("sounds\\start.ogg");
 sf::Sound effect_start(effect_start_buffer);
 
+sf::SoundBuffer secret_buffer("sounds\\secret.ogg");
+sf::Sound snd_secret(secret_buffer);
+
 for (int i = 0; i <= 2; i++) {
     soundbuffers.push_back(std::make_unique<sf::SoundBuffer>("sounds\\unicorn_click_"+std::to_string(i)+".ogg"));
     snd_unicorn_clicks.push_back(std::make_unique<sf::Sound>(*soundbuffers.back()));
@@ -590,6 +595,22 @@ while (window.isOpen())
                                         new_unicorn_click_idx = rand() % snd_unicorn_clicks.size();
                                     snd_unicorn_clicks[new_unicorn_click_idx]->play();
                                     last_unicorn_click_idx = new_unicorn_click_idx;
+
+                                    // Счетчик для пасхалки
+                                    if (*selected_uid == last_clicked_uid) {
+                                        counter_click++;
+                                        if (counter_click == 10) {
+                                            snd_secret.play();
+                                            // Здесь останавливаем предыдущую реплику, чтобы не мешала пасхалке
+                                            snd_unicorn_clicks[new_unicorn_click_idx]->stop();
+                                            counter_click = 0;
+                                        }
+                                    }
+                                    else {
+                                        last_clicked_uid = *selected_uid;
+                                        counter_click = 0;
+                                    }
+
                                 }
                             }
                     }
