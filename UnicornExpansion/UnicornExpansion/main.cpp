@@ -24,6 +24,7 @@
 #include "ComponentResource.h"
 #include "ComponentHarvester.h"
 #include "TreeBuilder.h"
+#include "CppTools.h"
 
 #pragma comment (lib, "sfml-graphics.lib")
 #pragma comment (lib, "sfml-system.lib")
@@ -274,18 +275,14 @@ int main(int argc, char * argv[])
     addUnitSprite("monster3", "images\\monster3.png");
     addUnitSprite("lair", "images\\lair.png");
     
-    // Здесь можно использовать автоподгрузку, если есть запрос от UI на спрайт
-    addActionSprite("build", "images\\action_build.png");
-    addActionSprite("upgrade_hp", "images\\action_upgrade_hp.png");
-    addActionSprite("upgrade_count", "images\\action_upgrade_count.png");
-    addActionSprite("make_harvester", "images\\action_make_harvester.png");
-    addActionSprite("make_healer", "images\\action_make_healer.png");
-    addActionSprite("make_attacker", "images\\action_make_attacker.png");
-    addActionSprite("make_radar", "images\\action_make_radar.png");
-    addActionSprite("do_radar", "images\\action_do_radar.png");
-    addActionSprite("upgrade_harvester", "images\\action_upgrade_harvester.png");
-    addActionSprite("upgrade_attacker", "images\\action_upgrade_attacker.png");
-    addActionSprite("upgrade_healer", "images\\action_upgrade_healer.png");
+    // Используется загрузка каталога в целом, можно вынести как процедуру
+    std::string pathload = "images\\actions\\";
+    for (auto & filename : std::filesystem::directory_iterator(pathload)) {
+        auto str = filename.path().string();
+        replaceFirstString(str, pathload, "");
+        replaceFirstString(str, ".png", "");
+        addActionSprite(str, filename.path().string());
+    }
 
     view.setSize({ VIEW_SIZE_X, VIEW_SIZE_Y });
     view.setViewport(sf::FloatRect({0.0,0.0},{1.0,0.75}));
