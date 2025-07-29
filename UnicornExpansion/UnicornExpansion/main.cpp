@@ -24,6 +24,7 @@
 #include "ComponentResource.h"
 #include "ComponentHarvester.h"
 #include "SubTerrainBuilder.h"
+#include "FogBuilder.h"
 #include "CppTools.h"
 
 #pragma comment (lib, "sfml-graphics.lib")
@@ -58,6 +59,7 @@ MiniMap minimap;
 Texts texts;
 Game game;
 SubTerrainBuilder stbuilder;
+FogBuilder fogbuilder;
 // Номер выделенного юнита
 std::optional<int> selected_uid;
 int started_galop_uid;
@@ -213,6 +215,7 @@ void loadGame(int leveln) {
     updateMiniMap(game);
 
     stbuilder.updateByGame(game);
+    fogbuilder.initByGame(game);
 }
 
 int main(int argc, char * argv[])
@@ -733,6 +736,8 @@ while (window.isOpen())
     if (auto newvp = game.getOnceNewViewPoint())
         view.setCenter({ (float)(*newvp).x * BLOCKW, (float)(*newvp).y * BLOCKH });
 
+    fogbuilder.updateByGame(game);
+
     if (!modeendgame)
         if (game.isGameOver())
             if (!counter_endgame.isActive()) counter_endgame.upset(2.0f);
@@ -818,6 +823,15 @@ while (window.isOpen())
             // Лазеры выводим после всего
             for (int i = 0; i < game.getLaserCount(); i++)
                 drawLaserFromTo(window, spr_laz, game.getLaser(i));
+
+            // Фрагменты тумана в конце
+            for (int i = 0; i < game.getWidth(); i++)
+                for (int j = 0; j < game.getHeight(); j++)
+                    if (!game.isFog(i, j))
+                        if (auto sprfog = fogbuilder.getFogSprite(i, j)) {
+                            (*sprfog).setPosition(sf::Vector2f(i* BLOCKW, j* BLOCKH));
+                            window.draw(*sprfog);
+                        }
 
             if (selected_uid) {
                 if (game.getUnitByUID(*selected_uid).isComponent<ComponentResource>())

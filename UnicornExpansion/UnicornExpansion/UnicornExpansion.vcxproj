@@ -163,6 +163,7 @@
     <ClCompile Include="Countdown.cpp" />
     <ClCompile Include="CppTools.cpp" />
     <ClCompile Include="FinderByBestDistance.cpp" />
+    <ClCompile Include="FogBuilder.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameUnit.cpp" />
     <ClCompile Include="main.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="Countdown.h" />
     <ClInclude Include="CppTools.h" />
     <ClInclude Include="FinderByBestDistance.h" />
+    <ClInclude Include="FogBuilder.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameUnit.h" />
     <ClInclude Include="MiniMap.h" />
