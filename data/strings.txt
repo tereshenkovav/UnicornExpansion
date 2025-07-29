@@ -1,4 +1,4 @@
-Text_GameCaption=Единороги: Экспансия
+Text_GameCaption=Экспансия единорогов
 Text_Energy=Магия:
 Text_UnicornCount=Пони:
 Msg_NotEnoughEnergy=Недостаточно магии
