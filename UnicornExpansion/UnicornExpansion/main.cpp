@@ -68,6 +68,7 @@ std::optional<Animation> current_teleportation_effect;
 bool mouseholdedonmap = false;
 int counter_click = 0;
 int last_clicked_uid = -1;
+float globalt = 0.0f;
 
 // Переключатели сцен
 enum class Scene { Menu, Task, Game };
@@ -156,17 +157,17 @@ float getScale05per20() {
 }
 
 // Рисование лазера и его анимации в точке приложения
-void drawLaserFromTo(sf::RenderWindow& window, sf::RectangleShape& laser, const Laser& laz) {
+void drawLaserFromTo(sf::RenderWindow& window, sf::Sprite spr_laz, const Laser& laz) {
+    sf::Vector2f dir = laz.pos2 - laz.pos1;
+    spr_laz.setColor(SfmlTools::getColorAsBright(color_lasers[laz.type],0.9+0.2*sin(4.0f*M_PI*globalt)));
+    spr_laz.setPosition(laz.pos1);
+    spr_laz.setRotation(dir.angle());
+    spr_laz.setScale({ dir.length()/128.0f,1.0f });
+    window.draw(spr_laz);
+
     anim_lasers[laz.type]->setColor(color_lasers[laz.type]);
     anim_lasers[laz.type]->setPosition(laz.pos2);
     window.draw(*anim_lasers[laz.type]);
-
-    sf::Vector2f dir = laz.pos2 - laz.pos1;
-    laser.setFillColor(color_lasers[laz.type]);
-    laser.setSize({ dir.length(), 3 });
-    laser.setPosition(laz.pos1);
-    laser.setRotation(dir.angle());
-    window.draw(laser);
 }
 
 void fixCameraPosition() {
@@ -228,8 +229,11 @@ int main(int argc, char * argv[])
     
     texts.loadFromFile("strings.txt");
 
+    sf::ContextSettings settings;
+    settings.antiAliasingLevel = 8;
+
     // Создание окна
-    sf::RenderWindow window(sf::VideoMode({ 1024, 768 }), texts.getSfmlStr("Text_GameCaption"),sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode({ 1024, 768 }), texts.getSfmlStr("Text_GameCaption"),sf::Style::Close,sf::State::Windowed,settings);
     window.setMouseCursorVisible(false);
     window.setVerticalSyncEnabled(true);
     window.setIcon(sf::Image("images\\icon.png"));
@@ -337,8 +341,6 @@ rect_progress_border.setPosition({ 1024 - 400 + 8, 576 + 132 });
 rect_progress_border.setSize({ 400-16, 32 });
 rect_progress_border.setFillColor(sf::Color::Transparent);
 
-sf::RectangleShape laser;
-
 sf::RectangleShape rect_progress;
 rect_progress.setOutlineThickness(0);
 rect_progress.setPosition(rect_progress_border.getPosition());
@@ -441,6 +443,10 @@ anim_lasers[LaserType::Heal] = &aura;
 Animation teleportation("images\\teleportation.png", 96, 96, 9, 9);
 teleportation.setOrigin({ 48, 48 });
 
+const sf::Texture texture_laz("images\\laser.png");
+sf::Sprite spr_laz(texture_laz);
+spr_laz.setOrigin({ 0,3 });
+
 // Шейдеры яркости и обесцвечивания
 sf::Shader shader_gray;
 sf::Shader shader_bright;
@@ -470,6 +476,7 @@ while (window.isOpen())
 
     float dt = clock.getElapsedTime().asSeconds();
     clock.restart();
+    globalt += dt;
 
     // Обработка сцены меню
     if (scene == Scene::Menu) {
@@ -810,7 +817,7 @@ while (window.isOpen())
 
             // Лазеры выводим после всего
             for (int i = 0; i < game.getLaserCount(); i++)
-                drawLaserFromTo(window, laser, game.getLaser(i));
+                drawLaserFromTo(window, spr_laz, game.getLaser(i));
 
             if (selected_uid) {
                 if (game.getUnitByUID(*selected_uid).isComponent<ComponentResource>())

@@ -385,9 +385,9 @@ void Game::update(float dt)
 		if (units[i].isComponent<ComponentUnicorn>()) clearFogAt(units[i].getXY(), 6);
 	}
 
-	// ¬ременна€ поправка дл€ позиции лазера
+	// ¬ременна€ поправка дл€ позиции лазера у единорога
 	sf::Vector2f laserfixleft{ -23, -25 };
-	sf::Vector2f laserfixright{ 23, -25 };
+	sf::Vector2f laserfixright{ 21, -25 };
 
 	// ѕостроение лазеров дл€ рендера и действи€ с ними
 	lasers.clear();
