@@ -17,12 +17,13 @@ ComponentResource.cpp ^
 ComponentUnicorn.cpp ^
 Countdown.cpp ^
 CppTools.cpp ^
-TreeBuilder.cpp ^
 FinderByBestDistance.cpp ^
+FogBuilder.cpp ^
 Game.cpp ^
 GameUnit.cpp ^
 MiniMap.cpp ^
 SfmlTools.cpp ^
+SubTerrainBuilder.cpp ^
 Texts.cpp ^
 UnitComponent.cpp ^
 UnitFactory.cpp ^
