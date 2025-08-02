@@ -327,7 +327,7 @@ int main(int argc, char * argv[])
     
     sf::Text text_progress(font, "", 24);
     text_progress.setFillColor(sf::Color::White);
-    text_progress.setPosition({ 1024 - 400 / 2 - 16, 576 + 132 });
+    text_progress.setPosition({ 1024 - 400 / 2 - 16, VIEW_SIZE_Y + 132 });
 
     sf::Text text_gameover(font, "", 24);
     text_gameover.setPosition({ 512 - 80, 270 });
@@ -340,7 +340,7 @@ int main(int argc, char * argv[])
     sf::RectangleShape rect_progress_border;
 rect_progress_border.setOutlineThickness(2);
 rect_progress_border.setOutlineColor(sf::Color::White);
-rect_progress_border.setPosition({ 1024 - 400 + 8, 576 + 132 });
+rect_progress_border.setPosition({ 1024 - 400 + 8, VIEW_SIZE_Y + 132 });
 rect_progress_border.setSize({ 400-16, 32 });
 rect_progress_border.setFillColor(sf::Color::Transparent);
 
@@ -537,7 +537,7 @@ while (window.isOpen())
     // Далее строго сцена игры
     if (scene == Scene::Game) {
     // Дублирование с определением при нажатии
-    if (mousePos.x > 256) {
+    if (mousePos.y < VIEW_SIZE_Y) {
         window.setView(view);
         sf::Vector2f worldpos = window.mapPixelToCoords(mousePos);
         window.setView(window.getDefaultView());
@@ -586,7 +586,7 @@ while (window.isOpen())
             if (const auto* mousePressed = event->getIf<sf::Event::MouseButtonPressed>())
             {
                 // Зона игры
-                if (mousePressed->position.y < 576.0f) {
+                if (mousePressed->position.y < VIEW_SIZE_Y) {
                     window.setView(view);
                     sf::Vector2f worldpos = window.mapPixelToCoords(mousePressed->position);
                     window.setView(window.getDefaultView());
