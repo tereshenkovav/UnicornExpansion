@@ -26,6 +26,7 @@
 #include "SubTerrainBuilder.h"
 #include "FogBuilder.h"
 #include "CppTools.h"
+#include "ClickerCounter.h"
 
 #pragma comment (lib, "sfml-graphics.lib")
 #pragma comment (lib, "sfml-system.lib")
@@ -68,8 +69,6 @@ int tekscale;
 sf::RectangleShape rect_health;
 std::optional<Animation> current_teleportation_effect;
 bool mouseholdedonmap = false;
-int counter_click = 0;
-int last_clicked_uid = -1;
 float globalt = 0.0f;
 
 // Переключатели сцен
@@ -373,13 +372,14 @@ effect_fire.play();
 sf::SoundBuffer effect_start_buffer("sounds\\start.ogg");
 sf::Sound effect_start(effect_start_buffer);
 
-sf::SoundBuffer secret_buffer("sounds\\secret.ogg");
-sf::Sound snd_secret(secret_buffer);
-
 for (int i = 0; i <= 2; i++) {
     soundbuffers.push_back(std::make_unique<sf::SoundBuffer>("sounds\\unicorn_click_"+std::to_string(i)+".ogg"));
     snd_unicorn_clicks.push_back(std::make_unique<sf::Sound>(*soundbuffers.back()));
 }
+soundbuffers.push_back(std::make_unique<sf::SoundBuffer>("sounds\\secret.ogg"));
+snd_unicorn_clicks.push_back(std::make_unique<sf::Sound>(*soundbuffers.back()));
+
+ClickerCounter clickcounter(snd_unicorn_clicks.size());
 
 soundbuffers.push_back(std::make_unique<sf::SoundBuffer>("sounds\\teleport.ogg"));
 snd_audioeffects[AudioEffect::Teleport] = std::make_unique<sf::Sound>(*soundbuffers.back());
@@ -390,8 +390,6 @@ soundbuffers.push_back(std::make_unique<sf::SoundBuffer>("sounds\\finish_researc
 snd_audioeffects[AudioEffect::FinishResearch] = std::make_unique<sf::Sound>(*soundbuffers.back());
 soundbuffers.push_back(std::make_unique<sf::SoundBuffer>("sounds\\finish_upgrade.ogg"));
 snd_audioeffects[AudioEffect::FinishUpgrade] = std::make_unique<sf::Sound>(*soundbuffers.back());
-
-int last_unicorn_click_idx = -1;
 
 addTerrainSprite(Terrain::Ground, "images\\terrains\\ground.png");
 addTerrainSprite(Terrain::Water, "images\\terrains\\water.png");
@@ -598,30 +596,8 @@ while (window.isOpen())
                         if (game.findUnitAt(worldpos.x, worldpos.y, &uid))
                             if (!game.isFog(game.getUnitByUID(uid).getXY().x, game.getUnitByUID(uid).getXY().y)) {
                                 selected_uid = uid;
-                                if (game.getUnitByUID(*selected_uid).isComponent<ComponentUnicorn>()) {
-                                    // Запуск для единорога новой реплики, не совпадающей со старой
-                                    int new_unicorn_click_idx = last_unicorn_click_idx;
-                                    while (new_unicorn_click_idx == last_unicorn_click_idx)
-                                        new_unicorn_click_idx = rand() % snd_unicorn_clicks.size();
-                                    snd_unicorn_clicks[new_unicorn_click_idx]->play();
-                                    last_unicorn_click_idx = new_unicorn_click_idx;
-
-                                    // Счетчик для пасхалки
-                                    if (*selected_uid == last_clicked_uid) {
-                                        counter_click++;
-                                        if (counter_click == 10) {
-                                            snd_secret.play();
-                                            // Здесь останавливаем предыдущую реплику, чтобы не мешала пасхалке
-                                            snd_unicorn_clicks[new_unicorn_click_idx]->stop();
-                                            counter_click = 0;
-                                        }
-                                    }
-                                    else {
-                                        last_clicked_uid = *selected_uid;
-                                        counter_click = 0;
-                                    }
-
-                                }
+                                if (game.getUnitByUID(*selected_uid).isComponent<ComponentUnicorn>())
+                                    snd_unicorn_clicks[clickcounter.getNextSoundIdx(*selected_uid)]->play();
                             }
                     }
 
