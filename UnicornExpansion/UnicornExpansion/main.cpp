@@ -333,7 +333,7 @@ int main(int argc, char * argv[])
 
     // Прямоугольники интерфейса
     sf::RectangleShape selector;
-    selector.setOutlineThickness(3);
+    selector.setOutlineThickness(2);
     selector.setFillColor(sf::Color::Transparent);
     
     sf::RectangleShape rect_progress_border;
