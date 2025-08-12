@@ -404,6 +404,13 @@ void Game::update(float dt)
 		if (units[i].isComponent<ComponentUnicorn>()) clearFogAt(units[i].getXY(), 6);
 	}
 
+	// ќбновление урона от грибов дл€ единорогов
+	for (int i = 0; i < units.size(); i++)
+		if (units[i].isComponent<ComponentUnicorn>()) {
+			int stage = mushrooms.getMushroomStage(units[i].getXY().x, units[i].getXY().y);
+			if (stage > 0) units[i].decHealth(stage * dt);
+		}
+
 	mushrooms.update(dt);
 
 	// ¬ременна€ поправка дл€ позиции лазера у единорога
