@@ -17,7 +17,7 @@ function initMap() {
 }
 
 function isVictory() {
-  return false ;
+  return !game.isMushroomsExist() ;
 }
 
 function isDefeat() {

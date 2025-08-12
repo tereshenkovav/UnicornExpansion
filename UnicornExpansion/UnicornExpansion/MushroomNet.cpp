@@ -52,6 +52,14 @@ int MushroomNet::getMushroomStage(int x, int y) const
 	return net[x][y].values.size();
 }
 
+bool MushroomNet::isMushroomsExist() const
+{
+	for (int i = 0; i < width; i++)
+		for (int j = 0; j < height; j++)
+			if (net[i][j].values.size() > 0) return true;
+	return false;
+}
+
 void MushroomNet::update(float dt)
 {
 	for (int i = 0; i < width; i++)

@@ -344,6 +344,11 @@ bool Game::isMushroomsAt(int x, int y) const
 	return mushrooms.getMushroomStage(x, y) > 0;
 }
 
+bool Game::isMushroomsExist() const
+{
+	return mushrooms.isMushroomsExist();
+}
+
 void Game::addComponentToUnitByUID(int uid, UnitComponent* component)
 {
 	for (int i = 0; i < units.size(); i++)

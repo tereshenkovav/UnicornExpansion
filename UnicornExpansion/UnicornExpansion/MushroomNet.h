@@ -31,6 +31,7 @@ public:
 	void initByGame(Game * game);
 	const std::vector<Mushroom> & getMushrooms(int x, int y) const;
 	int getMushroomStage(int x, int y) const;
+	bool isMushroomsExist() const;
 	void update(float dt);
 	void setMushrooms(int x, int y, int cnt);
 	void attackMushrooms(int x, int y, float value);

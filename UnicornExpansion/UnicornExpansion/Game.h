@@ -119,6 +119,7 @@ public:
 	std::vector<AudioEffect> getOnceAudioEffects();
 	const std::vector<Mushroom> & getMushrooms(int x, int y) const;
 	bool isMushroomsAt(int x, int y) const;
+	bool isMushroomsExist() const;
 	// Обновление игры
 	void update(float dt);
 	// Шаблонный метод - поиск юнитов по компонентам
