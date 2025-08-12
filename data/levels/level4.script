@@ -1,0 +1,27 @@
+var game ;
+
+function initMap() {
+  game = new Game() ;
+
+  game.addPortal(2,15) ;
+  game.addCrystal(18,5,450) ;
+  game.addCrystal(8,15,380) ;
+  game.addUnicorn(5,14) ;
+
+  game.incEnergy(300) ;
+  game.setTaskText("Очистите зараженную местноть") ;
+
+  game.setNewViewPoint(9,14) ;
+
+  return true ;
+}
+
+function isVictory() {
+  return false ;
+}
+
+function isDefeat() {
+  if ((game.getCountByComponent("Unicorn")==0)&&
+      (game.getCountByComponent("Portal")==0)) { return true ; }
+  return false ;
+}

@@ -58,6 +58,9 @@ bool Game::loadMap(const std::string& filename) {
 	if (!isStringNumber(line)) return false;
 	height = std::stoi(line);
 		
+	// Необходимо, чтобы сеть грибов была инициализирована до выполнения скриптов и до установки территории
+	mushrooms.initByGame(this);
+
 	map.resize(width);
 	for (int j = 0; j < width; j++)
 		map[j].resize(height);
@@ -67,9 +70,15 @@ bool Game::loadMap(const std::string& filename) {
 		line = prepLine(line);
 
 		for (int i = 0; i < width; i++)
-			if (i < line.length())
-				if (mapchars.count(line[i]) > 0)
-					map[i][j] = mapchars[line[i]];
+			if (i < line.length()) {
+				char c = line[i];
+				if ((c >= '1') && (c <= '0' + MAX_MUSHROOMS)) {
+					mushrooms.setMushrooms(i, j, c - '0');
+					c = '+';
+				}
+				if (mapchars.count(c) > 0)
+					map[i][j] = mapchars[c];
+			}
 	}
 	
 	fin.close();
@@ -81,7 +90,7 @@ bool Game::loadMap(const std::string& filename) {
 		for (int i = 0; i < height; i++)
 			fog[j][i] = !clearfog;
 	}
-
+		
 	return true;
 }
 
@@ -324,6 +333,16 @@ std::vector<AudioEffect> Game::getOnceAudioEffects()
 	return buf;
 }
 
+const std::vector<Mushroom>& Game::getMushrooms(int x, int y) const
+{
+	return mushrooms.getMushrooms(x, y);
+}
+
+bool Game::isMushroomsAt(int x, int y) const
+{
+	return mushrooms.getMushroomStage(x, y) > 0;
+}
+
 void Game::addComponentToUnitByUID(int uid, UnitComponent* component)
 {
 	for (int i = 0; i < units.size(); i++)
@@ -384,6 +403,8 @@ void Game::update(float dt)
 		// Разгон тумана войны
 		if (units[i].isComponent<ComponentUnicorn>()) clearFogAt(units[i].getXY(), 6);
 	}
+
+	mushrooms.update(dt);
 
 	// Временная поправка для позиции лазера у единорога
 	sf::Vector2f laserfixleft{ -23, -25 };

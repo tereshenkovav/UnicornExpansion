@@ -47,6 +47,7 @@ std::map<std::string, std::unique_ptr<sf::Sprite>> spr_units;
 std::map<std::string, std::unique_ptr<sf::Sprite>> spr_icons;
 std::map<std::string, std::unique_ptr<sf::Sprite>> spr_actions;
 std::map<Terrain, std::unique_ptr<sf::Sprite>> spr_terrains;
+std::vector<std::unique_ptr<sf::Sprite>> spr_mushrooms;
 std::map<Terrain, sf::Color> color_terrains;
 std::map<LaserType, sf::Color> color_lasers;
 std::map<LaserType, Animation*> anim_lasers;
@@ -114,9 +115,11 @@ void updateMiniMap(const Game & game) {
         for (int j = 0; j < game.getHeight(); j++) {
             if (game.isFog(i, j))
                 minimap.setCellColor(i, j, sf::Color::Black);
-            else
-                if (color_terrains.count(game.getMap(i, j)) > 0)
-                    minimap.setCellColor(i, j, color_terrains[game.getMap(i, j)]);
+            else {
+                if (color_terrains.count(game.getMap(i, j)) > 0) minimap.setCellColor(i, j, color_terrains[game.getMap(i, j)]);
+                // Затемнение грибами, только рельефа
+                if (game.isMushroomsAt(i, j)) minimap.addCellColor(i, j, sf::Color{ 160,56,255,192 });
+            }
         }
 
     // Работаем со всеми юнитами, без деления на свои и чужие
@@ -215,10 +218,12 @@ void loadGame(int leveln) {
 
     stbuilder.updateByGame(game);
     fogbuilder.initByGame(game);
+
 }
 
 int main(int argc, char * argv[])
 {
+    srand(time(NULL));
     std::string exedir = ".";
     const size_t last_slash_idx = std::string(argv[0]).rfind('\\');
     if (std::string::npos != last_slash_idx) exedir = std::string(argv[0]).substr(0, last_slash_idx);
@@ -293,6 +298,13 @@ int main(int argc, char * argv[])
         replaceFirstString(str, pathload, "");
         replaceFirstString(str, ".png", "");
         addActionSprite(str, filename.path().string());
+    }
+
+    // Используется загрузка каталога в целом, можно вынести как процедуру
+    pathload = "images\\mushrooms\\";
+    for (auto& filename : std::filesystem::directory_iterator(pathload)) {
+        textures.push_back(std::make_unique<sf::Texture>(filename));
+        spr_mushrooms.push_back(std::make_unique<sf::Sprite>(*textures.back()));
     }
 
     view.setSize({ VIEW_SIZE_X, VIEW_SIZE_Y });
@@ -466,7 +478,7 @@ scene = Scene::Menu;
 if (std::filesystem::exists(exedir + "\\developer.json"))
     game.loadDeveloperConfig(exedir + "\\developer.json");
 
-const int LEVEL_COUNT = 4;
+const int LEVEL_COUNT = 5;
 
 // Крутим цикл игры
 while (window.isOpen())
@@ -500,7 +512,7 @@ while (window.isOpen())
             {
                 textback.setSize({ 240, 40 });
                 for (int i = 0; i < LEVEL_COUNT; i++) {
-                    textback.setPosition({ 512 - 100, (float)(350 + 64 * i) });
+                    textback.setPosition({ 512 - 100, (float)(300 + 64 * i) });
                     if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) {
                         // Для выбора игры - переходим на сцену задания и загружаем игру
                         scene = Scene::Task;
@@ -713,7 +725,7 @@ while (window.isOpen())
         view.setCenter({ (float)(*newvp).x * BLOCKW, (float)(*newvp).y * BLOCKH });
 
     fogbuilder.updateByGame(game);
-
+    
     if (!modeendgame)
         if (game.isGameOver())
             if (!counter_endgame.isActive()) counter_endgame.upset(2.0f);
@@ -727,18 +739,18 @@ while (window.isOpen())
 
             textback.setSize({ 240, 40 });
             for (int i = 0; i < LEVEL_COUNT; i++) {
-                textback.setPosition({ 512-120, (float)(350 + 64 * i) });
+                textback.setPosition({ 512-120, (float)(300 + 64 * i) });
                 window.draw(textback);
 
                 text_info.setString(texts.getSfmlStr("Name_Level_" + std::to_string(i)));
-                text_info.setPosition({ 512 - text_info.getLocalBounds().size.x/2, (float)(350 + 64 * i) + 8 });
+                text_info.setPosition({ 512 - text_info.getLocalBounds().size.x/2, (float)(300 + 64 * i) + 8 });
                 window.draw(text_info);
             }
-            textback.setPosition({ 512 - 120, (float)(350 + 64 * LEVEL_COUNT) });
+            textback.setPosition({ 512 - 120, (float)(300 + 64 * LEVEL_COUNT) });
             window.draw(textback);
 
             text_info.setString(texts.getSfmlStr("Text_Quit"));
-            text_info.setPosition({ 512 - text_info.getLocalBounds().size.x / 2, (float)(350 + 64 * LEVEL_COUNT) + 8 });
+            text_info.setPosition({ 512 - text_info.getLocalBounds().size.x / 2, (float)(300 + 64 * LEVEL_COUNT) + 8 });
             window.draw(text_info);
         }
         // Для сцены задачи и игры - вывод территорий
@@ -765,6 +777,17 @@ while (window.isOpen())
                             if (spr_terrains.count(game.getMap(i, j)) > 0) {
                                 spr_terrains[game.getMap(i, j)]->setPosition(sf::Vector2f(i * BLOCKW, j * BLOCKH));
                                 window.draw(*spr_terrains[game.getMap(i, j)]);
+                            }
+                        }
+
+                // Вывод грибов
+                for (int i = 0; i < game.getWidth(); i++)
+                    for (int j = 0; j < game.getHeight(); j++)
+                        if (!game.isFog(i, j)) {
+                            auto & mset = game.getMushrooms(i, j);
+                            for (auto & m : mset) {
+                                spr_mushrooms[m.id]->setPosition(sf::Vector2f(i* BLOCKW + m.x, j* BLOCKH + m.y ));
+                                window.draw(*spr_mushrooms[m.id]);
                             }
                         }
 

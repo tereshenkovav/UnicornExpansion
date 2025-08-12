@@ -14,3 +14,13 @@ sf::Color SfmlTools::getColorAsBright(const sf::Color& color, float bright)
     c.a = color.a;
     return c;
 }
+
+sf::Color SfmlTools::appendColorWithAplha(const sf::Color& c1, const sf::Color& c2)
+{
+    sf::Color cnew;
+    float alpha = c2.a / 255.0f;
+    cnew.r = alpha * c2.r + (1.0f - alpha) * c1.r;
+    cnew.g = alpha * c2.g + (1.0f - alpha) * c1.g;
+    cnew.b = alpha * c2.b + (1.0f - alpha) * c1.b;
+    return cnew;
+}

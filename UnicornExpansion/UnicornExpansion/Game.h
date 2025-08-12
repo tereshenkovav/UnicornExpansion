@@ -10,6 +10,7 @@
 #include <zetscript.h>
 #include <json/json.h>
 #include <optional>
+#include "MushroomNet.h"
 
 // Перечисления территорий и типов лазера
 enum class Terrain { Ground, Forest, Water, Road };
@@ -40,6 +41,7 @@ private:
 	Json::Value jsonEnemys;
 	Json::Value jsonDevConfig;
 	std::string tasktext;
+	MushroomNet mushrooms;
 	float timerleft;
 	bool iswin;
 	bool isfail;
@@ -49,9 +51,9 @@ private:
 	std::function<bool()> funcdefeat;
 	std::optional<sf::Vector2f> teleportation_effect;
 	std::vector<AudioEffect> audioeffects;
-	static bool canWalkOnTerrain(Terrain terr);
 public:
 	Game();
+	static bool canWalkOnTerrain(Terrain terr);
 	// Загрузка данных из файлов
 	bool loadMap(const std::string& filename);
 	bool loadConfigs();
@@ -115,6 +117,8 @@ public:
 	void addAudioEffect(AudioEffect effect);
 	std::optional<sf::Vector2f> getOnceTeleportationEffect();
 	std::vector<AudioEffect> getOnceAudioEffects();
+	const std::vector<Mushroom> & getMushrooms(int x, int y) const;
+	bool isMushroomsAt(int x, int y) const;
 	// Обновление игры
 	void update(float dt);
 	// Шаблонный метод - поиск юнитов по компонентам

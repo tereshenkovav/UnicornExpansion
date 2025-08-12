@@ -34,6 +34,7 @@ public:
 	void setWindowSize(int windoww, int windowh);
 	// Установить цвет точки карты
 	void setCellColor(int i, int j, const sf::Color & c);
+	void addCellColor(int i, int j, const sf::Color& c);
 	// Установка центра камеры
 	void setCenter(int cx, int cy);
 	sf::Vector2f getWorldPosByMapPos(float mx, float my) const;

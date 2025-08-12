@@ -169,6 +169,7 @@
     <ClCompile Include="GameUnit.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MiniMap.cpp" />
+    <ClCompile Include="MushroomNet.cpp" />
     <ClCompile Include="SfmlTools.cpp" />
     <ClCompile Include="Texts.cpp" />
     <ClCompile Include="SubTerrainBuilder.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameUnit.h" />
     <ClInclude Include="MiniMap.h" />
+    <ClInclude Include="MushroomNet.h" />
     <ClInclude Include="SfmlTools.h" />
     <ClInclude Include="Texts.h" />
     <ClInclude Include="SubTerrainBuilder.h" />

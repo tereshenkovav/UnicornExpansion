@@ -11,5 +11,7 @@ public:
 	static sf::String utf2text(const std::string& str);
 	// Получение цвета с изменением яркости от 0 и выше
 	static sf::Color getColorAsBright(const sf::Color& color, float bright);
+	// Сложение цвета 1 и 2 с учетом альфы у 2
+	static sf::Color appendColorWithAplha(const sf::Color& c1, const sf::Color& c2);
 };
 
