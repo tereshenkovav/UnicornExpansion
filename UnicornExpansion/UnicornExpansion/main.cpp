@@ -522,7 +522,7 @@ while (window.isOpen())
                         loadGame(i);
                     }
                 }
-                textback.setPosition({ 512 - 100, (float)(350 + 64 * LEVEL_COUNT) });
+                textback.setPosition({ 512 - 100, (float)(300 + 64 * LEVEL_COUNT) });
                 if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) window.close();
             }
         }
