@@ -1,9 +1,11 @@
 #include "MushroomNet.h"
 #include "Game.h"
 
+// Часть параметров надо вынести в конфиг
 const int MUSHROOM_TYPES = 6;
 const int SHIFT = 8;
 const int PERIODGROWN = 20.0f;
+const float HEALTH = 10.0f;
 
 float genPeriod() {
 	return PERIODGROWN + 0.05f * (rand() % (10 * PERIODGROWN));
@@ -18,7 +20,7 @@ void MushroomNet::growMushrooms(int x, int y)
 		allposes.erase(std::remove(allposes.begin(), allposes.end(), m.pos), allposes.end());
 	int n = allposes[rand() % allposes.size()];
 	Mushroom m{ 32 * (n / 2) + (rand() % (2 * SHIFT + 1)) - SHIFT, 
-		32 * (n % 2) + (rand() % (2*SHIFT+1)) - SHIFT, rand() % MUSHROOM_TYPES, n };
+		32 * (n % 2) + (rand() % (2*SHIFT+1)) - SHIFT, rand() % MUSHROOM_TYPES, n, HEALTH };
 	net[x][y].values.push_back(m);
 }
 
@@ -72,6 +74,17 @@ void MushroomNet::update(float dt)
 					growMushrooms(i, j);
 			}
 		}
+
+	for (int i = 0; i < width; i++)
+		for (int j = 0; j < height; j++) {
+			int k = 0;
+			while (k < net[i][j].values.size()) {
+				if (net[i][j].values[k].health <= 0)
+					net[i][j].values.erase(net[i][j].values.begin() + k);
+				else
+					k++;
+			}
+		}
 }
 
 void MushroomNet::setMushrooms(int x, int y, int cnt)
@@ -79,4 +92,11 @@ void MushroomNet::setMushrooms(int x, int y, int cnt)
 	net[x][y].values.clear();
 	for (int i = 0; i < cnt; i++)
 		growMushrooms(x, y);
+}
+
+void MushroomNet::attackMushrooms(int x, int y, float value)
+{
+	if (net[x][y].values.size() == 0) return;
+
+	net[x][y].values[0].health -= value;
 }

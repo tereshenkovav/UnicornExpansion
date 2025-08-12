@@ -9,6 +9,10 @@
      "UpgradeStep": 5,
      "Distance": 200
    },
+  "Detoxer": {
+     "Value": 15,
+     "Distance": 200
+   },
   "Healer": {
      "Value": 7,
      "UpgradeStep": 3,

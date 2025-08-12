@@ -4,6 +4,7 @@
 #include "ComponentAttacker.h"
 #include "ComponentHealer.h"
 #include "ComponentRadar.h"
+#include "ComponentDetoxer.h"
 
 std::vector<UnitAction> ComponentUnicorn::getActions() const
 {
@@ -20,6 +21,9 @@ std::vector<UnitAction> ComponentUnicorn::getActions() const
 	if (!game->getUnitByUID(unit_id).isComponent<ComponentRadar>())
 		actions.push_back({ "make_radar", "MakeRadar",
 			game->getConfigAction()["MakeRadar"]["Price"].asInt(), game->getConfigAction()["MakeRadar"]["Time"].asInt(), (UnitComponent*)this });
+	if (!game->getUnitByUID(unit_id).isComponent<ComponentDetoxer>())
+		actions.push_back({ "make_detoxer", "MakeDetoxer",
+			game->getConfigAction()["MakeDetoxer"]["Price"].asInt(), game->getConfigAction()["MakeDetoxer"]["Time"].asInt(), (UnitComponent*)this });
 	return actions;
 }
 
@@ -42,6 +46,11 @@ bool ComponentUnicorn::applyAction(const UnitAction& action)
 	}
 	if (action.code == "make_radar") {
 		game->addComponentToUnitByUID(unit_id, new ComponentRadar(game));
+		game->addAudioEffect(AudioEffect::FinishResearch);
+		return true;
+	}
+	if (action.code == "make_detoxer") {
+		game->addComponentToUnitByUID(unit_id, new ComponentDetoxer(game));
 		game->addAudioEffect(AudioEffect::FinishResearch);
 		return true;
 	}

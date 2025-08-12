@@ -14,7 +14,7 @@
 
 // Перечисления территорий и типов лазера
 enum class Terrain { Ground, Forest, Water, Road };
-enum class LaserType { Harvest, Attack, Heal };
+enum class LaserType { Harvest, Attack, Heal, Detox };
 enum class AudioEffect { Teleport, FinishTeleport, FinishResearch, FinishUpgrade };
 
 // Запись для лазера

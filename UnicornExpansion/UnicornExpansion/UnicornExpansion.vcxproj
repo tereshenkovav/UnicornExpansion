@@ -151,6 +151,7 @@
     <ClCompile Include="BusyMap.cpp" />
     <ClCompile Include="ClickerCounter.cpp" />
     <ClCompile Include="ComponentAttacker.cpp" />
+    <ClCompile Include="ComponentDetoxer.cpp" />
     <ClCompile Include="ComponentEnemy.cpp" />
     <ClCompile Include="ComponentHealer.cpp" />
     <ClCompile Include="ComponentMeleeEnemy.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="BusyMap.h" />
     <ClInclude Include="ClickerCounter.h" />
     <ClInclude Include="ComponentAttacker.h" />
+    <ClInclude Include="ComponentDetoxer.h" />
     <ClInclude Include="ComponentEnemy.h" />
     <ClInclude Include="ComponentHealer.h" />
     <ClInclude Include="ComponentMeleeEnemy.h" />

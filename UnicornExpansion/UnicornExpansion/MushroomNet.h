@@ -10,6 +10,7 @@ struct Mushroom {
 	int y;
 	int id;
 	int pos;
+	float health;
 };
 
 struct MushroomCell {
@@ -32,5 +33,6 @@ public:
 	int getMushroomStage(int x, int y) const;
 	void update(float dt);
 	void setMushrooms(int x, int y, int cnt);
+	void attackMushrooms(int x, int y, float value);
 };
 

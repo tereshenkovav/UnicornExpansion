@@ -29,6 +29,10 @@
         "Price": 30,
         "Time": 7
     },
+    "MakeDetoxer": {
+        "Price": 40,
+        "Time": 10
+    },
     "UpgradeHarvester": {
         "Price": [50, 75],
         "Time": [20, 35]

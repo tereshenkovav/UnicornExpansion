@@ -9,6 +9,7 @@
 #include "ComponentHarvester.h"
 #include "ComponentResource.h"
 #include "ComponentAttacker.h"
+#include "ComponentDetoxer.h"
 #include "ComponentHealer.h"
 #include "ComponentMeleeEnemy.h"
 #include "ComponentEnemyTarget.h"
@@ -480,6 +481,23 @@ void Game::update(float dt)
 						units[*res_idx].getView(), LaserType::Attack });
 					if (auto* meleeenemy = units[*res_idx].getComponent<ComponentMeleeEnemy>())
 						meleeenemy->setTargetToUnit(units[i].getUID());
+				}
+			}
+		}
+		if (const auto* detoxer = units[i].getComponent<ComponentDetoxer>()) {
+			if ((!units[i].isWorkingTask()) && (!units[i].isTargeted())) {
+				FinderByBestDistance finder(detoxer->getDetoxDistance(), units[i].getView());
+				// »щем грибные зоны
+				for (int x = 0; x < width; x++)
+					for (int y = 0; y < height; y++)
+						if (mushrooms.getMushroomStage(x, y) > 0)
+							finder.addPos(sf::Vector2f(BLOCKW * x + BLOCKW / 2, BLOCKH * y + BLOCKH / 2), x * 10000 + y);
+				if (auto res_idx = finder.getBestIndex()) {
+					int x = *res_idx / 10000;
+					int y = *res_idx % 10000;
+					mushrooms.attackMushrooms(x, y, detoxer->getDetoxValue()* dt);
+					lasers.push_back({ units[i].getView() + (units[i].getLastMoving() == Moving::Left ? laserfixleft : laserfixright),
+						sf::Vector2f(BLOCKW * x + BLOCKW / 2, BLOCKH * y + BLOCKH / 2), LaserType::Detox });
 				}
 			}
 		}

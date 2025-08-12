@@ -440,6 +440,7 @@ color_terrains[Terrain::Road] = sf::Color(228, 218, 171);
 color_lasers[LaserType::Harvest] = sf::Color(0, 255, 255);
 color_lasers[LaserType::Attack] = sf::Color(255, 0, 0);
 color_lasers[LaserType::Heal] = sf::Color(240, 255, 0);
+color_lasers[LaserType::Detox] = sf::Color(160, 56, 255);
 
 Animation laser_apply("images\\laser_apply.png", 30, 34, 12, 12);
 laser_apply.setOrigin({ 15,17 });
@@ -452,6 +453,7 @@ aura.play();
 anim_lasers[LaserType::Harvest] = &aura;
 anim_lasers[LaserType::Attack] = &laser_apply;
 anim_lasers[LaserType::Heal] = &aura;
+anim_lasers[LaserType::Detox] = &laser_apply;
 
 Animation teleportation("images\\teleportation.png", 96, 96, 9, 9);
 teleportation.setOrigin({ 48, 48 });
