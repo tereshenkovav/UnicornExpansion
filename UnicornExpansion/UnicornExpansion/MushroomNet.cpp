@@ -12,6 +12,18 @@ float genPeriod() {
 	return PERIODGROWN + 0.05f * (rand() % (10 * PERIODGROWN));
 }
 
+// Вместо этой упаковки и распаковки можно использовать параметризацию класса FinderByBestDistance, чтобы index был произвольного типа,
+// тогда можно будет передавать туда Mushroom вместо int
+int calcIndex(int x, int y, int p) {
+	return x * 10000 + y * 10 + p;
+}
+
+void unpackIndex(int index, int * x, int * y, int * p) {
+	*x = index / 10000;
+	*y = (index % 10000) / 10;
+	*p = (index % 10000) % 10;
+}
+
 void MushroomNet::growMushrooms(int x, int y)
 {
 	if (net[x][y].values.size() >= MAX_MUSHROOMS) return;
@@ -21,7 +33,7 @@ void MushroomNet::growMushrooms(int x, int y)
 		allposes.erase(std::remove(allposes.begin(), allposes.end(), m.pos), allposes.end());
 	int n = allposes[rand() % allposes.size()];
 	Mushroom m{ MUSHROOM_SIZE * (n / 2) + MUSHROOM_SIZE/2 + (rand() % (2 * SHIFT + 1)) - SHIFT,
-		MUSHROOM_SIZE* (n % 2) + MUSHROOM_SIZE/2 + (rand() % (2*SHIFT+1)) - SHIFT, rand() % MUSHROOM_TYPES, n, HEALTH, x * 10000 + y * 10 + n };
+		MUSHROOM_SIZE* (n % 2) + MUSHROOM_SIZE/2 + (rand() % (2 * SHIFT + 1)) - SHIFT, rand() % MUSHROOM_TYPES, n, HEALTH, calcIndex(x,y,n) };
 	net[x][y].values.push_back(m);
 }
 
@@ -105,9 +117,8 @@ void MushroomNet::setMushrooms(int x, int y, int cnt)
 
 void MushroomNet::attackMushrooms(int index, float value)
 {
-	int x = index / 10000;
-	int y = (index % 10000) / 10;
-	int pos = (index % 10000) % 10;
+	int x, y, pos;
+	unpackIndex(index, &x, &y, &pos);
 	if (net[x][y].values.size() == 0) return;
 
 	for (int i = 0; i < net[x][y].values.size(); i++)
