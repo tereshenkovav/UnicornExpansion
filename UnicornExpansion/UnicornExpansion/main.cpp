@@ -118,7 +118,9 @@ void updateMiniMap(const Game & game) {
             else {
                 if (color_terrains.count(game.getMap(i, j)) > 0) minimap.setCellColor(i, j, color_terrains[game.getMap(i, j)]);
                 // «атемнение грибами, только рельефа
-                if (game.isMushroomsAt(i, j)) minimap.addCellColor(i, j, sf::Color{ 160,56,255,192 });
+                int stage = game.getMushrooms(i, j).size();
+                // «десь зависимость прозрачности от стадии грибов - считаем, что максимальна€ плотность это 4
+                if (stage>0) minimap.addCellColor(i, j, sf::Color{ 160,56,255,64+uint8_t(32*stage)});
             }
         }
 
