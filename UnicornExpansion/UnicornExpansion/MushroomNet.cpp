@@ -50,8 +50,10 @@ void MushroomNet::initByGame(Game* game)
 	net.resize(width);
 	for (int i = 0; i < width; i++) {
 		net[i].resize(height);
-		for (int j = 0; j < height; j++)
+		for (int j = 0; j < height; j++) {
 			net[i][j].nextgrown = genPeriod();
+			net[i][j].values.clear();
+		}
 	}
 }
 
