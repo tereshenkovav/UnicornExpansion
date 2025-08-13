@@ -481,7 +481,7 @@ scene = Scene::Menu;
 if (std::filesystem::exists(exedir + "\\developer.json"))
     game.loadDeveloperConfig(exedir + "\\developer.json");
 
-const int LEVEL_COUNT = 5;
+const int LEVEL_COUNT = 6;
 
 // Крутим цикл игры
 while (window.isOpen())
@@ -499,7 +499,7 @@ while (window.isOpen())
         // Дублирование с определением в клике (с учетом доп. кнопки выхода + 1)
         textback.setSize({ 240, 40 });
         for (int i = 0; i < LEVEL_COUNT + 1; i++) {
-            textback.setPosition({ 512 - 120, (float)(350 + 64 * i) });
+            textback.setPosition({ 512 - 120, (float)(250 + 64 * i) });
             if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y }))
                 cursor = &cursor_my;
         }
@@ -515,7 +515,7 @@ while (window.isOpen())
             {
                 textback.setSize({ 240, 40 });
                 for (int i = 0; i < LEVEL_COUNT; i++) {
-                    textback.setPosition({ 512 - 100, (float)(300 + 64 * i) });
+                    textback.setPosition({ 512 - 100, (float)(250 + 64 * i) });
                     if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) {
                         // Для выбора игры - переходим на сцену задания и загружаем игру
                         scene = Scene::Task;
@@ -523,7 +523,7 @@ while (window.isOpen())
                         loadGame(i);
                     }
                 }
-                textback.setPosition({ 512 - 100, (float)(300 + 64 * LEVEL_COUNT) });
+                textback.setPosition({ 512 - 100, (float)(250 + 64 * LEVEL_COUNT) });
                 if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) window.close();
             }
         }
@@ -742,18 +742,18 @@ while (window.isOpen())
 
             textback.setSize({ 240, 40 });
             for (int i = 0; i < LEVEL_COUNT; i++) {
-                textback.setPosition({ 512-120, (float)(300 + 64 * i) });
+                textback.setPosition({ 512-120, (float)(250 + 64 * i) });
                 window.draw(textback);
 
                 text_info.setString(texts.getSfmlStr("Name_Level_" + std::to_string(i)));
-                text_info.setPosition({ 512 - text_info.getLocalBounds().size.x/2, (float)(300 + 64 * i) + 8 });
+                text_info.setPosition({ 512 - text_info.getLocalBounds().size.x/2, (float)(250 + 64 * i) + 8 });
                 window.draw(text_info);
             }
-            textback.setPosition({ 512 - 120, (float)(300 + 64 * LEVEL_COUNT) });
+            textback.setPosition({ 512 - 120, (float)(250 + 64 * LEVEL_COUNT) });
             window.draw(textback);
 
             text_info.setString(texts.getSfmlStr("Text_Quit"));
-            text_info.setPosition({ 512 - text_info.getLocalBounds().size.x / 2, (float)(300 + 64 * LEVEL_COUNT) + 8 });
+            text_info.setPosition({ 512 - text_info.getLocalBounds().size.x / 2, (float)(250 + 64 * LEVEL_COUNT) + 8 });
             window.draw(text_info);
         }
         // Для сцены задачи и игры - вывод территорий
