@@ -305,6 +305,7 @@ int main(int argc, char * argv[])
     for (auto& filename : std::filesystem::directory_iterator(pathload)) {
         textures.push_back(std::make_unique<sf::Texture>(filename));
         spr_mushrooms.push_back(std::make_unique<sf::Sprite>(*textures.back()));
+        spr_mushrooms.back()->setOrigin({ textures.back()->getSize().x / 2.0f, textures.back()->getSize().y / 2.0f });
     }
 
     view.setSize({ VIEW_SIZE_X, VIEW_SIZE_Y });
@@ -788,8 +789,8 @@ while (window.isOpen())
                         if (!game.isFog(i, j)) {
                             auto & mset = game.getMushrooms(i, j);
                             for (auto & m : mset) {
-                                spr_mushrooms[m.id]->setPosition(sf::Vector2f(i* BLOCKW + m.x, j* BLOCKH + m.y ));
-                                window.draw(*spr_mushrooms[m.id]);
+                                spr_mushrooms[m.spriteid]->setPosition(sf::Vector2f(i* BLOCKW + m.x, j* BLOCKH + m.y ));
+                                window.draw(*spr_mushrooms[m.spriteid]);
                             }
                         }
 

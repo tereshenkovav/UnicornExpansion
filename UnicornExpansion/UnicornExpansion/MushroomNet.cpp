@@ -6,6 +6,7 @@ const int MUSHROOM_TYPES = 6;
 const int SHIFT = 8;
 const int PERIODGROWN = 20.0f;
 const float HEALTH = 10.0f;
+const int MUSHROOM_SIZE = 32;
 
 float genPeriod() {
 	return PERIODGROWN + 0.05f * (rand() % (10 * PERIODGROWN));
@@ -19,8 +20,8 @@ void MushroomNet::growMushrooms(int x, int y)
 	for (auto m: net[x][y].values)
 		allposes.erase(std::remove(allposes.begin(), allposes.end(), m.pos), allposes.end());
 	int n = allposes[rand() % allposes.size()];
-	Mushroom m{ 32 * (n / 2) + (rand() % (2 * SHIFT + 1)) - SHIFT, 
-		32 * (n % 2) + (rand() % (2*SHIFT+1)) - SHIFT, rand() % MUSHROOM_TYPES, n, HEALTH };
+	Mushroom m{ MUSHROOM_SIZE * (n / 2) + MUSHROOM_SIZE/2 + (rand() % (2 * SHIFT + 1)) - SHIFT,
+		MUSHROOM_SIZE* (n % 2) + MUSHROOM_SIZE/2 + (rand() % (2*SHIFT+1)) - SHIFT, rand() % MUSHROOM_TYPES, n, HEALTH, x * 10000 + y * 10 + n };
 	net[x][y].values.push_back(m);
 }
 
@@ -102,9 +103,14 @@ void MushroomNet::setMushrooms(int x, int y, int cnt)
 		growMushrooms(x, y);
 }
 
-void MushroomNet::attackMushrooms(int x, int y, float value)
+void MushroomNet::attackMushrooms(int index, float value)
 {
+	int x = index / 10000;
+	int y = (index % 10000) / 10;
+	int pos = (index % 10000) % 10;
 	if (net[x][y].values.size() == 0) return;
 
-	net[x][y].values[0].health -= value;
+	for (int i = 0; i < net[x][y].values.size(); i++)
+		if (net[x][y].values[i].pos == pos)
+			net[x][y].values[i].health -= value;
 }

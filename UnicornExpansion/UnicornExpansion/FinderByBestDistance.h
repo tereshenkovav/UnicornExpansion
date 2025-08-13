@@ -10,6 +10,7 @@ private:
 	int min_dist;
 	float best_dist;
 	int best_idx;
+	sf::Vector2f best_pos;
 public:
 	// —оздаем с указанием максимально обрабатываемой дистанции и точки начала
 	FinderByBestDistance(int min_dist, const sf::Vector2f & start);
@@ -18,5 +19,6 @@ public:
 	void addPos(const sf::Vector2f& pos, int idx);
 	// ѕолучить индекс лучшей позиции, если есть
 	std::optional<int> getBestIndex() const;
+	std::optional<sf::Vector2f> getBestPos() const;
 };
 

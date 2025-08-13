@@ -495,14 +495,12 @@ void Game::update(float dt)
 				// »щем грибные зоны
 				for (int x = 0; x < width; x++)
 					for (int y = 0; y < height; y++)
-						if (mushrooms.getMushroomStage(x, y) > 0)
-							finder.addPos(sf::Vector2f(BLOCKW * x + BLOCKW / 2, BLOCKH * y + BLOCKH / 2), x * 10000 + y);
+						for (auto m : mushrooms.getMushrooms(x, y))
+							finder.addPos(sf::Vector2f(BLOCKW * x + m.x, BLOCKH * y + m.y), m.index);
 				if (auto res_idx = finder.getBestIndex()) {
-					int x = *res_idx / 10000;
-					int y = *res_idx % 10000;
-					mushrooms.attackMushrooms(x, y, detoxer->getDetoxValue()* dt);
+					mushrooms.attackMushrooms(*res_idx, detoxer->getDetoxValue()* dt);
 					lasers.push_back({ units[i].getView() + (units[i].getLastMoving() == Moving::Left ? laserfixleft : laserfixright),
-						sf::Vector2f(BLOCKW * x + BLOCKW / 2, BLOCKH * y + BLOCKH / 2), LaserType::Detox });
+						*finder.getBestPos(), LaserType::Detox });
 				}
 			}
 		}

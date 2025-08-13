@@ -8,9 +8,10 @@ const int MAX_MUSHROOMS = 4;
 struct Mushroom {
 	int x;
 	int y;
-	int id;
+	int spriteid;
 	int pos;
 	float health;
+	int index;
 };
 
 struct MushroomCell {
@@ -34,6 +35,6 @@ public:
 	bool isMushroomsExist() const;
 	void update(float dt);
 	void setMushrooms(int x, int y, int cnt);
-	void attackMushrooms(int x, int y, float value);
+	void attackMushrooms(int index, float value);
 };
 
