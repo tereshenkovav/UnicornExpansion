@@ -20,7 +20,7 @@ void Texts::loadFromFile(const std::string& filename)
 		line = prepLine1(line);
 		if (line.size() == 0) continue;
 		auto lines = splitString(line, "=");
-		if (lines.size() >= 2) strings[lines[0]] = lines[1];
+		if (lines.size() >= 2) strings[lines[0]] = replaceAllString(lines[1], "\\n", "\n");
 	}
 	fin.close();
 }

@@ -16,5 +16,6 @@ bool isStringNumber(const std::string& str);
 std::vector<std::string> splitString(const std::string& src, const std::string& delimiter);
 // Замена первой подстроки
 std::string replaceFirstString(std::string& str, const std::string& src, const std::string& dst);
+std::string replaceAllString(std::string& str, const std::string& src, const std::string& dst);
 // Проверка завершения одной строки другой
 bool hasEnding (std::string const &fullString, std::string const &ending) ;

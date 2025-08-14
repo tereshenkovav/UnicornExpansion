@@ -346,6 +346,11 @@ int main(int argc, char * argv[])
     sf::Text text_gameover(font, "", 24);
     text_gameover.setPosition({ 512 - 80, 270 });
 
+    sf::Text text_help(font, "", 20);
+    text_help.setPosition({ 670, 250 });
+    text_help.setFillColor(sf::Color::White);
+    text_help.setString(texts.getSfmlStr("Text_Help"));
+
     // Прямоугольники интерфейса
     sf::RectangleShape selector;
     selector.setOutlineThickness(2);
@@ -741,6 +746,8 @@ while (window.isOpen())
         // Для сцены меню - вывод меню и фона
         if (scene == Scene::Menu) {
             window.draw(spr_intro);
+
+            window.draw(text_help);
 
             textback.setSize({ 240, 40 });
             for (int i = 0; i < LEVEL_COUNT; i++) {

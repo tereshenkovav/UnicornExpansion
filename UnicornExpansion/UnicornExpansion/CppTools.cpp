@@ -52,6 +52,14 @@ std::string replaceFirstString(std::string& str, const std::string & src, const 
 	return str.replace(pos, src.length(), dst);
 }
 
+std::string replaceAllString(std::string& str, const std::string& src, const std::string& dst) {
+	while (true) {
+		std::size_t pos = str.find(src);
+		if (pos == std::string::npos) return str;
+		str = str.replace(pos, src.length(), dst);
+	}
+}
+
 bool hasEnding (std::string const &fullString, std::string const &ending) {
     if (fullString.length() >= ending.length()) {
         return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
