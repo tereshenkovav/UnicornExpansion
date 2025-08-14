@@ -120,7 +120,7 @@ void updateMiniMap(const Game & game) {
                 // «атемнение грибами, только рельефа
                 int stage = game.getMushrooms(i, j).size();
                 // «десь зависимость прозрачности от стадии грибов - считаем, что максимальна€ плотность это 4
-                if (stage>0) minimap.addCellColor(i, j, sf::Color{ 160,56,255,64+uint8_t(32*stage)});
+                if (stage>0) minimap.addCellColor(i, j, sf::Color{ 160,56,255,uint8_t(64+32*stage)});
             }
         }
 

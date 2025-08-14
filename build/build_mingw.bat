@@ -4,7 +4,9 @@ cd ..\UnicornExpansion\UnicornExpansion
 g++ -o ..\..\bin\UnicornExpansion.exe -std=c++17 main.cpp ^
 Animation.cpp ^
 BusyMap.cpp ^
+ClickerCounter.cpp ^
 ComponentAttacker.cpp ^
+ComponentDetoxer.cpp ^
 ComponentEnemy.cpp ^
 ComponentEnemyLair.cpp ^
 ComponentEnemyTarget.cpp ^
@@ -22,6 +24,7 @@ FogBuilder.cpp ^
 Game.cpp ^
 GameUnit.cpp ^
 MiniMap.cpp ^
+MushroomNet.cpp ^
 SfmlTools.cpp ^
 SubTerrainBuilder.cpp ^
 Texts.cpp ^
