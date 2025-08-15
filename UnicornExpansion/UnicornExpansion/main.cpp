@@ -223,6 +223,13 @@ void loadGame(int leveln) {
 
 }
 
+void switchSound() {
+  if (sf::Listener::getGlobalVolume() == 0.0f)
+    sf::Listener::setGlobalVolume(100.0f);
+  else
+    sf::Listener::setGlobalVolume(0.0f);
+}
+
 int main(int argc, char * argv[])
 {
     srand(time(NULL));
@@ -517,6 +524,7 @@ while (window.isOpen())
             if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
             {
                 if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)	window.close();
+                if (keyPressed->scancode == sf::Keyboard::Scancode::M) switchSound();
             };
             if (const auto* mousePressed = event->getIf<sf::Event::MouseButtonReleased>())
             {
@@ -581,6 +589,7 @@ while (window.isOpen())
                 effect_start.stop();
                 scene = Scene::Menu;
             }
+            if (keyPressed->scancode == sf::Keyboard::Scancode::M) switchSound();
             if (keyPressed->scancode == sf::Keyboard::Scancode::NumpadMinus) {
                 if (tekscale < 6) {
                     tekscale++;
