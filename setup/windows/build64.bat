@@ -11,6 +11,5 @@ SET PATH=%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MS
 msbuild.exe ..\..\UnicornExpansion\UnicornExpansion.sln /p:Configuration=Release
 
 SET BINDIR=..\..\UnicornExpansion\x64\Release
-SET DATADIR=..\..\data
 
 SmartZipBuilder.exe script.szb
