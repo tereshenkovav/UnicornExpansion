@@ -88,6 +88,7 @@ public:
 	std::string getCode() const;
 	std::vector<UnitAction> getActions() const;
 	bool sendAction(const UnitAction & action);
+	bool cancelWorkingAction();
 	// Работа со здоровьем
 	void decHealth(float value);
 	void incHealth(float value);

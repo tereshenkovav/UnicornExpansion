@@ -81,6 +81,8 @@ public:
 	void setTargetToUnit(int uid, int targetx, int targety);
 	// Отправить юниту действие
 	bool sendUnitAction(int uid, const UnitAction & action);
+	// Отмена действия у юнита
+	bool cancelUnitWorkingAction(int uid);
 	// Искать первую свободную точку рядом с юнитом
 	std::optional<sf::Vector2i> getFirstFreePosNear(const GameUnit & unit) const;
 	// Работа с энергией

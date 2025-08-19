@@ -271,6 +271,10 @@ int main(int argc, char * argv[])
     const sf::Texture texture4("images\\cursor_my.png");
     sf::Sprite cursor_my(texture4);
     
+    const sf::Texture texture5("images\\undo.png");
+    sf::Sprite undo(texture5);
+    undo.setPosition({ 1024 - 36 - 10, VIEW_SIZE_Y + 130 });
+
     // Перечисление всех типов единорогов с учетом порядка их компонент
     addUnitSprite("unicorn_attacker", "images\\units\\unicorn.png");
     addUnitSprite("unicorn_harvester", "images\\units\\unicorn.png");
@@ -367,7 +371,7 @@ int main(int argc, char * argv[])
 rect_progress_border.setOutlineThickness(2);
 rect_progress_border.setOutlineColor(sf::Color::White);
 rect_progress_border.setPosition({ 1024 - 400 + 8, VIEW_SIZE_Y + 132 });
-rect_progress_border.setSize({ 400-16, 32 });
+rect_progress_border.setSize({ 350-16, 32 });
 rect_progress_border.setFillColor(sf::Color::Transparent);
 
 sf::RectangleShape rect_progress;
@@ -669,6 +673,12 @@ while (window.isOpen())
                                 }
                             }
                         }
+                        else {
+                            // Действие отмены
+                            if (undo.getGlobalBounds().contains({ (float)mousePressed->position.x, (float)mousePressed->position.y })) {
+                                game.cancelUnitWorkingAction(*selected_uid);
+                            }
+                        }
                     }
                 }
             };
@@ -925,12 +935,18 @@ while (window.isOpen())
                 std::string current_action_code;
                 if (selunit.isWorkingTask(&progress, &current_action_code)) {
                     window.draw(rect_progress_border);
-                    rect_progress.setSize({ (400-16) * progress, 32 });
+                    rect_progress.setSize({ (350-16) * progress, 32 });
                     window.draw(rect_progress);
                     text_progress.setString(std::to_string((int)(100 * progress)) + "%");
                     window.draw(text_progress);
                     spr_actions[current_action_code]->setPosition({ (float)(textback.getPosition().x + 200 - 32), textback.getPosition().y + 8 });
                     window.draw(*spr_actions[current_action_code]);
+                    if (undo.getGlobalBounds().contains({ (float)mousePos.x,(float)mousePos.y })) {
+                        window.draw(undo, &shader_bright);
+                        cursor = &cursor_my;
+                    }
+                    else 
+                        window.draw(undo);
                 }
                 else {
                     auto actions = selunit.getActions();

@@ -224,6 +224,13 @@ bool Game::sendUnitAction(int uid, const UnitAction & action)
 	return false;
 }
 
+bool Game::cancelUnitWorkingAction(int uid)
+{
+	for (int i = 0; i < units.size(); i++)
+		if (units[i].getUID() == uid) return units[i].cancelWorkingAction();
+	return false;
+}
+
 std::optional<sf::Vector2i> Game::getFirstFreePosNear(const GameUnit & unit) const
 {
 	std::vector<sf::Vector2i> nears;

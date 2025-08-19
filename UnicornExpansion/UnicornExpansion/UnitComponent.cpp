@@ -42,6 +42,13 @@ bool UnitComponent::doPrefixAction(const UnitAction& action)
     return true;
 }
 
+bool UnitComponent::undoAction(const UnitAction& action)
+{
+    // Действие при отмене по умолчанию восстанавливает энергию
+    game->incEnergy(action.energy);
+    return true;
+}
+
 std::string UnitComponent::getComponentInfo() const
 {
     return std::string();

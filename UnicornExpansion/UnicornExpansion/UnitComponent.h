@@ -35,6 +35,7 @@ public:
 	virtual bool applyAction(const UnitAction& action);
 	virtual bool canApplyAction(const UnitAction& action, std::string* msgcode) const;
 	virtual bool doPrefixAction(const UnitAction& action);
+	virtual bool undoAction(const UnitAction& action);
 	// Получение свойств компонента
 	virtual std::string getComponentInfo() const;
 	// Расширение кода объекта по компоненту - для перекраски танков

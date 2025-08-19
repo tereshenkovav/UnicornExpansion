@@ -161,7 +161,7 @@ void GameUnit::setVelocity(int v)
 }
 
 void GameUnit::update(float dt) {
-	if (worktek >= 0) {
+	if (isWorkingTask()) {
 		worktek += dt;
 		if (worktek >= workall) {
 			// Здесь жестко задано действие после завершения работы
@@ -254,6 +254,16 @@ bool GameUnit::sendAction(const UnitAction & action) {
 		worktek = 0.0f;
 		workall = action.time;
 		workaction = action;
+		return true;
+	}
+	else
+		return false;
+}
+
+bool GameUnit::cancelWorkingAction() {
+	if (isWorkingTask()) {
+		workaction.component->undoAction(workaction);
+		worktek = -1.0f;
 		return true;
 	}
 	else
