@@ -17,6 +17,7 @@
 #include "ComponentPortal.h"
 #include "FinderByBestDistance.h"
 #include "UnitFactory.h"
+#include "SeedStore.h"
 #include "ScriptWrapper.h"
 
 std::string prepLine(const std::string& str) {
@@ -443,7 +444,7 @@ void Game::update(float dt)
 					energy += harvester->getHarvestRate() * dt;
 					units[*res_idx].decHealth(harvester->getHarvestRate() * dt);
 					lasers.push_back({ units[i].getView() + (units[i].getLastMoving() == Moving::Left ? laserfixleft : laserfixright),
-						units[*res_idx].getView(), LaserType::Harvest });
+						units[*res_idx].getView(), LaserType::Harvest, SeedStore::getSeedByUIDAndLaserType(units[i].getUID(),LaserType::Harvest) });
 				}
 			}
 		}
@@ -462,7 +463,7 @@ void Game::update(float dt)
 							healer->setActive(true);
 							units[*res_idx].incHealth(healer->getHealerRate() * dt);
 							lasers.push_back({ units[i].getView() + (units[i].getLastMoving() == Moving::Left ? laserfixleft : laserfixright),
-								units[*res_idx].getView(), LaserType::Heal });
+								units[*res_idx].getView(), LaserType::Heal, SeedStore::getSeedByUIDAndLaserType(units[i].getUID(),LaserType::Heal) });
 						}
 					}
 					else {
@@ -490,7 +491,7 @@ void Game::update(float dt)
 				if (auto res_idx = finder.getBestIndex()) {
 					units[*res_idx].decHealth(attacker->getAttackValue() * dt);
 					lasers.push_back({ units[i].getView() + (units[i].getLastMoving() == Moving::Left ? laserfixleft : laserfixright),
-						units[*res_idx].getView(), LaserType::Attack });
+						units[*res_idx].getView(), LaserType::Attack, SeedStore::getSeedByUIDAndLaserType(units[i].getUID(),LaserType::Attack) });
 					if (auto* meleeenemy = units[*res_idx].getComponent<ComponentMeleeEnemy>())
 						meleeenemy->setTargetToUnit(units[i].getUID());
 				}
@@ -507,7 +508,7 @@ void Game::update(float dt)
 				if (auto res_idx = finder.getBestIndex()) {
 					mushrooms.attackMushrooms(*res_idx, detoxer->getDetoxValue()* dt);
 					lasers.push_back({ units[i].getView() + (units[i].getLastMoving() == Moving::Left ? laserfixleft : laserfixright),
-						*finder.getBestPos(), LaserType::Detox });
+						*finder.getBestPos(), LaserType::Detox, SeedStore::getSeedByUIDAndLaserType(units[i].getUID(),LaserType::Detox) });
 				}
 			}
 		}

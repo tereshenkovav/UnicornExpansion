@@ -108,6 +108,9 @@
     <ClCompile Include="ComponentDetoxer.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="SeedStore.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="version.h">
@@ -201,6 +204,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="ComponentDetoxer.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="SeedStore.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

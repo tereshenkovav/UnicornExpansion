@@ -22,6 +22,7 @@ struct Laser {
 	sf::Vector2f pos1;
 	sf::Vector2f pos2;
 	LaserType type;
+	float timeshift;
 };
 
 // Основной класс игры - содержит всё, что обрабатывается в игровом цикле
