@@ -360,6 +360,11 @@ bool Game::isMushroomsExist() const
 	return mushrooms.isMushroomsExist();
 }
 
+bool Game::isUnitUnderAttack(int uid) const
+{
+	return last_attacked_units.count(uid) > 0;
+}
+
 void Game::addComponentToUnitByUID(int uid, UnitComponent* component)
 {
 	for (int i = 0; i < units.size(); i++)

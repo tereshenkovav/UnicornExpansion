@@ -484,15 +484,17 @@ const sf::Texture texture_laz("images\\laser.png");
 sf::Sprite spr_laz(texture_laz);
 spr_laz.setOrigin({ 0,3 });
 
-// Шейдеры яркости и обесцвечивания
 sf::Shader shader_gray;
 sf::Shader shader_bright;
+sf::Shader shader_attack;
 
 shader_gray.loadFromFile("shaders\\gray.frag", sf::Shader::Type::Fragment);
 shader_bright.loadFromFile("shaders\\bright.frag", sf::Shader::Type::Fragment);
+shader_attack.loadFromFile("shaders\\attack.frag", sf::Shader::Type::Fragment);
 
 shader_gray.setUniform("texture", sf::Shader::CurrentTexture);
 shader_bright.setUniform("texture", sf::Shader::CurrentTexture);
+shader_attack.setUniform("texture", sf::Shader::CurrentTexture);
 
 sf::Clock clock;
 float progress;
@@ -757,7 +759,9 @@ while (window.isOpen())
         view.setCenter({ (float)(*newvp).x * BLOCKW, (float)(*newvp).y * BLOCKH });
 
     fogbuilder.updateByGame(game);
-    
+
+    shader_attack.setUniform("stage", 0.25f+0.25f*sin(4.0f*M_PI*globalt));
+
     if (!modeendgame)
         if (game.isGameOver())
             if (!counter_endgame.isActive()) counter_endgame.upset(2.0f);
@@ -831,7 +835,10 @@ while (window.isOpen())
                         if (spr_units.count(game.getUnit(i).getCode()) > 0) {
                             spr_units[game.getUnit(i).getCode()]->setPosition(game.getUnit(i).getView());
                             spr_units[game.getUnit(i).getCode()]->setScale({ game.getUnit(i).getLastMoving() == Moving::Left ? -1.0f : 1.0f,1 });
-                            window.draw(*spr_units[game.getUnit(i).getCode()]);
+                            if (game.isUnitUnderAttack(game.getUnit(i).getUID()))
+                                window.draw(*spr_units[game.getUnit(i).getCode()], &shader_attack);
+                            else
+                                window.draw(*spr_units[game.getUnit(i).getCode()]);
                         }
 
                 // И здесь вывод только верхних фрагментов леса
