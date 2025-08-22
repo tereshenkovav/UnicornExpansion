@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <set>
 #include "GameUnit.h"
 #include "BusyMap.h"
 #include "UnitMover.h"
@@ -54,6 +55,7 @@ private:
 	std::optional<sf::Vector2f> teleportation_effect;
 	std::vector<AudioEffect> audioeffects;
 	sf::Countdown counter_under_attack;
+	std::set<int> last_attacked_units;
 public:
 	Game();
 	static bool canWalkOnTerrain(Terrain terr);

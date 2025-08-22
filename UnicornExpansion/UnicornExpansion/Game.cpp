@@ -150,6 +150,7 @@ bool Game::loadScript(const std::string& filename) {
 	iswin = false;
 	isfail = false;
 	counter_under_attack.reset();
+	last_attacked_units.clear();
 	// Очистка лазеров
 	lasers.clear();
 
@@ -434,6 +435,8 @@ void Game::update(float dt)
 	sf::Vector2f laserfixleft{ -23, -25 };
 	sf::Vector2f laserfixright{ 21, -25 };
 
+	std::set<int> new_attacked_units;
+
 	// Построение лазеров для рендера и действия с ними
 	lasers.clear();
 	for (int i = 0; i < units.size(); i++) {
@@ -531,10 +534,12 @@ void Game::update(float dt)
 				if (!idx_attack) idx_attack = targets[0];
 
 				units[*idx_attack].decHealth(enemy->getAttackValue() * dt);
-				if (!counter_under_attack.isActive()) {
-					audioeffects.push_back(AudioEffect::UnderAttack);
-					counter_under_attack.upset(10.0f);
-				}
+				new_attacked_units.insert(units[*idx_attack].getUID());
+				if (!counter_under_attack.isActive())
+					if (last_attacked_units.count(units[*idx_attack].getUID()) == 0) {
+						audioeffects.push_back(AudioEffect::UnderAttack);
+						counter_under_attack.upset(5.0f);
+					}
 			}
 
 			// Блок отвечает за преследование танка, вошедшего в зону зрения
@@ -555,6 +560,8 @@ void Game::update(float dt)
 				enemy->setTargetToUnit(units[*res_idx].getUID());
 		}
 	}
+
+	last_attacked_units = new_attacked_units;
 
 	// Удаление уничтоженных юнитов
 	int i = 0;
