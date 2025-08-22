@@ -109,6 +109,12 @@ void addActionSprite(const std::string & code, const std::string& filename) {
     spr_actions[code] = std::make_unique<sf::Sprite>(*textures.back());
 }
 
+// Добавление аудиоэффекта
+void addAudioEffect(AudioEffect code, const std::string& filename) {
+    soundbuffers.push_back(std::make_unique<sf::SoundBuffer>(filename));
+    snd_audioeffects[code] = std::make_unique<sf::Sound>(*soundbuffers.back());
+}
+
 // Обновление мини-карты
 void updateMiniMap(const Game & game) {
     for (int i = 0; i < game.getWidth(); i++)
@@ -412,15 +418,12 @@ snd_unicorn_clicks.push_back(std::make_unique<sf::Sound>(*soundbuffers.back()));
 
 ClickerCounter clickcounter(snd_unicorn_clicks.size());
 
-soundbuffers.push_back(std::make_unique<sf::SoundBuffer>("sounds\\teleport.ogg"));
-snd_audioeffects[AudioEffect::Teleport] = std::make_unique<sf::Sound>(*soundbuffers.back());
+addAudioEffect(AudioEffect::Teleport, "sounds\\teleport.ogg");
 // В файле finish_teleport добавлена пауза в начале, чтобы можно было использовать совместно с эффектом телепортации
-soundbuffers.push_back(std::make_unique<sf::SoundBuffer>("sounds\\finish_teleport.ogg"));
-snd_audioeffects[AudioEffect::FinishTeleport]=std::make_unique<sf::Sound>(*soundbuffers.back());
-soundbuffers.push_back(std::make_unique<sf::SoundBuffer>("sounds\\finish_research.ogg"));
-snd_audioeffects[AudioEffect::FinishResearch] = std::make_unique<sf::Sound>(*soundbuffers.back());
-soundbuffers.push_back(std::make_unique<sf::SoundBuffer>("sounds\\finish_upgrade.ogg"));
-snd_audioeffects[AudioEffect::FinishUpgrade] = std::make_unique<sf::Sound>(*soundbuffers.back());
+addAudioEffect(AudioEffect::FinishTeleport, "sounds\\finish_teleport.ogg");
+addAudioEffect(AudioEffect::FinishResearch, "sounds\\finish_research.ogg");
+addAudioEffect(AudioEffect::FinishUpgrade, "sounds\\finish_upgrade.ogg");
+addAudioEffect(AudioEffect::UnderAttack, "sounds\\under_attack.ogg");
 
 addTerrainSprite(Terrain::Ground, "images\\terrains\\ground.png");
 addTerrainSprite(Terrain::Water, "images\\terrains\\water.png");

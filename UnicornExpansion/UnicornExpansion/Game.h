@@ -11,11 +11,12 @@
 #include <json/json.h>
 #include <optional>
 #include "MushroomNet.h"
+#include "Countdown.h"
 
 // Перечисления территорий и типов лазера
 enum class Terrain { Ground, Forest, Water, Road };
 enum class LaserType { Harvest, Attack, Heal, Detox };
-enum class AudioEffect { Teleport, FinishTeleport, FinishResearch, FinishUpgrade };
+enum class AudioEffect { Teleport, FinishTeleport, FinishResearch, FinishUpgrade, UnderAttack };
 
 // Запись для лазера
 struct Laser {
@@ -52,6 +53,7 @@ private:
 	std::function<bool()> funcdefeat;
 	std::optional<sf::Vector2f> teleportation_effect;
 	std::vector<AudioEffect> audioeffects;
+	sf::Countdown counter_under_attack;
 public:
 	Game();
 	static bool canWalkOnTerrain(Terrain terr);

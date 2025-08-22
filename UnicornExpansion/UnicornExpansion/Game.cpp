@@ -148,6 +148,7 @@ bool Game::loadScript(const std::string& filename) {
 	// ѕришлось добавить сюда, чтобы где-то инициализировало
 	iswin = false;
 	isfail = false;
+	counter_under_attack.reset();
 	// ќчистка лазеров
 	lasers.clear();
 
@@ -426,6 +427,7 @@ void Game::update(float dt)
 		}
 
 	mushrooms.update(dt);
+	counter_under_attack.update(dt);
 
 	// ¬ременна€ поправка дл€ позиции лазера у единорога
 	sf::Vector2f laserfixleft{ -23, -25 };
@@ -520,6 +522,10 @@ void Game::update(float dt)
 				if (units[j].isComponent<ComponentEnemyTarget>()&& units[j].isComponent<ComponentAttacker>())
 					if (units[i].isUnitNearUnit(units[j])) {
 						units[j].decHealth(enemy->getAttackValue() * dt);
+						if (!counter_under_attack.isActive()) {
+							audioeffects.push_back(AudioEffect::UnderAttack);
+							counter_under_attack.upset(10.0f);
+						}
 						findtank = true;
 						break;
 					}
@@ -529,6 +535,10 @@ void Game::update(float dt)
 					if (units[j].isComponent<ComponentEnemyTarget>())
 						if (units[i].isUnitNearUnit(units[j])) {
 							units[j].decHealth(enemy->getAttackValue() * dt);
+							if (!counter_under_attack.isActive()) {
+								audioeffects.push_back(AudioEffect::UnderAttack);
+								counter_under_attack.upset(10.0f);
+							}
 							break;
 						}
 
