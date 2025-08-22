@@ -56,7 +56,9 @@ private:
 	std::vector<AudioEffect> audioeffects;
 	sf::Countdown counter_under_attack;
 	std::set<int> last_attacked_units;
+	std::set<int> new_attacked_units;
 	std::optional<sf::Vector2f> lasteventpos;
+	void trySetUnderAttackEffect(const GameUnit& unit);
 public:
 	Game();
 	static bool canWalkOnTerrain(Terrain terr);

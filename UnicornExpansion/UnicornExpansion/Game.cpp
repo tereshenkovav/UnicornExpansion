@@ -31,6 +31,16 @@ bool Game::canWalkOnTerrain(Terrain terr)
 	return (terr==Terrain::Ground)||(terr==Terrain::Road);
 }
 
+void Game::trySetUnderAttackEffect(const GameUnit& unit)
+{
+	new_attacked_units.insert(unit.getUID());
+	if (!counter_under_attack.isActive())
+		if (last_attacked_units.count(unit.getUID()) == 0) {
+			addGameEvent(AudioEffect::UnderAttack, unit.getView());
+			counter_under_attack.upset(5.0f);
+		}
+}
+
 Game::Game() {
 	width = 0;
 	height = 0;
@@ -408,6 +418,8 @@ void Game::update(float dt)
 {
 	// Сначала обновляем карту занятости ячеек
 	BusyMap busymap(width, height);
+	
+	new_attacked_units.clear();
 
 	if (timerleft > 0.0f) timerleft -= dt;
 
@@ -432,12 +444,15 @@ void Game::update(float dt)
 		// Разгон тумана войны
 		if (units[i].isComponent<ComponentUnicorn>()) clearFogAt(units[i].getXY(), 6);
 	}
-
+	
 	// Обновление урона от грибов для единорогов
 	for (int i = 0; i < units.size(); i++)
 		if (units[i].isComponent<ComponentUnicorn>()) {
 			int stage = mushrooms.getMushroomStage(units[i].getXY().x, units[i].getXY().y);
-			if (stage > 0) units[i].decHealth(stage * dt);
+			if (stage > 0) {
+				units[i].decHealth(stage * dt);
+				trySetUnderAttackEffect(units[i]);
+			}
 		}
 
 	mushrooms.update(dt);
@@ -446,8 +461,6 @@ void Game::update(float dt)
 	// Временная поправка для позиции лазера у единорога
 	sf::Vector2f laserfixleft{ -23, -25 };
 	sf::Vector2f laserfixright{ 21, -25 };
-
-	std::set<int> new_attacked_units;
 
 	// Построение лазеров для рендера и действия с ними
 	lasers.clear();
@@ -546,12 +559,7 @@ void Game::update(float dt)
 				if (!idx_attack) idx_attack = targets[0];
 
 				units[*idx_attack].decHealth(enemy->getAttackValue() * dt);
-				new_attacked_units.insert(units[*idx_attack].getUID());
-				if (!counter_under_attack.isActive())
-					if (last_attacked_units.count(units[*idx_attack].getUID()) == 0) {
-						addGameEvent(AudioEffect::UnderAttack, units[*idx_attack].getView());
-						counter_under_attack.upset(5.0f);
-					}
+				trySetUnderAttackEffect(units[*idx_attack]);
 			}
 
 			// Блок отвечает за преследование танка, вошедшего в зону зрения
