@@ -4,6 +4,7 @@
 #include <sstream>
 #include <map>
 #include <math.h>
+#include <optional>
 #include "CppTools.h"
 #include "ComponentUnicorn.h"
 #include "ComponentHarvester.h"
@@ -516,31 +517,25 @@ void Game::update(float dt)
 		}
 		if (auto* enemy = units[i].getComponent<ComponentMeleeEnemy>()) {
 			// Блок отвечает за атаку на танк в зоне атаки - ближнее соприкосновение с учетом размеров объектов
-			// Сначала пробуем атаковать именно те юниты, которые  могут атаковать в ответ
-			bool findtank = false;
+			std::vector<int> targets;
 			for (int j = 0; j < units.size(); j++)
-				if (units[j].isComponent<ComponentEnemyTarget>()&& units[j].isComponent<ComponentAttacker>())
-					if (units[i].isUnitNearUnit(units[j])) {
-						units[j].decHealth(enemy->getAttackValue() * dt);
-						if (!counter_under_attack.isActive()) {
-							audioeffects.push_back(AudioEffect::UnderAttack);
-							counter_under_attack.upset(10.0f);
-						}
-						findtank = true;
-						break;
-					}
-			// И если танки не нашли, то все остальные цели
-			if (!findtank)
-				for (int j = 0; j < units.size(); j++)
-					if (units[j].isComponent<ComponentEnemyTarget>())
-						if (units[i].isUnitNearUnit(units[j])) {
-							units[j].decHealth(enemy->getAttackValue() * dt);
-							if (!counter_under_attack.isActive()) {
-								audioeffects.push_back(AudioEffect::UnderAttack);
-								counter_under_attack.upset(10.0f);
-							}
-							break;
-						}
+				if (units[j].isComponent<ComponentEnemyTarget>() && units[i].isUnitNearUnit(units[j]))
+					targets.push_back(j);
+
+			if (targets.size() > 0) {
+				std::optional<int> idx_attack = std::nullopt;
+				// Сначала пробуем атаковать именно те юниты, которые  могут атаковать в ответ
+				for (int j : targets)
+					if (units[j].isComponent<ComponentAttacker>()) idx_attack = j;
+				// И если танки не нашли, то все остальные цели, любая
+				if (!idx_attack) idx_attack = targets[0];
+
+				units[*idx_attack].decHealth(enemy->getAttackValue() * dt);
+				if (!counter_under_attack.isActive()) {
+					audioeffects.push_back(AudioEffect::UnderAttack);
+					counter_under_attack.upset(10.0f);
+				}
+			}
 
 			// Блок отвечает за преследование танка, вошедшего в зону зрения
 			FinderByBestDistance finder_view(enemy->getViewDistance(), units[i].getView());
