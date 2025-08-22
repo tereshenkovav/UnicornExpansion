@@ -56,6 +56,7 @@ private:
 	std::vector<AudioEffect> audioeffects;
 	sf::Countdown counter_under_attack;
 	std::set<int> last_attacked_units;
+	std::optional<sf::Vector2f> lasteventpos;
 public:
 	Game();
 	static bool canWalkOnTerrain(Terrain terr);
@@ -121,13 +122,14 @@ public:
 	std::string getTaskText() const;
 	void setTaskText(const std::string & value);
 	void addTeleportationEffect(float x, float y);
-	void addAudioEffect(AudioEffect effect);
+	void addGameEvent(AudioEffect effect, sf::Vector2f pos);
 	std::optional<sf::Vector2f> getOnceTeleportationEffect();
 	std::vector<AudioEffect> getOnceAudioEffects();
 	const std::vector<Mushroom> & getMushrooms(int x, int y) const;
 	bool isMushroomsAt(int x, int y) const;
 	bool isMushroomsExist() const;
 	bool isUnitUnderAttack(int uid) const;
+	std::optional<sf::Vector2f> getLastEventPos() const;
 	// Обновление игры
 	void update(float dt);
 	// Шаблонный метод - поиск юнитов по компонентам

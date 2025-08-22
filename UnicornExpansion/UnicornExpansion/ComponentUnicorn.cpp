@@ -31,27 +31,27 @@ bool ComponentUnicorn::applyAction(const UnitAction& action)
 {
 	if (action.code == "make_harvester") {
 		game->addComponentToUnitByUID(unit_id, new ComponentHarvester(game));
-		game->addAudioEffect(AudioEffect::FinishResearch);
+		game->addGameEvent(AudioEffect::FinishResearch, game->getUnitByUID(this->unit_id).getView());
 		return true;
 	}
 	if (action.code == "make_attacker") {
 		game->addComponentToUnitByUID(unit_id, new ComponentAttacker(game));
-		game->addAudioEffect(AudioEffect::FinishResearch);
+		game->addGameEvent(AudioEffect::FinishResearch, game->getUnitByUID(this->unit_id).getView());
 		return true;
 	}
 	if (action.code == "make_healer") {
 		game->addComponentToUnitByUID(unit_id, new ComponentHealer(game));
-		game->addAudioEffect(AudioEffect::FinishResearch);
+		game->addGameEvent(AudioEffect::FinishResearch, game->getUnitByUID(this->unit_id).getView());
 		return true;
 	}
 	if (action.code == "make_radar") {
 		game->addComponentToUnitByUID(unit_id, new ComponentRadar(game));
-		game->addAudioEffect(AudioEffect::FinishResearch);
+		game->addGameEvent(AudioEffect::FinishResearch, game->getUnitByUID(this->unit_id).getView());
 		return true;
 	}
 	if (action.code == "make_detoxer") {
 		game->addComponentToUnitByUID(unit_id, new ComponentDetoxer(game));
-		game->addAudioEffect(AudioEffect::FinishResearch);
+		game->addGameEvent(AudioEffect::FinishResearch, game->getUnitByUID(this->unit_id).getView());
 		return true;
 	}
 	return false;

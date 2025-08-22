@@ -599,6 +599,11 @@ while (window.isOpen())
                 scene = Scene::Menu;
             }
             if (keyPressed->scancode == sf::Keyboard::Scancode::M) switchSound();
+            if (keyPressed->scancode == sf::Keyboard::Scancode::Space)
+                if (game.getLastEventPos()) {
+                    view.setCenter(*game.getLastEventPos());
+                    fixCameraPosition();
+                }
             if (keyPressed->scancode == sf::Keyboard::Scancode::NumpadMinus) {
                 if (tekscale < 6) {
                     tekscale++;

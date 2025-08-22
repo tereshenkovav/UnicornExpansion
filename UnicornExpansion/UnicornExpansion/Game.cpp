@@ -151,6 +151,7 @@ bool Game::loadScript(const std::string& filename) {
 	isfail = false;
 	counter_under_attack.reset();
 	last_attacked_units.clear();
+	lasteventpos = std::nullopt;
 	// Очистка лазеров
 	lasers.clear();
 
@@ -323,9 +324,10 @@ void Game::addTeleportationEffect(float x, float y)
 	teleportation_effect = { x,y };
 }
 
-void Game::addAudioEffect(AudioEffect effect)
+void Game::addGameEvent(AudioEffect effect, sf::Vector2f pos)
 {
 	audioeffects.push_back(effect);
+	lasteventpos = pos;
 }
 
 std::optional<sf::Vector2f> Game::getOnceTeleportationEffect()
@@ -363,6 +365,11 @@ bool Game::isMushroomsExist() const
 bool Game::isUnitUnderAttack(int uid) const
 {
 	return last_attacked_units.count(uid) > 0;
+}
+
+std::optional<sf::Vector2f> Game::getLastEventPos() const
+{
+	return lasteventpos;
 }
 
 void Game::addComponentToUnitByUID(int uid, UnitComponent* component)
@@ -542,7 +549,7 @@ void Game::update(float dt)
 				new_attacked_units.insert(units[*idx_attack].getUID());
 				if (!counter_under_attack.isActive())
 					if (last_attacked_units.count(units[*idx_attack].getUID()) == 0) {
-						audioeffects.push_back(AudioEffect::UnderAttack);
+						addGameEvent(AudioEffect::UnderAttack, units[*idx_attack].getView());
 						counter_under_attack.upset(5.0f);
 					}
 			}
@@ -575,7 +582,7 @@ void Game::update(float dt)
 			// При удалении единорога дать эффект вспышки
 			if (units[i].isComponent<ComponentUnicorn>()) {
 				addTeleportationEffect(units[i].getView().x, units[i].getView().y);
-				addAudioEffect(AudioEffect::Teleport);
+				addGameEvent(AudioEffect::Teleport, units[i].getView());
 			}
 			units.erase(units.begin() + i);
 		}

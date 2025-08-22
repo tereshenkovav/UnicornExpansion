@@ -46,7 +46,7 @@ bool ComponentAttacker::applyAction(const UnitAction& action)
 	if (action.code == "upgrade_attacker") {
 		attack_value += game->getConfigComponent()["Attacker"]["UpgradeStep"].asInt();
 		tek_upgrade_pos++;
-		game->addAudioEffect(AudioEffect::FinishUpgrade);
+		game->addGameEvent(AudioEffect::FinishUpgrade, game->getUnitByUID(this->unit_id).getView());
 		return true;
 	}
 	return false;
