@@ -1,5 +1,12 @@
 # Игра "Экспансия единорогов", стратегия в реальном времени
 
+[![YooMoney donation](https://img.shields.io/badge/Donation-Yoo.money-blue.svg)](https://yoomoney.ru/to/41001497003495)
+[![Boosty](https://img.shields.io/badge/Boosty-donate-orange.svg)](https://boosty.to/ponygames)
+[![Website](https://img.shields.io/badge/Website-tav--developer.itch.io-29a662.svg)](https://tav-developer.itch.io)
+[![License](https://img.shields.io/badge/License-MIT0-darkgray.svg)](#)
+[![Tag](https://img.shields.io/github/v/tag/tereshenkovav/UnicornExpansion?color=00c2e8)](#)
+[![Downloads](https://img.shields.io/github/downloads/tereshenkovav/UnicornExpansion/total?color=c87bff)](#)
+
 ## О проекте
 
 Жанр игры - тактическая игра с элементами RTS. Двумерная карта, вид сверху, с прокруткой по игровому миру, а также мини-картой. Карта открывается по  мере продвижения юнитов. В распоряжении игрока — призываемые единороги, которые можно получить в портале за единицы магии. Единороги ходят по прямой (вертикали и горизонтали), обходят препятствия. Выстрелы идут автоматически при виде противника, когда он оказывается на расстоянии стрельбы (не только по прямой, в любом направлении на расстояние, меньшее или равное длине стрельбы). Сама стрельба реализована как непрерывная атака лучом-линией. 
