@@ -236,26 +236,26 @@ void switchSound() {
     sf::Listener::setGlobalVolume(0.0f);
 }
 
-int main(int argc, char * argv[])
+int main(int argc, char* argv[])
 {
     srand(time(NULL));
     std::string exedir = ".";
     const size_t last_slash_idx = std::string(argv[0]).rfind('\\');
     if (std::string::npos != last_slash_idx) exedir = std::string(argv[0]).substr(0, last_slash_idx);
-    
+
     // Установка текущего каталога
     if (argc > 1)
         std::filesystem::current_path(std::string(argv[1]));
     else
-        std::filesystem::current_path(exedir+"\\data");
-    
+        std::filesystem::current_path(exedir + "\\data");
+
     texts.loadFromFile("strings.txt");
 
     sf::ContextSettings settings;
     settings.antiAliasingLevel = 8;
 
     // Создание окна
-    sf::RenderWindow window(sf::VideoMode({ 1024, 768 }), texts.getSfmlStr("Text_GameCaption"),sf::Style::Close,sf::State::Windowed,settings);
+    sf::RenderWindow window(sf::VideoMode({ 1024, 768 }), texts.getSfmlStr("Text_GameCaption"), sf::Style::Close, sf::State::Windowed, settings);
     window.setMouseCursorVisible(false);
     window.setVerticalSyncEnabled(true);
     window.setIcon(sf::Image("images\\icon.png"));
@@ -263,6 +263,11 @@ int main(int argc, char * argv[])
     // Загрузка всех ресурсов
     const sf::Texture texture0("images\\intro.png");
     sf::Sprite spr_intro(texture0);
+
+    const sf::Texture texturetitle("images\\title.png");
+    sf::Sprite spr_title(texturetitle);
+    spr_title.setOrigin({ (float)texturetitle.getSize().x / 2, 0 });
+    spr_title.setPosition({ 512, 60 });
 
     const sf::Texture texture1("images\\border.png");
     sf::Sprite spr_border(texture1);
@@ -276,7 +281,7 @@ int main(int argc, char * argv[])
 
     const sf::Texture texture4("images\\cursor_my.png");
     sf::Sprite cursor_my(texture4);
-    
+
     const sf::Texture texture5("images\\undo.png");
     sf::Sprite undo(texture5);
     undo.setPosition({ 1024 - 36 - 10, VIEW_SIZE_Y + 130 });
@@ -312,7 +317,7 @@ int main(int argc, char * argv[])
 
     // Используется загрузка каталога в целом, можно вынести как процедуру
     pathload = "images\\actions\\";
-    for (auto & filename : std::filesystem::directory_iterator(pathload)) {
+    for (auto& filename : std::filesystem::directory_iterator(pathload)) {
         auto str = filename.path().string();
         replaceFirstString(str, pathload, "");
         replaceFirstString(str, ".png", "");
@@ -328,14 +333,18 @@ int main(int argc, char * argv[])
     }
 
     view.setSize({ VIEW_SIZE_X, VIEW_SIZE_Y });
-    view.setViewport(sf::FloatRect({0.0,0.0},{1.0,0.75}));
+    view.setViewport(sf::FloatRect({ 0.0,0.0 }, { 1.0,0.75 }));
 
     const sf::Font font("arial.ttf");
 
     // Все надписи готовим на основе шрифта
     sf::Text text_caption(font, "", 24);
     text_caption.setFillColor(sf::Color::White);
-    
+
+    sf::Text text_version(font, VERSION, 28);
+    text_version.setFillColor(sf::Color({ 192,192,192 }));
+    text_version.setPosition({ 1024 - 100, 768 - 50 });
+
     sf::Text text_ok(font, "", 24);
     text_ok.setFillColor(sf::Color::White);
     text_ok.setString("OK");
@@ -777,8 +786,10 @@ while (window.isOpen())
         // Для сцены меню - вывод меню и фона
         if (scene == Scene::Menu) {
             window.draw(spr_intro);
+            window.draw(spr_title);
 
             window.draw(text_help);
+            window.draw(text_version);
 
             textback.setSize({ 240, 40 });
             for (int i = 0; i < LEVEL_COUNT; i++) {
