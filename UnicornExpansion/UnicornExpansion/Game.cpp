@@ -48,6 +48,10 @@ Game::Game() {
 	isfail = false;
 
 	current_game = this;
+	// Резервируем место для 1024 юнитов, чтобы они не перемещались в памяти
+        // при push_back, поскольку это портит данные при добавлении
+        // нового юнита внутри кода юнита (обработка действий)
+	units.reserve(1024);
 }
 
 bool Game::loadMap(const std::string& filename) {
