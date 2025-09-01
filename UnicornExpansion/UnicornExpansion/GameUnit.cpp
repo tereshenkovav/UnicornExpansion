@@ -188,11 +188,11 @@ void GameUnit::update(float dt) {
 		components[i]->update(dt);
 }
 	
-void GameUnit::updateBusyMap(BusyMap & busymap) const {
+void GameUnit::updateBusyMap(Vector2D<bool> & busymap) const {
 	for (int i=0; i<unitw; i++)
 		for (int j=0; j<unith; j++) {
-			busymap.setBusy(unitx+i,unity+j) ;
-			busymap.setBusy(unitx+i+getMovingDx(),unity+j+getMovingDy()) ;
+			busymap.setValue(unitx+i,unity+j,true) ;
+			busymap.setValue(unitx+i+getMovingDx(),unity+j+getMovingDy(),true) ;
 		}
 }
 

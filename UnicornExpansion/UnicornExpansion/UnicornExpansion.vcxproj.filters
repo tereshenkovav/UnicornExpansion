@@ -30,12 +30,6 @@
     <ClCompile Include="WayFinder.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Countdown.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="BusyMap.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="UnitMover.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -111,6 +105,12 @@
     <ClCompile Include="SeedStore.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\libs\HelperCppClasses\src\Countdown.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\HelperCppClasses\src\Vector2D.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="version.h">
@@ -126,12 +126,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="WayFinder.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Countdown.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="BusyMap.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="UnitMover.h">

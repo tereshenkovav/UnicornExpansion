@@ -1,7 +1,6 @@
 add_executable(UnicornExpansion
 main.cpp
 Animation.cpp
-BusyMap.cpp
 ClickerCounter.cpp
 ComponentAttacker.cpp
 ComponentDetoxer.cpp
@@ -15,7 +14,6 @@ ComponentPortal.cpp
 ComponentRadar.cpp
 ComponentResource.cpp
 ComponentUnicorn.cpp
-Countdown.cpp
 CppTools.cpp
 FinderByBestDistance.cpp
 FogBuilder.cpp

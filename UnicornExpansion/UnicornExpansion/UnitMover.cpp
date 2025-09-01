@@ -1,6 +1,6 @@
 #include "UnitMover.h"
 
-UnitMover::UnitMover(BusyMap* busymap)
+UnitMover::UnitMover(Vector2D<bool>* busymap)
 {
 	dxy[0] = { -1, -1 };
 	dxy[1] = { 0, -1 };
@@ -18,7 +18,7 @@ void UnitMover::updateUnit(GameUnit & unit) const {
 	if (!unit.isTargeted()) return ;
 	if (unit.isMoving()) return ;
 	
-	if (busymap->isBusy(unit.getTarget().x,unit.getTarget().y)) {
+	if (busymap->getValue(unit.getTarget().x,unit.getTarget().y)) {
 		if (abs(unit.getXY().x - unit.getTarget().x)+
 			abs(unit.getXY().y - unit.getTarget().y) == 1) {
 			unit.resetTarget();// Здесь сбрасываем, мы подошли вплотную к занятой точке

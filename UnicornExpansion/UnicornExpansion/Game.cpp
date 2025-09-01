@@ -265,17 +265,18 @@ std::optional<sf::Vector2i> Game::getFirstFreePosNear(const GameUnit & unit) con
 	for (int i = unit.getSize().y - 1; i >= 0; i--)
 		nears.push_back({ -1, i });
 
-	BusyMap busymap(width, height);
+	Vector2D<bool> busymap(width, height,false);
+	busymap.setOutboundValue(false) ;
 
 	// Нужно вынести в отдельный блок построения полной карты занятости
 	for (int x = 0; x < width; x++)
 		for (int y = 0; y < height; y++)
-			if (!canWalkOnTerrain(getMap(x, y))) busymap.setBusy(x, y);
+			if (!canWalkOnTerrain(getMap(x, y))) busymap.setValue(x, y, true);
 	for (int j = 0; j < units.size(); j++)
 		units[j].updateBusyMap(busymap);
 
 	for (auto i = 0; i < nears.size(); i++)
-		if (!busymap.isBusy(unit.getXY().x + nears[i].x, unit.getXY().y + nears[i].y))
+		if (!busymap.getValue(unit.getXY().x + nears[i].x, unit.getXY().y + nears[i].y))
 			return sf::Vector2i({unit.getXY().x + nears[i].x, unit.getXY().y + nears[i].y });
 
 	return std::nullopt;
@@ -421,7 +422,7 @@ Json::Value Game::getConfigComponent() const {
 void Game::update(float dt)
 {
 	// Сначала обновляем карту занятости ячеек
-	BusyMap busymap(width, height);
+	Vector2D<bool> busymap(width, height,false);
 	
 	new_attacked_units.clear();
 
@@ -429,7 +430,7 @@ void Game::update(float dt)
 
 	for (int x = 0; x < width; x++)
 		for (int y = 0; y < height; y++)
-			if (!canWalkOnTerrain(getMap(x, y))) busymap.setBusy(x, y);
+			if (!canWalkOnTerrain(getMap(x, y))) busymap.setValue(x, y, true);
 
 	// Потом для каждого юнита обновляем всю карту занятости по новой, и двигаем его. 
 	// Иначе два юнита могут войти в одну свободную ячейку

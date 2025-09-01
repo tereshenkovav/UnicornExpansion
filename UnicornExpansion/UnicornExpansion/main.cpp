@@ -13,7 +13,7 @@
 
 #include "Game.h"
 #include "GameUnit.h"
-#include "Countdown.h"
+#include "HelperCppClasses/Countdown.h"
 #include "MiniMap.h"
 #include "Texts.h"
 #include "SfmlTools.h"
@@ -56,7 +56,7 @@ std::vector<std::unique_ptr<sf::SoundBuffer>> soundbuffers;
 std::vector<std::unique_ptr<sf::Sound>> snd_unicorn_clicks;
 std::map<AudioEffect, std::unique_ptr<sf::Sound>> snd_audioeffects;
 sf::View view;
-sf::Countdown counter_errmsg;
+Countdown counter_errmsg;
 MiniMap minimap;
 Texts texts;
 Game game;
@@ -65,7 +65,7 @@ FogBuilder fogbuilder;
 // Номер выделенного юнита
 std::optional<int> selected_uid;
 int started_galop_uid;
-sf::Countdown counter_endgame;
+Countdown counter_endgame;
 int tekscale;
 sf::RectangleShape rect_health;
 std::optional<Animation> current_teleportation_effect;

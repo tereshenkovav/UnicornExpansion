@@ -5,14 +5,14 @@
 #include <map>
 #include <set>
 #include "GameUnit.h"
-#include "BusyMap.h"
+#include "HelperCppClasses/Vector2D.h"
 #include "UnitMover.h"
 #include <SFML/Graphics.hpp>
 #include <zetscript.h>
 #include <json/json.h>
 #include <optional>
 #include "MushroomNet.h"
-#include "Countdown.h"
+#include "HelperCppClasses/Countdown.h"
 
 // Перечисления территорий и типов лазера
 enum class Terrain { Ground, Forest, Water, Road };
@@ -54,7 +54,7 @@ private:
 	std::function<bool()> funcdefeat;
 	std::optional<sf::Vector2f> teleportation_effect;
 	std::vector<AudioEffect> audioeffects;
-	sf::Countdown counter_under_attack;
+	Countdown counter_under_attack;
 	std::set<int> last_attacked_units;
 	std::set<int> new_attacked_units;
 	std::optional<sf::Vector2f> lasteventpos;

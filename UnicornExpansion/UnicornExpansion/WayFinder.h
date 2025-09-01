@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BusyMap.h"
+#include "HelperCppClasses\Vector2D.h"
 #include <vector>
 #include <array>
 
@@ -18,15 +18,13 @@ struct Step {
 class WayFinder
 {
 private:
-	BusyMap * map ;
-	std::vector<std::vector<int>> dists ;
+	Vector2D<bool>* map ;
+	Vector2D<int> dists ;
 	std::array<Step,4> dxy ;
-	void clearDists() ;
 	std::vector<Step> fillWayByDists(int x, int y) const ;
-	bool isXYInMap(int x, int y) const ;
 public:
 	// —оздаем класс
-	WayFinder(BusyMap * map);
+	WayFinder(Vector2D<bool> * map);
 	// »щем путь от и до
 	std::vector<Step> findWay(int startx, int starty, int dstx, int dsty) ;
 	~WayFinder(void);

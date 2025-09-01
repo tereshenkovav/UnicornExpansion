@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include <SFML/Graphics.hpp>
-#include "BusyMap.h"
+#include <HelperCppClasses/Vector2D.h>
 #include "UnitComponent.h"
 
 // Размер юнита в пикселях
@@ -69,7 +69,7 @@ public:
 	// Движение юнита
 	void moveTo(Moving moving) ;
 	// Обновление карты занятости от юнита
-	void updateBusyMap(BusyMap & busymap) const ;
+	void updateBusyMap(Vector2D<bool> & busymap) const ;
 	// Просто обновление юнита по времени
 	void update(float dt) ;
 	// Свойства юнита - его движение, имеет ли цель, работает ли над улучшением

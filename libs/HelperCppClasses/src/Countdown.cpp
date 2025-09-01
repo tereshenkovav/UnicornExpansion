@@ -1,13 +1,8 @@
-#include "Countdown.h"
-
-namespace sf {
-
-const float NOREACH=-1.0f ;
+#include "HelperCppClasses/Countdown.h"
 
 Countdown::Countdown(void)
 {
-	left=NOREACH ;
-	oncereach=false ;
+	reset() ;
 }
 
 void Countdown::upset(float interval) 
@@ -23,29 +18,20 @@ void Countdown::update(float dt)
 	if (!isActive()) oncereach=true ;	
 }
 
-bool Countdown::isActive() 
+bool Countdown::isActive() const
 {
-	return left>0 ;
+	return left>0.0f ;
 }
 
 bool Countdown::onceReachNol() 
 {
-	if (oncereach) 
-	{
-		oncereach=false ;
-		return true ;
-	}
-	return false ;
+	if (!oncereach) return false ;
+	oncereach=false ;
+	return true ;
 }
 
 void Countdown::reset() 
 {
-	left=NOREACH ;
+	left=0.0f ;
 	oncereach=false ;
-}
-
-Countdown::~Countdown(void)
-{
-}
-
 }
