@@ -78,13 +78,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);SFML\include;ZetScript\include;JsonCpp\include;..\..\libs\HelperCppClasses\include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);SFML\lib;ZetScript\lib;JsonCpp\lib</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);SFML\include;ZetScript\include;JsonCpp\include;..\..\libs\HelperCppClasses\include;..\..\libs\jsoncpp\include;</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);SFML\lib;ZetScript\lib;..\..\libs.static.vs2019</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);SFML\include;ZetScript\include;JsonCpp\include;..\..\libs\HelperCppClasses\include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);SFML\lib;ZetScript\lib;JsonCpp\lib</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);SFML\include;ZetScript\include;JsonCpp\include;..\..\libs\HelperCppClasses\include;..\..\libs\jsoncpp\include;</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);SFML\lib;ZetScript\lib;..\..\libs.static.vs2019</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

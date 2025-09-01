@@ -33,20 +33,17 @@ WayFinder.cpp
 
 include_directories(SFML.mingw/include)
 include_directories(ZetScript/include)
-include_directories(JsonCPP/include)
 
 find_library(SFML_LIB_Window sfml-window "SFML.mingw/lib")
 find_library(SFML_LIB_Graphics sfml-graphics "SFML.mingw/lib")
 find_library(SFML_LIB_System sfml-system "SFML.mingw/lib")
 find_library(SFML_LIB_Audio sfml-audio "SFML.mingw/lib")
-find_library(JSON_LIB jsoncpp "JsonCPP/lib.mingw")
 find_library(ZetScript_LIB zetscript-2-1-0-static "ZetScript/lib.mingw")
 
 target_link_libraries(UnicornExpansion PRIVATE ${SFML_LIB_Window})
 target_link_libraries(UnicornExpansion PRIVATE ${SFML_LIB_Graphics})
 target_link_libraries(UnicornExpansion PRIVATE ${SFML_LIB_System})
 target_link_libraries(UnicornExpansion PRIVATE ${SFML_LIB_Audio})
-target_link_libraries(UnicornExpansion PRIVATE ${JSON_LIB})
 target_link_libraries(UnicornExpansion PRIVATE ${ZetScript_LIB})
 
 # Команда копирует файл из каталога сборки в каталог bin.
