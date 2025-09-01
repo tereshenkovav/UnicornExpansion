@@ -49,10 +49,17 @@
 ## Сборка проекта
 
 В настоящее время, доступны два варианта построения игры - для Visual Studio и для MinGW.
+В обоих случаях нужно добавить в каталог `UnicornExpansion/UnicornExpansion`
+файл `Version.h`:
+
+```
+#pragma once
+const char * VERSION = "v1.0.0" ;
+```
 
 ### Сборка для Visual Studio
 
-Нужно открыть решение `Unicorn Expansion/UnicornExpansion.sln` и построить проект
+Нужно открыть решение `UnicornExpansion/UnicornExpansion.sln` и построить проект
 для архитектуры x64, конфигурация Release. Для запуска нужно поместить в каталог с exe-файлом
 библиотеки dll от SFML 3.0 для Visual Studio. Сборка проверена на Visual Studio 2019.
 Все зависимости вроде SFML, ZetScript и JsonCPP уже включены в состав проекта
