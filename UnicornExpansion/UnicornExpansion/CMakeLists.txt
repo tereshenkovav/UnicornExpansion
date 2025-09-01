@@ -46,13 +46,4 @@ target_link_libraries(UnicornExpansion PRIVATE ${SFML_LIB_System})
 target_link_libraries(UnicornExpansion PRIVATE ${SFML_LIB_Audio})
 target_link_libraries(UnicornExpansion PRIVATE ${ZetScript_LIB})
 
-# Команда копирует файл из каталога сборки в каталог bin.
-# Это нужно потому, что по неясной причине, в выходном каталоге появляется
-# также файл .dll.a, который не нужен.
-# Поэтому решение через set(EXECUTABLE_OUTPUT_PATH не подходит.
-
-add_custom_command(
-        TARGET UnicornExpansion POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-        ${CMAKE_CURRENT_BINARY_DIR}/UnicornExpansion.exe
-        ${PROJECT_SOURCE_DIR}/bin)
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
