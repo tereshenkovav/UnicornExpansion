@@ -4,3 +4,6 @@
 [submodule "libs/zetscript"]
 	path = libs/zetscript
 	url = git@github.com:jespa007/zetscript.git
+[submodule "libs/SFML"]
+	path = libs/SFML
+	url = git@github.com:SFML/SFML.git

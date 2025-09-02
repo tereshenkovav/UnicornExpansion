@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.28)
 
 project(UnicornExpansion LANGUAGES CXX)
 
@@ -29,3 +29,9 @@ add_subdirectory(libs/zetscript)
 # Добавляем библиотеку
 target_link_libraries(UnicornExpansion PRIVATE zetscript-2-1-0-static)
 target_include_directories(UnicornExpansion PUBLIC ${PROJECT_SOURCE_DIR}/libs/zetscript/src)
+
+add_subdirectory(libs/SFML)
+target_link_libraries(UnicornExpansion PRIVATE SFML::Graphics)
+target_link_libraries(UnicornExpansion PRIVATE SFML::Audio)
+target_link_libraries(UnicornExpansion PRIVATE SFML::System)
+target_link_libraries(UnicornExpansion PRIVATE SFML::Window)
