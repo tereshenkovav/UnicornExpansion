@@ -241,11 +241,17 @@ int main(int argc, char* argv[])
     srand(time(NULL));
 
     std::filesystem::path exepath(argv[0]);
-    std::string exedir = exepath.parent_path().string();
+    std::string exedir= exepath.parent_path().string();
 
     // Установка текущего каталога
+    // При ручном указании каталога
     if (argc > 1)
         std::filesystem::current_path(std::string(argv[1]));
+    else
+    // Для корректной работы внутри AppImage
+    if (hasEnding(std::filesystem::current_path(),"/usr"))
+        std::filesystem::current_path("data");
+    // Вариант по умолчанию - data в каталоге исполняемого файла
     else
         std::filesystem::current_path(exedir + "/data");
 

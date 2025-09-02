@@ -1,0 +1,12 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon=UnicornExpansion
+Icon[ru]=UnicornExpansion
+Name[ru]=UnicornExpansion
+Exec=UnicornExpansion
+Name=UnicornExpansion
+Categories=Game
