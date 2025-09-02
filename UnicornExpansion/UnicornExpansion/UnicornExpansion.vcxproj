@@ -78,12 +78,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);SFML\include;ZetScript\include;JsonCpp\include;..\..\libs\HelperCppClasses\include;..\..\libs\jsoncpp\include;..\..\libs\zetscript\src</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);SFML\include;ZetScript\include;JsonCpp\include;..\..\libs\HelperCppClasses\include;..\..\libs\jsoncpp\include;..\..\libs\zetscript\src;components;.</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);SFML\lib;ZetScript\lib;..\..\libs.static.vs2019</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);SFML\include;ZetScript\include;JsonCpp\include;..\..\libs\HelperCppClasses\include;..\..\libs\jsoncpp\include;..\..\libs\zetscript\src</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);SFML\include;ZetScript\include;JsonCpp\include;..\..\libs\HelperCppClasses\include;..\..\libs\jsoncpp\include;..\..\libs\zetscript\src;components;.</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);SFML\lib;ZetScript\lib;..\..\libs.static.vs2019</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -151,18 +151,18 @@
     <ClCompile Include="..\..\libs\HelperCppClasses\src\Vector2D.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="ClickerCounter.cpp" />
-    <ClCompile Include="ComponentAttacker.cpp" />
-    <ClCompile Include="ComponentDetoxer.cpp" />
-    <ClCompile Include="ComponentEnemy.cpp" />
-    <ClCompile Include="ComponentHealer.cpp" />
-    <ClCompile Include="ComponentMeleeEnemy.cpp" />
-    <ClCompile Include="ComponentEnemyLair.cpp" />
-    <ClCompile Include="ComponentEnemyTarget.cpp" />
-    <ClCompile Include="ComponentPortal.cpp" />
-    <ClCompile Include="ComponentHarvester.cpp" />
-    <ClCompile Include="ComponentRadar.cpp" />
-    <ClCompile Include="ComponentResource.cpp" />
-    <ClCompile Include="ComponentUnicorn.cpp" />
+    <ClCompile Include="components\ComponentAttacker.cpp" />
+    <ClCompile Include="components\ComponentDetoxer.cpp" />
+    <ClCompile Include="components\ComponentEnemy.cpp" />
+    <ClCompile Include="components\ComponentHealer.cpp" />
+    <ClCompile Include="components\ComponentMeleeEnemy.cpp" />
+    <ClCompile Include="components\ComponentEnemyLair.cpp" />
+    <ClCompile Include="components\ComponentEnemyTarget.cpp" />
+    <ClCompile Include="components\ComponentPortal.cpp" />
+    <ClCompile Include="components\ComponentHarvester.cpp" />
+    <ClCompile Include="components\ComponentRadar.cpp" />
+    <ClCompile Include="components\ComponentResource.cpp" />
+    <ClCompile Include="components\ComponentUnicorn.cpp" />
     <ClCompile Include="CppTools.cpp" />
     <ClCompile Include="FinderByBestDistance.cpp" />
     <ClCompile Include="FogBuilder.cpp" />
@@ -183,18 +183,18 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="ClickerCounter.h" />
-    <ClInclude Include="ComponentAttacker.h" />
-    <ClInclude Include="ComponentDetoxer.h" />
-    <ClInclude Include="ComponentEnemy.h" />
-    <ClInclude Include="ComponentHealer.h" />
-    <ClInclude Include="ComponentMeleeEnemy.h" />
-    <ClInclude Include="ComponentEnemyLair.h" />
-    <ClInclude Include="ComponentEnemyTarget.h" />
-    <ClInclude Include="ComponentPortal.h" />
-    <ClInclude Include="ComponentHarvester.h" />
-    <ClInclude Include="ComponentRadar.h" />
-    <ClInclude Include="ComponentResource.h" />
-    <ClInclude Include="ComponentUnicorn.h" />
+    <ClInclude Include="components\ComponentAttacker.h" />
+    <ClInclude Include="components\ComponentDetoxer.h" />
+    <ClInclude Include="components\ComponentEnemy.h" />
+    <ClInclude Include="components\ComponentHealer.h" />
+    <ClInclude Include="components\ComponentMeleeEnemy.h" />
+    <ClInclude Include="components\ComponentEnemyLair.h" />
+    <ClInclude Include="components\ComponentEnemyTarget.h" />
+    <ClInclude Include="components\ComponentPortal.h" />
+    <ClInclude Include="components\ComponentHarvester.h" />
+    <ClInclude Include="components\ComponentRadar.h" />
+    <ClInclude Include="components\ComponentResource.h" />
+    <ClInclude Include="components\ComponentUnicorn.h" />
     <ClInclude Include="CppTools.h" />
     <ClInclude Include="FinderByBestDistance.h" />
     <ClInclude Include="FogBuilder.h" />

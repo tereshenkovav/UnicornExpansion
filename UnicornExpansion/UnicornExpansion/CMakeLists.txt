@@ -2,18 +2,6 @@ add_executable(UnicornExpansion
 main.cpp
 Animation.cpp
 ClickerCounter.cpp
-ComponentAttacker.cpp
-ComponentDetoxer.cpp
-ComponentEnemy.cpp
-ComponentEnemyLair.cpp
-ComponentEnemyTarget.cpp
-ComponentHarvester.cpp
-ComponentHealer.cpp
-ComponentMeleeEnemy.cpp
-ComponentPortal.cpp
-ComponentRadar.cpp
-ComponentResource.cpp
-ComponentUnicorn.cpp
 CppTools.cpp
 FinderByBestDistance.cpp
 FogBuilder.cpp
@@ -30,6 +18,11 @@ UnitFactory.cpp
 UnitMover.cpp
 WayFinder.cpp
 )
+
+# Добавление каталога с классами компонент и установка текущего каталога
+# как включаемого, чтобы компоненты видели заголовочные файлы классов игры
+target_include_directories(UnicornExpansion PUBLIC .)
+add_subdirectory(components)
 
 include_directories(SFML.mingw/include)
 

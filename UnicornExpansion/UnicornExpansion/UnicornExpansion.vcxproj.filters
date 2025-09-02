@@ -45,46 +45,46 @@
     <ClCompile Include="UnitComponent.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentResource.cpp">
+    <ClCompile Include="components\ComponentResource.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentMeleeEnemy.cpp">
+    <ClCompile Include="components\ComponentMeleeEnemy.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="UnitFactory.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentPortal.cpp">
+    <ClCompile Include="components\ComponentPortal.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentUnicorn.cpp">
+    <ClCompile Include="components\ComponentUnicorn.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentHarvester.cpp">
+    <ClCompile Include="components\ComponentHarvester.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentAttacker.cpp">
+    <ClCompile Include="components\ComponentAttacker.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="FinderByBestDistance.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentEnemyTarget.cpp">
+    <ClCompile Include="components\ComponentEnemyTarget.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentEnemyLair.cpp">
+    <ClCompile Include="components\ComponentEnemyLair.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentEnemy.cpp">
+    <ClCompile Include="components\ComponentEnemy.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentHealer.cpp">
+    <ClCompile Include="components\ComponentHealer.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentRadar.cpp">
+    <ClCompile Include="components\ComponentRadar.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="SubTerrainBuilder.cpp">
@@ -99,7 +99,7 @@
     <ClCompile Include="MushroomNet.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentDetoxer.cpp">
+    <ClCompile Include="components\ComponentDetoxer.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="SeedStore.cpp">
@@ -143,46 +143,46 @@
     <ClInclude Include="UnitComponent.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentResource.h">
+    <ClInclude Include="components\ComponentResource.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentMeleeEnemy.h">
+    <ClInclude Include="components\ComponentMeleeEnemy.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="UnitFactory.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentPortal.h">
+    <ClInclude Include="components\ComponentPortal.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentUnicorn.h">
+    <ClInclude Include="components\ComponentUnicorn.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentHarvester.h">
+    <ClInclude Include="components\ComponentHarvester.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentAttacker.h">
+    <ClInclude Include="components\ComponentAttacker.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="FinderByBestDistance.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentEnemyTarget.h">
+    <ClInclude Include="components\ComponentEnemyTarget.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentEnemyLair.h">
+    <ClInclude Include="components\ComponentEnemyLair.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentEnemy.h">
+    <ClInclude Include="components\ComponentEnemy.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentHealer.h">
+    <ClInclude Include="components\ComponentHealer.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentRadar.h">
+    <ClInclude Include="components\ComponentRadar.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="SubTerrainBuilder.h">
@@ -197,7 +197,7 @@
     <ClInclude Include="MushroomNet.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentDetoxer.h">
+    <ClInclude Include="components\ComponentDetoxer.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="SeedStore.h">
