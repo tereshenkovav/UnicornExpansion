@@ -1,3 +1,6 @@
 [submodule "libs/jsoncpp"]
 	path = libs/jsoncpp
 	url = git@github.com:open-source-parsers/jsoncpp.git
+[submodule "libs/zetscript"]
+	path = libs/zetscript
+	url = git@github.com:jespa007/zetscript.git

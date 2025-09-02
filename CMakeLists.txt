@@ -23,3 +23,9 @@ set_property(TARGET jsoncpp_static PROPERTY CXX_STANDARD 17)
 # Добавляем библиотеку
 target_link_libraries(UnicornExpansion PRIVATE jsoncpp_static)
 
+# Настройка вложенного проекта zetscript
+# Добавляем каталог проекта
+add_subdirectory(libs/zetscript)
+# Добавляем библиотеку
+target_link_libraries(UnicornExpansion PRIVATE zetscript-2-1-0-static)
+target_include_directories(UnicornExpansion PUBLIC ${PROJECT_SOURCE_DIR}/libs/zetscript/src)
