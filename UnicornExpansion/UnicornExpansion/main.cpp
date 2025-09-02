@@ -207,8 +207,8 @@ void drawHealthRectAt(sf::RenderWindow& window, float hperc, float basew, float 
 // Загрузчик игры из файлов
 void loadGame(int leveln) {
     bool paramok = game.loadConfigs();
-    bool mapok = game.loadMap("levels\\level" + std::to_string(leveln) + ".map");
-    bool scriptok = game.loadScript("levels\\level" + std::to_string(leveln) + ".script");
+    bool mapok = game.loadMap("levels/level" + std::to_string(leveln) + ".map");
+    bool scriptok = game.loadScript("levels/level" + std::to_string(leveln) + ".script");
     
     game.update(0.0); // Первичная инициализация для тумана войны
     tekscale = 2.0;
@@ -239,15 +239,15 @@ void switchSound() {
 int main(int argc, char* argv[])
 {
     srand(time(NULL));
-    std::string exedir = ".";
-    const size_t last_slash_idx = std::string(argv[0]).rfind('\\');
-    if (std::string::npos != last_slash_idx) exedir = std::string(argv[0]).substr(0, last_slash_idx);
+
+    std::filesystem::path exepath(argv[0]);
+    std::string exedir = exepath.parent_path().string();
 
     // Установка текущего каталога
     if (argc > 1)
         std::filesystem::current_path(std::string(argv[1]));
     else
-        std::filesystem::current_path(exedir + "\\data");
+        std::filesystem::current_path(exedir + "/data");
 
     texts.loadFromFile("strings.txt");
 
@@ -258,56 +258,56 @@ int main(int argc, char* argv[])
     sf::RenderWindow window(sf::VideoMode({ 1024, 768 }), texts.getSfmlStr("Text_GameCaption"), sf::Style::Close, sf::State::Windowed, settings);
     window.setMouseCursorVisible(false);
     window.setVerticalSyncEnabled(true);
-    window.setIcon(sf::Image("images\\icon.png"));
+    window.setIcon(sf::Image("images/icon.png"));
 
     // Загрузка всех ресурсов
-    const sf::Texture texture0("images\\intro.png");
+    const sf::Texture texture0("images/intro.png");
     sf::Sprite spr_intro(texture0);
 
-    const sf::Texture texturetitle("images\\title.png");
+    const sf::Texture texturetitle("images/title.png");
     sf::Sprite spr_title(texturetitle);
     spr_title.setOrigin({ (float)texturetitle.getSize().x / 2, 0 });
     spr_title.setPosition({ 512, 60 });
 
-    const sf::Texture texture1("images\\border.png");
+    const sf::Texture texture1("images/border.png");
     sf::Sprite spr_border(texture1);
     spr_border.setPosition({ 0, 768 - 192 });
 
-    const sf::Texture texture2("images\\button.png");
+    const sf::Texture texture2("images/button.png");
     sf::Sprite spr_but_action(texture2);
 
-    const sf::Texture texture3("images\\cursor_def.png");
+    const sf::Texture texture3("images/cursor_def.png");
     sf::Sprite cursor_def(texture3);
 
-    const sf::Texture texture4("images\\cursor_my.png");
+    const sf::Texture texture4("images/cursor_my.png");
     sf::Sprite cursor_my(texture4);
 
-    const sf::Texture texture5("images\\undo.png");
+    const sf::Texture texture5("images/undo.png");
     sf::Sprite undo(texture5);
     undo.setPosition({ 1024 - 36 - 10, VIEW_SIZE_Y + 130 });
 
     // Перечисление всех типов единорогов с учетом порядка их компонент
-    addUnitSprite("unicorn_attacker", "images\\units\\unicorn.png");
-    addUnitSprite("unicorn_harvester", "images\\units\\unicorn.png");
-    addUnitSprite("unicorn_healer", "images\\units\\unicorn.png");
-    addUnitSprite("unicorn_radar", "images\\units\\unicorn.png");
+    addUnitSprite("unicorn_attacker", "images/units/unicorn.png");
+    addUnitSprite("unicorn_harvester", "images/units/unicorn.png");
+    addUnitSprite("unicorn_healer", "images/units/unicorn.png");
+    addUnitSprite("unicorn_radar", "images/units/unicorn.png");
 
-    addUnitSprite("unicorn_harvesterattacker", "images\\units\\unicorn.png");
-    addUnitSprite("unicorn_harvesterhealer", "images\\units\\unicorn.png");
-    addUnitSprite("unicorn_attackerhealer", "images\\units\\unicorn.png");
-    addUnitSprite("unicorn_harvesterradar", "images\\units\\unicorn.png");
-    addUnitSprite("unicorn_healerradar", "images\\units\\unicorn.png");
-    addUnitSprite("unicorn_attackerradar", "images\\units\\unicorn.png");
+    addUnitSprite("unicorn_harvesterattacker", "images/units/unicorn.png");
+    addUnitSprite("unicorn_harvesterhealer", "images/units/unicorn.png");
+    addUnitSprite("unicorn_attackerhealer", "images/units/unicorn.png");
+    addUnitSprite("unicorn_harvesterradar", "images/units/unicorn.png");
+    addUnitSprite("unicorn_healerradar", "images/units/unicorn.png");
+    addUnitSprite("unicorn_attackerradar", "images/units/unicorn.png");
 
-    addUnitSprite("unicorn_harvesterattackerhealer", "images\\units\\unicorn.png");
-    addUnitSprite("unicorn_harvesterhealerradar", "images\\units\\unicorn.png");
-    addUnitSprite("unicorn_harvesterattackerradar", "images\\units\\unicorn.png");
-    addUnitSprite("unicorn_attackerhealerradar", "images\\units\\unicorn.png");
+    addUnitSprite("unicorn_harvesterattackerhealer", "images/units/unicorn.png");
+    addUnitSprite("unicorn_harvesterhealerradar", "images/units/unicorn.png");
+    addUnitSprite("unicorn_harvesterattackerradar", "images/units/unicorn.png");
+    addUnitSprite("unicorn_attackerhealerradar", "images/units/unicorn.png");
 
-    addUnitSprite("unicorn_harvesterattackerhealerradar", "images\\units\\unicorn.png");
+    addUnitSprite("unicorn_harvesterattackerhealerradar", "images/units/unicorn.png");
 
     // Используется загрузка каталога в целом, можно вынести как процедуру
-    std::string pathload = "images\\units\\";
+    std::string pathload = "images/units/";
     for (auto& filename : std::filesystem::directory_iterator(pathload)) {
         auto str = filename.path().string();
         replaceFirstString(str, pathload, "");
@@ -316,7 +316,7 @@ int main(int argc, char* argv[])
     }
 
     // Используется загрузка каталога в целом, можно вынести как процедуру
-    pathload = "images\\actions\\";
+    pathload = "images/actions/";
     for (auto& filename : std::filesystem::directory_iterator(pathload)) {
         auto str = filename.path().string();
         replaceFirstString(str, pathload, "");
@@ -325,7 +325,7 @@ int main(int argc, char* argv[])
     }
 
     // Используется загрузка каталога в целом, можно вынести как процедуру
-    pathload = "images\\mushrooms\\";
+    pathload = "images/mushrooms/";
     for (auto& filename : std::filesystem::directory_iterator(pathload)) {
         textures.push_back(std::make_unique<sf::Texture>(filename));
         spr_mushrooms.push_back(std::make_unique<sf::Sprite>(*textures.back()));
@@ -410,57 +410,57 @@ endgameback.setPosition({ 512 - 150, 258 });
 endgameback.setSize({ 300, 100 });
 
 // Звуки лазера и старта
-sf::Music effect_fire("sounds\\laser.ogg");
+sf::Music effect_fire("sounds/laser.ogg");
 effect_fire.setVolume(0.0f);
 effect_fire.setLooping(true);
 effect_fire.play();
 
-sf::SoundBuffer effect_start_buffer("sounds\\start.ogg");
+sf::SoundBuffer effect_start_buffer("sounds/start.ogg");
 sf::Sound effect_start(effect_start_buffer);
 
 for (int i = 0; i <= 2; i++) {
-    soundbuffers.push_back(std::make_unique<sf::SoundBuffer>("sounds\\unicorn_click_"+std::to_string(i)+".ogg"));
+    soundbuffers.push_back(std::make_unique<sf::SoundBuffer>("sounds/unicorn_click_"+std::to_string(i)+".ogg"));
     snd_unicorn_clicks.push_back(std::make_unique<sf::Sound>(*soundbuffers.back()));
 }
-soundbuffers.push_back(std::make_unique<sf::SoundBuffer>("sounds\\secret.ogg"));
+soundbuffers.push_back(std::make_unique<sf::SoundBuffer>("sounds/secret.ogg"));
 snd_unicorn_clicks.push_back(std::make_unique<sf::Sound>(*soundbuffers.back()));
 
 ClickerCounter clickcounter(snd_unicorn_clicks.size());
 
-addAudioEffect(AudioEffect::Teleport, "sounds\\teleport.ogg");
+addAudioEffect(AudioEffect::Teleport, "sounds/teleport.ogg");
 // В файле finish_teleport добавлена пауза в начале, чтобы можно было использовать совместно с эффектом телепортации
-addAudioEffect(AudioEffect::FinishTeleport, "sounds\\finish_teleport.ogg");
-addAudioEffect(AudioEffect::FinishResearch, "sounds\\finish_research.ogg");
-addAudioEffect(AudioEffect::FinishUpgrade, "sounds\\finish_upgrade.ogg");
-addAudioEffect(AudioEffect::UnderAttack, "sounds\\under_attack.ogg");
+addAudioEffect(AudioEffect::FinishTeleport, "sounds/finish_teleport.ogg");
+addAudioEffect(AudioEffect::FinishResearch, "sounds/finish_research.ogg");
+addAudioEffect(AudioEffect::FinishUpgrade, "sounds/finish_upgrade.ogg");
+addAudioEffect(AudioEffect::UnderAttack, "sounds/under_attack.ogg");
 
-addTerrainSprite(Terrain::Ground, "images\\terrains\\ground.png");
-addTerrainSprite(Terrain::Water, "images\\terrains\\water.png");
-addTerrainSprite(Terrain::Forest, "images\\terrains\\forest.png");
-addTerrainSprite(Terrain::Road, "images\\terrains\\road.png");
+addTerrainSprite(Terrain::Ground, "images/terrains/ground.png");
+addTerrainSprite(Terrain::Water, "images/terrains/water.png");
+addTerrainSprite(Terrain::Forest, "images/terrains/forest.png");
+addTerrainSprite(Terrain::Road, "images/terrains/road.png");
 
-addSubTerrainSprite(TerrainSubType::TreeBottom, "images\\subterrains\\tree_bottom.png");
-addSubTerrainSprite(TerrainSubType::TreeBottomLeft, "images\\subterrains\\tree_bottom_left.png");
-addSubTerrainSprite(TerrainSubType::TreeBottomRight, "images\\subterrains\\tree_bottom_right.png");
-addSubTerrainSprite(TerrainSubType::TreeTop, "images\\subterrains\\tree_top.png");
-addSubTerrainSprite(TerrainSubType::TreeTopLeft, "images\\subterrains\\tree_top_left.png");
-addSubTerrainSprite(TerrainSubType::TreeTopRight, "images\\subterrains\\tree_top_right.png");
-addSubTerrainSprite(TerrainSubType::TreeLeft, "images\\subterrains\\tree_left.png");
-addSubTerrainSprite(TerrainSubType::TreeRight, "images\\subterrains\\tree_right.png");
-addSubTerrainSprite(TerrainSubType::WaterTopLeft, "images\\subterrains\\water_top_left.png");
-addSubTerrainSprite(TerrainSubType::WaterTop, "images\\subterrains\\water_top.png");
-addSubTerrainSprite(TerrainSubType::WaterTopRight, "images\\subterrains\\water_top_right.png");
-addSubTerrainSprite(TerrainSubType::WaterLeft, "images\\subterrains\\water_left.png");
-addSubTerrainSprite(TerrainSubType::WaterRight, "images\\subterrains\\water_right.png");
-addSubTerrainSprite(TerrainSubType::WaterBottomLeft, "images\\subterrains\\water_bottom_left.png");
-addSubTerrainSprite(TerrainSubType::WaterBottom, "images\\subterrains\\water_bottom.png");
-addSubTerrainSprite(TerrainSubType::WaterBottomRight, "images\\subterrains\\water_bottom_right.png");
-addSubTerrainSprite(TerrainSubType::RoadHorz, "images\\subterrains\\road_horz.png");
-addSubTerrainSprite(TerrainSubType::RoadVert, "images\\subterrains\\road_vert.png");
-addSubTerrainSprite(TerrainSubType::RoadTopLeft, "images\\subterrains\\road_top_left.png");
-addSubTerrainSprite(TerrainSubType::RoadTopRight, "images\\subterrains\\road_top_right.png");
-addSubTerrainSprite(TerrainSubType::RoadBottomLeft, "images\\subterrains\\road_bottom_left.png");
-addSubTerrainSprite(TerrainSubType::RoadBottomRight, "images\\subterrains\\road_bottom_right.png");
+addSubTerrainSprite(TerrainSubType::TreeBottom, "images/subterrains/tree_bottom.png");
+addSubTerrainSprite(TerrainSubType::TreeBottomLeft, "images/subterrains/tree_bottom_left.png");
+addSubTerrainSprite(TerrainSubType::TreeBottomRight, "images/subterrains/tree_bottom_right.png");
+addSubTerrainSprite(TerrainSubType::TreeTop, "images/subterrains/tree_top.png");
+addSubTerrainSprite(TerrainSubType::TreeTopLeft, "images/subterrains/tree_top_left.png");
+addSubTerrainSprite(TerrainSubType::TreeTopRight, "images/subterrains/tree_top_right.png");
+addSubTerrainSprite(TerrainSubType::TreeLeft, "images/subterrains/tree_left.png");
+addSubTerrainSprite(TerrainSubType::TreeRight, "images/subterrains/tree_right.png");
+addSubTerrainSprite(TerrainSubType::WaterTopLeft, "images/subterrains/water_top_left.png");
+addSubTerrainSprite(TerrainSubType::WaterTop, "images/subterrains/water_top.png");
+addSubTerrainSprite(TerrainSubType::WaterTopRight, "images/subterrains/water_top_right.png");
+addSubTerrainSprite(TerrainSubType::WaterLeft, "images/subterrains/water_left.png");
+addSubTerrainSprite(TerrainSubType::WaterRight, "images/subterrains/water_right.png");
+addSubTerrainSprite(TerrainSubType::WaterBottomLeft, "images/subterrains/water_bottom_left.png");
+addSubTerrainSprite(TerrainSubType::WaterBottom, "images/subterrains/water_bottom.png");
+addSubTerrainSprite(TerrainSubType::WaterBottomRight, "images/subterrains/water_bottom_right.png");
+addSubTerrainSprite(TerrainSubType::RoadHorz, "images/subterrains/road_horz.png");
+addSubTerrainSprite(TerrainSubType::RoadVert, "images/subterrains/road_vert.png");
+addSubTerrainSprite(TerrainSubType::RoadTopLeft, "images/subterrains/road_top_left.png");
+addSubTerrainSprite(TerrainSubType::RoadTopRight, "images/subterrains/road_top_right.png");
+addSubTerrainSprite(TerrainSubType::RoadBottomLeft, "images/subterrains/road_bottom_left.png");
+addSubTerrainSprite(TerrainSubType::RoadBottomRight, "images/subterrains/road_bottom_right.png");
 
 // Цвета территорий и лазеров
 color_terrains[Terrain::Ground] = sf::Color(105, 149, 19);
@@ -473,11 +473,11 @@ color_lasers[LaserType::Attack] = sf::Color(255, 0, 0);
 color_lasers[LaserType::Heal] = sf::Color(240, 255, 0);
 color_lasers[LaserType::Detox] = sf::Color(160, 56, 255);
 
-Animation laser_apply("images\\laser_apply.png", 30, 34, 12, 12);
+Animation laser_apply("images/laser_apply.png", 30, 34, 12, 12);
 laser_apply.setOrigin({ 15,17 });
 laser_apply.play();
 
-Animation aura("images\\aura_default.png", 86, 80, 12, 12);
+Animation aura("images/aura_default.png", 86, 80, 12, 12);
 aura.setOrigin({ 43, 40 });
 aura.play();
 
@@ -486,10 +486,10 @@ anim_lasers[LaserType::Attack] = &laser_apply;
 anim_lasers[LaserType::Heal] = &aura;
 anim_lasers[LaserType::Detox] = &laser_apply;
 
-Animation teleportation("images\\teleportation.png", 96, 96, 9, 9);
+Animation teleportation("images/teleportation.png", 96, 96, 9, 9);
 teleportation.setOrigin({ 48, 48 });
 
-const sf::Texture texture_laz("images\\laser.png");
+const sf::Texture texture_laz("images/laser.png");
 sf::Sprite spr_laz(texture_laz);
 spr_laz.setOrigin({ 0,3 });
 
@@ -497,9 +497,9 @@ sf::Shader shader_gray;
 sf::Shader shader_bright;
 sf::Shader shader_attack;
 
-shader_gray.loadFromFile("shaders\\gray.frag", sf::Shader::Type::Fragment);
-shader_bright.loadFromFile("shaders\\bright.frag", sf::Shader::Type::Fragment);
-shader_attack.loadFromFile("shaders\\attack.frag", sf::Shader::Type::Fragment);
+shader_gray.loadFromFile("shaders/gray.frag", sf::Shader::Type::Fragment);
+shader_bright.loadFromFile("shaders/bright.frag", sf::Shader::Type::Fragment);
+shader_attack.loadFromFile("shaders/attack.frag", sf::Shader::Type::Fragment);
 
 shader_gray.setUniform("texture", sf::Shader::CurrentTexture);
 shader_bright.setUniform("texture", sf::Shader::CurrentTexture);
@@ -510,8 +510,8 @@ float progress;
 bool modeendgame = false;
 scene = Scene::Menu;
 
-if (std::filesystem::exists(exedir + "\\developer.json"))
-    game.loadDeveloperConfig(exedir + "\\developer.json");
+if (std::filesystem::exists(exedir + "/developer.json"))
+    game.loadDeveloperConfig(exedir + "/developer.json");
 
 const int LEVEL_COUNT = 6;
 
@@ -774,7 +774,7 @@ while (window.isOpen())
 
     fogbuilder.updateByGame(game);
 
-    shader_attack.setUniform("stage", 0.25f+0.25f*sin(4.0f*M_PI*globalt));
+    shader_attack.setUniform("stage", (float)(0.25f+0.25f*sin(4.0f*M_PI*globalt)));
 
     if (!modeendgame)
         if (game.isGameOver())

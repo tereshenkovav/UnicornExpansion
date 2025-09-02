@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <string>
-#include <HelperCppClasses\Vector2D.h>
+#include <HelperCppClasses/Vector2D.h>
 #include "GameUnit.h"
 #include "WayFinder.h"
 
