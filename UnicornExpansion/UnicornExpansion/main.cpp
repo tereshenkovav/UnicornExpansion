@@ -249,7 +249,7 @@ int main(int argc, char* argv[])
         std::filesystem::current_path(std::string(argv[1]));
     else
     // Для корректной работы внутри AppImage
-    if (hasEnding(std::filesystem::current_path(),"/usr"))
+    if (hasEnding(std::filesystem::current_path().string(),"/usr"))
         std::filesystem::current_path("data");
     // Вариант по умолчанию - data в каталоге исполняемого файла
     else
