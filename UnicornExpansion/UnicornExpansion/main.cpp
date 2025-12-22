@@ -67,7 +67,7 @@ std::optional<int> selected_uid;
 int started_galop_uid;
 Countdown counter_endgame;
 int tekscale;
-sf::RectangleShape rect_health;
+sf::RectangleShape rect_pblocks;
 std::optional<Animation> current_teleportation_effect;
 bool mouseholdedonmap = false;
 float globalt = 0.0f;
@@ -195,12 +195,12 @@ void updateScale() {
     fixCameraPosition();
 }
 
-void drawHealthRectAt(sf::RenderWindow& window, float hperc, float basew, float x, float y) {
-    rect_health.setFillColor(getColorByHPNorm(hperc));
-    int cntrect = ((int)(basew * hperc) / (rect_health.getSize().x + 2)) + 1;
+void drawProgressRectsAt(sf::RenderWindow& window, float perc, float basew, float x, float y, sf::Color color) {
+    rect_pblocks.setFillColor(color);
+    int cntrect = ((int)(basew * perc) / (rect_pblocks.getSize().x + 2)) + 1;
     for (int j = 0; j < cntrect; j++) {
-        rect_health.setPosition({ x + j * (rect_health.getSize().x + 2), y });
-        window.draw(rect_health);
+        rect_pblocks.setPosition({ x + j * (rect_pblocks.getSize().x + 2), y });
+        window.draw(rect_pblocks);
     }
 }
 
@@ -400,9 +400,9 @@ rect_progress.setOutlineThickness(0);
 rect_progress.setPosition(rect_progress_border.getPosition());
 rect_progress.setFillColor(sf::Color(217, 138, 255));
 
-rect_health.setSize({ 4, 4 });
-rect_health.setOutlineThickness(1);
-rect_health.setOutlineColor(sf::Color{ 64,64,64 });
+rect_pblocks.setSize({ 4, 4 });
+rect_pblocks.setOutlineThickness(1);
+rect_pblocks.setOutlineColor(sf::Color{ 64,64,64 });
 
 sf::RectangleShape textback;
 textback.setOutlineThickness(1);
@@ -875,12 +875,20 @@ while (window.isOpen())
                             }
                         }
 
-            // Полоски здоровья выводим после юнитов
+            // Полоски здоровья и прогресса выводим после юнитов
                 for (int i = 0; i < game.getUnitCount(); i++)
-                    if (!game.isFog(game.getUnit(i).getXY().x, game.getUnit(i).getXY().y))
-                        drawHealthRectAt(window, game.getUnit(i).getHealthPerMax(), game.getUnit(i).getSizeView().x,
+                    if (!game.isFog(game.getUnit(i).getXY().x, game.getUnit(i).getXY().y)) {
+                        drawProgressRectsAt(window, game.getUnit(i).getHealthPerMax(), game.getUnit(i).getSizeView().x,
                             game.getUnit(i).getView().x - game.getUnit(i).getSizeView().x / 2.0f,
-                            game.getUnit(i).getView().y - game.getUnit(i).getSizeView().y / 2.0f - 10);
+                            game.getUnit(i).getView().y - game.getUnit(i).getSizeView().y / 2.0f - 10,
+                            getColorByHPNorm(game.getUnit(i).getHealthPerMax()));
+                        float v;
+                        if (game.getUnit(i).isWorkingTask(&v))
+                            drawProgressRectsAt(window, v, game.getUnit(i).getSizeView().x,
+                                game.getUnit(i).getView().x - game.getUnit(i).getSizeView().x / 2.0f,
+                                game.getUnit(i).getView().y - game.getUnit(i).getSizeView().y / 2.0f - 16,
+                                sf::Color(217, 138, 255));
+                    }
 
             // Лазеры выводим после всего
             for (int i = 0; i < game.getLaserCount(); i++)
@@ -939,7 +947,8 @@ while (window.isOpen())
                // window.draw(textback);
 
                 const GameUnit& selunit = game.getUnitByUID(*selected_uid);
-                drawHealthRectAt(window, selunit.getHealthPerMax(), 48, textback.getPosition().x + 12, textback.getPosition().y + 64);
+                drawProgressRectsAt(window, selunit.getHealthPerMax(), 48, textback.getPosition().x + 12, textback.getPosition().y + 64,
+                    getColorByHPNorm(selunit.getHealthPerMax()));
 
                 if (spr_icons.count(selunit.getCode()) > 0) {
                     spr_icons[selunit.getCode()]->setPosition({ textback.getPosition().x + 12 + 48 / 2, textback.getPosition().y + 34 });

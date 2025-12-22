@@ -76,6 +76,7 @@ public:
 	bool isMoving() const ;
 	bool isTargeted() const ;
 	bool isWorkingTask(float* progress, std::string * actioncode) const;
+	bool isWorkingTask(float* progress) const;
 	bool isWorkingTask() const;
 	// Установка цели и сброс её
 	void setTarget(int x, int y) ;

@@ -287,6 +287,13 @@ bool GameUnit::isWorkingTask(float* progress, std::string* actioncode) const
 	return true;
 }
 
+bool GameUnit::isWorkingTask(float* progress) const
+{
+	if (worktek < 0) return false;
+	*progress = worktek / workall;
+	return true;
+}
+
 bool GameUnit::isWorkingTask() const
 {
 	return (worktek >= 0);
