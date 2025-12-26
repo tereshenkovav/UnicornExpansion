@@ -17,6 +17,8 @@ GameUnit::GameUnit(int unitx, int unity, int unitw, int unith, const std::string
 
 	this->maxhealth = maxhealth;
 	this->health = maxhealth;
+	this->shield = 0.0f;
+	this->full_shield = std::nullopt;
 	this->code = code;
 	
 	worktek = -1.0f;
@@ -80,10 +82,24 @@ std::string GameUnit::getHealthInfo() const
 	return std::to_string(int_health) + "/" + std::to_string(maxhealth);
 }
 
+std::string GameUnit::getShieldInfo() const
+{
+	// »справление дл€ запрета вывода нулевого значени€
+	if (!full_shield) return "";
+	int int_shield = ((int)shield < 1) ? 1 : (int)shield;
+	return std::to_string(int_shield) + "/" + std::to_string(*full_shield);
+}
+
 float GameUnit::getHealthPerMax() const
 {
 	int int_health = ((int)health < 1) ? 1 : (int)health;
 	return int_health / (float)maxhealth;
+}
+
+float GameUnit::getShieldPerMax() const
+{
+	if (!full_shield) return 0.0f;
+	return shield / (float)*full_shield;
 }
 
 sf::Vector2i GameUnit::getTarget() const {
@@ -203,14 +219,26 @@ bool GameUnit::canSendAction(const UnitAction& action, std::string* msgcode) con
 
 void GameUnit::decHealth(float value)
 {
-	health -= value;
-	if (health < 0.0f) health = 0.0f;
+	if (shield > 0.0f) {
+		shield -= value;
+		if (shield <= 0.0f)	full_shield = std::nullopt;
+	}
+	else {
+		health -= value;
+		if (health < 0.0f) health = 0.0f;
+	}
 }
 
 void GameUnit::incHealth(float value)
 {
 	health += value;
 	if (health > maxhealth) health = maxhealth;
+}
+
+void GameUnit::setShield(int value)
+{
+	full_shield = value;
+	shield = value;
 }
 
 bool GameUnit::isKilled() const

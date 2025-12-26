@@ -875,18 +875,26 @@ while (window.isOpen())
                             }
                         }
 
-            // Полоски здоровья и прогресса выводим после юнитов
+            // Полоски здоровья, щита и прогресса выводим после юнитов
                 for (int i = 0; i < game.getUnitCount(); i++)
                     if (!game.isFog(game.getUnit(i).getXY().x, game.getUnit(i).getXY().y)) {
                         drawProgressRectsAt(window, game.getUnit(i).getHealthPerMax(), game.getUnit(i).getSizeView().x,
                             game.getUnit(i).getView().x - game.getUnit(i).getSizeView().x / 2.0f,
-                            game.getUnit(i).getView().y - game.getUnit(i).getSizeView().y / 2.0f - 10,
+                            game.getUnit(i).getView().y - game.getUnit(i).getSizeView().y / 2.0f - 8,
                             getColorByHPNorm(game.getUnit(i).getHealthPerMax()));
-                        float v;
+                        float v = game.getUnit(i).getShieldPerMax();
+                        int shift = 14;
+                        if (v > 0) {
+                            drawProgressRectsAt(window, v, game.getUnit(i).getSizeView().x,
+                                game.getUnit(i).getView().x - game.getUnit(i).getSizeView().x / 2.0f,
+                                game.getUnit(i).getView().y - game.getUnit(i).getSizeView().y / 2.0f - shift,
+                                sf::Color(107, 230, 255));
+                            shift += 6;
+                        }
                         if (game.getUnit(i).isWorkingTask(&v))
                             drawProgressRectsAt(window, v, game.getUnit(i).getSizeView().x,
                                 game.getUnit(i).getView().x - game.getUnit(i).getSizeView().x / 2.0f,
-                                game.getUnit(i).getView().y - game.getUnit(i).getSizeView().y / 2.0f - 16,
+                                game.getUnit(i).getView().y - game.getUnit(i).getSizeView().y / 2.0f - shift,
                                 sf::Color(217, 138, 255));
                     }
 
@@ -949,6 +957,9 @@ while (window.isOpen())
                 const GameUnit& selunit = game.getUnitByUID(*selected_uid);
                 drawProgressRectsAt(window, selunit.getHealthPerMax(), 48, textback.getPosition().x + 12, textback.getPosition().y + 64,
                     getColorByHPNorm(selunit.getHealthPerMax()));
+                if (selunit.getShieldPerMax() > 0.0f)
+                    drawProgressRectsAt(window, selunit.getShieldPerMax(), 48, textback.getPosition().x + 12, textback.getPosition().y + 82,
+                        sf::Color(107, 230, 255));
 
                 if (spr_icons.count(selunit.getCode()) > 0) {
                     spr_icons[selunit.getCode()]->setPosition({ textback.getPosition().x + 12 + 48 / 2, textback.getPosition().y + 34 });
@@ -962,6 +973,11 @@ while (window.isOpen())
                 text_hp.setString(selunit.getHealthInfo());
                 text_hp.setPosition({ textback.getPosition().x + 78, textback.getPosition().y + 54 });
                 text_hp.setFillColor(getColorByHPNorm(selunit.getHealthPerMax()));
+                window.draw(text_hp);
+
+                text_hp.setString(selunit.getShieldInfo());
+                text_hp.setPosition({ textback.getPosition().x + 78, textback.getPosition().y + 72 });
+                text_hp.setFillColor(sf::Color(107, 230, 255));
                 window.draw(text_hp);
 
                 text_info.setString(texts.getSfmlStrReplacedConsts(selunit.getComponentsInfo()));

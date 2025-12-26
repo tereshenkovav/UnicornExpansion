@@ -9,6 +9,7 @@ ComponentHealer.cpp
 ComponentMeleeEnemy.cpp
 ComponentPortal.cpp
 ComponentRadar.cpp
+ComponentShield.cpp
 ComponentResource.cpp
 ComponentUnicorn.cpp)
 target_include_directories(UnicornExpansion PUBLIC .)

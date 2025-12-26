@@ -41,6 +41,8 @@ private:
 	int unitw ;
 	int unith ;
 	float health;
+	float shield;
+	std::optional<int> full_shield;
 
 	std::vector<UnitComponent*> components;
 	int getMovingDx() const ;
@@ -84,7 +86,9 @@ public:
 	// Получение свойств юнита и его действия доступные
 	std::string getCaption() const;
 	std::string getHealthInfo() const;
+	std::string getShieldInfo() const;
 	float getHealthPerMax() const;
+	float getShieldPerMax() const;
 	int getVelocity() const;
 	std::string getCode() const;
 	std::vector<UnitAction> getActions() const;
@@ -93,6 +97,8 @@ public:
 	// Работа со здоровьем
 	void decHealth(float value);
 	void incHealth(float value);
+	// Работа с щитом
+	void setShield(int value);
 	// Признак убитого юнита
 	bool isKilled() const;
 	// Возможность вызвать действие

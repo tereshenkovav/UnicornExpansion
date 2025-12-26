@@ -4,6 +4,7 @@
 #include "ComponentAttacker.h"
 #include "ComponentHealer.h"
 #include "ComponentRadar.h"
+#include "ComponentShield.h"
 #include "ComponentDetoxer.h"
 
 std::vector<UnitAction> ComponentUnicorn::getActions() const
@@ -21,6 +22,9 @@ std::vector<UnitAction> ComponentUnicorn::getActions() const
 	if (!game->getUnitByUID(unit_id).isComponent<ComponentRadar>())
 		actions.push_back({ "make_radar", "MakeRadar",
 			game->getConfigAction()["MakeRadar"]["Price"].asInt(), game->getConfigAction()["MakeRadar"]["Time"].asInt(), (UnitComponent*)this });
+	if (!game->getUnitByUID(unit_id).isComponent<ComponentShield>())
+		actions.push_back({ "make_shield", "MakeShield",
+			game->getConfigAction()["MakeShield"]["Price"].asInt(), game->getConfigAction()["MakeShield"]["Time"].asInt(), (UnitComponent*)this });
 	if (!game->getUnitByUID(unit_id).isComponent<ComponentDetoxer>())
 		actions.push_back({ "make_detoxer", "MakeDetoxer",
 			game->getConfigAction()["MakeDetoxer"]["Price"].asInt(), game->getConfigAction()["MakeDetoxer"]["Time"].asInt(), (UnitComponent*)this });
@@ -46,6 +50,11 @@ bool ComponentUnicorn::applyAction(const UnitAction& action)
 	}
 	if (action.code == "make_radar") {
 		game->addComponentToUnitByUID(unit_id, new ComponentRadar(game));
+		game->addGameEvent(AudioEffect::FinishResearch, game->getUnitByUID(this->unit_id).getView());
+		return true;
+	}
+	if (action.code == "make_shield") {
+		game->addComponentToUnitByUID(unit_id, new ComponentShield(game));
 		game->addGameEvent(AudioEffect::FinishResearch, game->getUnitByUID(this->unit_id).getView());
 		return true;
 	}

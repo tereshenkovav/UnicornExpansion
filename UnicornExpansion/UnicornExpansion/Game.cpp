@@ -393,6 +393,11 @@ void Game::addComponentToUnitByUID(int uid, UnitComponent* component)
 		if (units[i].getUID() == uid) units[i].addComponent(component);
 }
 
+void Game::setShieldToUnit(int uid, int value) {
+	for (int i = 0; i < units.size(); i++)
+		if (units[i].getUID() == uid) units[i].setShield(value);
+}
+
 int Game::getLaserCount() const
 {
 	return lasers.size();

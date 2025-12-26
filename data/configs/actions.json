@@ -29,6 +29,10 @@
         "Price": 30,
         "Time": 7
     },
+    "MakeShield": {
+        "Price": 20,
+        "Time": 10
+    },
     "MakeDetoxer": {
         "Price": 40,
         "Time": 10
@@ -49,5 +53,10 @@
         "Price": 30,
         "Time": 3,
         "Distance": 14
+    },
+    "DoShield": {
+        "Price": 25,
+        "Time": 1,
+        "Amount": 40
     }
 }

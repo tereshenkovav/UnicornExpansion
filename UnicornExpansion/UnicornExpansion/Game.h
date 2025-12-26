@@ -108,6 +108,8 @@ public:
 	int getCountByComponent(const std::string & compname) const;
 	// Добавить компонент для юнита
 	void addComponentToUnitByUID(int uid, UnitComponent* component);
+	// Установка щита для юнита
+	void setShieldToUnit(int uid, int value);
 	// Работа с лазерами
 	int getLaserCount() const;
 	Laser getLaser(int i) const;
