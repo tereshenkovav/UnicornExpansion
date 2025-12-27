@@ -45,6 +45,7 @@ private:
 	std::optional<int> full_shield;
 
 	std::vector<UnitComponent*> components;
+	std::vector<std::string> postfixes;
 	int getMovingDx() const ;
 	int getMovingDy() const ;
 public:
@@ -103,6 +104,7 @@ public:
 	bool isKilled() const;
 	// Возможность вызвать действие
 	bool canSendAction(const UnitAction& action, std::string* msgcode) const;
+	const std::vector<std::string>& getPostfixes() const;
 	// Работа с компонентами
 	void addComponent(UnitComponent* comp);
 	bool hasComponentByName(const std::string& code) const;

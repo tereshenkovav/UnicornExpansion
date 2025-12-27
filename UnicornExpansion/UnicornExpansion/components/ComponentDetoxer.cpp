@@ -21,6 +21,11 @@ int ComponentDetoxer::getDetoxDistance() const
 	return game->getConfigComponent()["Detoxer"]["Distance"].asInt();
 }
 
+std::string ComponentDetoxer::getCodePostfix() const
+{
+	return "detoxer";
+}
+
 int ComponentDetoxer::getOrder() const
 {
 	return 5;

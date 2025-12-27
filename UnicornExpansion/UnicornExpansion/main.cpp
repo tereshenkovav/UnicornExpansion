@@ -72,6 +72,10 @@ std::optional<Animation> current_teleportation_effect;
 bool mouseholdedonmap = false;
 float globalt = 0.0f;
 
+// Сдвиговые значения для маркеров способностей
+std::array<int, 8> marker_dx = { 11, 0, 11, 0, 11, 0, 11, 0 };
+std::array<int, 8> marker_dy = { 0, 0, 11, 11, 64 - 22, 64 - 22, 64 - 11, 64 - 11 };
+
 // Переключатели сцен
 enum class Scene { Menu, Task, Game };
 Scene scene;
@@ -292,27 +296,19 @@ int main(int argc, char* argv[])
     sf::Sprite undo(texture5);
     undo.setPosition({ 1024 - 36 - 10, VIEW_SIZE_Y + 130 });
 
-    // Перечисление всех типов единорогов с учетом порядка их компонент
-    addUnitSprite("unicorn_attacker", "images/units/unicorn.png");
-    addUnitSprite("unicorn_harvester", "images/units/unicorn.png");
-    addUnitSprite("unicorn_healer", "images/units/unicorn.png");
-    addUnitSprite("unicorn_radar", "images/units/unicorn.png");
+    const sf::Texture texture6("images/marker.png");
+    sf::Sprite marker(texture6);
+    marker.setOrigin({ 5, 5 });
+    
+    std::map<std::string, sf::Color> components_color;
+    components_color["healer"] = sf::Color(240, 255, 0);
+    components_color["attacker"] = sf::Color(255, 0, 0);
+    components_color["harvester"] = sf::Color(0, 64, 255);
+    components_color["detoxer"] = sf::Color(208, 0, 220);
+    components_color["radar"] = sf::Color(255, 255, 255);
+    components_color["shield"] = sf::Color(107, 230, 255);
 
-    addUnitSprite("unicorn_harvesterattacker", "images/units/unicorn.png");
-    addUnitSprite("unicorn_harvesterhealer", "images/units/unicorn.png");
-    addUnitSprite("unicorn_attackerhealer", "images/units/unicorn.png");
-    addUnitSprite("unicorn_harvesterradar", "images/units/unicorn.png");
-    addUnitSprite("unicorn_healerradar", "images/units/unicorn.png");
-    addUnitSprite("unicorn_attackerradar", "images/units/unicorn.png");
-
-    addUnitSprite("unicorn_harvesterattackerhealer", "images/units/unicorn.png");
-    addUnitSprite("unicorn_harvesterhealerradar", "images/units/unicorn.png");
-    addUnitSprite("unicorn_harvesterattackerradar", "images/units/unicorn.png");
-    addUnitSprite("unicorn_attackerhealerradar", "images/units/unicorn.png");
-
-    addUnitSprite("unicorn_harvesterattackerhealerradar", "images/units/unicorn.png");
-
-    // Используется загрузка каталога в целом, можно вынести как процедуру
+   // Используется загрузка каталога в целом, можно вынести как процедуру
     std::string pathload = "images/units/";
     for (auto& filename : std::filesystem::directory_iterator(pathload)) {
         auto str = filename.path().string();
@@ -855,12 +851,23 @@ while (window.isOpen())
                 for (int i = 0; i < game.getUnitCount(); i++)
                     if (!game.isFog(game.getUnit(i).getXY().x, game.getUnit(i).getXY().y))
                         if (spr_units.count(game.getUnit(i).getCode()) > 0) {
+                            bool movleft = game.getUnit(i).getLastMoving() == Moving::Left;
                             spr_units[game.getUnit(i).getCode()]->setPosition(game.getUnit(i).getView());
-                            spr_units[game.getUnit(i).getCode()]->setScale({ game.getUnit(i).getLastMoving() == Moving::Left ? -1.0f : 1.0f,1 });
+                            spr_units[game.getUnit(i).getCode()]->setScale({ movleft ? -1.0f : 1.0f,1 });
                             if (game.isUnitUnderAttack(game.getUnit(i).getUID()))
                                 window.draw(*spr_units[game.getUnit(i).getCode()], &shader_attack);
                             else
                                 window.draw(*spr_units[game.getUnit(i).getCode()]);
+
+                            if (game.getUnit(i).isComponent<ComponentUnicorn>()) {
+                                int marker_x = game.getUnit(i).getView().x + (movleft ? 1 : -1)*(game.getUnit(i).getSizeView().x / 2 - 15);
+                                int marker_y = game.getUnit(i).getView().y - game.getUnit(i).getSizeView().y / 2 + 5;
+                                for (int j = 0; j < game.getUnit(i).getPostfixes().size(); j++) {
+                                    marker.setPosition(sf::Vector2f(marker_x+ (movleft ? 1 : -1)*marker_dx[j],marker_y+ marker_dy[j]));
+                                    marker.setColor(components_color[game.getUnit(i).getPostfixes()[j]]);
+                                    window.draw(marker);
+                                }
+                            }
                         }
 
                 // И здесь вывод только верхних фрагментов леса

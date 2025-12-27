@@ -12,5 +12,6 @@ public:
 	// Длина и сила очистки
 	int getDetoxValue() const;
 	int getDetoxDistance() const;
+	virtual std::string getCodePostfix() const;
 	virtual int getOrder() const;
 };

@@ -304,7 +304,11 @@ void GameUnit::addComponent(UnitComponent* comp)
 	components.push_back(comp);
 	std::sort(components.begin(), components.end(), [](const UnitComponent * a, const UnitComponent * b) {
 		return a->getOrder() < b->getOrder(); });
-
+	// Перестраиваем массив постфиксов
+	postfixes.clear();
+	for (auto comp : components)
+		if (comp->getCodePostfix() != "")
+			postfixes.push_back(comp->getCodePostfix());
 }
 
 bool GameUnit::isWorkingTask(float* progress, std::string* actioncode) const
@@ -331,8 +335,14 @@ GameUnit::~GameUnit()
 {
 }
 
+const std::vector<std::string> & GameUnit::getPostfixes() const
+{
+	return postfixes;
+}
+
 std::string GameUnit::getCode() const
 {
+	return code;
 	std::string postfix = "";
 	for (auto comp : components)
 		postfix += comp->getCodePostfix();

@@ -18,6 +18,11 @@ bool ComponentShield::applyAction(const UnitAction& action)
 	return false;
 }
 
+std::string ComponentShield::getCodePostfix() const
+{
+	return "shield";
+}
+
 int ComponentShield::getOrder() const
 {
 	return 5;
