@@ -16,6 +16,7 @@ Texts.cpp
 UnitComponent.cpp
 UnitFactory.cpp
 UnitMover.cpp
+UnitSelector.cpp
 WayFinder.cpp
 )
 
