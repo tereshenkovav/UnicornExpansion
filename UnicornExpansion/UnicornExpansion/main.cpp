@@ -664,8 +664,10 @@ while (window.isOpen())
                         if (selector.isSelectedOne())
                             if (game.getUnitByUID(selector.getSelectedUID()).isComponent<ComponentUnicorn>()) {
                                 game.setTargetToUnit(selector.getSelectedUID(), worldpos.x / BLOCKW, worldpos.y / BLOCKH);
-                                effect_start.play();
-                                started_galop_uid = selector.getSelectedUID();
+                                if (((started_galop_uid != selector.getSelectedUID())||(effect_start.getStatus() != sf::SoundSource::Status::Playing))) {
+                                    effect_start.play();
+                                    started_galop_uid = selector.getSelectedUID();
+                                }
                             }
                     }
                 }
