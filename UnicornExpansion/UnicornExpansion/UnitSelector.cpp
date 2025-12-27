@@ -1,8 +1,12 @@
 #include "UnitSelector.h"
 
-void UnitSelector::selectUnit(int uid) {
+void UnitSelector::selectOneUnit(int uid) {
 	uids.clear();
 	uids.push_back(uid);
+}
+
+void UnitSelector::invertUnit(int uid) {
+	if (isUnitSelected(uid)) unSelectUnit(uid); else uids.push_back(uid);
 }
 
 void UnitSelector::unSelectUnit(int uid) {
@@ -17,8 +21,16 @@ void UnitSelector::unSelectAll() {
 	uids.clear();
 }
 
+bool UnitSelector::isNoSelected() const {
+	return uids.size() == 0;
+}
+
 bool UnitSelector::isSelectedOne() const {
 	return uids.size() == 1;
+}
+
+bool UnitSelector::isSelectedMulti() const {
+	return uids.size() > 1;
 }
 
 int UnitSelector::getSelectedUID() const {

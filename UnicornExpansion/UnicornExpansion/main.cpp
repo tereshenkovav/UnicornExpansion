@@ -650,21 +650,35 @@ while (window.isOpen())
                     {
                         if (auto uid = game.findUnitAt(worldpos.x, worldpos.y))
                             if (!game.isFog(game.getUnitByUID(*uid).getXY().x, game.getUnitByUID(*uid).getXY().y)) {
-                                selector.selectUnit(*uid);
-                                if (game.getUnitByUID(selector.getSelectedUID()).isComponent<ComponentUnicorn>())
-                                    snd_unicorn_clicks[clickcounter.getNextSoundIdx(selector.getSelectedUID())]->play();
+                                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) {
+                                    if (selector.isNoSelected())
+                                        selector.selectOneUnit(*uid);
+                                    else {
+                                        if (game.getUnitByUID(*uid).isComponent<ComponentUnicorn>()) {
+                                            bool allunicorn = true;
+                                            for (int selid : selector.getSelectedUnits())
+                                                allunicorn = allunicorn && game.getUnitByUID(selector.getSelectedUID()).isComponent<ComponentUnicorn>();
+                                            if (allunicorn) selector.invertUnit(*uid);
+                                        }
+                                    }
+                                }
+                                else {
+                                    selector.selectOneUnit(*uid);
+                                    if (game.getUnitByUID(selector.getSelectedUID()).isComponent<ComponentUnicorn>())
+                                        snd_unicorn_clicks[clickcounter.getNextSoundIdx(selector.getSelectedUID())]->play();
+                                }
                             }
                     }
 
                     // Команда движения юнита
                     if (mousePressed->button == sf::Mouse::Button::Right)
                     {
-                        if (selector.isSelectedOne())
-                            if (game.getUnitByUID(selector.getSelectedUID()).isComponent<ComponentUnicorn>()) {
-                                game.setTargetToUnit(selector.getSelectedUID(), worldpos.x / BLOCKW, worldpos.y / BLOCKH);
-                                if (((started_galop_uid != selector.getSelectedUID())||(effect_start.getStatus() != sf::SoundSource::Status::Playing))) {
+                        for (int uid: selector.getSelectedUnits())
+                            if (game.getUnitByUID(uid).isComponent<ComponentUnicorn>()) {
+                                game.setTargetToUnit(uid, worldpos.x / BLOCKW, worldpos.y / BLOCKH);
+                                if (((started_galop_uid != uid)||(effect_start.getStatus() != sf::SoundSource::Status::Playing))) {
                                     effect_start.play();
-                                    started_galop_uid = selector.getSelectedUID();
+                                    started_galop_uid = uid;
                                 }
                             }
                     }
@@ -920,17 +934,17 @@ while (window.isOpen())
                             window.draw(*sprfog);
                         }
 
-            if (selector.isSelectedOne()) {
-                if (game.getUnitByUID(selector.getSelectedUID()).isComponent<ComponentResource>())
+            for (int uid: selector.getSelectedUnits()) {
+                if (game.getUnitByUID(uid).isComponent<ComponentResource>())
                     rect_selector.setOutlineColor(sf::Color::Blue);
                 else
-                    if (game.getUnitByUID(selector.getSelectedUID()).isComponent<ComponentEnemy>())
+                    if (game.getUnitByUID(uid).isComponent<ComponentEnemy>())
                         rect_selector.setOutlineColor(sf::Color::Red);
                     else
                         rect_selector.setOutlineColor(sf::Color::Green);
-                rect_selector.setPosition(game.getUnitByUID(selector.getSelectedUID()).getView());
-                rect_selector.setSize(game.getUnitByUID(selector.getSelectedUID()).getSizeView());
-                rect_selector.setOrigin(game.getUnitByUID(selector.getSelectedUID()).getSizeView() / 2.0f);
+                rect_selector.setPosition(game.getUnitByUID(uid).getView());
+                rect_selector.setSize(game.getUnitByUID(uid).getSizeView());
+                rect_selector.setOrigin(game.getUnitByUID(uid).getSizeView() / 2.0f);
                 window.draw(rect_selector);
             }
 
@@ -959,9 +973,9 @@ while (window.isOpen())
 
             if (selector.isSelectedOne()) {
                 // Информация по юниту
+                // Здесь мы привязываем к позиции text_back без его вывода
                 textback.setSize({ 240, 192 });
                 textback.setPosition({ 512 - textback.getSize().x/2 - 64, 768 - textback.getSize().y });
-               // window.draw(textback);
 
                 const GameUnit& selunit = game.getUnitByUID(selector.getSelectedUID());
                 drawProgressRectsAt(window, selunit.getHealthPerMax(), 48, textback.getPosition().x + 12, textback.getPosition().y + 64,
@@ -994,10 +1008,10 @@ while (window.isOpen())
                 window.draw(text_info);
                 
                 // Действия юнита
+                // Здесь мы привязываем к позиции text_back без его вывода
                 textback.setSize({ 400, 192 });
                 textback.setPosition({ 1024 - textback.getSize().x, 768 - textback.getSize().y });
-               // window.draw(textback);
-
+               
                 std::string current_action_code;
                 if (selunit.isWorkingTask(&progress, &current_action_code)) {
                     window.draw(rect_progress_border);
@@ -1041,6 +1055,29 @@ while (window.isOpen())
                             text_action.setFillColor(sf::Color::White);
                             window.draw(text_action);
                         }
+                    }
+                }
+            }
+            if (selector.isSelectedMulti()) {
+                const int UNIT_IN_ROW = 10;
+                const int UNIT_STEP_X = 64;
+                const int UNIT_STEP_Y = 84;
+                // Здесь мы привязываем к позиции text_back без его вывода
+                textback.setSize({ 240, 182 });
+                textback.setPosition({ 512 - textback.getSize().x / 2 - 64, 768 - textback.getSize().y });
+                for (int i = 0; i < selector.getSelectedUnits().size(); i++) {
+                    const GameUnit& selunit = game.getUnitByUID(selector.getSelectedUnits()[i]);
+                    drawProgressRectsAt(window, selunit.getHealthPerMax(), 48,
+                        textback.getPosition().x + 12 + (i % UNIT_IN_ROW) * UNIT_STEP_X, textback.getPosition().y + 64 + (i / UNIT_IN_ROW) * UNIT_STEP_Y,
+                        getColorByHPNorm(selunit.getHealthPerMax()));
+                    if (selunit.getShieldPerMax() > 0.0f)
+                        drawProgressRectsAt(window, selunit.getShieldPerMax(), 48,
+                            textback.getPosition().x + 12 + (i % UNIT_IN_ROW) * UNIT_STEP_X, textback.getPosition().y + 70 + (i / UNIT_IN_ROW) * UNIT_STEP_Y,
+                            sf::Color(107, 230, 255));
+                    if (spr_icons.count(selunit.getCode()) > 0) {
+                        spr_icons[selunit.getCode()]->setPosition({ textback.getPosition().x + 12 + 48 / 2 + (i % UNIT_IN_ROW) * UNIT_STEP_X,
+                            textback.getPosition().y + 34 + (i / UNIT_IN_ROW) * UNIT_STEP_Y });
+                        window.draw(*spr_icons[selunit.getCode()]);
                     }
                 }
             }
