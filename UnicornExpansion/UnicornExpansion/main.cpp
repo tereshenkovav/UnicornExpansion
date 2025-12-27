@@ -430,6 +430,8 @@ snd_unicorn_clicks.push_back(std::make_unique<sf::Sound>(*soundbuffers.back()));
 
 ClickerCounter clickcounter(snd_unicorn_clicks.size());
 
+std::optional<sf::Rect<int>> rect_holded = std::nullopt;
+
 addAudioEffect(AudioEffect::Teleport, "sounds/teleport.ogg");
 // В файле finish_teleport добавлена пауза в начале, чтобы можно было использовать совместно с эффектом телепортации
 addAudioEffect(AudioEffect::FinishTeleport, "sounds/finish_teleport.ogg");
@@ -648,6 +650,9 @@ while (window.isOpen())
                     // Выделение юнита
                     if (mousePressed->button == sf::Mouse::Button::Left)
                     {
+                        if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift))
+                            rect_holded = sf::IntRect(mousePressed->position, sf::Vector2i(1, 1));
+
                         if (auto uid = game.findUnitAt(worldpos.x, worldpos.y))
                             if (!game.isFog(game.getUnitByUID(*uid).getXY().x, game.getUnitByUID(*uid).getXY().y)) {
                                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) {
@@ -717,7 +722,34 @@ while (window.isOpen())
                         }
                     }
                 }
-            };
+            }
+            // Применение рамки только по отжатию
+            if (const auto* mousePressed = event->getIf<sf::Event::MouseButtonReleased>()) {
+                if (rect_holded) {
+                    window.setView(view);
+                    sf::Vector2f worldpos_1 = window.mapPixelToCoords((*rect_holded).position);
+                    sf::Vector2f worldpos_2 = window.mapPixelToCoords((*rect_holded).position + (*rect_holded).size);
+                    window.setView(window.getDefaultView());
+
+                    auto uids = game.findUnitsInRect(std::min(worldpos_1.x, worldpos_2.x), std::min(worldpos_1.y, worldpos_2.y),
+                        std::max(worldpos_1.x, worldpos_2.x), std::max(worldpos_1.y, worldpos_2.y));
+                    if (uids.size() > 0) {
+                        // Выделяем всех единорогов в списке
+                        selector.unSelectAll();
+                        for (int uid : uids)
+                            if (game.getUnitByUID(uid).isComponent<ComponentUnicorn>())
+                                selector.invertUnit(uid);
+                        // Если никто не выделился, то пробуем тогда выделить одного не-единорога
+                        if (selector.isNoSelected())
+                            for (int uid : uids)
+                                if (!game.getUnitByUID(uid).isComponent<ComponentUnicorn>()) {
+                                    selector.invertUnit(uid);
+                                    break;
+                                }
+                    }
+                    rect_holded = std::nullopt;
+                }
+            }
         }
     }
     
@@ -753,6 +785,11 @@ while (window.isOpen())
             if (!game.isUnitExist(uid)) selector.unSelectUnit(uid);
 
         updateMiniMap(game);
+
+        if (rect_holded) {
+            (*rect_holded).size.x = mousePos.x - (*rect_holded).position.x;
+            (*rect_holded).size.y = mousePos.y - (*rect_holded).position.y;
+        }
     }
 
     counter_errmsg.update(dt);
@@ -1099,6 +1136,13 @@ while (window.isOpen())
                 window.draw(text_timer);
             }
 
+            if (rect_holded) {
+                rect_selector.setOutlineColor(sf::Color::Green);
+                rect_selector.setPosition(sf::Vector2f((*rect_holded).position.x, (*rect_holded).position.y));
+                rect_selector.setSize(sf::Vector2f((*rect_holded).size.x, (*rect_holded).size.y));
+                rect_selector.setOrigin(sf::Vector2f(0,0));
+                window.draw(rect_selector);
+            }
 
             // Для режима завершения игры - вывод диалога
             if (modeendgame) {

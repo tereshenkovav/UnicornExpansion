@@ -112,6 +112,12 @@ bool GameUnit::isXYInUnit(float x, float y) const
 		(getView().y - getSizeView().y / 2.0f < y) && (y < getView().y + getSizeView().y / 2.0f);
 }
 
+bool GameUnit::isUnitInRect(float x1, float y1, float x2, float y2) const
+{
+	return (getView().x - getSizeView().x / 2.0f < x2) && (x1 < getView().x + getSizeView().x / 2.0f) &&
+		(getView().y - getSizeView().y / 2.0f < y2) && (y1 < getView().y + getSizeView().y / 2.0f);
+}
+
 Moving GameUnit::getLastMoving() const
 {
 	return lastmoving;

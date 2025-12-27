@@ -65,6 +65,7 @@ public:
 	sf::Vector2i getTarget() const ;
 	// Проверка вхождение точки в юнита
 	bool isXYInUnit(float x, float y) const;
+	bool isUnitInRect(float x1, float y1, float x2, float y2) const;
 	// Ориентация юнита по последнему движению
 	Moving getLastMoving() const;
 	// Проверка, находятся ли юниты рядом
