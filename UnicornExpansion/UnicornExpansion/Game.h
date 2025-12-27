@@ -69,7 +69,7 @@ public:
 	bool loadScript(const std::string& filename);
 	// Работа с юнитами
 	void addUnit(const GameUnit& unit);
-	bool findUnitAt(float viewx, float viewy, int* uid) const;
+	std::optional<int> findUnitAt(float viewx, float viewy) const;
 	bool isUnitExist(int uid) const;
 	// Размеры карты
 	int getWidth() const;

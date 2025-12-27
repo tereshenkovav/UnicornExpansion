@@ -199,15 +199,13 @@ void Game::addUnit(const GameUnit & unit) {
 	units.push_back(unit);
 }
 
-bool Game::findUnitAt(float viewx, float viewy, int* uid) const
+std::optional<int> Game::findUnitAt(float viewx, float viewy) const
 {
 	// Примитивная реализация
-	for (int i=0; i<units.size(); i++)
-		if (units[i].isXYInUnit(viewx,viewy)) {
-			*uid = units[i].getUID();
-			return true;
-		}
-	return false;
+	for (int i = 0; i < units.size(); i++)
+		if (units[i].isXYInUnit(viewx, viewy))
+			return units[i].getUID();
+	return std::nullopt;
 }
 
 int Game::getUnitCount() const {

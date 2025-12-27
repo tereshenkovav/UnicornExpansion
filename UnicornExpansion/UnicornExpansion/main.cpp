@@ -591,9 +591,8 @@ while (window.isOpen())
         sf::Vector2f worldpos = window.mapPixelToCoords(mousePos);
         window.setView(window.getDefaultView());
 
-        int uid;
-        if (game.findUnitAt(worldpos.x, worldpos.y, &uid))
-            if (!game.isFog(game.getUnitByUID(uid).getXY().x, game.getUnitByUID(uid).getXY().y))
+        if (auto uid = game.findUnitAt(worldpos.x, worldpos.y))
+            if (!game.isFog(game.getUnitByUID(*uid).getXY().x, game.getUnitByUID(*uid).getXY().y))
                 cursor = &cursor_my;
     }
     effect_fire.setVolume(game.getLaserCount() > 0 ? 100.0f : 0.0f);
@@ -649,10 +648,9 @@ while (window.isOpen())
                     // Выделение юнита
                     if (mousePressed->button == sf::Mouse::Button::Left)
                     {
-                        int uid;
-                        if (game.findUnitAt(worldpos.x, worldpos.y, &uid))
-                            if (!game.isFog(game.getUnitByUID(uid).getXY().x, game.getUnitByUID(uid).getXY().y)) {
-                                selector.selectUnit(uid);
+                        if (auto uid = game.findUnitAt(worldpos.x, worldpos.y))
+                            if (!game.isFog(game.getUnitByUID(*uid).getXY().x, game.getUnitByUID(*uid).getXY().y)) {
+                                selector.selectUnit(*uid);
                                 if (game.getUnitByUID(selector.getSelectedUID()).isComponent<ComponentUnicorn>())
                                     snd_unicorn_clicks[clickcounter.getNextSoundIdx(selector.getSelectedUID())]->play();
                             }
