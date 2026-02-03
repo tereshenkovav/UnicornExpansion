@@ -9,7 +9,7 @@ SET VERSION=%BUILDTAG:~1%
 echo #pragma once > ..\..\UnicornExpansion\UnicornExpansion\version.h
 echo const char * VERSION = "%VERSION%" ; >> ..\..\UnicornExpansion\UnicornExpansion\version.h
 
-SET PATH=%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin
+SET PATH=%PATH%;C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin
 msbuild.exe ..\..\UnicornExpansion\UnicornExpansion.sln /p:Configuration=Release
 
 SET BINDIR=..\..\UnicornExpansion\x64\Release
