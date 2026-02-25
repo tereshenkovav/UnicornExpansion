@@ -1,5 +1,5 @@
 #include "MiniMap.h"
-#include "SfmlTools.h"
+#include "SfmlGameEngine/SfmlTools.h"
 
 MiniMap::MiniMap()
 {
@@ -73,7 +73,7 @@ void MiniMap::setCellColor(int i, int j, const sf::Color & c)
 void MiniMap::addCellColor(int i, int j, const sf::Color& c)
 {
     int p = 6 * (i * worldh + j);
-    sf::Color cnew = SfmlTools::appendColorWithAplha(minimap[p].color,c);
+    sf::Color cnew = sfge::SfmlTools::appendColorWithAplha(minimap[p].color,c);
     for (int k = 0; k < 6; k++)
         minimap[p + k].color = cnew;
 }

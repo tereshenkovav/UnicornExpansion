@@ -1,5 +1,5 @@
 #include "Texts.h"
-#include "SfmlTools.h"
+#include "SfmlGameEngine/SfmlTools.h"
 #include <fstream>
 #include "CppTools.h"
 
@@ -32,7 +32,7 @@ std::string Texts::getStr(const std::string& name)
 
 sf::String Texts::getSfmlStr(const std::string& name)
 {
-	return SfmlTools::utf2text(getStr(name));
+	return sfge::SfmlTools::utf2text(getStr(name));
 }
 
 sf::String Texts::getSfmlStrReplacedConsts(const std::string & str)
@@ -40,5 +40,5 @@ sf::String Texts::getSfmlStrReplacedConsts(const std::string & str)
 	std::string newstr = str;
 	for (const auto& pair : strings)
 		newstr = replaceFirstString(newstr, "$" + pair.first + "$", pair.second);
-	return SfmlTools::utf2text(newstr);
+	return sfge::SfmlTools::utf2text(newstr);
 }

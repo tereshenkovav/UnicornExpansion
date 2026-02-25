@@ -78,12 +78,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\libs\SFML\include;ZetScript\include;JsonCpp\include;..\..\libs\HelperCppClasses\include;..\..\libs\jsoncpp\include;..\..\libs\zetscript\src;components;.</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\libs\SFML\include;ZetScript\include;JsonCpp\include;..\..\libs\HelperCppClasses\include;..\..\libs\jsoncpp\include;..\..\libs\zetscript\src;components;..\..\libs\SfmlGameEngine\include;.</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);SFML\lib;ZetScript\lib;..\..\libs.static.vs2019</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\libs\SFML\include;ZetScript\include;JsonCpp\include;..\..\libs\HelperCppClasses\include;..\..\libs\jsoncpp\include;..\..\libs\zetscript\src;components;.</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\libs\SFML\include;ZetScript\include;JsonCpp\include;..\..\libs\HelperCppClasses\include;..\..\libs\jsoncpp\include;..\..\libs\zetscript\src;components;..\..\libs\SfmlGameEngine\include;.</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);SFML\lib;ZetScript\lib;..\..\libs.static.vs2019</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -150,7 +150,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\libs\HelperCppClasses\src\Countdown.cpp" />
     <ClCompile Include="..\..\libs\HelperCppClasses\src\Vector2D.cpp" />
-    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="..\..\libs\SfmlGameEngine\src\Animation.cpp" />
     <ClCompile Include="ClickerCounter.cpp" />
     <ClCompile Include="components\ComponentAttacker.cpp" />
     <ClCompile Include="components\ComponentDetoxer.cpp" />
@@ -174,7 +174,7 @@
     <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="MushroomNet.cpp" />
     <ClCompile Include="SeedStore.cpp" />
-    <ClCompile Include="SfmlTools.cpp" />
+    <ClCompile Include="..\..\libs\SfmlGameEngine\src\SfmlTools.cpp" />
     <ClCompile Include="Texts.cpp" />
     <ClCompile Include="SubTerrainBuilder.cpp" />
     <ClCompile Include="UnitComponent.cpp" />
@@ -184,7 +184,6 @@
     <ClCompile Include="WayFinder.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animation.h" />
     <ClInclude Include="ClickerCounter.h" />
     <ClInclude Include="components\ComponentAttacker.h" />
     <ClInclude Include="components\ComponentDetoxer.h" />
@@ -207,7 +206,6 @@
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="MushroomNet.h" />
     <ClInclude Include="SeedStore.h" />
-    <ClInclude Include="SfmlTools.h" />
     <ClInclude Include="Texts.h" />
     <ClInclude Include="SubTerrainBuilder.h" />
     <ClInclude Include="UnitComponent.h" />

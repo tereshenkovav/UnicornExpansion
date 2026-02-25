@@ -1,6 +1,5 @@
 add_executable(UnicornExpansion
 main.cpp
-Animation.cpp
 ClickerCounter.cpp
 CppTools.cpp
 FinderByBestDistance.cpp
@@ -10,7 +9,6 @@ GameUnit.cpp
 MiniMap.cpp
 MushroomNet.cpp
 SeedStore.cpp
-SfmlTools.cpp
 SubTerrainBuilder.cpp
 Texts.cpp
 UnitComponent.cpp

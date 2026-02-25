@@ -1,4 +1,6 @@
-#include "Animation.h"
+#include "SfmlGameEngine/Animation.h"
+
+namespace sfge {
 
 Animation::Animation(const std::string& filename, int w, int h, int framecount, int fps): sf::Sprite(deftex)
 {
@@ -86,4 +88,6 @@ void Animation::playOneTime()
     onceflag = true ;
     tekt=0 ;
     update(0) ;
+}
+
 }

@@ -39,7 +39,7 @@
     <ClCompile Include="Texts.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="SfmlTools.cpp">
+    <ClCompile Include="..\..\libs\SfmlGameEngine\src\SfmlTools.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="UnitComponent.cpp">
@@ -78,7 +78,7 @@
     <ClCompile Include="components\ComponentEnemy.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Animation.cpp">
+    <ClCompile Include="..\..\libs\SfmlGameEngine\src\Animation.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="components\ComponentHealer.cpp">
@@ -143,9 +143,6 @@
     <ClInclude Include="Texts.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="SfmlTools.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="UnitComponent.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -180,9 +177,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="components\ComponentEnemy.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="components\ComponentHealer.h">

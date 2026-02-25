@@ -1,4 +1,6 @@
-#include "SfmlTools.h"
+#include "SfmlGameEngine/SfmlTools.h"
+
+namespace sfge {
 
 sf::String SfmlTools::utf2text(const std::string& str)
 {
@@ -23,4 +25,6 @@ sf::Color SfmlTools::appendColorWithAplha(const sf::Color& c1, const sf::Color& 
     cnew.g = alpha * c2.g + (1.0f - alpha) * c1.g;
     cnew.b = alpha * c2.b + (1.0f - alpha) * c1.b;
     return cnew;
+}
+
 }

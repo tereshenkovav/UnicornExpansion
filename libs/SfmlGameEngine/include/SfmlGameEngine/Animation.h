@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
+namespace sfge {
+
 // Класс анимации - позволяет создать серию спрайтов, которая анимируется по методу update. В остальном это обычный спрайт
 class Animation : public sf::Sprite
 {
@@ -29,3 +31,4 @@ public:
     bool isPlayed() ;
 };
 
+};

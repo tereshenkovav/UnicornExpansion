@@ -7,7 +7,7 @@
 #include <string>
 #include <filesystem>
 #include <map>
-#include "Animation.h"
+#include "SfmlGameEngine/Animation.h"
 
 #include "version.h"
 
@@ -16,7 +16,7 @@
 #include "HelperCppClasses/Countdown.h"
 #include "MiniMap.h"
 #include "Texts.h"
-#include "SfmlTools.h"
+#include "SfmlGameEngine/SfmlTools.h"
 #include "UnitFactory.h"
 #include "ComponentUnicorn.h"
 #include "ComponentMeleeEnemy.h"
@@ -51,7 +51,7 @@ std::map<Terrain, std::unique_ptr<sf::Sprite>> spr_terrains;
 std::vector<std::unique_ptr<sf::Sprite>> spr_mushrooms;
 std::map<Terrain, sf::Color> color_terrains;
 std::map<LaserType, sf::Color> color_lasers;
-std::map<LaserType, Animation*> anim_lasers;
+std::map<LaserType, sfge::Animation*> anim_lasers;
 std::map<TerrainSubType, std::unique_ptr<sf::Sprite>> spr_trees;
 std::vector<std::unique_ptr<sf::SoundBuffer>> soundbuffers;
 std::vector<std::unique_ptr<sf::Sound>> snd_unicorn_clicks;
@@ -69,7 +69,7 @@ int started_galop_uid;
 Countdown counter_endgame;
 int tekscale;
 sf::RectangleShape rect_pblocks;
-std::optional<Animation> current_teleportation_effect;
+std::optional<sfge::Animation> current_teleportation_effect;
 bool mouseholdedonmap = false;
 float globalt = 0.0f;
 
@@ -176,7 +176,7 @@ float getScale05per20() {
 // Рисование лазера и его анимации в точке приложения
 void drawLaserFromTo(sf::RenderWindow& window, sf::Sprite spr_laz, const Laser& laz) {
     sf::Vector2f dir = laz.pos2 - laz.pos1;
-    spr_laz.setColor(SfmlTools::getColorAsBright(color_lasers[laz.type],0.9+0.2*sin(4.0f*M_PI*globalt+laz.timeshift)));
+    spr_laz.setColor(sfge::SfmlTools::getColorAsBright(color_lasers[laz.type],0.9+0.2*sin(4.0f*M_PI*globalt+laz.timeshift)));
     spr_laz.setPosition(laz.pos1);
     spr_laz.setRotation(dir.angle());
     spr_laz.setScale({ dir.length()/128.0f,1.0f });
@@ -478,11 +478,11 @@ color_lasers[LaserType::Attack] = sf::Color(255, 0, 0);
 color_lasers[LaserType::Heal] = sf::Color(240, 255, 0);
 color_lasers[LaserType::Detox] = sf::Color(160, 56, 255);
 
-Animation laser_apply("images/laser_apply.png", 30, 34, 12, 12);
+sfge::Animation laser_apply("images/laser_apply.png", 30, 34, 12, 12);
 laser_apply.setOrigin({ 15,17 });
 laser_apply.play();
 
-Animation aura("images/aura_default.png", 86, 80, 12, 12);
+sfge::Animation aura("images/aura_default.png", 86, 80, 12, 12);
 aura.setOrigin({ 43, 40 });
 aura.play();
 
@@ -491,7 +491,7 @@ anim_lasers[LaserType::Attack] = &laser_apply;
 anim_lasers[LaserType::Heal] = &aura;
 anim_lasers[LaserType::Detox] = &laser_apply;
 
-Animation teleportation("images/teleportation.png", 96, 96, 9, 9);
+sfge::Animation teleportation("images/teleportation.png", 96, 96, 9, 9);
 teleportation.setOrigin({ 48, 48 });
 
 const sf::Texture texture_laz("images/laser.png");
@@ -999,11 +999,11 @@ while (window.isOpen())
             window.draw(textback);
 
             // Информация по ресурсам и танкам
-            text_resource.setString(SfmlTools::utf2text(texts.getStr("Text_Energy") + " " + std::to_string(game.getEnergy())));
+            text_resource.setString(sfge::SfmlTools::utf2text(texts.getStr("Text_Energy") + " " + std::to_string(game.getEnergy())));
             text_resource.setPosition({ 10, 10 });
             text_resource.setFillColor(sf::Color{ 162, 231, 255 });
             window.draw(text_resource);
-            text_resource.setString(SfmlTools::utf2text(texts.getStr("Text_UnicornCount") + " " + game.getUnicornCountInfo()));
+            text_resource.setString(sfge::SfmlTools::utf2text(texts.getStr("Text_UnicornCount") + " " + game.getUnicornCountInfo()));
             text_resource.setPosition({ 256 / 2 + 12, 10 });
             text_resource.setFillColor(sf::Color::White);
             window.draw(text_resource);
@@ -1087,7 +1087,7 @@ while (window.isOpen())
                         if (isover) cursor = &cursor_my;
 
                         if ((isover) && (!counter_errmsg.isActive())) {
-                            text_action.setString(SfmlTools::utf2text(
+                            text_action.setString(sfge::SfmlTools::utf2text(
                                 texts.getStr("Action_" + actions[i].caption) + "\n" + texts.getStr("Text_Energy") + " " + std::to_string(actions[i].energy)));
                             text_action.setFillColor(sf::Color::White);
                             window.draw(text_action);
@@ -1131,7 +1131,7 @@ while (window.isOpen())
                 textback.setSize({ 140, 36 });
                 window.draw(textback);
 
-                text_timer.setString(SfmlTools::utf2text(texts.getStr("Text_Timer") + " " + *stimer));
+                text_timer.setString(sfge::SfmlTools::utf2text(texts.getStr("Text_Timer") + " " + *stimer));
                 text_timer.setPosition({ 1024 - 144 + 10, 8 });
                 window.draw(text_timer);
             }
@@ -1173,7 +1173,7 @@ while (window.isOpen())
                 textback.setSize({ 400, 150 });
                 window.draw(textback);
 
-                text_task.setString(texts.getSfmlStr("Text_Task")+"\n"+SfmlTools::utf2text(game.getTaskText()));
+                text_task.setString(texts.getSfmlStr("Text_Task")+"\n"+sfge::SfmlTools::utf2text(game.getTaskText()));
                 text_task.setPosition({ 512 - 190, 290 });
                 window.draw(text_task);
 

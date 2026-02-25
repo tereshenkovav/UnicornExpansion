@@ -3,6 +3,8 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
+namespace sfge {
+
 // Класс утилит для SFML
 class SfmlTools
 {
@@ -15,3 +17,4 @@ public:
 	static sf::Color appendColorWithAplha(const sf::Color& c1, const sf::Color& c2);
 };
 
+};

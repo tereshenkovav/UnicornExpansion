@@ -11,6 +11,9 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/UnicornExpansion/UnicornExpansion)
 add_subdirectory(libs/HelperCppClasses)
 target_link_libraries(UnicornExpansion PRIVATE HelperCppClasses)
 
+add_subdirectory(libs/SfmlGameEngine)
+target_link_libraries(UnicornExpansion PRIVATE SfmlGameEngine)
+
 # Настройка вложенного проекта jsonlib
 set(JSONCPP_WITH_TESTS OFF)
 set(BUILD_SHARED_LIBS OFF)
