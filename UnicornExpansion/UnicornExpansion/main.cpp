@@ -9,8 +9,6 @@
 #include <map>
 #include "SfmlGameEngine/Animation.h"
 
-#include "version.h"
-
 #include "Game.h"
 #include "GameUnit.h"
 #include "HelperCppClasses/Countdown.h"
@@ -28,6 +26,8 @@
 #include "CppTools.h"
 #include "ClickerCounter.h"
 #include "UnitSelector.h"
+#include "SfmlGameEngine/Engine.h"
+#include "SceneMainMenu.h"
 
 #pragma comment (lib, "sfml-graphics.lib")
 #pragma comment (lib, "sfml-system.lib")
@@ -37,6 +37,7 @@
 #pragma comment (lib, "zetscript-2-1-0-static.lib")
 #pragma comment (lib, "jsoncpp_static.lib")
 
+/*
 // Размеры камеры и скорость прокрутки камеры
 const int SCROLLSPEED = 10;
 const float VIEW_SIZE_X = 1024.0f;
@@ -78,8 +79,8 @@ std::array<int, 8> marker_dx = { 11, 0, 11, 0, 11, 0, 11, 0 };
 std::array<int, 8> marker_dy = { 0, 0, 11, 11, 64 - 22, 64 - 22, 64 - 11, 64 - 11 };
 
 // Переключатели сцен
-enum class Scene { Menu, Task, Game };
-Scene scene;
+enum class Scenex { Menu, Task, Game };
+Scenex scene;
 
 // Добавить юнит в массив по последней загруженной текстуре
 void addUnitSpriteFromLastTexture(const std::string& code) {
@@ -240,46 +241,39 @@ void switchSound() {
   else
     sf::Listener::setGlobalVolume(0.0f);
 }
-
+*/
 int main(int argc, char* argv[])
 {
     srand(time(NULL));
 
     std::filesystem::path exepath(argv[0]);
-    std::string exedir= exepath.parent_path().string();
+    std::string exedir = exepath.parent_path().string();
 
     // Установка текущего каталога
     // При ручном указании каталога
     if (argc > 1)
         std::filesystem::current_path(std::string(argv[1]));
     else
-    // Для корректной работы внутри AppImage
-    if (hasEnding(std::filesystem::current_path().string(),"/usr"))
-        std::filesystem::current_path("data");
+        // Для корректной работы внутри AppImage
+        if (hasEnding(std::filesystem::current_path().string(), "/usr"))
+            std::filesystem::current_path("data");
     // Вариант по умолчанию - data в каталоге исполняемого файла
-    else
-        std::filesystem::current_path(exedir + "/data");
+        else
+            std::filesystem::current_path(exedir + "/data");
 
+    Texts texts;
     texts.loadFromFile("strings.txt");
 
-    sf::ContextSettings settings;
-    settings.antiAliasingLevel = 8;
+    sfge::Engine engine(1024, 768);
+    engine.setCaption(texts.getStr("Text_GameCaption"));
+    engine.setIcon("images/icon.png");
+    engine.Run(std::make_shared<SceneMainMenu>());
 
-    // Создание окна
-    sf::RenderWindow window(sf::VideoMode({ 1024, 768 }), texts.getSfmlStr("Text_GameCaption"), sf::Style::Close, sf::State::Windowed, settings);
-    window.setMouseCursorVisible(false);
-    window.setVerticalSyncEnabled(true);
-    window.setIcon(sf::Image("images/icon.png"));
+    /*
+    texts.loadFromFile("strings.txt");
 
     // Загрузка всех ресурсов
-    const sf::Texture texture0("images/intro.png");
-    sf::Sprite spr_intro(texture0);
-
-    const sf::Texture texturetitle("images/title.png");
-    sf::Sprite spr_title(texturetitle);
-    spr_title.setOrigin({ (float)texturetitle.getSize().x / 2, 0 });
-    spr_title.setPosition({ 512, 60 });
-
+    
     const sf::Texture texture1("images/border.png");
     sf::Sprite spr_border(texture1);
     spr_border.setPosition({ 0, 768 - 192 });
@@ -343,11 +337,7 @@ int main(int argc, char* argv[])
     // Все надписи готовим на основе шрифта
     sf::Text text_caption(font, "", 24);
     text_caption.setFillColor(sf::Color::White);
-
-    sf::Text text_version(font, VERSION, 28);
-    text_version.setFillColor(sf::Color({ 192,192,192 }));
-    text_version.setPosition({ 1024 - 100, 768 - 50 });
-
+        
     sf::Text text_ok(font, "", 24);
     text_ok.setFillColor(sf::Color::White);
     text_ok.setString("OK");
@@ -359,10 +349,7 @@ int main(int argc, char* argv[])
 
     sf::Text text_task(font, "", 22);
     text_task.setPosition({ 16, 720 });
-
-    sf::Text text_info(font, "", 16);
-    text_info.setFillColor(sf::Color::White);
-
+        
     sf::Text text_timer(font, "", 20);
     text_timer.setFillColor(sf::Color::White);
 
@@ -375,11 +362,7 @@ int main(int argc, char* argv[])
     sf::Text text_gameover(font, "", 24);
     text_gameover.setPosition({ 512 - 80, 270 });
 
-    sf::Text text_help(font, "", 20);
-    text_help.setPosition({ 670, 250 });
-    text_help.setFillColor(sf::Color::White);
-    text_help.setString(texts.getSfmlStr("Text_Help"));
-
+    
     // Прямоугольники интерфейса
     sf::RectangleShape rect_selector;
     rect_selector.setOutlineThickness(2);
@@ -510,15 +493,12 @@ shader_gray.setUniform("texture", sf::Shader::CurrentTexture);
 shader_bright.setUniform("texture", sf::Shader::CurrentTexture);
 shader_attack.setUniform("texture", sf::Shader::CurrentTexture);
 
-sf::Clock clock;
 float progress;
 bool modeendgame = false;
-scene = Scene::Menu;
+scene = Scenex::Menu;
 
 if (std::filesystem::exists(exedir + "/developer.json"))
     game.loadDeveloperConfig(exedir + "/developer.json");
-
-const int LEVEL_COUNT = 6;
 
 // Крутим цикл игры
 while (window.isOpen())
@@ -527,12 +507,10 @@ while (window.isOpen())
 
     sf::Sprite* cursor = &cursor_def;
 
-    float dt = clock.getElapsedTime().asSeconds();
-    clock.restart();
     globalt += dt;
 
     // Обработка сцены меню
-    if (scene == Scene::Menu) {
+    if (scene == Scenex::Menu) {
         // Дублирование с определением в клике (с учетом доп. кнопки выхода + 1)
         textback.setSize({ 240, 40 });
         for (int i = 0; i < LEVEL_COUNT + 1; i++) {
@@ -556,7 +534,7 @@ while (window.isOpen())
                     textback.setPosition({ 512 - 100, (float)(250 + 64 * i) });
                     if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) {
                         // Для выбора игры - переходим на сцену задания и загружаем игру
-                        scene = Scene::Task;
+                        scene = Scenex::Task;
                         modeendgame = false;
                         loadGame(i);
                     }
@@ -567,26 +545,26 @@ while (window.isOpen())
         }
     }
     // Для сцены задания
-    if (scene == Scene::Task) {
+    if (scene == Scenex::Task) {
     while (const std::optional event = window.pollEvent())
     {
         if (event->is<sf::Event::Closed>()) window.close();
         if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
         {
             // Переход к игре по нажатию на кнопку Esc
-            if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)	scene = Scene::Menu;
+            if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)	scene = Scenex::Menu;
         };
         if (const auto* mousePressed = event->getIf<sf::Event::MouseButtonReleased>())
         {
             // Переход к игре по нажатию на кнопку ОК
             textback.setPosition({ 512 - 40, 400 });
             textback.setSize({ 80, 30 });
-            if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) scene = Scene::Game;
+            if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) scene = Scenex::Game;
         }
     }
     }
     // Далее строго сцена игры
-    if (scene == Scene::Game) {
+    if (scene == Scenex::Game) {
     // Дублирование с определением при нажатии
     if (mousePos.y < VIEW_SIZE_Y) {
         window.setView(view);
@@ -609,7 +587,7 @@ while (window.isOpen())
                 // Инициализация механизма завершения уровня - отключение звуковых эффектов, дублирование кода
                 effect_fire.setVolume(0.0f);
                 effect_start.stop();
-                scene = Scene::Menu;
+                scene = Scenex::Menu;
             }
             if (keyPressed->scancode == sf::Keyboard::Scancode::M) switchSound();
             if (keyPressed->scancode == sf::Keyboard::Scancode::Space)
@@ -635,7 +613,7 @@ while (window.isOpen())
             if (const auto* mousePressed = event->getIf<sf::Event::MouseButtonReleased>()) {
                 textback.setPosition({ 512 - 40, 320 });
                 textback.setSize({ 80, 30 });
-                if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) scene = Scene::Menu;
+                if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) scene = Scenex::Menu;
             }
         }
         else {
@@ -839,7 +817,7 @@ while (window.isOpen())
         window.clear();
 
         // Для сцены меню - вывод меню и фона
-        if (scene == Scene::Menu) {
+        if (scene == Scenex::Menu) {
             window.draw(spr_intro);
             window.draw(spr_title);
 
@@ -863,7 +841,7 @@ while (window.isOpen())
             window.draw(text_info);
         }
         // Для сцены задачи и игры - вывод территорий
-        if ((scene == Scene::Task) || (scene == Scene::Game)) {
+        if ((scene == Scenex::Task) || (scene == Scenex::Game)) {
             window.setView(view);
 
                 for (int i = 0; i < game.getWidth(); i++)
@@ -1168,7 +1146,7 @@ while (window.isOpen())
             }            
 
             // Для сцены задания - вывод диалога
-            if (scene == Scene::Task) {
+            if (scene == Scenex::Task) {
                 textback.setPosition({512 - 200, 286 });
                 textback.setSize({ 400, 150 });
                 window.draw(textback);
@@ -1192,6 +1170,7 @@ while (window.isOpen())
 
         window.display();
     }
+    */
 
     return 0;
 }

@@ -1,0 +1,97 @@
+#include "SceneMainMenu.h"
+#include "version.h"
+#include "SfmlGameEngine/Engine.h"
+
+const int LEVEL_COUNT = 6;
+
+void SceneMainMenu::Render(sf::RenderTarget & rendertarget) {
+    rendertarget.clear();
+
+    rendertarget.draw(*spr_intro);
+    rendertarget.draw(*spr_title);
+
+    rendertarget.draw(*text_help);
+    rendertarget.draw(*text_version);
+
+        textback.setSize({ 240, 40 });
+        for (int i = 0; i < LEVEL_COUNT; i++) {
+            textback.setPosition({ 512 - 120, (float)(250 + 64 * i) });
+            rendertarget.draw(textback);
+
+            text_info->setString(texts.getSfmlStr("Name_Level_" + std::to_string(i)));
+            text_info->setPosition({ 512 - text_info->getLocalBounds().size.x / 2, (float)(250 + 64 * i) + 8 });
+            rendertarget.draw(*text_info);
+        }
+        textback.setPosition({ 512 - 120, (float)(250 + 64 * LEVEL_COUNT) });
+        rendertarget.draw(textback);
+
+        text_info->setString(texts.getSfmlStr("Text_Quit"));
+        text_info->setPosition({ 512 - text_info->getLocalBounds().size.x / 2, (float)(250 + 64 * LEVEL_COUNT) + 8 });
+        rendertarget.draw(*text_info);
+    
+    // Вывод курсора
+    int delta = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) ? 4 : 0;
+    cursor->setPosition({ (float)mousePos.x + delta,(float)mousePos.y + delta });
+    rendertarget.draw(*cursor);
+}
+
+void SceneMainMenu::Update(float dt, const sf::Vector2i & mousePos, const std::vector<sf::Event>& events) {
+    this->mousePos = mousePos;
+    for (auto & event : events) {
+        if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
+        {
+            if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)	engine->doClose();
+            //if (keyPressed->scancode == sf::Keyboard::Scancode::M) switchSound();
+        };
+        if (const auto* mousePressed = event.getIf<sf::Event::MouseButtonReleased>())
+        {
+            textback.setSize({ 240, 40 });
+            for (int i = 0; i < LEVEL_COUNT; i++) {
+                textback.setPosition({ 512 - 100, (float)(250 + 64 * i) });
+                if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) {
+                    // Для выбора игры - переходим на сцену задания и загружаем игру                    
+                    //loadGame(i);
+                    engine->doClose();
+                }
+            }
+            textback.setPosition({ 512 - 100, (float)(250 + 64 * LEVEL_COUNT) });
+            if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) engine->doClose();
+        }
+    }
+}
+
+void SceneMainMenu::Init() {
+    textback.setOutlineThickness(1);
+    textback.setOutlineColor(sf::Color(192, 192, 192));
+    textback.setFillColor(sf::Color{ 40, 40, 40, 192 });
+
+    textures.push_back(std::make_unique<sf::Texture>("images/intro.png"));    
+    spr_intro = std::make_unique<sf::Sprite>(*textures.back());
+
+    textures.push_back(std::make_unique<sf::Texture>("images/title.png"));
+    spr_title = std::make_unique<sf::Sprite>(*textures.back());
+    spr_title->setOrigin({ (float)(spr_title->getTexture().getSize().x / 2), 0});
+    spr_title->setPosition({ 512, 60 });
+
+    font = std::make_unique<sf::Font>("arial.ttf");
+
+    texts.loadFromFile("strings.txt");
+
+    text_help = std::make_unique<sf::Text>(*font, "", 20);
+    text_help->setPosition({ 670, 250 });
+    text_help->setFillColor(sf::Color::White);
+    text_help->setString(texts.getSfmlStr("Text_Help"));
+
+    text_version = std::make_unique<sf::Text>(*font, VERSION, 28);
+    text_version->setFillColor(sf::Color({ 192,192,192 }));
+    text_version->setPosition({ 1024 - 100, 768 - 50 });
+
+    text_info = std::make_unique<sf::Text>(*font, "", 16);
+    text_info->setFillColor(sf::Color::White);
+
+    textures.push_back(std::make_unique<sf::Texture>("images/cursor_def.png"));
+    cursor = std::make_unique<sf::Sprite>(*textures.back());
+}
+
+void SceneMainMenu::UnInit() {
+}

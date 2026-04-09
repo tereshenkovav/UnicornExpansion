@@ -8,6 +8,7 @@ Game.cpp
 GameUnit.cpp
 MiniMap.cpp
 MushroomNet.cpp
+SceneMainMenu.cpp
 SeedStore.cpp
 SubTerrainBuilder.cpp
 Texts.cpp

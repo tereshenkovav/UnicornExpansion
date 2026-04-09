@@ -151,6 +151,8 @@
     <ClCompile Include="..\..\libs\HelperCppClasses\src\Countdown.cpp" />
     <ClCompile Include="..\..\libs\HelperCppClasses\src\Vector2D.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Animation.cpp" />
+    <ClCompile Include="..\..\libs\SfmlGameEngine\src\Engine.cpp" />
+    <ClCompile Include="..\..\libs\SfmlGameEngine\src\Scene.cpp" />
     <ClCompile Include="ClickerCounter.cpp" />
     <ClCompile Include="components\ComponentAttacker.cpp" />
     <ClCompile Include="components\ComponentDetoxer.cpp" />
@@ -173,6 +175,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="MushroomNet.cpp" />
+    <ClCompile Include="SceneMainMenu.cpp" />
     <ClCompile Include="SeedStore.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\SfmlTools.cpp" />
     <ClCompile Include="Texts.cpp" />
@@ -205,6 +208,7 @@
     <ClInclude Include="GameUnit.h" />
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="MushroomNet.h" />
+    <ClInclude Include="SceneMainMenu.h" />
     <ClInclude Include="SeedStore.h" />
     <ClInclude Include="Texts.h" />
     <ClInclude Include="SubTerrainBuilder.h" />

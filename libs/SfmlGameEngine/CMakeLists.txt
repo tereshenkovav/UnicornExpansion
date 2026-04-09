@@ -11,8 +11,13 @@ add_library(SfmlGameEngine)
 set(sources
     include/SfmlGameEngine/Animation.h
     include/SfmlGameEngine/SfmlTools.h
+    include/SfmlGameEngine/Scene.h
+    include/SfmlGameEngine/Engine.h
     src/Animation.cpp
-    src/SfmlTools.cpp)
+    src/SfmlTools.cpp
+    src/Scene.cpp
+    src/Engine.cpp
+)
 
 target_sources(SfmlGameEngine PRIVATE ${sources})
 target_include_directories(SfmlGameEngine PUBLIC ${PROJECT_SOURCE_DIR}/include)
