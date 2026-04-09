@@ -1,12 +1,11 @@
 #include "SceneMainMenu.h"
 #include "version.h"
 #include "SfmlGameEngine/Engine.h"
+#include "SceneGame.h"
 
 const int LEVEL_COUNT = 6;
 
 void SceneMainMenu::Render(sf::RenderTarget & rendertarget) {
-    rendertarget.clear();
-
     rendertarget.draw(*spr_intro);
     rendertarget.draw(*spr_title);
 
@@ -51,7 +50,7 @@ void SceneMainMenu::Update(float dt, const sf::Vector2i & mousePos, const std::v
                 if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) {
                     // Для выбора игры - переходим на сцену задания и загружаем игру                    
                     //loadGame(i);
-                    engine->doClose();
+                    engine->SwitchToScene(std::make_shared<SceneGame>());
                 }
             }
             textback.setPosition({ 512 - 100, (float)(250 + 64 * LEVEL_COUNT) });

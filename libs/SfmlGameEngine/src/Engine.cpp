@@ -31,12 +31,19 @@ void Engine::doClose()
     closed = true;
 }
 
+void Engine::SwitchToScene(std::shared_ptr<Scene> scene)
+{
+    nextscene = scene;
+}
+
 void Engine::Run(std::shared_ptr<Scene> scene)
 {    
     std::shared_ptr<Scene> tekscene = scene;
     tekscene->setEngine(this);
     tekscene->Init();
     
+    nextscene = std::shared_ptr<Scene>();
+
 	sf::Clock clock;
 
     std::vector<sf::Event> events;
@@ -59,6 +66,15 @@ void Engine::Run(std::shared_ptr<Scene> scene)
         window->clear();
         tekscene->Render(*window);
         window->display();
+
+        if (nextscene) {
+            tekscene->UnInit();
+            tekscene = nextscene;
+            tekscene->setEngine(this);
+            tekscene->Init();
+
+            nextscene.reset();
+        }
 
         // Последняя строка в цикле
         if (closed) window->close();

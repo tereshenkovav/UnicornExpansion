@@ -175,6 +175,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="MushroomNet.cpp" />
+    <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneMainMenu.cpp" />
     <ClCompile Include="SeedStore.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\SfmlTools.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="GameUnit.h" />
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="MushroomNet.h" />
+    <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneMainMenu.h" />
     <ClInclude Include="SeedStore.h" />
     <ClInclude Include="Texts.h" />

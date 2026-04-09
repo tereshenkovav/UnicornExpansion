@@ -13,9 +13,11 @@ private:
     unsigned int height;
     bool closed;
     std::unique_ptr<sf::RenderWindow> window;
+    std::shared_ptr<Scene> nextscene;
 public:
     Engine(unsigned int width, unsigned int height) ;
     void Run(std::shared_ptr<Scene> scene);
+    void SwitchToScene(std::shared_ptr<Scene> scene);
     void setCaption(const std::string & str);
     void setIcon(const std::string& filename);
     void doClose();
