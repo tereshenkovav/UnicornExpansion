@@ -68,22 +68,16 @@ void SceneMainMenu::Init() {
     spr_title = loadSprite("images/title.png");
     spr_title->setOrigin({ (float)(spr_title->getTexture().getSize().x / 2), 0});
     spr_title->setPosition({ 512, 60 });
-
-    font = std::make_unique<sf::Font>("arial.ttf");
-
+        
     texts.loadFromFile("strings.txt");
-
-    text_help = std::make_unique<sf::Text>(*font, "", 20);
+        
+    text_help = loadText(texts.getStr("Text_Help"), 20, sf::Color::White);
     text_help->setPosition({ 670, 250 });
-    text_help->setFillColor(sf::Color::White);
-    text_help->setString(texts.getSfmlStr("Text_Help"));
-
-    text_version = std::make_unique<sf::Text>(*font, VERSION, 28);
-    text_version->setFillColor(sf::Color({ 192,192,192 }));
+    
+    text_version = loadText(VERSION, 28, sf::Color({ 192,192,192 }));
     text_version->setPosition({ 1024 - 100, 768 - 50 });
 
-    text_info = std::make_unique<sf::Text>(*font, "", 16);
-    text_info->setFillColor(sf::Color::White);
+    text_info = loadText(16, sf::Color::White);
 
     cursor = loadSprite("images/cursor_def.png");
 }

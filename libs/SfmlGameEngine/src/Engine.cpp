@@ -16,6 +16,17 @@ Engine::Engine(unsigned int width, unsigned int height)
     window->setVerticalSyncEnabled(true);
 }
 
+void Engine::loadDefaultFont(const std::string& filename)
+{
+    defaultfont = std::make_shared<sf::Font>(filename);
+}
+
+std::shared_ptr<sf::Font> Engine::getDefaultFont() const
+{
+    if (!defaultfont) throw sf::Exception("Not set default font for Engine");
+    return defaultfont;
+}
+
 void Engine::setCaption(const std::string& str)
 {
     window->setTitle(SfmlTools::utf2text(str));

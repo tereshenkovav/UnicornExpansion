@@ -15,6 +15,10 @@ private:
 protected:
     Engine* getEngine() const;
     std::unique_ptr<sf::Sprite> loadSprite(const std::string& filename);
+    std::unique_ptr<sf::Text> loadText(int size);
+    std::unique_ptr<sf::Text> loadText(const std::string & str, int size);
+    std::unique_ptr<sf::Text> loadText(int size, sf::Color color);
+    std::unique_ptr<sf::Text> loadText(const std::string& str, int size, sf::Color color);
 public:
     virtual void Render(sf::RenderTarget& rendertarget);
     virtual void Update(float dt, const sf::Vector2i& mousePos, const std::vector<sf::Event>& events);

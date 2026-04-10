@@ -267,6 +267,7 @@ int main(int argc, char* argv[])
     sfge::Engine engine(1024, 768);
     engine.setCaption(texts.getStr("Text_GameCaption"));
     engine.setIcon("images/icon.png");
+    engine.loadDefaultFont("arial.ttf");
     engine.Run(std::make_shared<SceneMainMenu>());
 
     /*
