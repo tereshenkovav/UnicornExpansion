@@ -19,4 +19,15 @@ void Scene::setEngine(Engine* engine)
 	this->engine = engine;
 }
 
+Engine* Scene::getEngine() const
+{
+	return engine;
+}
+
+std::unique_ptr<sf::Sprite> Scene::loadSprite(const std::string& filename)
+{
+	textures.push_back(std::make_unique<sf::Texture>(filename));
+	return std::make_unique<sf::Sprite>(*textures.back());
+}
+
 }

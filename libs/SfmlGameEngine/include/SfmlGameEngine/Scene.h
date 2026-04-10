@@ -9,8 +9,12 @@ class Engine;
 
 class Scene
 {
-protected:
+private:
     Engine* engine;
+    std::vector<std::unique_ptr<sf::Texture>> textures;
+protected:
+    Engine* getEngine() const;
+    std::unique_ptr<sf::Sprite> loadSprite(const std::string& filename);
 public:
     virtual void Render(sf::RenderTarget& rendertarget);
     virtual void Update(float dt, const sf::Vector2i& mousePos, const std::vector<sf::Event>& events);

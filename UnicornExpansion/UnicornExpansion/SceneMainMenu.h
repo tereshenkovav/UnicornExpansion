@@ -17,8 +17,7 @@ private:
     std::unique_ptr<sf::Sprite> cursor;
     sf::Vector2i mousePos;     
     std::unique_ptr<sf::Font> font;
-    std::vector<std::unique_ptr<sf::Texture>> textures;
-
+    
     Texts texts;
 public:
     virtual void Render(sf::RenderTarget& rendertarget) override;

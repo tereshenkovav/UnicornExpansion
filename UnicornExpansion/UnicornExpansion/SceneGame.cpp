@@ -14,14 +14,13 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
     for (auto & event : events) {
         if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
         {
-            if (keyPressed->scancode == sf::Keyboard::Scancode::Escape) engine->SwitchToScene(std::make_shared<SceneMainMenu>());
+            if (keyPressed->scancode == sf::Keyboard::Scancode::Escape) getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>());
         };
     }
 }
 
 void SceneGame::Init() {
-    textures.push_back(std::make_unique<sf::Texture>("images/cursor_my.png"));
-    cursor = std::make_unique<sf::Sprite>(*textures.back());
+    cursor = loadSprite("images/cursor_my.png");
 }
 
 void SceneGame::UnInit() {

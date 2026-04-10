@@ -69,11 +69,9 @@ void Engine::Run(std::shared_ptr<Scene> scene)
 
         if (nextscene) {
             tekscene->UnInit();
-            tekscene = nextscene;
+            tekscene = std::move(nextscene);
             tekscene->setEngine(this);
             tekscene->Init();
-
-            nextscene.reset();
         }
 
         // Последняя строка в цикле
