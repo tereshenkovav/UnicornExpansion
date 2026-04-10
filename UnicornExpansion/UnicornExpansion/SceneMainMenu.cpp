@@ -27,15 +27,20 @@ void SceneMainMenu::Render(sf::RenderTarget & rendertarget) {
         text_info->setString(texts.getSfmlStr("Text_Quit"));
         text_info->setPosition({ 512 - text_info->getLocalBounds().size.x / 2, (float)(250 + 64 * LEVEL_COUNT) + 8 });
         rendertarget.draw(*text_info);
-    
-    // Вывод курсора
-    int delta = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) ? 4 : 0;
-    cursor->setPosition({ (float)mousePos.x + delta,(float)mousePos.y + delta });
-    rendertarget.draw(*cursor);
 }
 
 void SceneMainMenu::Update(float dt, const sf::Vector2i & mousePos, const std::vector<sf::Event>& events) {
-    this->mousePos = mousePos;
+    std::optional<int> selected_idx;
+    textback.setSize({ 240, 40 });
+    for (int i = 0; i < LEVEL_COUNT; i++) {
+        textback.setPosition({ 512 - 100, (float)(250 + 64 * i) });
+        if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) selected_idx = i;
+    }
+    textback.setPosition({ 512 - 100, (float)(250 + 64 * LEVEL_COUNT) });
+    if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) selected_idx = -1;
+
+    if (selected_idx) getEngine()->setCursor(1);
+
     for (auto & event : events) {
         if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
         {
@@ -44,17 +49,14 @@ void SceneMainMenu::Update(float dt, const sf::Vector2i & mousePos, const std::v
         };
         if (const auto* mousePressed = event.getIf<sf::Event::MouseButtonReleased>())
         {
-            textback.setSize({ 240, 40 });
-            for (int i = 0; i < LEVEL_COUNT; i++) {
-                textback.setPosition({ 512 - 100, (float)(250 + 64 * i) });
-                if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) {
-                    // Для выбора игры - переходим на сцену задания и загружаем игру                    
-                    //loadGame(i);
+            if (selected_idx) {
+                if (*selected_idx>=0) {
+                // Для выбора игры - переходим на сцену задания и загружаем игру
+                    //loadGame(*selected_idx);
                     getEngine()->SwitchToScene(std::make_shared<SceneGame>());
                 }
+                if (*selected_idx < 0) getEngine()->doClose();
             }
-            textback.setPosition({ 512 - 100, (float)(250 + 64 * LEVEL_COUNT) });
-            if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) getEngine()->doClose();
         }
     }
 }
@@ -78,8 +80,6 @@ void SceneMainMenu::Init() {
     text_version->setPosition({ 1024 - 100, 768 - 50 });
 
     text_info = loadText(16, sf::Color::White);
-
-    cursor = loadSprite("images/cursor_def.png");
 }
 
 void SceneMainMenu::UnInit() {

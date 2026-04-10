@@ -27,6 +27,24 @@ std::shared_ptr<sf::Font> Engine::getDefaultFont() const
     return defaultfont;
 }
 
+void Engine::loadDefaultCursor(const std::string& filename)
+{
+    textures.push_back(std::make_unique<sf::Texture>(filename));
+    defaultcursor = std::make_shared<sf::Sprite>(*textures.back());
+}
+
+void Engine::addCursor(int code, const std::string& filename)
+{
+    textures.push_back(std::make_unique<sf::Texture>(filename));
+    cursors[code]=std::make_shared<sf::Sprite>(*textures.back());
+}
+
+void Engine::setCursor(int code)
+{
+    if (cursors.count(code) == 0) throw sf::Exception("Not found cursor with code: " + std::to_string(code));
+    currentcursor = cursors[code];
+}
+
 void Engine::setCaption(const std::string& str)
 {
     window->setTitle(SfmlTools::utf2text(str));
@@ -72,10 +90,23 @@ void Engine::Run(std::shared_ptr<Scene> scene)
         while (const std::optional event = window->pollEvent())
             if (event->is<sf::Event::Closed>()) window->close(); else events.push_back(*event);
 
+        // Ставим курсор как пустой по умолчанию, и дополняем, если он был установлен в default
+        currentcursor = std::weak_ptr<sf::Sprite>();
+        if (defaultcursor) currentcursor = defaultcursor;
+
+        // Обновление сцены
         tekscene->Update(dt, mousepos, events);
         
+        // Рендер сцены
         window->clear();
         tekscene->Render(*window);
+        // Курсор в конце сцены
+        auto cursor = currentcursor.lock();
+        if (cursor) {
+            int delta = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) ? 4 : 0;
+            cursor->setPosition({ (float)mousepos.x + delta,(float)mousepos.y + delta });
+            window->draw(*cursor);
+        }
         window->display();
 
         if (nextscene) {

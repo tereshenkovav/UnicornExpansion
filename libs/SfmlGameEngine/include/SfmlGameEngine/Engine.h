@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include "SfmlGameEngine/Scene.h"
+#include <map>
 
 namespace sfge {
 
@@ -15,10 +16,17 @@ private:
     std::unique_ptr<sf::RenderWindow> window;
     std::shared_ptr<Scene> nextscene;
     std::shared_ptr<sf::Font> defaultfont;
+    std::vector<std::unique_ptr<sf::Texture>> textures;
+    std::shared_ptr<sf::Sprite> defaultcursor;
+    std::weak_ptr<sf::Sprite> currentcursor;
+    std::map<int, std::shared_ptr<sf::Sprite>> cursors;
 public:
     Engine(unsigned int width, unsigned int height) ;
     void loadDefaultFont(const std::string& filename);
     std::shared_ptr<sf::Font> getDefaultFont() const;
+    void loadDefaultCursor(const std::string& filename);
+    void addCursor(int code, const std::string& filename);
+    void setCursor(int code);
     void Run(std::shared_ptr<Scene> scene);
     void SwitchToScene(std::shared_ptr<Scene> scene);
     void setCaption(const std::string & str);

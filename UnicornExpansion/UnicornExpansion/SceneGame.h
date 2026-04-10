@@ -7,8 +7,6 @@
 class SceneGame: public sfge::Scene
 {
 private:
-    std::unique_ptr<sf::Sprite> cursor;
-    sf::Vector2i mousePos;     
 public:
     virtual void Render(sf::RenderTarget& rendertarget) override;
     virtual void Update(float dt, const sf::Vector2i& mousePos, const std::vector<sf::Event>& events) override;

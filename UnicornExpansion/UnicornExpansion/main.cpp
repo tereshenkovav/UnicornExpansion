@@ -268,6 +268,8 @@ int main(int argc, char* argv[])
     engine.setCaption(texts.getStr("Text_GameCaption"));
     engine.setIcon("images/icon.png");
     engine.loadDefaultFont("arial.ttf");
+    engine.loadDefaultCursor("images/cursor_def.png");
+    engine.addCursor(1, "images/cursor_my.png");
     engine.Run(std::make_shared<SceneMainMenu>());
 
     /*
