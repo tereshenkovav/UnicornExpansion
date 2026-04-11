@@ -27,6 +27,7 @@
 #include "UnitSelector.h"
 #include "SfmlGameEngine/Engine.h"
 #include "SceneMainMenu.h"
+#include "SceneTask.h"
 
 #pragma comment (lib, "sfml-graphics.lib")
 #pragma comment (lib, "sfml-system.lib")

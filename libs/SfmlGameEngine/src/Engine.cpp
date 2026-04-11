@@ -60,9 +60,18 @@ void Engine::doClose()
     closed = true;
 }
 
+void Engine::doExitScene() {
+    exitscene = true;
+}
+
 void Engine::SwitchToScene(std::shared_ptr<Scene> scene)
 {
     nextscene = scene;
+}
+
+void Engine::AddOverScene(std::shared_ptr<Scene> scene)
+{
+    overscene = scene;
 }
 
 void Engine::loadTexts(const std::string& filename)
@@ -78,6 +87,7 @@ const Texts& Engine::getTexts() const
 void Engine::Run(std::shared_ptr<Scene> scene)
 {    
     std::shared_ptr<Scene> tekscene = scene;
+    std::shared_ptr<Scene> tekoverscene ;
     tekscene->setEngine(this);
     tekscene->Init();
     
@@ -87,6 +97,8 @@ void Engine::Run(std::shared_ptr<Scene> scene)
 
     std::vector<sf::Event> events;
     closed = false;
+    exitscene = false;
+
     // Крутим цикл игры
     while (window->isOpen())
     {
@@ -105,11 +117,15 @@ void Engine::Run(std::shared_ptr<Scene> scene)
         if (defaultcursor) currentcursor = defaultcursor;
 
         // Обновление сцены
-        tekscene->Update(dt, mousepos, events);
-        
+        if (tekoverscene)
+            tekoverscene->Update(dt, mousepos, events);
+        else
+            tekscene->Update(dt, mousepos, events);
+
         // Рендер сцены
         window->clear();
         tekscene->Render(*window);
+        if (tekoverscene) tekoverscene->Render(*window);
         // Курсор в конце сцены
         auto cursor = currentcursor.lock();
         if (cursor) {
@@ -119,15 +135,44 @@ void Engine::Run(std::shared_ptr<Scene> scene)
         }
         window->display();
 
+        // Обработка сигналов на переключение сцены, добавление сверхсцены и закрытие
         if (nextscene) {
+            if (tekoverscene) {
+                tekoverscene->UnInit();
+                tekoverscene.reset();
+            }
             tekscene->UnInit();
             tekscene = std::move(nextscene);
             tekscene->setEngine(this);
             tekscene->Init();
         }
 
+        if (overscene) {
+            if (tekoverscene) tekoverscene->UnInit();
+            tekoverscene = std::move(overscene);
+            tekoverscene->setEngine(this);
+            tekoverscene->Init();
+        }
+
+        if (exitscene) {
+            exitscene = false;
+            if (tekoverscene) {
+                tekoverscene->UnInit();
+                tekoverscene.reset();
+            }
+            else
+                window->close();
+        }
+
         // Последняя строка в цикле
-        if (closed) window->close();
+        if (closed) {
+            closed = false;
+            window->close();
+        }
+    }
+    if (tekoverscene) {
+        tekoverscene->UnInit();
+        tekoverscene.reset();
     }
     tekscene->UnInit();
 }

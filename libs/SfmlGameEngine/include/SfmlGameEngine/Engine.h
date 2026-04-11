@@ -14,8 +14,10 @@ private:
     unsigned int width;
     unsigned int height;
     bool closed;
+    bool exitscene;
     std::unique_ptr<sf::RenderWindow> window;
     std::shared_ptr<Scene> nextscene;
+    std::shared_ptr<Scene> overscene;
     std::shared_ptr<sf::Font> defaultfont;
     std::vector<std::unique_ptr<sf::Texture>> textures;
     std::shared_ptr<sf::Sprite> defaultcursor;
@@ -31,11 +33,13 @@ public:
     void setCursor(int code);
     void Run(std::shared_ptr<Scene> scene);
     void SwitchToScene(std::shared_ptr<Scene> scene);
+    void AddOverScene(std::shared_ptr<Scene> scene);
     void setCaption(const std::string & str);
     void setIcon(const std::string& filename);
     void loadTexts(const std::string& filename);
     const Texts& getTexts() const;
     void doClose();
+    void doExitScene();
 };
 
 };

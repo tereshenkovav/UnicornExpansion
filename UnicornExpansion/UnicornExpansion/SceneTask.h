@@ -4,11 +4,15 @@
 #include <SFML/Window.hpp>
 #include "SfmlGameEngine/Scene.h"
 
-class SceneGame: public sfge::Scene
+class SceneTask: public sfge::Scene
 {
 private:
-    std::unique_ptr<sf::Sprite> spr_border;
+    sf::RectangleShape textback;
+    std::unique_ptr<sf::Text> text_task;
+    std::unique_ptr<sf::Text> text_ok;
+    std::string task;
 public:
+    SceneTask(const std::string& task);
     virtual void Render(sf::RenderTarget& rendertarget) override;
     virtual void Update(float dt, const sf::Vector2i& mousePos, const std::vector<sf::Event>& events) override;
     virtual void Init() override;

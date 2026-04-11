@@ -21,9 +21,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="CppTools.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="GameUnit.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -34,9 +31,6 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="MiniMap.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Texts.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\SfmlTools.cpp">
@@ -129,15 +123,21 @@
     <ClCompile Include="SceneGame.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\libs\HelperCppClasses\src\StringTools.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\SfmlGameEngine\src\Texts.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneTask.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="version.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="CppTools.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="GameUnit.h">
@@ -150,9 +150,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="MiniMap.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Texts.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="UnitComponent.h">
@@ -225,6 +222,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="SceneGame.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneTask.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
