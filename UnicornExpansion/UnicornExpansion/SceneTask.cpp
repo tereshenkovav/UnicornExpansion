@@ -1,9 +1,11 @@
 #include "SceneTask.h"
 #include "SfmlGameEngine/Engine.h"
 
-SceneTask::SceneTask(const std::string& task):Scene()
+SceneTask::SceneTask(const std::string& task, sf::Color color, std::function<void()> closefunc) :Scene()
 {
     this->task = task;
+    this->color = color;
+    this->closefunc = closefunc;
 }
 
 void SceneTask::Render(sf::RenderTarget & rendertarget) {
@@ -32,11 +34,11 @@ void SceneTask::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
     for (auto & event : events) {
         if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
         {
-            if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)	getEngine()->doExitScene();
+            if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)	closefunc();
         };
         if (const auto* mousePressed = event.getIf<sf::Event::MouseButtonReleased>())
         {
-            if (sel) getEngine()->doExitScene();
+            if (sel) closefunc();
         }
     }
 }
@@ -46,7 +48,7 @@ void SceneTask::Init() {
     textback.setOutlineColor(sf::Color(192, 192, 192));
     textback.setFillColor(sf::Color{ 40, 40, 40, 192 });
     
-    text_task = loadText(getTexts().getStr("Text_Task") + "\n" + task, 22);    
+    text_task = loadText(task, 22, color);
     text_task->setPosition({ 512 - 190, 290 });
 
     text_ok = loadText("OK", 24, sf::Color::White);    

@@ -20,7 +20,8 @@ void SceneGame::Init() {
     spr_border = loadSprite("images/border.png");
     spr_border->setPosition({ 0, 768 - 192 });
 
-    getEngine()->AddOverScene(std::make_shared<SceneTask>("Task123"));
+    getEngine()->AddOverScene(std::make_shared<SceneTask>(getTexts().getStr("Text_Task") + "\n" + "Task123", sf::Color::Green,
+        [this]()->void{ getEngine()->doExitScene(); }));
 }
     
 
