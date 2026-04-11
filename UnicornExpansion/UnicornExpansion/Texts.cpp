@@ -1,7 +1,7 @@
 #include "Texts.h"
 #include "SfmlGameEngine/SfmlTools.h"
 #include <fstream>
-#include "CppTools.h"
+#include "HelperCppClasses/StringTools.h"
 
 std::string prepLine1(const std::string& str) {
 	return trimString(clearLineFromBOM(clearStringFromEndl(str)));

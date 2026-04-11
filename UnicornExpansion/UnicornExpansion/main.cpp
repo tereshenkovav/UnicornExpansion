@@ -23,7 +23,7 @@
 #include "ComponentHarvester.h"
 #include "SubTerrainBuilder.h"
 #include "FogBuilder.h"
-#include "CppTools.h"
+#include "HelperCppClasses/StringTools.h"
 #include "ClickerCounter.h"
 #include "UnitSelector.h"
 #include "SfmlGameEngine/Engine.h"

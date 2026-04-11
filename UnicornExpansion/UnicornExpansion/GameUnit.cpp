@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <math.h>
 #include <typeinfo>
-#include "CppTools.h"
+#include "HelperCppClasses/StringTools.h"
 
 GameUnit::GameUnit(int unitx, int unity, int unitw, int unith, const std::string& caption, int maxhealth, const std::string& code)
 {

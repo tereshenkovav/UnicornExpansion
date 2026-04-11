@@ -167,7 +167,7 @@
     <ClCompile Include="components\ComponentResource.cpp" />
     <ClCompile Include="components\ComponentShield.cpp" />
     <ClCompile Include="components\ComponentUnicorn.cpp" />
-    <ClCompile Include="CppTools.cpp" />
+    <ClCompile Include="..\..\libs\HelperCppClasses\src\StringTools.cpp" />
     <ClCompile Include="FinderByBestDistance.cpp" />
     <ClCompile Include="FogBuilder.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -202,7 +202,6 @@
     <ClInclude Include="components\ComponentResource.h" />
     <ClInclude Include="components\ComponentShield.h" />
     <ClInclude Include="components\ComponentUnicorn.h" />
-    <ClInclude Include="CppTools.h" />
     <ClInclude Include="FinderByBestDistance.h" />
     <ClInclude Include="FogBuilder.h" />
     <ClInclude Include="Game.h" />

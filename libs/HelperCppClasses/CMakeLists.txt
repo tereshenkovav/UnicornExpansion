@@ -9,8 +9,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_library(HelperCppClasses)
 
 set(sources
+    include/HelperCppClasses/StringTools.h
     include/HelperCppClasses/Countdown.h
     include/HelperCppClasses/Vector2D.h
+    src/StringTools.cpp
     src/Countdown.cpp
     src/Vector2D.cpp)
 

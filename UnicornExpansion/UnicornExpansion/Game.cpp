@@ -5,7 +5,7 @@
 #include <map>
 #include <math.h>
 #include <optional>
-#include "CppTools.h"
+#include "HelperCppClasses/StringTools.h"
 #include "ComponentUnicorn.h"
 #include "ComponentHarvester.h"
 #include "ComponentResource.h"

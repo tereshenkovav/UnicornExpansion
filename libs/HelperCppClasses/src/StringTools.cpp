@@ -1,4 +1,4 @@
-#include "CppTools.h"
+#include "HelperCppClasses/StringTools.h"
 
 std::string clearStringFromEndl(const std::string& str) {
 	std::string res = str;
