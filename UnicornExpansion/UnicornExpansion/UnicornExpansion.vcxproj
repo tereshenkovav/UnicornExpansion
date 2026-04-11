@@ -179,7 +179,7 @@
     <ClCompile Include="SceneMainMenu.cpp" />
     <ClCompile Include="SeedStore.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\SfmlTools.cpp" />
-    <ClCompile Include="Texts.cpp" />
+    <ClCompile Include="..\..\libs\SfmlGameEngine\src\Texts.cpp" />
     <ClCompile Include="SubTerrainBuilder.cpp" />
     <ClCompile Include="UnitComponent.cpp" />
     <ClCompile Include="UnitFactory.cpp" />
@@ -211,7 +211,6 @@
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneMainMenu.h" />
     <ClInclude Include="SeedStore.h" />
-    <ClInclude Include="Texts.h" />
     <ClInclude Include="SubTerrainBuilder.h" />
     <ClInclude Include="UnitComponent.h" />
     <ClInclude Include="UnitFactory.h" />

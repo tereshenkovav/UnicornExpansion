@@ -11,7 +11,6 @@ SceneMainMenu.cpp
 SceneGame.cpp
 SeedStore.cpp
 SubTerrainBuilder.cpp
-Texts.cpp
 UnitComponent.cpp
 UnitFactory.cpp
 UnitMover.cpp

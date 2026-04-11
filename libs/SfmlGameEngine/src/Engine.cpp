@@ -65,6 +65,16 @@ void Engine::SwitchToScene(std::shared_ptr<Scene> scene)
     nextscene = scene;
 }
 
+void Engine::loadTexts(const std::string& filename)
+{
+    texts.loadFromFile(filename);
+}
+
+const Texts& Engine::getTexts() const
+{
+    return texts;
+}
+
 void Engine::Run(std::shared_ptr<Scene> scene)
 {    
     std::shared_ptr<Scene> tekscene = scene;

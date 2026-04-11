@@ -13,7 +13,6 @@
 #include "GameUnit.h"
 #include "HelperCppClasses/Countdown.h"
 #include "MiniMap.h"
-#include "Texts.h"
 #include "SfmlGameEngine/SfmlTools.h"
 #include "UnitFactory.h"
 #include "ComponentUnicorn.h"
@@ -260,12 +259,10 @@ int main(int argc, char* argv[])
     // Вариант по умолчанию - data в каталоге исполняемого файла
         else
             std::filesystem::current_path(exedir + "/data");
-
-    Texts texts;
-    texts.loadFromFile("strings.txt");
-
+        
     sfge::Engine engine(1024, 768);
-    engine.setCaption(texts.getStr("Text_GameCaption"));
+    engine.loadTexts("strings.txt");
+    engine.setCaption(engine.getTexts().getStr("Text_GameCaption"));
     engine.setIcon("images/icon.png");
     engine.loadDefaultFont("arial.ttf");
     engine.loadDefaultCursor("images/cursor_def.png");

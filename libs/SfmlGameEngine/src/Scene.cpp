@@ -56,4 +56,9 @@ std::unique_ptr<sf::Text> Scene::loadText(const std::string& str, int size, sf::
 	return text;
 }
 
+const Texts& Scene::getTexts() const
+{
+	return engine->getTexts();
+}
+
 }

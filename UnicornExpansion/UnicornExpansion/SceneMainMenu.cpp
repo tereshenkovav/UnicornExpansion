@@ -17,14 +17,14 @@ void SceneMainMenu::Render(sf::RenderTarget & rendertarget) {
             textback.setPosition({ 512 - 120, (float)(250 + 64 * i) });
             rendertarget.draw(textback);
 
-            text_info->setString(texts.getSfmlStr("Name_Level_" + std::to_string(i)));
+            text_info->setString(getTexts().getSfmlStr("Name_Level_" + std::to_string(i)));
             text_info->setPosition({ 512 - text_info->getLocalBounds().size.x / 2, (float)(250 + 64 * i) + 8 });
             rendertarget.draw(*text_info);
         }
         textback.setPosition({ 512 - 120, (float)(250 + 64 * LEVEL_COUNT) });
         rendertarget.draw(textback);
 
-        text_info->setString(texts.getSfmlStr("Text_Quit"));
+        text_info->setString(getTexts().getSfmlStr("Text_Quit"));
         text_info->setPosition({ 512 - text_info->getLocalBounds().size.x / 2, (float)(250 + 64 * LEVEL_COUNT) + 8 });
         rendertarget.draw(*text_info);
 }
@@ -71,9 +71,7 @@ void SceneMainMenu::Init() {
     spr_title->setOrigin({ (float)(spr_title->getTexture().getSize().x / 2), 0});
     spr_title->setPosition({ 512, 60 });
         
-    texts.loadFromFile("strings.txt");
-        
-    text_help = loadText(texts.getStr("Text_Help"), 20, sf::Color::White);
+    text_help = loadText(getTexts().getStr("Text_Help"), 20, sf::Color::White);
     text_help->setPosition({ 670, 250 });
     
     text_version = loadText(VERSION, 28, sf::Color({ 192,192,192 }));

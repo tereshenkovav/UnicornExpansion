@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include "SfmlGameEngine/Texts.h"
 
 namespace sfge {
 
@@ -19,6 +20,7 @@ protected:
     std::unique_ptr<sf::Text> loadText(const std::string & str, int size);
     std::unique_ptr<sf::Text> loadText(int size, sf::Color color);
     std::unique_ptr<sf::Text> loadText(const std::string& str, int size, sf::Color color);
+    const Texts& getTexts() const;
 public:
     virtual void Render(sf::RenderTarget& rendertarget);
     virtual void Update(float dt, const sf::Vector2i& mousePos, const std::vector<sf::Event>& events);
