@@ -24,3 +24,4 @@ target_include_directories(UnicornExpansion PUBLIC .)
 add_subdirectory(components)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+target_link_options(UnicornExpansion PRIVATE -mwindows)
