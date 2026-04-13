@@ -181,6 +181,7 @@
     <ClCompile Include="SeedStore.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\SfmlTools.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Texts.cpp" />
+    <ClCompile Include="..\..\libs\SfmlGameEngine\src\Colors.cpp" />
     <ClCompile Include="SubTerrainBuilder.cpp" />
     <ClCompile Include="UnitComponent.cpp" />
     <ClCompile Include="UnitFactory.cpp" />

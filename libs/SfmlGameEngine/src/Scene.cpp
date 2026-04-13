@@ -67,4 +67,9 @@ const Texts& Scene::getTexts() const
 	return engine->getTexts();
 }
 
+const Colors& Scene::getColors() const
+{
+	return engine->getColors();
+}
+
 }

@@ -5,10 +5,6 @@
 
 namespace sfge {
 
-std::string prepLine1(const std::string& str) {
-	return trimString(clearLineFromBOM(clearStringFromEndl(str)));
-}
-
 void Texts::loadFromFile(const std::string& filename)
 {
 	strings.clear();
@@ -19,7 +15,7 @@ void Texts::loadFromFile(const std::string& filename)
 
 	while (std::getline(fin, line))
 	{
-		line = prepLine1(line);
+		line = trimString(clearLineFromBOM(clearStringFromEndl(line)));
 		if (line.size() == 0) continue;
 		auto lines = splitString(line, "=");
 		if (lines.size() >= 2) strings[lines[0]] = replaceAllString(lines[1], "\\n", "\n");

@@ -84,6 +84,16 @@ const Texts& Engine::getTexts() const
     return texts;
 }
 
+void Engine::loadColors(const std::string& filename)
+{
+    colors.loadFromFile(filename);
+}
+
+const Colors& Engine::getColors() const
+{
+    return colors;
+}
+
 void Engine::Run(std::shared_ptr<Scene> scene)
 {    
     std::shared_ptr<Scene> tekscene = scene;

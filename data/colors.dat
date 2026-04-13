@@ -1,0 +1,8 @@
+healer=   240, 255 ,0
+attacker= 255, 0,   0
+harvester=0,   64,  255
+detoxer=  208, 0,   220
+radar=    255, 255, 255
+shield=   107, 230, 255
+textbackborder = 192,192,192
+textbackfill =   40, 40, 40, 192

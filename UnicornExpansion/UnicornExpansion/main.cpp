@@ -78,10 +78,6 @@ float globalt = 0.0f;
 std::array<int, 8> marker_dx = { 11, 0, 11, 0, 11, 0, 11, 0 };
 std::array<int, 8> marker_dy = { 0, 0, 11, 11, 64 - 22, 64 - 22, 64 - 11, 64 - 11 };
 
-// Переключатели сцен
-enum class Scenex { Menu, Task, Game };
-Scenex scene;
-
 // Добавить юнит в массив по последней загруженной текстуре
 void addUnitSpriteFromLastTexture(const std::string& code) {
     spr_units[code] = std::make_unique<sf::Sprite>(*textures.back());
@@ -256,6 +252,7 @@ int main(int argc, char* argv[])
         
     sfge::Engine engine(1024, 768);
     engine.loadTexts("strings.txt");
+    engine.loadColors("colors.dat");
     engine.setCaption(engine.getTexts().getStr("Text_GameCaption"));
     engine.setIcon("images/icon.png");
     engine.loadDefaultFont("arial.ttf");

@@ -73,8 +73,8 @@ void SceneMainMenu::Update(float dt, const sf::Vector2i & mousePos, const std::v
 
 void SceneMainMenu::Init() {
     textback.setOutlineThickness(1);
-    textback.setOutlineColor(sf::Color(192, 192, 192));
-    textback.setFillColor(sf::Color{ 40, 40, 40, 192 });
+    textback.setOutlineColor(getColors().getColor("textbackborder"));
+    textback.setFillColor(getColors().getColor("textbackfill"));
 
     spr_intro = loadSprite("images/intro.png");
     spr_title = loadSprite("images/title.png");
@@ -84,7 +84,7 @@ void SceneMainMenu::Init() {
     text_help = loadText(getTexts().getStr("Text_Help"), 20, sf::Color::White);
     text_help->setPosition({ 670, 250 });
     
-    text_version = loadText(VERSION, 28, sf::Color({ 192,192,192 }));
+    text_version = loadText(VERSION, 28, getColors().getColor("textbackborder"));
     text_version->setPosition({ 1024 - 100, 768 - 50 });
 
     text_info = loadText(16, sf::Color::White);
