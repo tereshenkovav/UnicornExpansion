@@ -13,6 +13,7 @@ private:
     std::unique_ptr<sf::Text> text_help;
     std::unique_ptr<sf::Text> text_version;
     std::unique_ptr<sf::Text> text_info;
+    std::unique_ptr<sf::Sound> snd_click;
 public:
     virtual void Render(sf::RenderTarget& rendertarget) override;
     virtual void Update(float dt, const sf::Vector2i& mousePos, const std::vector<sf::Event>& events) override;

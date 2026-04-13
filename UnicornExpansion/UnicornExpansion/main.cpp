@@ -234,13 +234,6 @@ void loadGame(int leveln) {
     fogbuilder.initByGame(game);
 
 }
-
-void switchSound() {
-  if (sf::Listener::getGlobalVolume() == 0.0f)
-    sf::Listener::setGlobalVolume(100.0f);
-  else
-    sf::Listener::setGlobalVolume(0.0f);
-}
 */
 int main(int argc, char* argv[])
 {

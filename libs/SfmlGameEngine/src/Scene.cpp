@@ -32,6 +32,12 @@ std::unique_ptr<sf::Sprite> Scene::loadSprite(const std::string& filename)
 	return std::make_unique<sf::Sprite>(*textures.back());
 }
 
+std::unique_ptr<sf::Sound> Scene::loadSound(const std::string& filename)
+{
+	sounds.push_back(std::make_unique<sf::SoundBuffer>(filename));
+	return std::make_unique<sf::Sound>(*sounds.back());
+}
+
 std::unique_ptr<sf::Text> Scene::loadText(const std::string& str, int size)
 {
 	return std::make_unique<sf::Text>(*engine->getDefaultFont(),SfmlTools::utf2text(str),size);

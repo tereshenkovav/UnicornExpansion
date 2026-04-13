@@ -2,8 +2,16 @@
 #include "version.h"
 #include "SfmlGameEngine/Engine.h"
 #include "SceneGame.h"
+#include <SFML/Audio.hpp>
 
 const int LEVEL_COUNT = 6;
+
+void switchSound() {
+    if (sf::Listener::getGlobalVolume() == 0.0f)
+        sf::Listener::setGlobalVolume(100.0f);
+    else
+        sf::Listener::setGlobalVolume(0.0f);
+}
 
 void SceneMainMenu::Render(sf::RenderTarget & rendertarget) {
     rendertarget.draw(*spr_intro);
@@ -45,8 +53,10 @@ void SceneMainMenu::Update(float dt, const sf::Vector2i & mousePos, const std::v
         if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
         {
             if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)	getEngine()->doClose();
-            //if (keyPressed->scancode == sf::Keyboard::Scancode::M) switchSound();
+            if (keyPressed->scancode == sf::Keyboard::Scancode::M) switchSound();
         };
+        if (const auto* mousePressed = event.getIf<sf::Event::MouseButtonPressed>())
+            snd_click->play();
         if (const auto* mousePressed = event.getIf<sf::Event::MouseButtonReleased>())
         {
             if (selected_idx) {
@@ -78,6 +88,8 @@ void SceneMainMenu::Init() {
     text_version->setPosition({ 1024 - 100, 768 - 50 });
 
     text_info = loadText(16, sf::Color::White);
+
+    snd_click = loadSound("sounds/click.ogg");
 }
 
 void SceneMainMenu::UnInit() {
