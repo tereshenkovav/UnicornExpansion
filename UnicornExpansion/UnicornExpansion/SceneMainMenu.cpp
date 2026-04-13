@@ -60,11 +60,9 @@ void SceneMainMenu::Update(float dt, const sf::Vector2i & mousePos, const std::v
         if (const auto* mousePressed = event.getIf<sf::Event::MouseButtonReleased>())
         {
             if (selected_idx) {
-                if (*selected_idx>=0) {
-                // Для выбора игры - переходим на сцену задания и загружаем игру
-                    //loadGame(*selected_idx);
-                    getEngine()->SwitchToScene(std::make_shared<SceneGame>());
-                }
+                if (*selected_idx>=0)
+                    getEngine()->SwitchToScene(std::make_shared<SceneGame>(*selected_idx));
+                else
                 if (*selected_idx < 0) getEngine()->doClose();
             }
         }

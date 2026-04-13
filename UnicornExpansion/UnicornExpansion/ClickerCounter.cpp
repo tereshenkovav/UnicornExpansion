@@ -1,7 +1,7 @@
 #include "ClickerCounter.h"
 #include <stdlib.h>
 
-ClickerCounter::ClickerCounter(int soundcountall)
+void ClickerCounter::setCount(int soundcountall)
 {
 	this->soundcountall = soundcountall;
 }

@@ -95,7 +95,7 @@ const Colors& Engine::getColors() const
 }
 
 void Engine::Run(std::shared_ptr<Scene> scene)
-{    
+{
     std::shared_ptr<Scene> tekscene = scene;
     std::shared_ptr<Scene> tekoverscene ;
     tekscene->setEngine(this);

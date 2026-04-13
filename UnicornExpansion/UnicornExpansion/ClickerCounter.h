@@ -9,7 +9,7 @@ private:
 	int last_sound_idx = -1;
 public:
 	// Передается размер массива звуков, где последний массив - секретная реплик после заданного числа нажатий
-	ClickerCounter(int soundcountall);
+	void setCount(int soundcountall);
 	int getNextSoundIdx(int selected_uid);
 };
 
