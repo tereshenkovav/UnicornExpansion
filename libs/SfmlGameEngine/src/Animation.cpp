@@ -10,7 +10,7 @@ Animation::Animation(const std::string& filename, int w, int h, int framecount, 
     tekt = 0 ;
     onceflag = false ;
         
-    frames = new sf::Texture[count] ;
+    frames.resize(count);
     sf::Image source ;
     source.loadFromFile(filename) ;
 
@@ -23,8 +23,9 @@ Animation::Animation(const std::string& filename, int w, int h, int framecount, 
     rect.size = { w, h };
     
     for (int i=0; i<count; i++) {
-        frames[i].loadFromImage(source,false,rect) ;
-        frames[i].setSmooth(true);
+        frames[i] = std::make_unique<sf::Texture>();
+        frames[i]->loadFromImage(source,false,rect) ;
+        frames[i]->setSmooth(true);
         rect.position.x+=w ;
         if (rect.position.x>=(int)source.getSize().x) {
             rect.position.x=0 ;
@@ -33,7 +34,7 @@ Animation::Animation(const std::string& filename, int w, int h, int framecount, 
     }
 
     // Здесь обязательно передать нулевой файл обратно к предку - он там используется
-    setTexture(frames[0],true);
+    setTexture(*frames[0],true);
     
     isplayed = true ;
     update(0) ;
@@ -58,7 +59,7 @@ void Animation::update(double dt)
             tekt-=count*sec_per_frame ;
         }
     }
-    setTexture(frames[tekframe],true) ;
+    setTexture(*frames[tekframe],true) ;
 }
 
 int Animation::getFrame() const

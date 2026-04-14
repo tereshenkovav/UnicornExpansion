@@ -8,7 +8,7 @@ namespace sfge {
 class Animation : public sf::Sprite
 {
 private:
-    sf::Texture * frames ;
+    std::vector<std::unique_ptr<sf::Texture>> frames ;
     int count ;
     float fps ;
     float tekt ;
