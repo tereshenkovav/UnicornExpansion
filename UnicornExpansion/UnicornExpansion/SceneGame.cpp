@@ -77,9 +77,9 @@ void SceneGame::drawLaserFromTo(sf::RenderTarget& rendertarget, std::unique_ptr<
     spr_laz->setScale({ dir.length() / 128.0f,1.0f });
     rendertarget.draw(*spr_laz);
 
-    (*anim_lasers[laz.type])->setColor(color_lasers[laz.type]);
-    (*anim_lasers[laz.type])->setPosition(laz.pos2);
-    rendertarget.draw(**anim_lasers[laz.type]);
+    anim_lasers[laz.type]->setColor(color_lasers[laz.type]);
+    anim_lasers[laz.type]->setPosition(laz.pos2);
+    rendertarget.draw(*anim_lasers[laz.type]);
 }
 
 void SceneGame::fixCameraPosition() {
@@ -776,18 +776,18 @@ void SceneGame::Init() {
     color_lasers[LaserType::Heal] = sf::Color(240, 255, 0);
     color_lasers[LaserType::Detox] = sf::Color(160, 56, 255);
 
-    laser_apply = std::make_unique<sfge::Animation>("images/laser_apply.png", 30, 34, 12, 12);
+    laser_apply = std::make_shared<sfge::Animation>("images/laser_apply.png", 30, 34, 12, 12);
     laser_apply->setOrigin({ 15,17 });
     laser_apply->play();
 
-    aura = std::make_unique<sfge::Animation>("images/aura_default.png", 86, 80, 12, 12);
+    aura = std::make_shared<sfge::Animation>("images/aura_default.png", 86, 80, 12, 12);
     aura->setOrigin({ 43, 40 });
     aura->play();
 
-    anim_lasers[LaserType::Harvest] = &aura;
-    anim_lasers[LaserType::Attack] = &laser_apply;
-    anim_lasers[LaserType::Heal] = &aura;
-    anim_lasers[LaserType::Detox] = &laser_apply;
+    anim_lasers[LaserType::Harvest] = aura;
+    anim_lasers[LaserType::Attack] = laser_apply;
+    anim_lasers[LaserType::Heal] = aura;
+    anim_lasers[LaserType::Detox] = laser_apply;
 
     teleportation = std::make_unique<sfge::Animation>("images/teleportation.png", 96, 96, 9, 9);
     teleportation->setOrigin({ 48, 48 });

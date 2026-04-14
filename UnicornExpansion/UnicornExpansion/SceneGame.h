@@ -41,7 +41,7 @@ private:
     std::vector<std::unique_ptr<sf::Sprite>> spr_mushrooms;
     std::map<Terrain, sf::Color> color_terrains;
     std::map<LaserType, sf::Color> color_lasers;
-    std::map<LaserType, std::unique_ptr<sfge::Animation>*> anim_lasers;
+    std::map<LaserType, std::shared_ptr<sfge::Animation>> anim_lasers;
     std::map<TerrainSubType, std::unique_ptr<sf::Sprite>> spr_trees;
     std::vector<std::unique_ptr<sf::Sound>> snd_unicorn_clicks;
     std::map<AudioEffect, std::unique_ptr<sf::Sound>> snd_audioeffects;
@@ -92,8 +92,8 @@ private:
 
     std::optional<sf::Rect<int>> rect_holded;
 
-    std::unique_ptr<sfge::Animation> laser_apply;
-    std::unique_ptr<sfge::Animation> aura;
+    std::shared_ptr<sfge::Animation> laser_apply;
+    std::shared_ptr<sfge::Animation> aura;
     std::shared_ptr<sfge::Animation> teleportation;
 
     std::unique_ptr<sf::Sprite> spr_laz;
