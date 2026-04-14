@@ -34,10 +34,13 @@ private:
     std::map<int, std::shared_ptr<sf::Sprite>> cursors;
     Texts texts;
     Colors colors;
+    bool stopupdatingforlostfocus = false;
 public:
     Engine(unsigned int width, unsigned int height) ;
     // Основной метод - запуск движка со сценой
     void Run(std::shared_ptr<Scene> scene);
+    // Установка поведения при потере фокуса окна
+    void setStopUpdatingForLostFocus(bool value);
     // Работа с установкой exe-каталога для сцен, если нужно чего грузить
     void setExeDir(const std::string& exedir);
     std::string getExeDir() const;

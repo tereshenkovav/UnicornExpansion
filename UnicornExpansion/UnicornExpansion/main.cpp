@@ -43,6 +43,7 @@ int main(int argc, char* argv[])
     engine.loadDefaultFont("arial.ttf");
     engine.loadDefaultCursor("images/cursor_def.png");
     engine.addCursor(1, "images/cursor_my.png");
+    engine.setStopUpdatingForLostFocus(true);
     engine.Run(std::make_shared<SceneMainMenu>());
         
     return 0;

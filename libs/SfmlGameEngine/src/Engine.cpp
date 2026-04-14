@@ -16,6 +16,11 @@ Engine::Engine(unsigned int width, unsigned int height)
     window->setVerticalSyncEnabled(true);
 }
 
+void Engine::setStopUpdatingForLostFocus(bool value)
+{
+    this->stopupdatingforlostfocus = value;
+}
+
 void Engine::loadDefaultFont(const std::string& filename)
 {
     defaultfont = std::make_shared<sf::Font>(filename);
@@ -139,8 +144,10 @@ void Engine::Run(std::shared_ptr<Scene> scene)
         currentcursor = std::weak_ptr<sf::Sprite>();
         if (defaultcursor) currentcursor = defaultcursor;
 
-        // Обновление сцены - только верхний уровень
-        if (!scenes.empty()) scenes.back()->Update(dt, mousepos, events);
+        // Если окно активно или не установлен флаг остановки обновлений при потере фокуса
+        if ((window->hasFocus())||(!stopupdatingforlostfocus))
+            // Обновление сцены - только верхний уровень
+            if (!scenes.empty()) scenes.back()->Update(dt, mousepos, events);
 
         // Рендер сцены - снизу вверх все сцены
         window->clear();
