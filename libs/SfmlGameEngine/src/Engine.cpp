@@ -115,6 +115,10 @@ sf::Vector2f Engine::getWorldPosByView(const sf::View& view, sf::Vector2i pos)
     return worldpos;
 }
 
+int Engine::getFactFPS() const {
+    return factfps;
+}
+
 void Engine::Run(std::shared_ptr<Scene> scene)
 {
     std::vector<std::shared_ptr<Scene>> scenes = { scene };
@@ -126,6 +130,8 @@ void Engine::Run(std::shared_ptr<Scene> scene)
 
     sf::Clock clock;
     std::vector<sf::Event> events;
+    float timefps = 0.0f;
+    int calcfps = 0;
 
     // Крутим цикл игры
     while (window->isOpen())
@@ -134,6 +140,13 @@ void Engine::Run(std::shared_ptr<Scene> scene)
 
         float dt = clock.getElapsedTime().asSeconds();
         clock.restart();
+        
+        // Вычисление фактического FPS
+        timefps += dt;
+        calcfps++;
+        if (timefps >= 1.0f) {
+            factfps = calcfps; timefps = 0.0f; calcfps = 0;
+        }
 
         events.clear();
         // Получаем все события от окна

@@ -402,6 +402,11 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
         rect_selector.setOrigin(sf::Vector2f(0, 0));
         rendertarget.draw(rect_selector);
     }
+
+    if (showfps) {
+        text_fps->setString("FPS: " + std::to_string(getEngine()->getFactFPS()));
+        rendertarget.draw(*text_fps);
+    }
 }
 
 void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vector<sf::Event>& events) {
@@ -441,6 +446,7 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
         if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
         {
             if (keyPressed->scancode == sf::Keyboard::Scancode::Escape) getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>());
+            if (keyPressed->scancode == sf::Keyboard::Scancode::F) showfps = !showfps;
             if (keyPressed->scancode == sf::Keyboard::Scancode::Space)
                 if (game.getLastEventPos()) {
                     view.setCenter(*game.getLastEventPos());
@@ -692,6 +698,9 @@ void SceneGame::Init() {
     text_resource = loadText(18);
     text_progress = loadText(24, sf::Color::White);
     text_progress->setPosition({ 1024 - 400 / 2 - 16, VIEW_SIZE_Y + 132 });
+
+    text_fps= loadText(16, sf::Color::Green);
+    text_fps->setPosition({ 1024 - 70, 768 - 20 });
 
     // Прямоугольники интерфейса
     rect_selector.setOutlineThickness(2);

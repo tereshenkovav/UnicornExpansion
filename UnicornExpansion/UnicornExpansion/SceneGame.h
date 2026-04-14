@@ -59,6 +59,7 @@ private:
     std::weak_ptr<sfge::Animation> current_teleportation_effect;
     bool mouseholdedonmap = false;
     float globalt = 0.0f;
+    bool showfps = false;
 
     bool overundo = false;
     std::optional<int> overactionidx = std::nullopt;
@@ -79,6 +80,7 @@ private:
     std::unique_ptr<sf::Text> text_timer;
     std::unique_ptr<sf::Text> text_resource;
     std::unique_ptr<sf::Text> text_progress;
+    std::unique_ptr<sf::Text> text_fps;
 
     sf::RectangleShape rect_selector;
     sf::RectangleShape rect_progress_border;

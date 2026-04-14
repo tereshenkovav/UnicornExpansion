@@ -35,6 +35,7 @@ private:
     Texts texts;
     Colors colors;
     bool stopupdatingforlostfocus = false;
+    int factfps = 0;
 public:
     Engine(unsigned int width, unsigned int height) ;
     // Основной метод - запуск движка со сценой
@@ -69,6 +70,8 @@ public:
     void doClose();
     // Команда на выход из текущей сцены (если сцена корневая - то будет выход из игры)
     void doExitScene();
+    // Получение фактического FPS
+    int getFactFPS() const;
 };
 
 };
