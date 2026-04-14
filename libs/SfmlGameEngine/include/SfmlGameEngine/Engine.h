@@ -15,8 +15,8 @@ private:
     unsigned int width;
     unsigned int height;
     std::string exedir;
-    bool closed;
-    bool exitscene;
+    bool signal_closed;
+    bool signal_exitscene;
     std::unique_ptr<sf::RenderWindow> window;
     std::shared_ptr<Scene> nextscene;
     std::shared_ptr<Scene> overscene;

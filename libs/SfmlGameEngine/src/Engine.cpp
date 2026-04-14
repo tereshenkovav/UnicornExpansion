@@ -65,11 +65,11 @@ void Engine::setIcon(const std::string& filename)
 
 void Engine::doClose()
 {
-    closed = true;
+    signal_closed = true;
 }
 
 void Engine::doExitScene() {
-    exitscene = true;
+    signal_exitscene = true;
 }
 
 void Engine::SwitchToScene(std::shared_ptr<Scene> scene)
@@ -112,18 +112,15 @@ sf::Vector2f Engine::getWorldPosByView(const sf::View& view, sf::Vector2i pos)
 
 void Engine::Run(std::shared_ptr<Scene> scene)
 {
-    std::shared_ptr<Scene> tekscene = scene;
-    std::shared_ptr<Scene> tekoverscene ;
-    tekscene->setEngine(this);
-    tekscene->Init();
-    
-    nextscene = std::shared_ptr<Scene>();
+    std::vector<std::shared_ptr<Scene>> scenes = { scene };
+    scenes.back()->setEngine(this);
+    scenes.back()->Init();
 
-	sf::Clock clock;
+    signal_closed = false;
+    signal_exitscene = false;
 
+    sf::Clock clock;
     std::vector<sf::Event> events;
-    closed = false;
-    exitscene = false;
 
     // Крутим цикл игры
     while (window->isOpen())
@@ -142,19 +139,14 @@ void Engine::Run(std::shared_ptr<Scene> scene)
         currentcursor = std::weak_ptr<sf::Sprite>();
         if (defaultcursor) currentcursor = defaultcursor;
 
-        // Обновление сцены
-        if (tekoverscene)
-            tekoverscene->Update(dt, mousepos, events);
-        else
-            tekscene->Update(dt, mousepos, events);
+        // Обновление сцены - только верхний уровень
+        if (!scenes.empty()) scenes.back()->Update(dt, mousepos, events);
 
-        // Рендер сцены
+        // Рендер сцены - снизу вверх все сцены
         window->clear();
-        tekscene->Render(*window);
-        if (tekoverscene) tekoverscene->Render(*window);
-        // Курсор в конце сцены
-        auto cursor = currentcursor.lock();
-        if (cursor) {
+        for (auto& scene : scenes) scene->Render(*window);
+        // Курсор в конце сцены        
+        if (auto cursor = currentcursor.lock()) {
             int delta = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) ? 4 : 0;
             cursor->setPosition({ (float)mousepos.x + delta,(float)mousepos.y + delta });
             window->draw(*cursor);
@@ -163,44 +155,36 @@ void Engine::Run(std::shared_ptr<Scene> scene)
 
         // Обработка сигналов на переключение сцены, добавление сверхсцены и закрытие
         if (nextscene) {
-            if (tekoverscene) {
-                tekoverscene->UnInit();
-                tekoverscene.reset();
-            }
-            tekscene->UnInit();
-            tekscene = std::move(nextscene);
-            tekscene->setEngine(this);
-            tekscene->Init();
+            for (auto& scene : scenes) scene->UnInit();
+            scenes.clear();
+
+            scenes.push_back(std::move(nextscene));
+            scenes.back()->setEngine(this);
+            scenes.back()->Init();
         }
 
         if (overscene) {
-            if (tekoverscene) tekoverscene->UnInit();
-            tekoverscene = std::move(overscene);
-            tekoverscene->setEngine(this);
-            tekoverscene->Init();
+            scenes.push_back(std::move(overscene));
+            scenes.back()->setEngine(this);
+            scenes.back()->Init();
         }
 
-        if (exitscene) {
-            exitscene = false;
-            if (tekoverscene) {
-                tekoverscene->UnInit();
-                tekoverscene.reset();
+        if (signal_exitscene) {
+            signal_exitscene = false;
+            if (!scenes.empty()) {
+                scenes.back()->UnInit();
+                scenes.pop_back();
+                if (scenes.empty()) window->close();
             }
-            else
-                window->close();
         }
 
         // Последняя строка в цикле
-        if (closed) {
-            closed = false;
-            window->close();
-        }
+        if (signal_closed) window->close();
     }
-    if (tekoverscene) {
-        tekoverscene->UnInit();
-        tekoverscene.reset();
-    }
-    tekscene->UnInit();
+    // Очистка всех сцен
+    for (auto& scene : scenes) scene->UnInit();
+    // Избыточно в конце метода для локального объекта, но пусть будет для ясности
+    scenes.clear();
 }
 
 }
