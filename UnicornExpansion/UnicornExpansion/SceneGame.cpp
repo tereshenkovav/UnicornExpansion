@@ -25,46 +25,7 @@ sf::Vector2f getActionButtonPos(int i) {
 SceneGame::SceneGame(int leveln) {
     this->leveln = leveln;
 }
-/*
-// Добавить юнит в массив по последней загруженной текстуре
-void addUnit(const std::string& code, const std::string& filename) {
-    spr_units[code] = std::make_unique<sf::Sprite>(*textures.back());
-    spr_units[code]->setOrigin({ textures.back()->getSize().x / 2.0f,textures.back()->getSize().y / 2.0f });
 
-    spr_icons[code] = std::make_unique<sf::Sprite>(*textures.back());
-    spr_icons[code]->setOrigin({ textures.back()->getSize().x / 2.0f,textures.back()->getSize().y / 2.0f });
-    spr_icons[code]->setScale({ 48.0f / textures.back()->getSize().x, 48.0f / textures.back()->getSize().y });
-}
-
-// Добавить юнит в массив с текстурой из файла
-void addUnitSprite(const std::string& code, const std::string& filename) {
-    textures.push_back(std::make_unique<sf::Texture>(filename));
-    addUnitSpriteFromLastTexture(code);
-}
-
-void addSubTerrainSprite(TerrainSubType ttype, const std::string& filename) {
-    textures.push_back(std::make_unique<sf::Texture>(filename));
-    spr_trees[ttype] = std::make_unique<sf::Sprite>(*textures.back());
-}
-
-// Добавление спрайта территорий
-void addTerrainSprite(Terrain code, const std::string& filename) {
-    textures.push_back(std::make_unique<sf::Texture>(filename));
-    spr_terrains[code] = std::make_unique<sf::Sprite>(*textures.back());
-}
-
-// Добавление спрайта действий
-void addActionSprite(const std::string& code, const std::string& filename) {
-    textures.push_back(std::make_unique<sf::Texture>(filename));
-    spr_actions[code] = std::make_unique<sf::Sprite>(*textures.back());
-}
-
-// Добавление аудиоэффекта
-void addAudioEffect(AudioEffect code, const std::string& filename) {
-    soundbuffers.push_back(std::make_unique<sf::SoundBuffer>(filename));
-    snd_audioeffects[code] = std::make_unique<sf::Sound>(*soundbuffers.back());
-}
-*/
 // Обновление мини-карты
 void SceneGame::updateMiniMap() {
     for (int i = 0; i < game.getWidth(); i++)
@@ -364,18 +325,12 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
             rendertarget.draw(*text_progress);
             spr_actions[current_action_code]->setPosition({ (float)(textback.getPosition().x + 200 - 32), textback.getPosition().y + 8 });
             rendertarget.draw(*spr_actions[current_action_code]);
-            /*if (undo->getGlobalBounds().contains({(float)mousePos.x,(float)mousePos.y})) {
-                window.draw(undo, &shader_bright);
-                cursor = &cursor_my;
-            }
-            else*/
-            rendertarget.draw(*undo);
+            if (overundo) rendertarget.draw(*undo, &shader_bright); else rendertarget.draw(*undo);
         }
         else {
             auto actions = selunit.getActions();
             for (int i = 0; i < actions.size(); i++) {
                 spr_but_action->setPosition(getActionButtonPos(i));
-                //bool isover = spr_but_action->getGlobalBounds().contains({ (float)mousePos.x,(float)mousePos.y });
                 std::string msgcode = "";
                 rendertarget.draw(*spr_but_action);
                 if (spr_actions.count(actions[i].code) > 0) {
@@ -384,15 +339,13 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
                     if (!selunit.canSendAction(actions[i], &msgcode))
                         rendertarget.draw(*spr_actions[actions[i].code], &shader_gray);
                     else
-                        /*if (isover)
+                        if ((overactionidx)&&(*overactionidx==i))
                             rendertarget.draw(*spr_actions[actions[i].code], &shader_bright);
-                        else*/
+                        else
                             rendertarget.draw(*spr_actions[actions[i].code]);
                 }
-
-                //if (isover) cursor = &cursor_my;
-
-                if (true) {// ((isover)&&(!counter_errmsg.isActive()) {
+                                
+                if ((overactionidx) && (*overactionidx == i) &&(!counter_errmsg.isActive())) {
                     text_action->setString(sfge::SfmlTools::utf2text(
                         getTexts().getStr("Action_" + actions[i].caption) + "\n" + getTexts().getStr("Text_Energy") + " " + std::to_string(actions[i].energy)));
                     text_action->setFillColor(sf::Color::White);
@@ -453,19 +406,35 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
 
 void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vector<sf::Event>& events) {
     globalt += dt;
-
-    // Пока определение курсора отключено
-    /*if (mousePos.y < VIEW_SIZE_Y) {
-        window->setView(view);
-        sf::Vector2f worldpos = window.mapPixelToCoords(mousePos);
-        window.setView(window.getDefaultView());
-
+        
+    // Определение наведения на юнита
+    std::optional<int> overunituid = std::nullopt;
+    if (mousePos.y < VIEW_SIZE_Y) {
+        sf::Vector2f worldpos = getEngine()->getWorldPosByView(view, mousePos);        
         if (auto uid = game.findUnitAt(worldpos.x, worldpos.y))
             if (!game.isFog(game.getUnitByUID(*uid).getXY().x, game.getUnitByUID(*uid).getXY().y))
-                cursor = &cursor_my;
+                overunituid = uid;
     }
-    */
 
+    // Проверка положений курсора над кнопками
+    overundo = false;
+    overactionidx = std::nullopt;
+    if (selector.isSelectedOne()) {
+        // Разрешаем действия только если юнит не работает над действием в данный момент
+        if (!game.getUnitByUID(selector.getSelectedUID()).isWorkingTask()) {
+            auto actions = game.getUnitByUID(selector.getSelectedUID()).getActions();
+            for (int i = 0; i < actions.size(); i++) {
+                spr_but_action->setPosition(getActionButtonPos(i));
+                if (spr_but_action->getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) overactionidx = i;
+            }
+        }
+        else
+            // Действие отмены
+            overundo = undo->getGlobalBounds().contains({ (float)mousePos.x,(float)mousePos.y });
+    }
+    // Установка курсора, если нужно
+    if ((overundo)||(overactionidx)||(overunituid)) getEngine()->setCursor(1);
+    
     effect_fire->setVolume(game.getLaserCount() > 0 ? 100.0f : 0.0f);
 
     for (auto & event : events) {
@@ -493,11 +462,7 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
         if (const auto* mousePressed = event.getIf<sf::Event::MouseButtonPressed>()) {
             // Зона игры
             if (mousePressed->position.y < VIEW_SIZE_Y) {
-                /*window.setView(view);
-                sf::Vector2f worldpos = window.mapPixelToCoords(mousePressed->position);
-                window.setView(window.getDefaultView());
-                */
-                sf::Vector2f worldpos;
+                sf::Vector2f worldpos = getEngine()->getWorldPosByView(view, mousePressed->position);
 
                 // Выделение юнита
                 if (mousePressed->button == sf::Mouse::Button::Left)
@@ -505,26 +470,25 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
                     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift))
                         rect_holded = sf::IntRect(mousePressed->position, sf::Vector2i(1, 1));
 
-                    if (auto uid = game.findUnitAt(worldpos.x, worldpos.y))
-                        if (!game.isFog(game.getUnitByUID(*uid).getXY().x, game.getUnitByUID(*uid).getXY().y)) {
+                    if (overunituid) {
                             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) {
                                 if (selector.isNoSelected())
-                                    selector.selectOneUnit(*uid);
+                                    selector.selectOneUnit(*overunituid);
                                 else {
-                                    if (game.getUnitByUID(*uid).isComponent<ComponentUnicorn>()) {
+                                    if (game.getUnitByUID(*overunituid).isComponent<ComponentUnicorn>()) {
                                         bool allunicorn = true;
                                         for (int selid : selector.getSelectedUnits())
                                             allunicorn = allunicorn && game.getUnitByUID(selector.getSelectedUID()).isComponent<ComponentUnicorn>();
-                                        if (allunicorn) selector.invertUnit(*uid);
+                                        if (allunicorn) selector.invertUnit(*overunituid);
                                     }
                                 }
                             }
                             else {
-                                selector.selectOneUnit(*uid);
+                                selector.selectOneUnit(*overunituid);
                                 if (game.getUnitByUID(selector.getSelectedUID()).isComponent<ComponentUnicorn>())
                                     snd_unicorn_clicks[clickcounter.getNextSoundIdx(selector.getSelectedUID())]->play();
                             }
-                        }
+                    }
                 }
 
                 // Команда движения юнита
@@ -549,42 +513,25 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
                 }
             // Зона действий
                 else {
-                    if (selector.isSelectedOne()) {
                         std::string msgcode = "";
-                        // Разрешаем действия только если юнит не работает над действием в данный момент
-                        if (!game.getUnitByUID(selector.getSelectedUID()).isWorkingTask()) {
+                        if (overactionidx) {
                             auto actions = game.getUnitByUID(selector.getSelectedUID()).getActions();
-                            for (int i = 0; i < actions.size(); i++) {
-                                spr_but_action->setPosition(getActionButtonPos(i));
-                                if (spr_but_action->getGlobalBounds().contains({ (float)mousePressed->position.x, (float)mousePressed->position.y })) {
-                                    if (!game.getUnitByUID(selector.getSelectedUID()).canSendAction(actions[i], &msgcode)) {
-                                        text_action->setString(getTexts().getSfmlStr(msgcode));
-                                        counter_errmsg.upset(1.0f);
-                                    }
-                                    else
-                                        game.sendUnitAction(selector.getSelectedUID(), actions[i]);
-                                }
+                            if (!game.getUnitByUID(selector.getSelectedUID()).canSendAction(actions[*overactionidx], &msgcode)) {
+                                text_action->setString(getTexts().getSfmlStr(msgcode));
+                                counter_errmsg.upset(1.0f);
                             }
+                            else
+                                game.sendUnitAction(selector.getSelectedUID(), actions[*overactionidx]);
                         }
-                        else {
-                            // Действие отмены
-                            if (undo->getGlobalBounds().contains({ (float)mousePressed->position.x, (float)mousePressed->position.y })) {
-                                game.cancelUnitWorkingAction(selector.getSelectedUID());
-                            }
-                        }
-                    }
+                        if (overundo) game.cancelUnitWorkingAction(selector.getSelectedUID());
                 }
         }
         // Применение рамки только по отжатию
         if (const auto* mousePressed = event.getIf<sf::Event::MouseButtonReleased>()) {
             if (rect_holded) {
-                //window.setView(view);
-                //sf::Vector2f worldpos_1 = window.mapPixelToCoords((*rect_holded).position);
-                //sf::Vector2f worldpos_2 = window.mapPixelToCoords((*rect_holded).position + (*rect_holded).size);
-                //window.setView(window.getDefaultView());
-                sf::Vector2f worldpos_1;
-                sf::Vector2f worldpos_2;
-
+                sf::Vector2f worldpos_1 = getEngine()->getWorldPosByView(view, (*rect_holded).position);
+                sf::Vector2f worldpos_2 = getEngine()->getWorldPosByView(view, (*rect_holded).position + (*rect_holded).size);
+                
                 auto uids = game.findUnitsInRect(std::min(worldpos_1.x, worldpos_2.x), std::min(worldpos_1.y, worldpos_2.y),
                     std::max(worldpos_1.x, worldpos_2.x), std::max(worldpos_1.y, worldpos_2.y));
                 if (uids.size() > 0) {
@@ -694,7 +641,7 @@ void SceneGame::Init() {
     spr_border->setPosition({ 0, 768 - 192 });
 
     spr_but_action = loadSprite("images/button.png") ;
-    undo = loadSprite("images/button.png"); 
+    undo = loadSprite("images/undo.png");
     undo->setPosition({ 1024 - 36 - 10, VIEW_SIZE_Y + 130 });
     marker = loadSprite("images/marker.png");
     marker->setOrigin({ 5, 5 });
@@ -707,12 +654,12 @@ void SceneGame::Init() {
         replaceFirstString(str, ".png", "");
         
         spr_units[str] = loadSprite(filename.path().string());
-        //spr_units[str]->setOrigin({ spr_units[str]->getTexture()->getSize().x / 2.0f,
-        //    spr_units[str]->getTexture()->getSize().y / 2.0f });
+        spr_units[str]->setOrigin({ spr_units[str]->getTexture().getSize().x / 2.0f,
+            spr_units[str]->getTexture().getSize().y / 2.0f });
 
         spr_icons[str] = loadSprite(filename.path().string());
-        //spr_icons[code]->setOrigin({ textures.back()->getSize().x / 2.0f,textures.back()->getSize().y / 2.0f });
-        //spr_icons[code]->setScale({ 48.0f / textures.back()->getSize().x, 48.0f / textures.back()->getSize().y });        
+        spr_icons[str]->setOrigin({ spr_units[str]->getTexture().getSize().x / 2.0f,spr_units[str]->getTexture().getSize().y / 2.0f });
+        spr_icons[str]->setScale({ 48.0f / spr_units[str]->getTexture().getSize().x, 48.0f / spr_units[str]->getTexture().getSize().y });
     }
 
     // Используется загрузка каталога в целом, можно вынести как процедуру
@@ -729,7 +676,7 @@ void SceneGame::Init() {
     pathload = "images/mushrooms/";
     for (auto& filename : std::filesystem::directory_iterator(pathload)) {
         spr_mushrooms.push_back(loadSprite(filename.path().string()));
-        //spr_mushrooms.back()->setOrigin({ textures.back()->getSize().x / 2.0f, textures.back()->getSize().y / 2.0f });
+        spr_mushrooms.back()->setOrigin({ spr_mushrooms.back()->getTexture().getSize().x / 2.0f, spr_mushrooms.back()->getTexture().getSize().y / 2.0f});
     }
 
     view.setSize({ VIEW_SIZE_X, VIEW_SIZE_Y });
@@ -769,7 +716,7 @@ void SceneGame::Init() {
     rect_pblocks.setOutlineColor(sf::Color{ 64,64,64 });
 
     // Звуки лазера и старта
-    effect_fire = std::make_unique<sf::Music>("sounds/laser.ogg");
+    effect_fire = loadSound("sounds/laser.ogg");
     effect_fire->setVolume(0.0f);
     effect_fire->setLooping(true);
     effect_fire->play();

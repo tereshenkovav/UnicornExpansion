@@ -94,6 +94,14 @@ const Colors& Engine::getColors() const
     return colors;
 }
 
+sf::Vector2f Engine::getWorldPosByView(const sf::View& view, sf::Vector2i pos)
+{
+    window->setView(view);
+    sf::Vector2f worldpos = window->mapPixelToCoords(pos);
+    window->setView(window->getDefaultView());
+    return worldpos;
+}
+
 void Engine::Run(std::shared_ptr<Scene> scene)
 {
     std::shared_ptr<Scene> tekscene = scene;

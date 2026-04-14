@@ -42,6 +42,7 @@ public:
     const Texts& getTexts() const;
     void loadColors(const std::string& filename);
     const Colors& getColors() const;
+    sf::Vector2f getWorldPosByView(const sf::View& view, sf::Vector2i pos);
     void doClose();
     void doExitScene();
 };

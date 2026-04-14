@@ -60,6 +60,9 @@ private:
     bool mouseholdedonmap = false;
     float globalt = 0.0f;
 
+    bool overundo = false;
+    std::optional<int> overactionidx = std::nullopt;
+
     // Сдвиговые значения для маркеров способностей
     std::array<int, 8> marker_dx = { 11, 0, 11, 0, 11, 0, 11, 0 };
     std::array<int, 8> marker_dy = { 0, 0, 11, 11, 64 - 22, 64 - 22, 64 - 11, 64 - 11 };
@@ -82,7 +85,7 @@ private:
     sf::RectangleShape rect_progress;
     sf::RectangleShape textback;
 
-    std::unique_ptr<sf::Music> effect_fire;
+    std::unique_ptr<sf::Sound> effect_fire;
     std::unique_ptr<sf::Sound> effect_start;
 
     ClickerCounter clickcounter;
