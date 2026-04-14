@@ -58,7 +58,6 @@ private:
     int tekscale = DEFAULT_SCALE;
     std::weak_ptr<sfge::Animation> current_teleportation_effect;
     bool mouseholdedonmap = false;
-    float globalt = 0.0f;
     bool showfps = false;
 
     bool overundo = false;

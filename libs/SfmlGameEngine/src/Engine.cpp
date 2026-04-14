@@ -119,6 +119,10 @@ int Engine::getFactFPS() const {
     return factfps;
 }
 
+float Engine::getAllTime() const {
+    return alltime;
+}
+
 void Engine::Run(std::shared_ptr<Scene> scene)
 {
     std::vector<std::shared_ptr<Scene>> scenes = { scene };
@@ -128,6 +132,7 @@ void Engine::Run(std::shared_ptr<Scene> scene)
     signal_closed = false;
     signal_exitscene = false;
 
+    alltime = 0;
     sf::Clock clock;
     std::vector<sf::Event> events;
     float timefps = 0.0f;
@@ -140,6 +145,7 @@ void Engine::Run(std::shared_ptr<Scene> scene)
 
         float dt = clock.getElapsedTime().asSeconds();
         clock.restart();
+        alltime += dt;
         
         // Вычисление фактического FPS
         timefps += dt;

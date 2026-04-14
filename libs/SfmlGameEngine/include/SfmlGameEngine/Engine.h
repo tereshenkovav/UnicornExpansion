@@ -36,6 +36,7 @@ private:
     Colors colors;
     bool stopupdatingforlostfocus = false;
     int factfps = 0;
+    float alltime = 0;
 public:
     Engine(unsigned int width, unsigned int height) ;
     // Основной метод - запуск движка со сценой
@@ -72,6 +73,7 @@ public:
     void doExitScene();
     // Получение фактического FPS
     int getFactFPS() const;
+    float getAllTime() const;
 };
 
 };

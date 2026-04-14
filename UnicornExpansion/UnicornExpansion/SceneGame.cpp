@@ -71,7 +71,7 @@ float SceneGame::getScale05per20() {
 // Рисование лазера и его анимации в точке приложения
 void SceneGame::drawLaserFromTo(sf::RenderTarget& rendertarget, std::unique_ptr<sf::Sprite> & spr_laz, const Laser& laz) {
     sf::Vector2f dir = laz.pos2 - laz.pos1;
-    spr_laz->setColor(sfge::SfmlTools::getColorAsBright(color_lasers[laz.type], 0.9 + 0.2 * sin(4.0f * M_PI * globalt + laz.timeshift)));
+    spr_laz->setColor(sfge::SfmlTools::getColorAsBright(color_lasers[laz.type], 0.9 + 0.2 * sin(4.0f * M_PI * getEngine()->getAllTime() + laz.timeshift)));
     spr_laz->setPosition(laz.pos1);
     spr_laz->setRotation(dir.angle());
     spr_laz->setScale({ dir.length() / 128.0f,1.0f });
@@ -410,8 +410,6 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
 }
 
 void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vector<sf::Event>& events) {
-    globalt += dt;
-        
     // Определение наведения на юнита
     std::optional<int> overunituid = std::nullopt;
     if (mousePos.y < VIEW_SIZE_Y) {
@@ -635,7 +633,7 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
 
     fogbuilder.updateByGame(game);
 
-    shader_attack.setUniform("stage", (float)(0.25f + 0.25f * sin(4.0f * M_PI * globalt)));
+    shader_attack.setUniform("stage", (float)(0.25f + 0.25f * sin(4.0f * M_PI * getEngine()->getAllTime())));
 
     if (game.isGameOver())
         if (!counter_endgame.isActive()) counter_endgame.upset(2.0f);
