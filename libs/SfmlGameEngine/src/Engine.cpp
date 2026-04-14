@@ -39,6 +39,14 @@ void Engine::addCursor(int code, const std::string& filename)
     cursors[code]=std::make_shared<sf::Sprite>(*textures.back());
 }
 
+void Engine::setExeDir(const std::string& exedir) {
+    this->exedir = exedir;
+}
+
+std::string Engine::getExeDir() const {
+    return exedir;
+}
+
 void Engine::setCursor(int code)
 {
     if (cursors.count(code) == 0) throw sf::Exception("Not found cursor with code: " + std::to_string(code));

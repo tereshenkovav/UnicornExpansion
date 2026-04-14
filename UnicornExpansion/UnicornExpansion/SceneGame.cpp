@@ -803,6 +803,9 @@ void SceneGame::Init() {
     shader_bright.setUniform("texture", sf::Shader::CurrentTexture);
     shader_attack.setUniform("texture", sf::Shader::CurrentTexture);
 
+    if (std::filesystem::exists(getEngine()->getExeDir() + "/developer.json"))
+        game.loadDeveloperConfig(getEngine()->getExeDir() + "/developer.json");
+
     loadGame(leveln);
         
     getEngine()->AddOverScene(std::make_shared<SceneTask>(getTexts().getStr("Text_Task") + "\n" + game.getTaskText(), sf::Color::White,

@@ -33,8 +33,9 @@ int main(int argc, char* argv[])
     // Вариант по умолчанию - data в каталоге исполняемого файла
         else
             std::filesystem::current_path(exedir + "/data");
-        
+
     sfge::Engine engine(1024, 768);
+    engine.setExeDir(exedir);
     engine.loadTexts("strings.txt");
     engine.loadColors("colors.dat");
     engine.setCaption(engine.getTexts().getStr("Text_GameCaption"));

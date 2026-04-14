@@ -14,6 +14,7 @@ class Engine
 private:
     unsigned int width;
     unsigned int height;
+    std::string exedir;
     bool closed;
     bool exitscene;
     std::unique_ptr<sf::RenderWindow> window;
@@ -28,6 +29,8 @@ private:
     Colors colors;
 public:
     Engine(unsigned int width, unsigned int height) ;
+    void setExeDir(const std::string& exedir);
+    std::string getExeDir() const;
     void loadDefaultFont(const std::string& filename);
     std::shared_ptr<sf::Font> getDefaultFont() const;
     void loadDefaultCursor(const std::string& filename);
