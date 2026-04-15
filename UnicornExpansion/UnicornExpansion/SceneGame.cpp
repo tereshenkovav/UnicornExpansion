@@ -261,7 +261,7 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
     minimap.drawTo(&rendertarget);
 
     textback.setPosition({ 6, 6 });
-    textback.setSize({ 240, 30 });
+    textback.setSize({ 120, 50 });
     rendertarget.draw(textback);
 
     // Информация по ресурсам и танкам
@@ -270,7 +270,7 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
     text_resource->setFillColor(sf::Color{ 162, 231, 255 });
     rendertarget.draw(*text_resource);
     text_resource->setString(sfge::SfmlTools::utf2text(getTexts().getStr("Text_UnicornCount") + " " + game.getUnicornCountInfo()));
-    text_resource->setPosition({ 256 / 2 + 12, 10 });
+    text_resource->setPosition({ 10, 30 });
     text_resource->setFillColor(sf::Color::White);
     rendertarget.draw(*text_resource);
 
@@ -393,6 +393,21 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
         text_timer->setString(sfge::SfmlTools::utf2text(getTexts().getStr("Text_Timer") + " " + *stimer));
         text_timer->setPosition({ 1024 - 144 + 10, 8 });
         rendertarget.draw(*text_timer);
+    }
+
+    // Вывод сообщения, если оно есть
+    if (auto msg = game.getTekMessage()) {
+        textback.setPosition({ 1024/2 - 350, 4 });
+        textback.setSize({ 700, 100 });
+        rendertarget.draw(textback);
+
+        text_msg->setString(sfge::SfmlTools::utf2text((*msg).text));
+        rendertarget.draw(*text_msg);
+
+        if (spr_dialog_icons.count((*msg).icon) > 0) {
+            spr_dialog_icons[(*msg).icon]->setPosition({ 1024 / 2 - 350 + 15, 20 });
+            rendertarget.draw(*spr_dialog_icons[(*msg).icon]);
+        }
     }
 
     if (rect_holded) {
@@ -677,6 +692,16 @@ void SceneGame::Init() {
     }
 
     // Используется загрузка каталога в целом, можно вынести как процедуру
+    pathload = "images/icons/";
+    for (auto& filename : std::filesystem::directory_iterator(pathload)) {
+        auto str = filename.path().string();
+        replaceFirstString(str, pathload, "");
+        replaceFirstString(str, ".png", "");
+
+        spr_dialog_icons[str] = loadSprite(filename.path().string());
+    }
+
+    // Используется загрузка каталога в целом, можно вынести как процедуру
     pathload = "images/mushrooms/";
     for (auto& filename : std::filesystem::directory_iterator(pathload)) {
         spr_mushrooms.push_back(loadSprite(filename.path().string()));
@@ -699,6 +724,9 @@ void SceneGame::Init() {
 
     text_fps= loadText(16, sf::Color::Green);
     text_fps->setPosition({ 1024 - 70, 768 - 20 });
+
+    text_msg = loadText(18, sf::Color::White);
+    text_msg->setPosition({ 1024/2 - 350 + 100, 8 });
 
     // Прямоугольники интерфейса
     rect_selector.setOutlineThickness(2);

@@ -96,6 +96,11 @@ void Game_setNewViewPoint(zetscript::ScriptEngine* _script_engine, Game* _this, 
 	_this->setNewViewPoint(x,y);
 }
 
+void Game_showMessage(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::StringScriptObject* icon, zetscript::zs_int duration, zetscript::StringScriptObject* text) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	_this->addMessage(icon->getConstChar(),duration,text->getConstChar());
+}
+
 void Game_delete(zetscript::ScriptEngine* _script_engine, Game* _this) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	// empty
@@ -119,4 +124,5 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
 	engine.registerMemberFunction<Game>("getTimer", &Game_getTimer);
 	engine.registerMemberFunction<Game>("startTimer", &Game_startTimer);
 	engine.registerMemberFunction<Game>("setNewViewPoint", &Game_setNewViewPoint);
+        engine.registerMemberFunction<Game>("showMessage", &Game_showMessage);
 }

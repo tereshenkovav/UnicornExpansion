@@ -37,6 +37,7 @@ private:
     std::map<std::string, std::unique_ptr<sf::Sprite>> spr_units;
     std::map<std::string, std::unique_ptr<sf::Sprite>> spr_icons;
     std::map<std::string, std::unique_ptr<sf::Sprite>> spr_actions;
+    std::map<std::string, std::unique_ptr<sf::Sprite>> spr_dialog_icons;
     std::map<Terrain, std::unique_ptr<sf::Sprite>> spr_terrains;
     std::vector<std::unique_ptr<sf::Sprite>> spr_mushrooms;
     std::map<Terrain, sf::Color> color_terrains;
@@ -80,6 +81,7 @@ private:
     std::unique_ptr<sf::Text> text_resource;
     std::unique_ptr<sf::Text> text_progress;
     std::unique_ptr<sf::Text> text_fps;
+    std::unique_ptr<sf::Text> text_msg;
 
     sf::RectangleShape rect_selector;
     sf::RectangleShape rect_progress_border;

@@ -27,6 +27,12 @@ struct Laser {
 	float timeshift;
 };
 
+struct Message {
+	std::string icon;
+	int duration;
+	std::string text;
+};
+
 // Основной класс игры - содержит всё, что обрабатывается в игровом цикле
 class Game
 {
@@ -38,6 +44,7 @@ private:
 	std::vector<std::vector<Terrain>> map;
 	std::vector<GameUnit> units;
 	std::vector<Laser> lasers;
+	std::vector<Message> messages;
 	Json::Value jsonActions;
 	Json::Value jsonUnits;
 	Json::Value jsonComponents;
@@ -46,6 +53,7 @@ private:
 	std::string tasktext;
 	MushroomNet mushrooms;
 	float timerleft;
+	Countdown counter_showmessage;
 	bool iswin;
 	bool isfail;
 	std::vector<std::vector<bool>> fog;
@@ -135,6 +143,10 @@ public:
 	bool isMushroomsExist() const;
 	bool isUnitUnderAttack(int uid) const;
 	std::optional<sf::Vector2f> getLastEventPos() const;
+	// Механизм сообщений
+	void addMessage(const std::string& icon, int duration, const std::string& text);
+	void skipTekMessage();
+	std::optional<Message> getTekMessage() const;
 	// Обновление игры
 	void update(float dt);
 	// Шаблонный метод - поиск юнитов по компонентам
