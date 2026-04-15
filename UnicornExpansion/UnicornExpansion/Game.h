@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <queue>
 #include <string>
 #include <map>
 #include <set>
@@ -44,7 +45,8 @@ private:
 	std::vector<std::vector<Terrain>> map;
 	std::vector<GameUnit> units;
 	std::vector<Laser> lasers;
-	std::vector<Message> messages;
+	std::queue<Message> messages;
+	std::vector<Message> history;
 	Json::Value jsonActions;
 	Json::Value jsonUnits;
 	Json::Value jsonComponents;
@@ -146,6 +148,7 @@ public:
 	// Механизм сообщений
 	void addMessage(const std::string& icon, int duration, const std::string& text);
 	void skipTekMessage();
+	void skipAllMessages();
 	std::optional<Message> getTekMessage() const;
 	// Обновление игры
 	void update(float dt);

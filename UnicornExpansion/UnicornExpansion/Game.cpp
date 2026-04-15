@@ -475,6 +475,13 @@ void Game::update(float dt)
 	counter_under_attack.update(dt);
 	counter_showmessage.update(dt);
 
+	if ((!counter_showmessage.isActive())&&(!messages.empty())) {
+		history.push_back(messages.front());
+		counter_showmessage.upset(messages.front().duration);
+		messages.pop();
+	}
+
+
 	// ¬ременна€ поправка дл€ позиции лазера у единорога
 	sf::Vector2f laserfixleft{ -23, -25 };
 	sf::Vector2f laserfixright{ 21, -25 };
@@ -704,16 +711,20 @@ void Game::setNewViewPoint(int x, int y) {
 }
 
 void Game::addMessage(const std::string& icon, int duration, const std::string& text) {
-	messages.push_back({ icon, duration, text });
-	counter_showmessage.upset(duration);
+	messages.push({ icon, duration, text });
 }
 
 void Game::skipTekMessage() {
 	counter_showmessage.reset();
 }
 
+void Game::skipAllMessages() {
+	skipTekMessage();
+	while (!messages.empty()) messages.pop();
+}
+
 std::optional<Message> Game::getTekMessage() const {
-	if (messages.empty()) return std::nullopt;
+	if (history.empty()) return std::nullopt;
 	if (!counter_showmessage.isActive()) return std::nullopt;
-	return messages.back();
+	return history.back();
 }

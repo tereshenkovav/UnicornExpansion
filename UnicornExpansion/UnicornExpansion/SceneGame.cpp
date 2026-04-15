@@ -401,7 +401,7 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
         textback.setSize({ 700, 100 });
         rendertarget.draw(textback);
 
-        text_msg->setString(sfge::SfmlTools::utf2text((*msg).text));
+        text_msg->setString(sfge::SfmlTools::utf2text("\t"+(*msg).text));
         rendertarget.draw(*text_msg);
 
         if (spr_dialog_icons.count((*msg).icon) > 0) {
@@ -460,11 +460,16 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
         {
             if (keyPressed->scancode == sf::Keyboard::Scancode::Escape) getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>());
             if (keyPressed->scancode == sf::Keyboard::Scancode::F) showfps = !showfps;
-            if (keyPressed->scancode == sf::Keyboard::Scancode::Space)
+            if (keyPressed->scancode == sf::Keyboard::Scancode::Enter) {
+                game.skipAllMessages();
+            }
+            if (keyPressed->scancode == sf::Keyboard::Scancode::Space) {
+                game.skipTekMessage();
                 if (game.getLastEventPos()) {
                     view.setCenter(*game.getLastEventPos());
                     fixCameraPosition();
                 }
+            }
             if (keyPressed->scancode == sf::Keyboard::Scancode::NumpadMinus) {
                 if (tekscale < 6) {
                     tekscale++;
