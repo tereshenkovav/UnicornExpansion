@@ -45,3 +45,4 @@ Name_Level_3=Карта 4. Штурм
 Name_Level_4=Карта 5. Заражение часть 1
 Name_Level_5=Карта 6. Заражение часть 2
 Text_Quit=Выход
+Text_Training=Обучение

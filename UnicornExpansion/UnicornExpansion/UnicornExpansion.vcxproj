@@ -151,6 +151,7 @@
     <ClCompile Include="..\..\libs\HelperCppClasses\src\Countdown.cpp" />
     <ClCompile Include="..\..\libs\HelperCppClasses\src\Vector2D.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Animation.cpp" />
+    <ClCompile Include="..\..\libs\SfmlGameEngine\src\Button.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Engine.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Scene.cpp" />
     <ClCompile Include="ClickerCounter.cpp" />

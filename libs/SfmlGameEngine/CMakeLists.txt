@@ -15,12 +15,14 @@ set(sources
     include/SfmlGameEngine/Engine.h
     include/SfmlGameEngine/Texts.h
     include/SfmlGameEngine/Colors.h
+    include/SfmlGameEngine/Button.h
     src/Animation.cpp
     src/SfmlTools.cpp
     src/Scene.cpp
     src/Engine.cpp
     src/Texts.cpp
     src/Colors.cpp
+    src/Button.cpp
 )
 
 target_sources(SfmlGameEngine PRIVATE ${sources})

@@ -20,36 +20,14 @@ void SceneMainMenu::Render(sf::RenderTarget & rendertarget) {
     rendertarget.draw(*text_help);
     rendertarget.draw(*text_version);
 
-        textback.setSize({ 240, 40 });
-        for (int i = 0; i < LEVEL_COUNT; i++) {
-            textback.setPosition({ 512 - 120, (float)(250 + 64 * i) });
-            rendertarget.draw(textback);
-
-            text_info->setString(getTexts().getSfmlStr("Name_Level_" + std::to_string(i)));
-            text_info->setPosition({ 512 - text_info->getLocalBounds().size.x / 2, (float)(250 + 64 * i) + 8 });
-            rendertarget.draw(*text_info);
-        }
-        textback.setPosition({ 512 - 120, (float)(250 + 64 * LEVEL_COUNT) });
-        rendertarget.draw(textback);
-
-        text_info->setString(getTexts().getSfmlStr("Text_Quit"));
-        text_info->setPosition({ 512 - text_info->getLocalBounds().size.x / 2, (float)(250 + 64 * LEVEL_COUNT) + 8 });
-        rendertarget.draw(*text_info);
+    for (auto& button : buttons) rendertarget.draw(*button);
 }
 
 void SceneMainMenu::Update(float dt, const sf::Vector2i & mousePos, const std::vector<sf::Event>& events) {
-    std::optional<int> selected_idx;
-    textback.setSize({ 240, 40 });
-    for (int i = 0; i < LEVEL_COUNT; i++) {
-        textback.setPosition({ 512 - 100, (float)(250 + 64 * i) });
-        if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) selected_idx = i;
-    }
-    textback.setPosition({ 512 - 100, (float)(250 + 64 * LEVEL_COUNT) });
-    if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) selected_idx = -1;
-
-    if (selected_idx) getEngine()->setCursor(1);
-
     for (auto & event : events) {
+
+        for (auto& button : buttons) button->processEvent(event);
+
         if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
         {
             if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)	getEngine()->doClose();
@@ -57,23 +35,10 @@ void SceneMainMenu::Update(float dt, const sf::Vector2i & mousePos, const std::v
         };
         if (const auto* mousePressed = event.getIf<sf::Event::MouseButtonPressed>())
             snd_click->play();
-        if (const auto* mousePressed = event.getIf<sf::Event::MouseButtonReleased>())
-        {
-            if (selected_idx) {
-                if (*selected_idx>=0)
-                    getEngine()->SwitchToScene(std::make_shared<SceneGame>(*selected_idx));
-                else
-                if (*selected_idx < 0) getEngine()->doClose();
-            }
-        }
     }
 }
 
-void SceneMainMenu::Init() {
-    textback.setOutlineThickness(1);
-    textback.setOutlineColor(getColors().getColor("textbackborder"));
-    textback.setFillColor(getColors().getColor("textbackfill"));
-
+void SceneMainMenu::Init() {    
     spr_intro = loadSprite("images/intro.png");
     spr_title = loadSprite("images/title.png");
     spr_title->setOrigin({ (float)(spr_title->getTexture().getSize().x / 2), 0});
@@ -85,7 +50,13 @@ void SceneMainMenu::Init() {
     text_version = loadText(VERSION, 28, getColors().getColor("textbackborder"));
     text_version->setPosition({ 1024 - 100, 768 - 50 });
 
-    text_info = loadText(16, sf::Color::White);
+    buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_Training"), 18,
+        512 - 100, 300, 200, 40));
+    buttons.back()->setOnClick([this]() {getEngine()->SwitchToScene(std::make_shared<SceneGame>(0)); });
+
+    buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_Quit"), 18,
+        512 - 100, 360, 200, 40));
+    buttons.back()->setOnClick([this]() {getEngine()->doClose(); });
 
     snd_click = loadSound("sounds/click.ogg");
 }
