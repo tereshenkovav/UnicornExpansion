@@ -179,7 +179,9 @@
     <ClCompile Include="SceneEndGame.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneGameMenu.cpp" />
+    <ClCompile Include="SceneHelp.cpp" />
     <ClCompile Include="SceneMainMenu.cpp" />
+    <ClCompile Include="SceneStartMenu.cpp" />
     <ClCompile Include="SceneTask.cpp" />
     <ClCompile Include="SeedStore.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\SfmlTools.cpp" />
@@ -216,7 +218,9 @@
     <ClInclude Include="SceneEndGame.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneGameMenu.h" />
+    <ClInclude Include="SceneHelp.h" />
     <ClInclude Include="SceneMainMenu.h" />
+    <ClInclude Include="SceneStartMenu.h" />
     <ClInclude Include="SceneTask.h" />
     <ClInclude Include="SeedStore.h" />
     <ClInclude Include="SubTerrainBuilder.h" />
