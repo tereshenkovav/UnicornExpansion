@@ -87,6 +87,11 @@ void Engine::AddOverScene(std::shared_ptr<Scene> scene)
     overscene = scene;
 }
 
+void Engine::ReplaceOverScene(std::shared_ptr<Scene> scene)
+{
+    replacedoverscene = scene;
+}
+
 void Engine::loadTexts(const std::string& filename)
 {
     texts.loadFromFile(filename);
@@ -179,7 +184,7 @@ void Engine::Run(std::shared_ptr<Scene> scene)
         }
         window->display();
 
-        // Обработка сигналов на переключение сцены, добавление сверхсцены и закрытие
+        // Обработка сигналов на переключение сцены, добавление сверхсцены, замену сверхсцены и закрытие
         if (nextscene) {
             for (auto& scene : scenes) scene->UnInit();
             scenes.clear();
@@ -193,6 +198,18 @@ void Engine::Run(std::shared_ptr<Scene> scene)
             scenes.push_back(std::move(overscene));
             scenes.back()->setEngine(this);
             scenes.back()->Init();
+        }
+
+        if (replacedoverscene) {
+            if (scenes.size() > 1) {
+                scenes.back()->UnInit();
+                scenes.pop_back();
+                scenes.push_back(std::move(replacedoverscene));
+                scenes.back()->setEngine(this);
+                scenes.back()->Init();
+            }
+            else
+                replacedoverscene.reset();
         }
 
         if (signal_exitscene) {

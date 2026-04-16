@@ -35,7 +35,7 @@ void SceneGameMenu::Init() {
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_Restart"), 18, 512 - 80, 260, 160, 40));
     buttons.back()->setOnClick([this]() { getEngine()->SwitchToScene(std::make_shared<SceneGame>(leveln)); });
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_Task"), 18, 512 - 80, 320, 160, 40));
-    buttons.back()->setOnClick([this]() { getEngine()->AddOverScene(std::make_shared<SceneTask>(*game)); });
+    buttons.back()->setOnClick([this]() { getEngine()->ReplaceOverScene(std::make_shared<SceneTask>(*game)); });
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_MainMenu"), 18, 512 - 80, 380, 160, 40));
     buttons.back()->setOnClick([this]() { getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>()); });
 }

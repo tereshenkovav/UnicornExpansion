@@ -22,6 +22,7 @@ private:
     // Ссылки на новые сцены - корневой и верхней следующей
     std::shared_ptr<Scene> nextscene;
     std::shared_ptr<Scene> overscene;
+    std::shared_ptr<Scene> replacedoverscene;
     // Шрифт по умолчанию
     std::shared_ptr<sf::Font> defaultfont;
     // Текстуры для курсоров
@@ -55,6 +56,8 @@ public:
     void SwitchToScene(std::shared_ptr<Scene> scene);
     // Добавить новую сцену поверх
     void AddOverScene(std::shared_ptr<Scene> scene);
+    // Заменить сцену поверх
+    void ReplaceOverScene(std::shared_ptr<Scene> scene);
     // Настройка окна - заголовок и иконка
     void setCaption(const std::string & str);
     void setIcon(const std::string& filename);
