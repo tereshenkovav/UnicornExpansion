@@ -8,6 +8,10 @@ GameUnit.cpp
 MiniMap.cpp
 MushroomNet.cpp
 SceneMainMenu.cpp
+SceneGameMenu.cpp
+SceneStartMenu.cpp
+SceneEndGame.cpp
+SceneHelp.cpp
 SceneTask.cpp
 SceneGame.cpp
 SeedStore.cpp

@@ -41,7 +41,7 @@ void SceneHelp::Init() {
     text_help->setPosition({ 160, 280});
 
     butok = std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), "OK", 18,
-        512 - 100, 700, 200, 40);
+        512 - 40, 700, 80, 40);
     butok->setOnClick([this]() {getEngine()->ReplaceOverScene(std::make_shared<SceneStartMenu>()); });
 }
 
