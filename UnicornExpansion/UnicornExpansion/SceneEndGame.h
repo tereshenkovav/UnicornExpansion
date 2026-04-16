@@ -6,16 +6,18 @@
 #include "SfmlGameEngine/Button.h"
 #include "Game.h"
 
-class SceneTask: public sfge::Scene
+class SceneEndGame: public sfge::Scene
 {
 private:
     sf::RectangleShape textback;
-    std::unique_ptr<sf::Text> text_task;
     std::unique_ptr<sf::Text> text_title;
-    std::unique_ptr<sfge::Button> butok;
-    std::string task;
+    std::vector<std::unique_ptr<sfge::Button>> buttons;
+    std::unique_ptr<sfge::Button> butcontinue;
+    std::unique_ptr<sfge::Button> butmenu;
+    int leveln;
+    bool iswin;
 public:
-    SceneTask(const Game & game);
+    SceneEndGame(const Game& game, int leveln);
     virtual void Render(sf::RenderTarget& rendertarget) override;
     virtual void Update(float dt, const sf::Vector2i& mousePos, const std::vector<sf::Event>& events) override;
     virtual void Init() override;

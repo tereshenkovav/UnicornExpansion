@@ -2,6 +2,7 @@
 #include "SfmlGameEngine/Engine.h"
 #include "SceneMainMenu.h"
 #include "SceneTask.h"
+#include "SceneEndGame.h"
 
 // Размеры камеры и скорость прокрутки камеры
 const int SCROLLSPEED = 10;
@@ -638,14 +639,7 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
     for (auto effect : game.getOnceAudioEffects())
         snd_audioeffects[effect]->play();
 
-    if (counter_endgame.onceReachNol()) {
-        if (game.isWin())
-            getEngine()->AddOverScene(std::make_shared<SceneTask>(getTexts().getStr("Msg_Win"), sf::Color::Green,
-                [this]()->void { getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>()); }));
-        else
-            getEngine()->AddOverScene(std::make_shared<SceneTask>(getTexts().getStr("Msg_Fail"), sf::Color::Red,
-                [this]()->void { getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>()); }));
-    }
+    if (counter_endgame.onceReachNol()) getEngine()->AddOverScene(std::make_shared<SceneEndGame>(game,leveln));
 
     // Обновление камеры если нужно
     if (auto newvp = game.getOnceNewViewPoint())
@@ -848,8 +842,7 @@ void SceneGame::Init() {
 
     loadGame(leveln);
         
-    getEngine()->AddOverScene(std::make_shared<SceneTask>(getTexts().getStr("Text_Task") + "\n" + game.getTaskText(), sf::Color::White,
-        [this]()->void { getEngine()->doExitScene(); }));
+    getEngine()->AddOverScene(std::make_shared<SceneTask>(game));
 }
 
 

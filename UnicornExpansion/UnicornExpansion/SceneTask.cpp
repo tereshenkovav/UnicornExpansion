@@ -1,45 +1,23 @@
 #include "SceneTask.h"
 #include "SfmlGameEngine/Engine.h"
 
-SceneTask::SceneTask(const std::string& task, sf::Color color, std::function<void()> closefunc) :Scene()
+SceneTask::SceneTask(const Game & game) :Scene()
 {
-    this->task = task;
-    this->color = color;
-    this->closefunc = closefunc;
+    this->task = game.getTaskText();
 }
 
 void SceneTask::Render(sf::RenderTarget & rendertarget) {
-    textback.setPosition({ 512 - 200, 286 });
-    textback.setSize({ 400, 150 });
     rendertarget.draw(textback);
-
+    rendertarget.draw(*text_title);
     rendertarget.draw(*text_task);
-
-    textback.setPosition({ 512 - 40, 400 });
-    textback.setSize({ 80, 30 });
-    rendertarget.draw(textback);
-
-    rendertarget.draw(*text_ok);
+    rendertarget.draw(*butok);
 }
 
 void SceneTask::Update(float dt, const sf::Vector2i & mousePos, const std::vector<sf::Event>& events) {
-    std::optional<int> sel = std::nullopt;
-    
-    textback.setPosition({ 512 - 40, 400 });
-    textback.setSize({ 80, 30 });
-    if (textback.getGlobalBounds().contains({ (float)mousePos.x, (float)mousePos.y })) sel=1;
-
-    if (sel) getEngine()->setCursor(1);
-
     for (auto & event : events) {
+        butok->processEvent(event);
         if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
-        {
-            if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)	closefunc();
-        };
-        if (const auto* mousePressed = event.getIf<sf::Event::MouseButtonReleased>())
-        {
-            if (sel) closefunc();
-        }
+            if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)	getEngine()->doExitScene();
     }
 }
 
@@ -47,12 +25,17 @@ void SceneTask::Init() {
     textback.setOutlineThickness(1);
     textback.setOutlineColor(sf::Color(192, 192, 192));
     textback.setFillColor(sf::Color{ 40, 40, 40, 192 });
-    
-    text_task = loadText(task, 22, color);
-    text_task->setPosition({ 512 - 190, 290 });
+    textback.setPosition({ 512 - 250, 100 });
+    textback.setSize({ 500, 600 });
 
-    text_ok = loadText("OK", 24, sf::Color::White);    
-    text_ok->setPosition({ 512 - 20, 400 });
+    text_title = loadText(getTexts().getStr("Text_Task"), 22, sf::Color::White);
+    text_title->setPosition({ 512 - text_title->getGlobalBounds().size.x/2, 110});
+
+    text_task = loadText(task, 18, sf::Color::White);
+    text_task->setPosition({ 512 - 220, 150 });
+
+    butok = std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), "OK", 22, 512 - 40, 640, 80, 40);
+    butok->setOnClick([this]() { getEngine()->doExitScene(); });
 }
 
 void SceneTask::UnInit() {
