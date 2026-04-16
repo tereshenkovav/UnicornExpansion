@@ -3,6 +3,7 @@
 #include "SceneMainMenu.h"
 #include "SceneTask.h"
 #include "SceneEndGame.h"
+#include "SceneGameMenu.h"
 
 // Размеры камеры и скорость прокрутки камеры
 const int SCROLLSPEED = 10;
@@ -459,7 +460,8 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
     for (auto & event : events) {
         if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
         {
-            if (keyPressed->scancode == sf::Keyboard::Scancode::Escape) getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>());
+            if ((keyPressed->scancode == sf::Keyboard::Scancode::Escape)||
+                (keyPressed->scancode == sf::Keyboard::Scancode::F10)) getEngine()->AddOverScene(std::make_shared<SceneGameMenu>(&game,leveln));
             if (keyPressed->scancode == sf::Keyboard::Scancode::F) showfps = !showfps;
             if (keyPressed->scancode == sf::Keyboard::Scancode::Enter) {
                 game.skipAllMessages();

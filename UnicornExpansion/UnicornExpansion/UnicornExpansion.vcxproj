@@ -178,6 +178,7 @@
     <ClCompile Include="MushroomNet.cpp" />
     <ClCompile Include="SceneEndGame.cpp" />
     <ClCompile Include="SceneGame.cpp" />
+    <ClCompile Include="SceneGameMenu.cpp" />
     <ClCompile Include="SceneMainMenu.cpp" />
     <ClCompile Include="SceneTask.cpp" />
     <ClCompile Include="SeedStore.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="MushroomNet.h" />
     <ClInclude Include="SceneEndGame.h" />
     <ClInclude Include="SceneGame.h" />
+    <ClInclude Include="SceneGameMenu.h" />
     <ClInclude Include="SceneMainMenu.h" />
     <ClInclude Include="SceneTask.h" />
     <ClInclude Include="SeedStore.h" />
