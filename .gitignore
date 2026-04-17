@@ -397,6 +397,7 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+data/credits.txt
 UnicornExpansion/UnicornExpansion/version.h
 setup/windows/*.zip
 *build-*/
