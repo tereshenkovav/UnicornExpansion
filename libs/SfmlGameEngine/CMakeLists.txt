@@ -16,6 +16,8 @@ set(sources
     include/SfmlGameEngine/Texts.h
     include/SfmlGameEngine/Colors.h
     include/SfmlGameEngine/Button.h
+    include/SfmlGameEngine/Profile.h
+    include/SfmlGameEngine/Checkbox.h
     src/Animation.cpp
     src/SfmlTools.cpp
     src/Scene.cpp
@@ -23,6 +25,8 @@ set(sources
     src/Texts.cpp
     src/Colors.cpp
     src/Button.cpp
+    src/Profile.cpp
+    src/Checkbox.cpp
 )
 
 target_sources(SfmlGameEngine PRIVATE ${sources})

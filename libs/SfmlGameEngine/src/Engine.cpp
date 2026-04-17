@@ -7,13 +7,7 @@ Engine::Engine(unsigned int width, unsigned int height)
 {
     this->width = width;
     this->height = height;
-    sf::ContextSettings settings;
-    settings.antiAliasingLevel = 8;
-
-    // Создание окна
-    window = std::make_unique<sf::RenderWindow>(sf::VideoMode({ width, height }), "", sf::Style::Close, sf::State::Windowed, settings);
-    window->setMouseCursorVisible(false);
-    window->setVerticalSyncEnabled(true);
+    this->profile = std::make_shared<Profile>();
 }
 
 void Engine::setStopUpdatingForLostFocus(bool value)
@@ -60,12 +54,14 @@ void Engine::setCursor(int code)
 
 void Engine::setCaption(const std::string& str)
 {
-    window->setTitle(SfmlTools::utf2text(str));
+    windowtitlestr = str;
+    if (window) window->setTitle(SfmlTools::utf2text(windowtitlestr));
 }
 
 void Engine::setIcon(const std::string& filename)
 {
-    window->setIcon(sf::Image(filename));
+    windowicon = sf::Image(filename);
+    if (window) window->setIcon(*windowicon);
 }
 
 void Engine::doClose()
@@ -128,14 +124,42 @@ float Engine::getAllTime() const {
     return alltime;
 }
 
+std::shared_ptr<Profile> Engine::getProfile() const {
+    return profile;
+}
+
+void Engine::updateByProfile() {
+    if (window) window->setVerticalSyncEnabled(profile->isVSync());
+    sf::Listener::setGlobalVolume(profile->isSoundOn() ? 100.0f : 0.0f);
+    if (isfullscr != profile->isFullScreen()) signal_rebuild = true;
+}
+
+void Engine::createWindow() {
+    sf::ContextSettings settings;
+    settings.antiAliasingLevel = 8;
+
+    // Создание окна
+    window = std::make_unique<sf::RenderWindow>(sf::VideoMode({ width, height }), "", sf::Style::Close,
+        profile->isFullScreen() ? sf::State::Fullscreen : sf::State::Windowed, settings);
+    updateByProfile();
+    window->setTitle(SfmlTools::utf2text(windowtitlestr));
+    if (windowicon) window->setIcon(*windowicon);
+
+    window->setMouseCursorVisible(false);
+    isfullscr = profile->isFullScreen();
+}
+
 void Engine::Run(std::shared_ptr<Scene> scene)
 {
+    createWindow();
+
     std::vector<std::shared_ptr<Scene>> scenes = { scene };
     scenes.back()->setEngine(this);
     scenes.back()->Init();
 
     signal_closed = false;
     signal_exitscene = false;
+    signal_rebuild = false;
 
     alltime = 0;
     sf::Clock clock;
@@ -219,6 +243,13 @@ void Engine::Run(std::shared_ptr<Scene> scene)
                 scenes.pop_back();
                 if (scenes.empty()) window->close();
             }
+        }
+
+        if (signal_rebuild) {
+            signal_rebuild = false;
+            window->close();
+            window.reset();
+            createWindow();
         }
 
         // Последняя строка в цикле

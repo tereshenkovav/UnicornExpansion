@@ -5,6 +5,7 @@
 #include <SFML/Audio.hpp>
 #include "SfmlGameEngine/Texts.h"
 #include "SfmlGameEngine/Colors.h"
+#include "SfmlGameEngine/Profile.h"
 
 namespace sfge {
 
@@ -21,6 +22,7 @@ protected:
     Engine* getEngine() const;
     const Texts& getTexts() const;
     const Colors& getColors() const;
+    std::shared_ptr<Profile> getProfile() const;
     // Загрузка ресурсов игры с автоудалением потом их текстур и буферов
     std::unique_ptr<sf::Sprite> loadSprite(const std::string& filename);
     std::unique_ptr<sf::Sound> loadSound(const std::string& filename);

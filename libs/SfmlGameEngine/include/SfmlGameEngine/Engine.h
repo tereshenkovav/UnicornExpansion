@@ -5,6 +5,7 @@
 #include "SfmlGameEngine/Scene.h"
 #include "SfmlGameEngine/Texts.h"
 #include "SfmlGameEngine/Colors.h"
+#include "SfmlGameEngine/Profile.h"
 #include <map>
 
 namespace sfge {
@@ -18,6 +19,7 @@ private:
     // Флаги закрытия окна и закрытия текущей (верхней) сцены
     bool signal_closed;
     bool signal_exitscene;
+    bool signal_rebuild;
     std::unique_ptr<sf::RenderWindow> window;
     // Ссылки на новые сцены - корневой и верхней следующей
     std::shared_ptr<Scene> nextscene;
@@ -38,6 +40,15 @@ private:
     bool stopupdatingforlostfocus = false;
     int factfps = 0;
     float alltime = 0;
+    // Заголовок и иконка окна, устанавливаемые в createWindow
+    std::string windowtitlestr = "";
+    std::optional<sf::Image> windowicon = std::nullopt;
+    // Профиль
+    std::shared_ptr<Profile> profile;
+    // Метка текущего состояния окна
+    bool isfullscr = false;
+    // Пересоздание окна с настройками профиля
+    void createWindow();
 public:
     Engine(unsigned int width, unsigned int height) ;
     // Основной метод - запуск движка со сценой
@@ -76,7 +87,11 @@ public:
     void doExitScene();
     // Получение фактического FPS
     int getFactFPS() const;
+    // Глобальное время
     float getAllTime() const;
+    std::shared_ptr<Profile> getProfile() const;
+    // Обновить параметры окна по профилю
+    void updateByProfile();
 };
 
 };

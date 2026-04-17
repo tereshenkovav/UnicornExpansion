@@ -72,4 +72,9 @@ const Colors& Scene::getColors() const
 	return engine->getColors();
 }
 
+std::shared_ptr<Profile> Scene::getProfile() const
+{
+	return engine->getProfile();
+}
+
 }

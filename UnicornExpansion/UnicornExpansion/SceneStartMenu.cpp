@@ -3,14 +3,7 @@
 #include "SfmlGameEngine/Engine.h"
 #include "SceneGame.h"
 #include "SceneHelp.h"
-#include <SFML/Audio.hpp>
-
-void switchSound() {
-    if (sf::Listener::getGlobalVolume() == 0.0f)
-        sf::Listener::setGlobalVolume(100.0f);
-    else
-        sf::Listener::setGlobalVolume(0.0f);
-}
+#include "SceneOptions.h"
 
 void SceneStartMenu::Render(sf::RenderTarget & rendertarget) {
     rendertarget.draw(*text_caption);
@@ -50,7 +43,7 @@ void SceneStartMenu::Init() {
 
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_Options"), 18,
         512 - 100, 440, 200, 40));
-    buttons.back()->setOnClick([this]() {getEngine()->doClose(); });
+    buttons.back()->setOnClick([this]() {getEngine()->ReplaceOverScene(std::make_shared<SceneOptions>()); });
 
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_Help"), 18,
         512 - 100, 500, 200, 40));

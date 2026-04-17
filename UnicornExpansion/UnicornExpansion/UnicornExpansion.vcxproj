@@ -181,12 +181,15 @@
     <ClCompile Include="SceneGameMenu.cpp" />
     <ClCompile Include="SceneHelp.cpp" />
     <ClCompile Include="SceneMainMenu.cpp" />
+    <ClCompile Include="SceneOptions.cpp" />
     <ClCompile Include="SceneStartMenu.cpp" />
     <ClCompile Include="SceneTask.cpp" />
     <ClCompile Include="SeedStore.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\SfmlTools.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Texts.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Colors.cpp" />
+    <ClCompile Include="..\..\libs\SfmlGameEngine\src\Profile.cpp" />
+    <ClCompile Include="..\..\libs\SfmlGameEngine\src\Checkbox.cpp" />
     <ClCompile Include="SubTerrainBuilder.cpp" />
     <ClCompile Include="UnitComponent.cpp" />
     <ClCompile Include="UnitFactory.cpp" />
@@ -220,6 +223,7 @@
     <ClInclude Include="SceneGameMenu.h" />
     <ClInclude Include="SceneHelp.h" />
     <ClInclude Include="SceneMainMenu.h" />
+    <ClInclude Include="SceneOptions.h" />
     <ClInclude Include="SceneStartMenu.h" />
     <ClInclude Include="SceneTask.h" />
     <ClInclude Include="SeedStore.h" />

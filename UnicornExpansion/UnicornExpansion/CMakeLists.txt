@@ -11,6 +11,7 @@ SceneMainMenu.cpp
 SceneGameMenu.cpp
 SceneStartMenu.cpp
 SceneEndGame.cpp
+SceneOptions.cpp
 SceneHelp.cpp
 SceneTask.cpp
 SceneGame.cpp
