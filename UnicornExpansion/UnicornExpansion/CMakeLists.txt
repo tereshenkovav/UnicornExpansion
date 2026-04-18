@@ -22,6 +22,7 @@ UnitFactory.cpp
 UnitMover.cpp
 UnitSelector.cpp
 WayFinder.cpp
+UserProfile.cpp
 )
 
 # Добавление каталога с классами компонент и установка текущего каталога
