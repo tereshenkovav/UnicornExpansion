@@ -34,6 +34,8 @@ void SceneOptions::Update(float dt, const sf::Vector2i & mousePos, const std::ve
         cbfullscreen->processEvent(event);
         cbvsync->processEvent(event);
 
+        cbvoice->setDisabled(!cbsound->isChecked());
+
         if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
         {
             if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)	

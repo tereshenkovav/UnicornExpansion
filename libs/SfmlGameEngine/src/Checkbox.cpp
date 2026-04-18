@@ -5,8 +5,10 @@ const sf::Color COLNORM = sf::Color({ 40, 40, 40, 192 });
 const sf::Color COLOVER = sf::Color({ 80, 80, 80, 192 });
 const sf::Color COLBORDERNORM = sf::Color({ 208, 0, 220 });
 const sf::Color COLBORDEROVER = sf::Color({ 228, 0, 255 });
+const sf::Color COLBORDERDISABLED = sf::Color({ 128, 128, 128 });
 const sf::Color COLFONTNORM = sf::Color({ 192, 192, 192 });
 const sf::Color COLFONTOVER = sf::Color::White;
+const sf::Color COLFONTDISABLED = sf::Color({ 128, 128, 128 });
 const sf::Vector2f SHIFT = sf::Vector2f({ -3.0f,-3.0f });
 
 namespace sfge {
@@ -32,7 +34,7 @@ namespace sfge {
 		vertex[3].position = sf::Vector2f(x + w - 2, y + 2);
 		vertex[4].position = sf::Vector2f(x + w / 2, y + h / 2 + 4);
 		vertex[5].position = sf::Vector2f(x + w / 2, y + h - 2);
-
+		
 		caption.setFillColor(COLFONTNORM);
 		caption.setPosition({ x + w + 10.0f, (float)y });
 	}
@@ -50,17 +52,20 @@ namespace sfge {
 		checked = value;
 	}
 
+	void Checkbox::setDisabled(bool value)
+	{
+		disabled = value;
+		shape.setOutlineColor(disabled ? COLBORDERDISABLED : COLBORDERNORM);
+		caption.setFillColor(disabled ? COLFONTDISABLED : COLFONTNORM);
+		for (int i = 0; i < vertex.getVertexCount(); i++)
+			vertex[i].color = disabled ? COLFONTDISABLED : sf::Color::White;
+	}
+
 	void Checkbox::processEvent(const sf::Event& event) {
+		if (disabled) return;
+
 		if (const auto* mousePressed = event.getIf<sf::Event::MouseButtonReleased>()) {
-			//shape.setOrigin({ 0.0f, 0.0f });
-			//caption.setOrigin({ 0.0f, 0.0f });
 			if (isMouseOver(mousePressed->position)) setChecked(!checked);
-		}
-		if (const auto* mousePressed = event.getIf<sf::Event::MouseButtonPressed>()) {
-			if (isMouseOver(mousePressed->position)) {
-				//shape.setOrigin(SHIFT);
-				//caption.setOrigin(SHIFT);
-			}
 		}
 		if (const auto* mouseMoved = event.getIf<sf::Event::MouseMoved>()) {
 			shape.setFillColor(isMouseOver(mouseMoved->position) ? COLOVER : COLNORM);
