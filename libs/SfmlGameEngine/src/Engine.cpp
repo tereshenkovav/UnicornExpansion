@@ -128,6 +128,11 @@ std::shared_ptr<Profile> Engine::getProfile() const {
     return profile;
 }
 
+void Engine::setUserProfile(std::shared_ptr<Profile> userprofile)
+{
+    profile = userprofile;
+}
+
 void Engine::updateByProfile() {
     if (window) window->setVerticalSyncEnabled(profile->isVSync());
     sf::Listener::setGlobalVolume(profile->isSoundOn() ? 100.0f : 0.0f);

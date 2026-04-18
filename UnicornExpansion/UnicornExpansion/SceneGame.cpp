@@ -513,7 +513,8 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
                             else {
                                 selector.selectOneUnit(*overunituid);
                                 if (game.getUnitByUID(selector.getSelectedUID()).isComponent<ComponentUnicorn>())
-                                    snd_unicorn_clicks[clickcounter.getNextSoundIdx(selector.getSelectedUID())]->play();
+                                    if (userprofile->isVoiceOn())
+                                        snd_unicorn_clicks[clickcounter.getNextSoundIdx(selector.getSelectedUID())]->play();
                             }
                     }
                 }
@@ -657,6 +658,8 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
 }
 
 void SceneGame::Init() {
+    userprofile = std::static_pointer_cast<UserProfile>(getProfile());
+
     spr_border = loadSprite("images/border.png");
     spr_border->setPosition({ 0, 768 - 192 });
 

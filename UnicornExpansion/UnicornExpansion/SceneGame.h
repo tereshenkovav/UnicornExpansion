@@ -25,6 +25,7 @@
 #include "HelperCppClasses/StringTools.h"
 #include "ClickerCounter.h"
 #include "UnitSelector.h"
+#include "UserProfile.h"
 
 const int DEFAULT_SCALE = 2;
 
@@ -32,7 +33,8 @@ class SceneGame: public sfge::Scene
 {
 private:
     int leveln;
-    
+    std::shared_ptr<UserProfile> userprofile;
+
     // Все данные игры, спрайты, тексты, массивы территорий и цветов
     std::map<std::string, std::unique_ptr<sf::Sprite>> spr_units;
     std::map<std::string, std::unique_ptr<sf::Sprite>> spr_icons;

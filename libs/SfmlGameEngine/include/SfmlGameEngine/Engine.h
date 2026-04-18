@@ -89,6 +89,8 @@ public:
     int getFactFPS() const;
     // Глобальное время
     float getAllTime() const;
+    // Установка пользовательского профиля, если не вызвать, то будет объект Profile по умолчанию
+    void setUserProfile(std::shared_ptr<Profile> userprofile);
     std::shared_ptr<Profile> getProfile() const;
     // Обновить параметры окна по профилю
     void updateByProfile();

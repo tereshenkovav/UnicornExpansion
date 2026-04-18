@@ -60,5 +60,6 @@ Text_Credits=Благодарности спонсорам и тестерам
 Text_Save=Сохранить
 Text_Cancel=Отмена
 Checkbox_Sound=Звуковые эффекты
+Checkbox_Voice=Озвучка юнитов
 Checkbox_Fullscreen=Полноэкранный режим
 Checkbox_VSync=Вертикальная синхронизация

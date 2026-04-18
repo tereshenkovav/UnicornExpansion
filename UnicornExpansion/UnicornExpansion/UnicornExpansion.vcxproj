@@ -195,6 +195,7 @@
     <ClCompile Include="UnitFactory.cpp" />
     <ClCompile Include="UnitMover.cpp" />
     <ClCompile Include="UnitSelector.cpp" />
+    <ClCompile Include="UserProfile.cpp" />
     <ClCompile Include="WayFinder.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +233,7 @@
     <ClInclude Include="UnitFactory.h" />
     <ClInclude Include="UnitMover.h" />
     <ClInclude Include="UnitSelector.h" />
+    <ClInclude Include="UserProfile.h" />
     <ClInclude Include="version.h" />
     <ClInclude Include="WayFinder.h" />
   </ItemGroup>

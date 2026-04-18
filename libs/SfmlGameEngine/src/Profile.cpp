@@ -1,5 +1,4 @@
 #include "SfmlGameEngine/Profile.h"
-#include <SFML/Audio.hpp>
 
 namespace sfge {
 
