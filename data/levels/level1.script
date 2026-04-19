@@ -27,17 +27,16 @@ function initMap() {
   game.addEnemy2(19,22) ;
 
   game.incEnergy(200) ;
-  game.setTaskText(String::format("Соберите {0} магии за {1} минут.",
-    MANA_TASK,TIME_LIMIT)) ;
+  game.setTaskText(String::format(game.getText("MainTask"),MANA_TASK,TIME_LIMIT)) ;
 
   game.startTimer(TIME_LIMIT*60) ;
 
   game.setNewViewPoint(12,6) ;
 
-  game.showMessage("unicorn",5,"Добро пожаловать в симуляцию экспансии, командир\nЗдесь ты освоишь основы управления порталом и единорогами,\nа также сбора ресурсов и защиты от нападений.\nДля начала - подвигайся по карте стрелками или WASD.") ;
-  game.showMessage("unicorn",5,"Если ты пропустил часть сообщения,\nего можно посмотреть снова в журнале сообщений.") ;
-  game.showMessage("unicorn",5,"Чтобы закрыть сообщение немедленно,\nиспользуй кнопку Пробел") ;
-  game.showMessage("unicorn",5,"Чтобы пропустить все сообщения в текущем диалоге,\nиспользуй кнопку Enter") ;
+  game.showMessage("unicorn",5,"$Brief_1_1") ;
+  game.showMessage("unicorn",5,"$Brief_1_2") ;
+  game.showMessage("unicorn",5,"$Brief_1_3") ;
+  game.showMessage("unicorn",5,"$Brief_1_4") ;
 
   return true ;
 }

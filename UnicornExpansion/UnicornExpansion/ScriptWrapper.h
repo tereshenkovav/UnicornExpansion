@@ -101,6 +101,11 @@ void Game_showMessage(zetscript::ScriptEngine* _script_engine, Game* _this, zets
 	_this->addMessage(icon->getConstChar(),duration,text->getConstChar());
 }
 
+zetscript::StringScriptObject* Game_getText(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::StringScriptObject* name) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	return _script_engine->newStringScriptObject(_this->getText(name->getConstChar()).data());
+}
+
 void Game_delete(zetscript::ScriptEngine* _script_engine, Game* _this) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	// empty
@@ -125,4 +130,5 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
 	engine.registerMemberFunction<Game>("startTimer", &Game_startTimer);
 	engine.registerMemberFunction<Game>("setNewViewPoint", &Game_setNewViewPoint);
         engine.registerMemberFunction<Game>("showMessage", &Game_showMessage);
+        engine.registerMemberFunction<Game>("getText", &Game_getText);
 }

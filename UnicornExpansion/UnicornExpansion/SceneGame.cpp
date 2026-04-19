@@ -109,9 +109,10 @@ void SceneGame::drawProgressRectsAt(sf::RenderTarget& rendertarget, float perc, 
 // Загрузчик игры из файлов
 void SceneGame::loadGame(int leveln) {
     bool paramok = game.loadConfigs();
+    bool textok = game.loadTexts(std::format("levels/level{}.strings", leveln));
     bool mapok = game.loadMap(std::format("levels/level{}.map",leveln));
     bool scriptok = game.loadScript(std::format("levels/level{}.script",leveln));
-
+    
     game.update(0.0); // Первичная инициализация для тумана войны
     tekscale = DEFAULT_SCALE;
     updateScale();

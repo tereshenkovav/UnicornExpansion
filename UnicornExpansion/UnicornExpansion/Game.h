@@ -14,6 +14,7 @@
 #include <optional>
 #include "MushroomNet.h"
 #include "HelperCppClasses/Countdown.h"
+#include "SfmlGameEngine/Texts.h"
 
 // Перечисления территорий и типов лазера
 enum class Terrain { Ground, Forest, Water, Road };
@@ -42,6 +43,7 @@ private:
 	int height;
 	std::optional<sf::Vector2i> new_viewpoint;
 	float energy;
+	sfge::Texts texts;
 	std::vector<std::vector<Terrain>> map;
 	std::vector<GameUnit> units;
 	std::vector<Laser> lasers;
@@ -77,6 +79,7 @@ public:
 	bool loadConfigs();
 	bool loadDeveloperConfig(const std::string& filename);
 	bool loadScript(const std::string& filename);
+	bool loadTexts(const std::string& filename);
 	// Работа с юнитами
 	void addUnit(const GameUnit& unit);
 	std::optional<int> findUnitAt(float viewx, float viewy) const;
@@ -150,6 +153,7 @@ public:
 	void skipTekMessage();
 	void skipAllMessages();
 	std::optional<Message> getTekMessage() const;
+	std::string getText(const std::string& name) const;
 	// Обновление игры
 	void update(float dt);
 	// Шаблонный метод - поиск юнитов по компонентам

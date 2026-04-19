@@ -14,7 +14,7 @@ function initMap() {
   game.addUnicorn(5,14) ;
 
   game.incEnergy(300) ;
-  game.setTaskText(String::format("Увеличьте отряд до {0}-х единорогов",UNICORN_TASK)) ;
+  game.setTaskText(String::format(game.getText("MainTask"),UNICORN_TASK)) ;
 
   game.setNewViewPoint(9,14) ;
 

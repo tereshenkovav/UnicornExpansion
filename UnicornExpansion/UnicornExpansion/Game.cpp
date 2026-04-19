@@ -172,6 +172,12 @@ bool Game::loadScript(const std::string& filename) {
 	return true;
 }
 
+bool Game::loadTexts(const std::string& filename)
+{
+	texts.loadFromFile(filename);
+	return true;
+}
+
 bool Game::isUnitExist(int uid) const
 {
 	for (int i = 0; i < units.size(); i++)
@@ -711,7 +717,8 @@ void Game::setNewViewPoint(int x, int y) {
 }
 
 void Game::addMessage(const std::string& icon, int duration, const std::string& text) {
-	messages.push({ icon, duration, text });
+	// Полезная функция, позволяет автоматически получать строки из внешнего файла, записывая их как $key, без использования game.getText
+	messages.push({ icon, duration, (text.at(0) == '$')?getText(text.substr(1)):text});
 }
 
 void Game::skipTekMessage() {
@@ -727,4 +734,9 @@ std::optional<Message> Game::getTekMessage() const {
 	if (history.empty()) return std::nullopt;
 	if (!counter_showmessage.isActive()) return std::nullopt;
 	return history.back();
+}
+
+std::string Game::getText(const std::string& name) const
+{
+	return texts.getStr(name);
 }
