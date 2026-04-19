@@ -400,4 +400,5 @@ FodyWeavers.xsd
 data/credits.txt
 UnicornExpansion/UnicornExpansion/version.h
 setup/windows/*.zip
+setup/windows/*.exe
 *build-*/
