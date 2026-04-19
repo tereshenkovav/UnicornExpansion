@@ -311,7 +311,7 @@ std::string Game::getUnicornCountInfo() const
 	int max = 0;
 	for (int i = 0; i < units.size(); i++)
 		if (units[i].isComponent<ComponentPortal>()) max += units[i].getComponent<ComponentPortal>()->getMaxUnicornCount();
-	return std::to_string(getUnicornCount())+"/"+std::to_string(max);
+	return std::format("{}/{}", getUnicornCount(), max);
 }
 
 int Game::getUnicornCount() const

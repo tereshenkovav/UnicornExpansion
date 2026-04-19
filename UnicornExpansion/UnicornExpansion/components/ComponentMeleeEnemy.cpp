@@ -28,8 +28,7 @@ void ComponentMeleeEnemy::setTargetToUnit(int uid)
 
 std::string ComponentMeleeEnemy::getComponentInfo() const
 {
-	return "$Info_AttackLevel$: " + std::to_string(attack_value) + "\n" +
-		"$Info_MovementSpeed$: " + std::to_string(game->getUnitByUID(unit_id).getVelocity());
+	return std::format("$Info_AttackLevel$: {}\n$Info_MovementSpeed$: {}",attack_value,game->getUnitByUID(unit_id).getVelocity());
 }
 
 void ComponentMeleeEnemy::update(float dt)

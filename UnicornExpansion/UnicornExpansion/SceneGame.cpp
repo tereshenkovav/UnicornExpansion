@@ -109,8 +109,8 @@ void SceneGame::drawProgressRectsAt(sf::RenderTarget& rendertarget, float perc, 
 // Загрузчик игры из файлов
 void SceneGame::loadGame(int leveln) {
     bool paramok = game.loadConfigs();
-    bool mapok = game.loadMap("levels/level" + std::to_string(leveln) + ".map");
-    bool scriptok = game.loadScript("levels/level" + std::to_string(leveln) + ".script");
+    bool mapok = game.loadMap(std::format("levels/level{}.map",leveln));
+    bool scriptok = game.loadScript(std::format("levels/level{}.script",leveln));
 
     game.update(0.0); // Первичная инициализация для тумана войны
     tekscale = DEFAULT_SCALE;
@@ -348,8 +348,8 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
                 }
                                 
                 if ((overactionidx) && (*overactionidx == i) &&(!counter_errmsg.isActive())) {
-                    text_action->setString(sfge::SfmlTools::utf2text(
-                        getTexts().getStr("Action_" + actions[i].caption) + "\n" + getTexts().getStr("Text_Energy") + " " + std::to_string(actions[i].energy)));
+                    text_action->setString(sfge::SfmlTools::utf2text(std::format("{}\n{} {}",
+                        getTexts().getStr("Action_" + actions[i].caption),getTexts().getStr("Text_Energy"),actions[i].energy)));
                     text_action->setFillColor(sf::Color::White);
                     rendertarget.draw(*text_action);
                 }
@@ -762,7 +762,7 @@ void SceneGame::Init() {
 
     effect_start = loadSound("sounds/start.ogg");
     for (int i = 0; i <= 2; i++)
-        snd_unicorn_clicks.push_back(loadSound("sounds/unicorn_click_" + std::to_string(i) + ".ogg"));
+        snd_unicorn_clicks.push_back(loadSound(std::format("sounds/unicorn_click_{}.ogg",i)));
     snd_unicorn_clicks.push_back(loadSound("sounds/secret.ogg"));
 
     clickcounter.setCount(snd_unicorn_clicks.size());
