@@ -850,7 +850,3 @@ void SceneGame::Init() {
         
     getEngine()->AddOverScene(std::make_shared<SceneTask>(game));
 }
-
-
-void SceneGame::UnInit() {
-}

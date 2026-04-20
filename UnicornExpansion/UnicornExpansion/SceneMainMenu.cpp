@@ -18,6 +18,3 @@ void SceneMainMenu::Init() {
         
     getEngine()->AddOverScene(std::make_shared<SceneStartMenu>());
 }
-
-void SceneMainMenu::UnInit() {
-}

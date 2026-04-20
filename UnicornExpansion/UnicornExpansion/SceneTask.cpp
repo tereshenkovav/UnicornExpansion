@@ -37,6 +37,3 @@ void SceneTask::Init() {
     butok = std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), "OK", 22, 512 - 40, 640, 80, 40);
     butok->setOnClick([this]() { getEngine()->doExitScene(); });
 }
-
-void SceneTask::UnInit() {
-}

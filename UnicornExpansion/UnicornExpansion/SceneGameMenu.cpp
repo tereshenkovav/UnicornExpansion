@@ -39,6 +39,3 @@ void SceneGameMenu::Init() {
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_MainMenu"), 18, 512 - 80, 380, 160, 40));
     buttons.back()->setOnClick([this]() { getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>()); });
 }
-
-void SceneGameMenu::UnInit() {
-}

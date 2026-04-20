@@ -67,6 +67,3 @@ void SceneHelp::Init() {
         512 - 40, 700, 80, 40);
     butok->setOnClick([this]() {getEngine()->ReplaceOverScene(std::make_shared<SceneStartMenu>()); });
 }
-
-void SceneHelp::UnInit() {
-}

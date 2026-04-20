@@ -78,6 +78,3 @@ void SceneOptions::Init() {
         512 - 160, 400, 24, 24);
     cbvsync->setChecked(getProfile()->isVSync());
 }
-
-void SceneOptions::UnInit() {
-}

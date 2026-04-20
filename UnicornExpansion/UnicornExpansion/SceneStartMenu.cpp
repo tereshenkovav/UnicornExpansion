@@ -59,6 +59,3 @@ void SceneStartMenu::Init() {
 
     snd_click = loadSound("sounds/click.ogg");
 }
-
-void SceneStartMenu::UnInit() {
-}

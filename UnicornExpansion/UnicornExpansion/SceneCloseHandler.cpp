@@ -44,6 +44,3 @@ void SceneCloseHandler::Init() {
         512 + 20, 280, 160, 40);
     butcancel->setOnClick([this]() {getEngine()->doExitScene(); });
 }
-
-void SceneCloseHandler::UnInit() {
-}
