@@ -203,11 +203,12 @@ std::optional<int> Game::findUnitAt(float viewx, float viewy) const
 	return std::nullopt;
 }
 
-std::vector<int> Game::findUnitsInRect(float viewx1, float viewy1, float viewx2, float viewy2) const {
+std::vector<int> Game::findVisibleUnitsInRect(float viewx1, float viewy1, float viewx2, float viewy2) const {
 	std::vector<int> uids;
 	for (int i = 0; i < units.size(); i++)
 		if (units[i].isUnitInRect(viewx1, viewy1, viewx2, viewy2))
-			uids.push_back(units[i].getUID());
+			if (!isFog(units[i].getXY().x, units[i].getXY().y))
+				uids.push_back(units[i].getUID());
 	return uids;
 }
 

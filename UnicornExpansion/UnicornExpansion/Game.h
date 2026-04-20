@@ -83,7 +83,7 @@ public:
 	// Работа с юнитами
 	void addUnit(const GameUnit& unit);
 	std::optional<int> findUnitAt(float viewx, float viewy) const;
-	std::vector<int> findUnitsInRect(float viewx1, float viewy1, float viewx2, float viewy2) const;
+	std::vector<int> findVisibleUnitsInRect(float viewx1, float viewy1, float viewx2, float viewy2) const;
 	bool isUnitExist(int uid) const;
 	// Размеры карты
 	int getWidth() const;

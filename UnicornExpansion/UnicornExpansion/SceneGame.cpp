@@ -561,7 +561,7 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
                 sf::Vector2f worldpos_1 = getEngine()->getWorldPosByView(view, (*rect_holded).position);
                 sf::Vector2f worldpos_2 = getEngine()->getWorldPosByView(view, (*rect_holded).position + (*rect_holded).size);
                 
-                auto uids = game.findUnitsInRect(std::min(worldpos_1.x, worldpos_2.x), std::min(worldpos_1.y, worldpos_2.y),
+                auto uids = game.findVisibleUnitsInRect(std::min(worldpos_1.x, worldpos_2.x), std::min(worldpos_1.y, worldpos_2.y),
                     std::max(worldpos_1.x, worldpos_2.x), std::max(worldpos_1.y, worldpos_2.y));
                 if (uids.size() > 0) {
                     // Выделяем всех единорогов в списке
