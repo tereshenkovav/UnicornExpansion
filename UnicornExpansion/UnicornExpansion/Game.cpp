@@ -311,7 +311,7 @@ std::string Game::getUnicornCountInfo() const
 
 int Game::getUnicornCount() const
 {
-	return std::count_if(units.begin(), units.end(), [](auto& unit) {return unit.isComponent<ComponentUnicorn>(); });
+	return std::count_if(units.begin(), units.end(), [](auto& unit) {return unit.template isComponent<ComponentUnicorn>(); });
 }
 
 int Game::getCountByComponent(const std::string& compname) const
