@@ -5,6 +5,7 @@
 
 #include "SfmlGameEngine/Engine.h"
 #include "SceneMainMenu.h"
+#include "SceneCloseHandler.h"
 #include "HelperCppClasses/StringTools.h"
 #include "UserProfile.h"
 
@@ -69,6 +70,7 @@ int main(int argc, char* argv[])
     engine.addCursor(1, "images/cursor_my.png");
     engine.setStopUpdatingForLostFocus(true);
     engine.setUserProfile(profile);
+    engine.setCloseHandlerScene(std::make_shared<SceneCloseHandler>());
     engine.Run(std::make_shared<SceneMainMenu>());
         
     return 0;

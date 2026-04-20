@@ -8,6 +8,7 @@ GameUnit.cpp
 MiniMap.cpp
 MushroomNet.cpp
 SceneMainMenu.cpp
+SceneCloseHandler.cpp
 SceneGameMenu.cpp
 SceneStartMenu.cpp
 SceneEndGame.cpp

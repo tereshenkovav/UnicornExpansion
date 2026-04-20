@@ -154,6 +154,11 @@ void Engine::createWindow() {
     isfullscr = profile->isFullScreen();
 }
 
+void Engine::setCloseHandlerScene(std::shared_ptr<Scene> scene)
+{
+    closehandlerscene = scene;
+}
+
 void Engine::Run(std::shared_ptr<Scene> scene)
 {
     createWindow();
@@ -191,7 +196,11 @@ void Engine::Run(std::shared_ptr<Scene> scene)
         events.clear();
         // Получаем все события от окна
         while (const std::optional event = window->pollEvent())
-            if (event->is<sf::Event::Closed>()) window->close(); else events.push_back(*event);
+            if (event->is<sf::Event::Closed>()) {
+                if (closehandlerscene) AddOverScene(closehandlerscene); else window->close();
+            }
+            else
+                events.push_back(*event);
 
         // Ставим курсор как пустой по умолчанию, и дополняем, если он был установлен в default
         currentcursor = std::weak_ptr<sf::Sprite>();

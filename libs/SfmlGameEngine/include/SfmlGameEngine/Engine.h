@@ -25,6 +25,8 @@ private:
     std::shared_ptr<Scene> nextscene;
     std::shared_ptr<Scene> overscene;
     std::shared_ptr<Scene> replacedoverscene;
+    // Статичная ссылка на сцену обработки закрытия окна
+    std::shared_ptr<Scene> closehandlerscene;
     // Шрифт по умолчанию
     std::shared_ptr<sf::Font> defaultfont;
     // Текстуры для курсоров
@@ -94,6 +96,7 @@ public:
     std::shared_ptr<Profile> getProfile() const;
     // Обновить параметры окна по профилю
     void updateByProfile();
+    void setCloseHandlerScene(std::shared_ptr<Scene> scene);
 };
 
 };

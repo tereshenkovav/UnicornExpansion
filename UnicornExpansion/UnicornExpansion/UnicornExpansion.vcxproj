@@ -176,6 +176,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="MushroomNet.cpp" />
+    <ClCompile Include="SceneCloseHandler.cpp" />
     <ClCompile Include="SceneEndGame.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneGameMenu.cpp" />
@@ -219,6 +220,7 @@
     <ClInclude Include="GameUnit.h" />
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="MushroomNet.h" />
+    <ClInclude Include="SceneCloseHandler.h" />
     <ClInclude Include="SceneEndGame.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneGameMenu.h" />
