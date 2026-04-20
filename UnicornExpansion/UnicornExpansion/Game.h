@@ -44,7 +44,7 @@ private:
 	std::optional<sf::Vector2i> new_viewpoint;
 	float energy;
 	sfge::Texts texts;
-	std::vector<std::vector<Terrain>> map;
+	Vector2D<Terrain> map;
 	std::vector<GameUnit> units;
 	std::vector<Laser> lasers;
 	std::queue<Message> messages;
@@ -60,7 +60,7 @@ private:
 	Countdown counter_showmessage;
 	bool iswin;
 	bool isfail;
-	std::vector<std::vector<bool>> fog;
+	Vector2D<bool> fog;
 	zetscript::ScriptEngine script_engine;
 	std::function<bool()> funcvictory;
 	std::function<bool()> funcdefeat;

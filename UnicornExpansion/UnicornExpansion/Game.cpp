@@ -78,10 +78,9 @@ bool Game::loadMap(const std::string& filename) {
 	// Необходимо, чтобы сеть грибов была инициализирована до выполнения скриптов и до установки территории
 	mushrooms.initByGame(this);
 
-	map.resize(width);
-	for (int j = 0; j < width; j++)
-		map[j].resize(height);
-
+	map.setOutboundValue(Terrain::Ground);
+	map.resizeAndFill(width, height, Terrain::Ground);
+	
 	for (int j = 0; j < height; j++) {
 		if (!std::getline(fin, line)) return false;
 		line = prepLine(line);
@@ -94,20 +93,14 @@ bool Game::loadMap(const std::string& filename) {
 					c = '+';
 				}
 				if (mapchars.count(c) > 0)
-					map[i][j] = mapchars[c];
+					map.setValue(i, j, mapchars[c]);
 			}
 	}
 	
 	fin.close();
 
-	bool clearfog = jsonDevConfig["clearfog"].asBool();
-	fog.resize(width);
-	for (int j = 0; j < width; j++) {
-		fog[j].resize(height);
-		for (int i = 0; i < height; i++)
-			fog[j][i] = !clearfog;
-	}
-		
+	fog.setOutboundValue(true);
+	fog.resizeAndFill(width, height, !jsonDevConfig["clearfog"].asBool());
 	return true;
 }
 
@@ -194,11 +187,7 @@ int Game::getHeight() const {
 }
 
 Terrain Game::getMap(int i, int j) const {
-	if (i < 0) return Terrain::Ground;
-	if (i >= width) return Terrain::Ground;
-	if (j < 0) return Terrain::Ground;
-	if (j >= height) return Terrain::Ground;
-	return map[i][j];
+	return map.getValue(i, j);
 }
 
 void Game::addUnit(const GameUnit & unit) {
@@ -634,26 +623,14 @@ void Game::update(float dt)
 
 bool Game::isFog(int i, int j) const
 {
-	if (i < 0) return true;
-	if (i >= width) return true;
-	if (j < 0) return true;
-	if (j >= height) return true;
-	return fog[i][j];
+	return fog.getValue(i, j);
 }
 
 void Game::clearFogAt(const sf::Vector2i& pos, int dist)
 {
 	for (int dx = -dist; dx <= dist; dx++)
-		for (int dy = -dist; dy <= dist; dy++) {
-			if (dx * dx + dy * dy >= dist * dist) continue;
-			int nx = pos.x + dx;
-			int ny = pos.y + dy;
-			if (nx < 0) continue;
-			if (nx >= width) continue;
-			if (ny < 0) continue;
-			if (ny >= height) continue;
-			fog[nx][ny] = false;
-		}
+		for (int dy = -dist; dy <= dist; dy++)
+			if (dx * dx + dy * dy < dist * dist) fog.setValue(pos.x + dx, pos.y + dy, false);
 }
 
 bool Game::isGameOver() const
