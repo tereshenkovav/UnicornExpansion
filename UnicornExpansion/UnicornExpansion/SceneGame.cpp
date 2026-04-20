@@ -71,7 +71,7 @@ float SceneGame::getScale05per20() {
 }
 
 // Рисование лазера и его анимации в точке приложения
-void SceneGame::drawLaserFromTo(sf::RenderTarget& rendertarget, std::unique_ptr<sf::Sprite> & spr_laz, const Laser& laz) {
+void SceneGame::drawLaserFromTo(sf::RenderTarget& rendertarget, sfge::UniqueSprite & spr_laz, const Laser& laz) {
     sf::Vector2f dir = laz.pos2 - laz.pos1;
     spr_laz->setColor(sfge::SfmlTools::getColorAsBright(color_lasers[laz.type], 0.9 + 0.2 * sin(4.0f * M_PI * getEngine()->getAllTime() + laz.timeshift)));
     spr_laz->setPosition(laz.pos1);

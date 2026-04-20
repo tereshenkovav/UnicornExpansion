@@ -36,18 +36,18 @@ private:
     std::shared_ptr<UserProfile> userprofile;
 
     // Все данные игры, спрайты, тексты, массивы территорий и цветов
-    std::map<std::string, std::unique_ptr<sf::Sprite>> spr_units;
-    std::map<std::string, std::unique_ptr<sf::Sprite>> spr_icons;
-    std::map<std::string, std::unique_ptr<sf::Sprite>> spr_actions;
-    std::map<std::string, std::unique_ptr<sf::Sprite>> spr_dialog_icons;
-    std::map<Terrain, std::unique_ptr<sf::Sprite>> spr_terrains;
-    std::vector<std::unique_ptr<sf::Sprite>> spr_mushrooms;
+    std::map<std::string, sfge::UniqueSprite> spr_units;
+    std::map<std::string, sfge::UniqueSprite> spr_icons;
+    std::map<std::string, sfge::UniqueSprite> spr_actions;
+    std::map<std::string, sfge::UniqueSprite> spr_dialog_icons;
+    std::map<Terrain, sfge::UniqueSprite> spr_terrains;
+    std::vector<sfge::UniqueSprite> spr_mushrooms;
     std::map<Terrain, sf::Color> color_terrains;
     std::map<LaserType, sf::Color> color_lasers;
     std::map<LaserType, std::shared_ptr<sfge::Animation>> anim_lasers;
-    std::map<TerrainSubType, std::unique_ptr<sf::Sprite>> spr_trees;
-    std::vector<std::unique_ptr<sf::Sound>> snd_unicorn_clicks;
-    std::map<AudioEffect, std::unique_ptr<sf::Sound>> snd_audioeffects;
+    std::map<TerrainSubType, sfge::UniqueSprite> spr_trees;
+    std::vector<sfge::UniqueSound> snd_unicorn_clicks;
+    std::map<AudioEffect, sfge::UniqueSound> snd_audioeffects;
     sf::View view;
     Countdown counter_errmsg;
     MiniMap minimap;
@@ -71,27 +71,27 @@ private:
     std::array<int, 8> marker_dy = { 0, 0, 11, 11, 64 - 22, 64 - 22, 64 - 11, 64 - 11 };
 
     // Перенесено из main
-    std::unique_ptr<sf::Sprite> spr_border;
-    std::unique_ptr<sf::Sprite> spr_but_action;
-    std::unique_ptr<sf::Sprite> undo;
-    std::unique_ptr<sf::Sprite> marker;
-    std::unique_ptr<sf::Text> text_caption;
-    std::unique_ptr<sf::Text> text_action;
-    std::unique_ptr<sf::Text> text_hp;
-    std::unique_ptr<sf::Text> text_info;
-    std::unique_ptr<sf::Text> text_timer;
-    std::unique_ptr<sf::Text> text_resource;
-    std::unique_ptr<sf::Text> text_progress;
-    std::unique_ptr<sf::Text> text_fps;
-    std::unique_ptr<sf::Text> text_msg;
+    sfge::UniqueSprite spr_border;
+    sfge::UniqueSprite spr_but_action;
+    sfge::UniqueSprite undo;
+    sfge::UniqueSprite marker;
+    sfge::UniqueText text_caption;
+    sfge::UniqueText text_action;
+    sfge::UniqueText text_hp;
+    sfge::UniqueText text_info;
+    sfge::UniqueText text_timer;
+    sfge::UniqueText text_resource;
+    sfge::UniqueText text_progress;
+    sfge::UniqueText text_fps;
+    sfge::UniqueText text_msg;
 
     sf::RectangleShape rect_selector;
     sf::RectangleShape rect_progress_border;
     sf::RectangleShape rect_progress;
     sf::RectangleShape textback;
 
-    std::unique_ptr<sf::Sound> effect_fire;
-    std::unique_ptr<sf::Sound> effect_start;
+    sfge::UniqueSound effect_fire;
+    sfge::UniqueSound effect_start;
 
     ClickerCounter clickcounter;
 
@@ -101,7 +101,7 @@ private:
     std::shared_ptr<sfge::Animation> aura;
     std::shared_ptr<sfge::Animation> teleportation;
 
-    std::unique_ptr<sf::Sprite> spr_laz;
+    sfge::UniqueSprite spr_laz;
 
     sf::Shader shader_gray;
     sf::Shader shader_bright;
@@ -111,7 +111,7 @@ private:
 
     void updateMiniMap();
     float getScale05per20();
-    void drawLaserFromTo(sf::RenderTarget& rendertarget, std::unique_ptr<sf::Sprite>& spr_laz, const Laser& laz);
+    void drawLaserFromTo(sf::RenderTarget& rendertarget, sfge::UniqueSprite& spr_laz, const Laser& laz);
     void fixCameraPosition();
     void updateScale();
     void drawProgressRectsAt(sf::RenderTarget& rendertarget, float perc, float basew, float x, float y, sf::Color color);

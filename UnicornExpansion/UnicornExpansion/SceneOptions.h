@@ -11,13 +11,13 @@ class SceneOptions: public sfge::Scene
 {
 private:
     sf::RectangleShape textback;
-    std::unique_ptr<sf::Text> text_caption;
-    std::unique_ptr<sfge::Button> butsave;
-    std::unique_ptr<sfge::Button> butcancel;
-    std::unique_ptr<sfge::Checkbox> cbsound;
-    std::unique_ptr<sfge::Checkbox> cbfullscreen;
-    std::unique_ptr<sfge::Checkbox> cbvsync;
-    std::unique_ptr<sfge::Checkbox> cbvoice;
+    sfge::UniqueText text_caption;
+    sfge::UniqueButton butsave;
+    sfge::UniqueButton butcancel;
+    sfge::UniqueCheckbox cbsound;
+    sfge::UniqueCheckbox cbfullscreen;
+    sfge::UniqueCheckbox cbvsync;
+    sfge::UniqueCheckbox cbvoice;
     void saveOptions();
     std::shared_ptr<UserProfile> userprofile;
 public:

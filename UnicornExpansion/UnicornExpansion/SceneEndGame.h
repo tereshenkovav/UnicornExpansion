@@ -10,8 +10,8 @@ class SceneEndGame: public sfge::Scene
 {
 private:
     sf::RectangleShape textback;
-    std::unique_ptr<sf::Text> text_title;
-    std::vector<std::unique_ptr<sfge::Button>> buttons;
+    sfge::UniqueText text_title;
+    std::vector<sfge::UniqueButton> buttons;
     int leveln;
     bool iswin;
 public:

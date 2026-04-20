@@ -10,9 +10,9 @@ class SceneTask: public sfge::Scene
 {
 private:
     sf::RectangleShape textback;
-    std::unique_ptr<sf::Text> text_task;
-    std::unique_ptr<sf::Text> text_title;
-    std::unique_ptr<sfge::Button> butok;
+    sfge::UniqueText text_task;
+    sfge::UniqueText text_title;
+    sfge::UniqueButton butok;
     std::string task;
 public:
     SceneTask(const Game & game);

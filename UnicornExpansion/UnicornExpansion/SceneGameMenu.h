@@ -10,7 +10,7 @@ class SceneGameMenu: public sfge::Scene
 {
 private:
     sf::RectangleShape textback;
-    std::vector<std::unique_ptr<sfge::Button>> buttons;
+    std::vector<sfge::UniqueButton> buttons;
     int leveln;
     Game* game;
 public:

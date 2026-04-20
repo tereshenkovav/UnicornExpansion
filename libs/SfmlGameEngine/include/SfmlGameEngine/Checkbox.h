@@ -23,4 +23,6 @@ public:
 	void processEvent(const sf::Event& event);
 };
 
+using UniqueCheckbox = std::unique_ptr<Checkbox>;
+
 }

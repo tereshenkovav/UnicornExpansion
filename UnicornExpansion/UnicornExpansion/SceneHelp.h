@@ -11,9 +11,9 @@ class SceneHelp: public sfge::Scene
 {
 private:
     sf::RectangleShape textback;
-    std::unique_ptr<sf::Text> text_caption;
-    std::unique_ptr<sf::Text> text_help;
-    std::unique_ptr<sfge::Button> butok;
+    sfge::UniqueText text_caption;
+    sfge::UniqueText text_help;
+    sfge::UniqueButton butok;
     HelpType helptype;
 public:
     SceneHelp(HelpType helptype);

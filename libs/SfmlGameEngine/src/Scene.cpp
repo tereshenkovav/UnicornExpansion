@@ -26,36 +26,36 @@ Engine* Scene::getEngine() const
 	return engine;
 }
 
-std::unique_ptr<sf::Sprite> Scene::loadSprite(const std::string& filename)
+UniqueSprite Scene::loadSprite(const std::string& filename)
 {
 	textures.push_back(std::make_unique<sf::Texture>(filename));
 	return std::make_unique<sf::Sprite>(*textures.back());
 }
 
-std::unique_ptr<sf::Sound> Scene::loadSound(const std::string& filename)
+UniqueSound Scene::loadSound(const std::string& filename)
 {
 	sounds.push_back(std::make_unique<sf::SoundBuffer>(filename));
 	return std::make_unique<sf::Sound>(*sounds.back());
 }
 
-std::unique_ptr<sf::Text> Scene::loadText(const std::string& str, int size)
+UniqueText Scene::loadText(const std::string& str, int size)
 {
 	return std::make_unique<sf::Text>(*engine->getDefaultFont(),SfmlTools::utf2text(str),size);
 }
 
-std::unique_ptr<sf::Text> Scene::loadText(int size)
+UniqueText Scene::loadText(int size)
 {
 	return loadText(std::string(), size);
 }
 
-std::unique_ptr<sf::Text> Scene::loadText(int size, sf::Color color)
+UniqueText Scene::loadText(int size, sf::Color color)
 {
 	auto text = loadText(size);
 	text->setFillColor(color);
 	return text;
 }
 
-std::unique_ptr<sf::Text> Scene::loadText(const std::string& str, int size, sf::Color color)
+UniqueText Scene::loadText(const std::string& str, int size, sf::Color color)
 {
 	auto text = loadText(str, size);
 	text->setFillColor(color);

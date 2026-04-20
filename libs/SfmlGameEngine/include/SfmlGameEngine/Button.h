@@ -18,4 +18,6 @@ public:
 	void processEvent(const sf::Event& event);
 };
 
+using UniqueButton = std::unique_ptr<Button>;
+
 }

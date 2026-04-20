@@ -11,9 +11,9 @@ class SceneCloseHandler: public sfge::Scene
 {
 private:
     sf::RectangleShape textback;
-    std::unique_ptr<sf::Text> text_caption;
-    std::unique_ptr<sfge::Button> butconfirm;
-    std::unique_ptr<sfge::Button> butcancel;
+    sfge::UniqueText text_caption;
+    sfge::UniqueButton butconfirm;
+    sfge::UniqueButton butcancel;
 public:
     virtual void Render(sf::RenderTarget& rendertarget) override;
     virtual void Update(float dt, const sf::Vector2i& mousePos, const std::vector<sf::Event>& events) override;
