@@ -453,13 +453,11 @@ void Game::update(float dt)
 	
 	// Обновление урона от грибов для единорогов
 	for (int i = 0; i < units.size(); i++)
-		if (units[i].isComponent<ComponentUnicorn>()) {
-			int stage = mushrooms.getMushroomStage(units[i].getXY().x, units[i].getXY().y);
-			if (stage > 0) {
+		if (units[i].isComponent<ComponentUnicorn>())
+			if (int stage = mushrooms.getMushroomStage(units[i].getXY().x, units[i].getXY().y); stage > 0) {
 				units[i].decHealth(stage * dt);
 				trySetUnderAttackEffect(units[i]);
 			}
-		}
 
 	mushrooms.update(dt);
 	counter_under_attack.update(dt);

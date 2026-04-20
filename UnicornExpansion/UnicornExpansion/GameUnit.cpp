@@ -255,13 +255,11 @@ bool GameUnit::isKilled() const
 std::string GameUnit::getComponentsInfo() const
 {
 	std::string res = "";
-	for (int i = 0; i < components.size(); i++) {
-		std::string info = components[i]->getComponentInfo();
-		if (info.length() > 0) {
+	for (int i = 0; i < components.size(); i++)
+		if (std::string info = components[i]->getComponentInfo(); info.length() > 0) {
 			if (res.length() > 0) res += "\n";
 			res += info;
 		}
-	}
 	return res;
 }
 
