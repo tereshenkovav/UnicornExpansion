@@ -322,18 +322,12 @@ std::string Game::getUnicornCountInfo() const
 
 int Game::getUnicornCount() const
 {
-	int r = 0;
-	for (int i = 0; i < units.size(); i++)
-		if (units[i].isComponent<ComponentUnicorn>()) r++;
-	return r;
+	return std::count_if(units.begin(),units.end(), [](auto& unit) {return unit.isComponent<ComponentUnicorn>(); });
 }
 
 int Game::getCountByComponent(const std::string& compname) const
 {
-	int r = 0;
-	for (int i = 0; i < units.size(); i++)
-		if (units[i].hasComponentByName("Component"+compname)) r++;
-	return r;
+	return std::count_if(units.begin(), units.end(), [compname](auto& unit) {return unit.hasComponentByName("Component" + compname); });
 }
 
 std::string Game::getTaskText() const
@@ -463,7 +457,7 @@ void Game::update(float dt)
 	// И потом уже работаем с обновлением юнитов
 	for (int i = 0; i < units.size(); i++) {
 		units[i].update(dt);
-		// Разгон тумана войны
+		// Для единоров Разгон тумана войны
 		if (units[i].isComponent<ComponentUnicorn>()) clearFogAt(units[i].getXY(), 6);
 	}
 	
@@ -613,18 +607,15 @@ void Game::update(float dt)
 
 	last_attacked_units = new_attacked_units;
 
-	// Удаление уничтоженных юнитов
-	int i = 0;
-	while (i < units.size())
-		if (units[i].isKilled()) {
-			// При удалении единорога дать эффект вспышки
-			if (units[i].isComponent<ComponentUnicorn>()) {
-				addTeleportationEffect(units[i].getView().x, units[i].getView().y);
-				addGameEvent(AudioEffect::Teleport, units[i].getView());
-			}
-			units.erase(units.begin() + i);
+	// При удалении единорога дать эффект вспышки (обработка перед самым удалением)
+	for (auto & unit: units)
+		if (unit.isKilled() && unit.isComponent<ComponentUnicorn>()) {
+			addTeleportationEffect(unit.getView().x, unit.getView().y);
+			addGameEvent(AudioEffect::Teleport, unit.getView());
 		}
-		else i++;
+
+	// Удаление уничтоженных юнитов
+	std::erase_if(units, [](const GameUnit& unit){ return unit.isKilled(); });
 
 	try {
 		if (!isGameOver()) iswin = funcvictory();
@@ -672,15 +663,7 @@ bool Game::isGameOver() const
 
 std::optional<std::string> Game::getTimerStr() const
 {
-	if (timerleft > 0) {
-		std::stringstream ss;
-		ss << std::setw(2) << std::setfill('0') << (int)(timerleft / 60);
-		ss << ":";
-		ss << std::setw(2) << std::setfill('0') << (int)(timerleft) % 60;
-		return ss.str();
-	}
-	else
-		return std::nullopt;
+	return (timerleft > 0)? std::optional(std::format("{:02}:{:02}", (int)(timerleft / 60), (int)(timerleft) % 60)): std::nullopt;
 }
 
 int Game::getTimer() const
