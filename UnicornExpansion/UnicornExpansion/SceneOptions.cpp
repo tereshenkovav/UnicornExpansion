@@ -9,6 +9,7 @@ void SceneOptions::saveOptions() {
     getProfile()->setVSync(cbvsync->isChecked());
     getEngine()->updateByProfile();
     getEngine()->ReplaceOverScene(std::make_shared<SceneStartMenu>());
+    userprofile->saveProfile();
 }
 
 void SceneOptions::Render(sf::RenderTarget & rendertarget) {

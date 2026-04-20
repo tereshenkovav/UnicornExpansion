@@ -35,6 +35,29 @@ int main(int argc, char* argv[])
         else
             std::filesystem::current_path(exedir + "/data");
 
+    // Обработка домашнего каталога для платформ
+    char buf[_MAX_PATH];
+    size_t bufcount;
+#ifdef __GNUC__
+#ifdef __MINGW32__
+    getenv_s(&bufcount, buf, _MAX_PATH, "LOCALAPPDATA");
+    auto profiledir = std::string(buf) + "\\UnicornExpansion\\";
+#else
+    getenv_s(&bufcount, buf, _MAX_PATH, "HOME");
+    auto profiledir = std::string(buf) + "/.local/share/UnicornExpansion/";
+#endif
+#else
+    getenv_s(&bufcount, buf, _MAX_PATH, "LOCALAPPDATA");
+    auto profiledir = std::string(buf) + "\\UnicornExpansion\\" ;
+#endif
+
+    // Создаем домашний каталог
+    std::filesystem::create_directories(profiledir);
+
+    // Грузим профиль игры
+    auto profile = std::make_shared<UserProfile>();
+    profile->loadProfile(profiledir+"profile.json");
+
     sfge::Engine engine(1024, 768);
     engine.setExeDir(exedir);
     engine.loadTexts("strings.txt");
@@ -45,7 +68,7 @@ int main(int argc, char* argv[])
     engine.loadDefaultCursor("images/cursor_def.png");
     engine.addCursor(1, "images/cursor_my.png");
     engine.setStopUpdatingForLostFocus(true);
-    engine.setUserProfile(std::make_shared<UserProfile>());
+    engine.setUserProfile(profile);
     engine.Run(std::make_shared<SceneMainMenu>());
         
     return 0;
