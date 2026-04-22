@@ -61,6 +61,11 @@ void Game_incEnergy(zetscript::ScriptEngine* _script_engine, Game* _this, zetscr
 	_this->incEnergy(value);
 }
 
+void Game_decEnergy(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int value) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	_this->decEnergy(value);
+}
+
 zetscript::zs_int  Game_getEnergy(zetscript::ScriptEngine* _script_engine, Game* _this) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	return _this->getEnergy();
@@ -96,7 +101,7 @@ void Game_setNewViewPoint(zetscript::ScriptEngine* _script_engine, Game* _this, 
 	_this->setNewViewPoint(x,y);
 }
 
-void Game_showMessage(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::StringScriptObject* icon, zetscript::zs_int duration, zetscript::StringScriptObject* text) {
+void Game_addMessage(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::StringScriptObject* icon, zetscript::zs_int duration, zetscript::StringScriptObject* text) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	_this->addMessage(icon->getConstChar(),duration,text->getConstChar());
 }
@@ -122,6 +127,7 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
 	engine.registerMemberFunction<Game>("addUnicorn", &Game_addUnicorn);
 	engine.registerMemberFunction<Game>("addLair", &Game_addLair);
 	engine.registerMemberFunction<Game>("incEnergy", &Game_incEnergy);
+	engine.registerMemberFunction<Game>("decEnergy", &Game_decEnergy);
 	engine.registerMemberFunction<Game>("getEnergy", &Game_getEnergy);
 	engine.registerMemberFunction<Game>("setTaskText", &Game_setTaskText);
 	engine.registerMemberFunction<Game>("getCountByComponent", &Game_getCountByComponent);
@@ -129,6 +135,6 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
 	engine.registerMemberFunction<Game>("getTimer", &Game_getTimer);
 	engine.registerMemberFunction<Game>("startTimer", &Game_startTimer);
 	engine.registerMemberFunction<Game>("setNewViewPoint", &Game_setNewViewPoint);
-        engine.registerMemberFunction<Game>("showMessage", &Game_showMessage);
+        engine.registerMemberFunction<Game>("addMessage", &Game_addMessage);
         engine.registerMemberFunction<Game>("getText", &Game_getText);
 }

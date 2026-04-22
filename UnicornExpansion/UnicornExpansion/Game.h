@@ -90,7 +90,6 @@ public:
 	int getHeight() const;
 	// Получить новую точку камеры и сброс новой точки
 	std::optional<sf::Vector2i> getOnceNewViewPoint();
-	void setNewViewPoint(int x, int y);
 	// Получение типа территории
 	Terrain getMap(int i, int j) const;
 	bool isFog(int i, int j) const;
@@ -107,19 +106,30 @@ public:
 	bool cancelUnitWorkingAction(int uid);
 	// Искать первую свободную точку рядом с юнитом
 	std::optional<sf::Vector2i> getFirstFreePosNear(const GameUnit & unit) const;
+
+	/* Этот блок функций подключен в скрипты */
 	// Работа с энергией
 	int getEnergy() const;
 	bool decEnergy(int value);
 	bool incEnergy(int value);
-	// Получить информацию о единорогах текстовую
-	std::string getUnicornCountInfo() const;
-	// Получить информацию о таймере
-	std::optional<std::string> getTimerStr() const;
 	int getTimer() const;
 	void startTimer(int value);
-	int getUnicornCount() const;
+	void setTaskText(const std::string& value);
 	// Вычисление количества по компонентам
-	int getCountByComponent(const std::string & compname) const;
+	int getCountByComponent(const std::string& compname) const;
+	bool isMushroomsExist() const;
+	void setNewViewPoint(int x, int y);
+	void addMessage(const std::string& icon, int duration, const std::string& text);
+	std::string getText(const std::string& name) const;
+	/* Конец скриптового блока */
+
+	// Получить информацию о таймере
+	std::optional<std::string> getTimerStr() const;
+
+	// Получить информацию о единорогах текстовую
+	std::string getUnicornCountInfo() const;
+
+	int getUnicornCount() const;
 	// Добавить компонент для юнита
 	void addComponentToUnitByUID(int uid, UnitComponent* component);
 	// Установка щита для юнита
@@ -138,22 +148,18 @@ public:
 	bool isFail() const;
 	// Текст игровой задачи
 	std::string getTaskText() const;
-	void setTaskText(const std::string & value);
 	void addTeleportationEffect(float x, float y);
 	void addGameEvent(AudioEffect effect, sf::Vector2f pos);
 	std::optional<sf::Vector2f> getOnceTeleportationEffect();
 	std::vector<AudioEffect> getOnceAudioEffects();
 	const std::vector<Mushroom> & getMushrooms(int x, int y) const;
 	bool isMushroomsAt(int x, int y) const;
-	bool isMushroomsExist() const;
 	bool isUnitUnderAttack(int uid) const;
 	std::optional<sf::Vector2f> getLastEventPos() const;
 	// Механизм сообщений
-	void addMessage(const std::string& icon, int duration, const std::string& text);
 	void skipTekMessage();
 	void skipAllMessages();
 	std::optional<Message> getTekMessage() const;
-	std::string getText(const std::string& name) const;
 	// Обновление игры
 	void update(float dt);
 	// Шаблонный метод - поиск юнитов по компонентам

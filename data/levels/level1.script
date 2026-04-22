@@ -33,10 +33,10 @@ function initMap() {
 
   game.setNewViewPoint(12,6) ;
 
-  game.showMessage("unicorn",5,"$Brief_1_1") ;
-  game.showMessage("unicorn",5,"$Brief_1_2") ;
-  game.showMessage("unicorn",5,"$Brief_1_3") ;
-  game.showMessage("unicorn",5,"$Brief_1_4") ;
+  game.addMessage("unicorn",5,"$Brief_1_1") ;
+  game.addMessage("unicorn",5,"$Brief_1_2") ;
+  game.addMessage("unicorn",5,"$Brief_1_3") ;
+  game.addMessage("unicorn",5,"$Brief_1_4") ;
 
   return true ;
 }
