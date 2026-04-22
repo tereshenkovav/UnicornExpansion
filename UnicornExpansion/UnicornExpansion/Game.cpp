@@ -131,6 +131,7 @@ bool Game::loadDeveloperConfig(const std::string& filename)
 
 bool Game::loadScript(const std::string& filename) {
 	units.clear();
+	allowedactions.clear();
 	energy = 0.0f;
 	tasktext = "?";
 	timerleft = 0;
@@ -161,7 +162,7 @@ bool Game::loadScript(const std::string& filename) {
 	lasteventpos = std::nullopt;
 	// Очистка лазеров
 	lasers.clear();
-
+	
 	return true;
 }
 
@@ -695,7 +696,22 @@ std::optional<Message> Game::getTekMessage() const {
 	return history.back();
 }
 
+bool Game::isActionAllowed(const std::string name) const
+{
+	return allowedactions.contains(name);
+}
+
 std::string Game::getText(const std::string& name) const
 {
 	return texts.getStr(name);
+}
+
+void Game::allowAction(const std::string& name)
+{
+	if (!allowedactions.contains(name)) allowedactions.insert(name);
+}
+
+void Game::denyAction(const std::string& name)
+{
+	if (allowedactions.contains(name)) allowedactions.erase(name);
 }

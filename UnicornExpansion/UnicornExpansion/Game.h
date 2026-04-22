@@ -49,6 +49,7 @@ private:
 	std::vector<Laser> lasers;
 	std::queue<Message> messages;
 	std::vector<Message> history;
+	std::set<std::string> allowedactions;
 	Json::Value jsonActions;
 	Json::Value jsonUnits;
 	Json::Value jsonComponents;
@@ -121,6 +122,8 @@ public:
 	void setNewViewPoint(int x, int y);
 	void addMessage(const std::string& icon, int duration, const std::string& text);
 	std::string getText(const std::string& name) const;
+	void allowAction(const std::string& name);
+	void denyAction(const std::string& name);
 	/* Конец скриптового блока */
 
 	// Получить информацию о таймере
@@ -160,6 +163,7 @@ public:
 	void skipTekMessage();
 	void skipAllMessages();
 	std::optional<Message> getTekMessage() const;
+	bool isActionAllowed(const std::string name) const;
 	// Обновление игры
 	void update(float dt);
 	// Шаблонный метод - поиск юнитов по компонентам

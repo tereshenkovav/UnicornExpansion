@@ -8,6 +8,11 @@ function initMap() {
   MANA_TASK = 3000 ;
   TIME_LIMIT = 7 ;
 
+  game.allowAction("BuildUnicorn") ;
+  game.allowAction("MakeHarvester") ;
+  game.allowAction("MakeAttacker") ;
+  game.allowAction("MakeHealer") ;
+
   game.addPortal(13,2) ;
   game.addUnicorn(16,2) ;
   game.addUnicorn(17,6) ;
