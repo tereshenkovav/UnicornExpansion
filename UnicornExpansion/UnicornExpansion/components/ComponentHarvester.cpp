@@ -20,9 +20,7 @@ int ComponentHarvester::getHarvestDistance() const
 std::vector<UnitAction> ComponentHarvester::getActions() const
 {
 	std::vector<UnitAction> actions;
-	if (tek_upgrade_pos < game->getConfigAction()["UpgradeHarvester"]["Price"].size())
-		actions.push_back({ "upgrade_harvester", "UpgradeHarvester",
-			game->getConfigAction()["UpgradeHarvester"]["Price"][tek_upgrade_pos].asInt(), game->getConfigAction()["UpgradeHarvester"]["Time"][tek_upgrade_pos].asInt(), (UnitComponent*)this });
+	addActionIfAllowed(&actions, "upgrade_harvester", "UpgradeHarvester", tek_upgrade_pos);
 	return actions;
 }
 

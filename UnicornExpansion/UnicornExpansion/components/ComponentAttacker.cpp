@@ -35,9 +35,7 @@ int ComponentAttacker::getOrder() const
 std::vector<UnitAction> ComponentAttacker::getActions() const
 {
 	std::vector<UnitAction> actions;
-	if (tek_upgrade_pos < game->getConfigAction()["UpgradeAttacker"]["Price"].size())
-		actions.push_back({ "upgrade_attacker", "UpgradeAttacker",
-			game->getConfigAction()["UpgradeAttacker"]["Price"][tek_upgrade_pos].asInt(), game->getConfigAction()["UpgradeAttacker"]["Time"][tek_upgrade_pos].asInt(), (UnitComponent*)this });
+	addActionIfAllowed(&actions, "upgrade_attacker", "UpgradeAttacker", tek_upgrade_pos);
 	return actions;
 }
 

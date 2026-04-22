@@ -12,15 +12,9 @@ ComponentPortal::ComponentPortal(Game* game): UnitComponent(game)
 std::vector<UnitAction> ComponentPortal::getActions() const
 {
 	std::vector<UnitAction> actions;
-	actions.push_back({ "build", "BuildUnicorn",
-		game->getConfigAction()["BuildUnicorn"]["Price"].asInt(), game->getConfigAction()["BuildUnicorn"]["Time"].asInt(), (UnitComponent*)this});
-	if (tek_upgrade_pos < game->getConfigAction()["UpgradeUnicornHP"]["Price"].size())
-		actions.push_back({ "upgrade_hp", "UpgradeUnicornHP",
-			game->getConfigAction()["UpgradeUnicornHP"]["Price"][tek_upgrade_pos].asInt(), game->getConfigAction()["UpgradeUnicornHP"]["Time"][tek_upgrade_pos].asInt(), (UnitComponent*)this });
-
-	if (tek_increase_pos < game->getConfigAction()["IncreaseUnicornCount"]["Price"].size())
-		actions.push_back({ "upgrade_count", "IncreaseUnicornsCount",
-			game->getConfigAction()["IncreaseUnicornCount"]["Price"][tek_upgrade_pos].asInt(), game->getConfigAction()["IncreaseUnicornCount"]["Time"][tek_upgrade_pos].asInt(), (UnitComponent*)this });
+	addActionIfAllowed(&actions,"build", "BuildUnicorn");
+	addActionIfAllowed(&actions, "upgrade_hp", "UpgradeUnicornHP", tek_upgrade_pos);
+	addActionIfAllowed(&actions, "upgrade_count", "IncreaseUnicornCount", tek_increase_pos);
 
 	return actions;
 }

@@ -4,8 +4,7 @@
 std::vector<UnitAction> ComponentShield::getActions() const
 {
 	std::vector<UnitAction> actions;
-	actions.push_back({ "do_shield", "DoShield",
-		game->getConfigAction()["DoShield"]["Price"].asInt(), game->getConfigAction()["DoShield"]["Time"].asInt(), (UnitComponent*)this});
+	addActionIfAllowed(&actions, "do_shield", "DoShield");
 	return actions;
 }
 

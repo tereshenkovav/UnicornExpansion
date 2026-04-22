@@ -15,6 +15,19 @@ UnitComponent::~UnitComponent()
 {
 }
 
+void UnitComponent::addActionIfAllowed(std::vector<UnitAction>* actions, const std::string & code, const std::string& caption) const
+{
+    auto config = game->getConfigAction()[caption];
+    actions->push_back({ code,caption,config["Price"].asInt(), config["Time"].asInt(), (UnitComponent*)this });
+}
+
+void UnitComponent::addActionIfAllowed(std::vector<UnitAction>* actions, const std::string& code, const std::string& caption, int idx) const
+{
+    auto config = game->getConfigAction()[caption];
+    if (idx < config["Price"].size())
+        actions->push_back({ code,caption,config["Price"][idx].asInt(), config["Time"][idx].asInt(), (UnitComponent*)this});
+}
+
 std::vector<UnitAction> UnitComponent::getActions() const
 {
     return std::vector<UnitAction>();

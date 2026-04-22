@@ -26,10 +26,7 @@ int ComponentHealer::getHealerEnergyCost() const
 std::vector<UnitAction> ComponentHealer::getActions() const
 {
 	std::vector<UnitAction> actions;
-	if (tek_upgrade_pos < game->getConfigAction()["UpgradeHealer"]["Price"].size())
-		actions.push_back({ "upgrade_healer", "UpgradeHealer",
-			game->getConfigAction()["UpgradeHealer"]["Price"][tek_upgrade_pos].asInt(), game->getConfigAction()["UpgradeHealer"]["Time"][tek_upgrade_pos].asInt(), (UnitComponent*)this });
-
+	addActionIfAllowed(&actions, "upgrade_healer", "UpgradeHealer", tek_upgrade_pos);
 	return actions;
 }
 

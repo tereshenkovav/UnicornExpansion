@@ -4,8 +4,7 @@
 std::vector<UnitAction> ComponentRadar::getActions() const
 {
 	std::vector<UnitAction> actions;
-	actions.push_back({ "do_radar", "DoRadar",
-		game->getConfigAction()["DoRadar"]["Price"].asInt(), game->getConfigAction()["DoRadar"]["Time"].asInt(), (UnitComponent*)this});
+	addActionIfAllowed(&actions, "do_radar", "DoRadar");
 	return actions;
 }
 

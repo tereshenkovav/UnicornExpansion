@@ -30,6 +30,8 @@ public:
 	virtual ~UnitComponent();
 	// Виртуальные методы для перегрузки в потомках, по умолчанию они делают базовые вещи
 	// Действия
+	void addActionIfAllowed(std::vector<UnitAction>* actions, const std::string& code, const std::string& caption) const;
+	void addActionIfAllowed(std::vector<UnitAction>* actions, const std::string& code, const std::string& caption, int idx) const;
 	virtual std::vector<UnitAction> getActions() const;
 	// Применение действий - в момент завершения и в момент старта
 	virtual bool applyAction(const UnitAction& action);

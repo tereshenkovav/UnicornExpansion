@@ -10,24 +10,13 @@
 std::vector<UnitAction> ComponentUnicorn::getActions() const
 {
 	std::vector<UnitAction> actions;
-	if (!game->getUnitByUID(unit_id).isComponent<ComponentHarvester>())
-		actions.push_back({ "make_harvester", "MakeHarvester",
-			game->getConfigAction()["MakeHarvester"]["Price"].asInt(), game->getConfigAction()["MakeHarvester"]["Time"].asInt(), (UnitComponent*)this});
-	if (!game->getUnitByUID(unit_id).isComponent<ComponentAttacker>())
-		actions.push_back({ "make_attacker", "MakeAttacker",
-			game->getConfigAction()["MakeAttacker"]["Price"].asInt(), game->getConfigAction()["MakeAttacker"]["Time"].asInt(), (UnitComponent*)this });
-	if (!game->getUnitByUID(unit_id).isComponent<ComponentHealer>())
-		actions.push_back({ "make_healer", "MakeHealer",
-			game->getConfigAction()["MakeHealer"]["Price"].asInt(), game->getConfigAction()["MakeHealer"]["Time"].asInt(), (UnitComponent*)this });
-	if (!game->getUnitByUID(unit_id).isComponent<ComponentRadar>())
-		actions.push_back({ "make_radar", "MakeRadar",
-			game->getConfigAction()["MakeRadar"]["Price"].asInt(), game->getConfigAction()["MakeRadar"]["Time"].asInt(), (UnitComponent*)this });
-	if (!game->getUnitByUID(unit_id).isComponent<ComponentShield>())
-		actions.push_back({ "make_shield", "MakeShield",
-			game->getConfigAction()["MakeShield"]["Price"].asInt(), game->getConfigAction()["MakeShield"]["Time"].asInt(), (UnitComponent*)this });
-	if (!game->getUnitByUID(unit_id).isComponent<ComponentDetoxer>())
-		actions.push_back({ "make_detoxer", "MakeDetoxer",
-			game->getConfigAction()["MakeDetoxer"]["Price"].asInt(), game->getConfigAction()["MakeDetoxer"]["Time"].asInt(), (UnitComponent*)this });
+	const GameUnit& unit = game->getUnitByUID(unit_id);
+	if (!unit.isComponent<ComponentHarvester>()) addActionIfAllowed(&actions,"make_harvester", "MakeHarvester");
+	if (!unit.isComponent<ComponentAttacker>()) addActionIfAllowed(&actions, "make_attacker", "MakeAttacker");
+	if (!unit.isComponent<ComponentHealer>()) addActionIfAllowed(&actions, "make_healer", "MakeHealer");
+	if (!unit.isComponent<ComponentRadar>()) addActionIfAllowed(&actions, "make_radar", "MakeRadar");
+	if (!unit.isComponent<ComponentShield>()) addActionIfAllowed(&actions, "make_shield", "MakeShield");
+	if (!unit.isComponent<ComponentDetoxer>()) addActionIfAllowed(&actions, "make_detoxer", "MakeDetoxer");
 	return actions;
 }
 
