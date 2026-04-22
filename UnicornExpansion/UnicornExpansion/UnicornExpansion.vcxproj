@@ -78,12 +78,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\libs\SFML\include;ZetScript\include;JsonCpp\include;..\..\libs\HelperCppClasses\include;..\..\libs\jsoncpp\include;..\..\libs\zetscript\src;components;..\..\libs\SfmlGameEngine\include;.</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\libs\SFML\include;ZetScript\include;JsonCpp\include;..\..\libs\HelperCppClasses\include;..\..\libs\jsoncpp\include;..\..\libs\zetscript\src;components;scenes;..\..\libs\SfmlGameEngine\include;.</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);SFML\lib;ZetScript\lib;..\..\libs.static.vs2019</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\libs\SFML\include;ZetScript\include;JsonCpp\include;..\..\libs\HelperCppClasses\include;..\..\libs\jsoncpp\include;..\..\libs\zetscript\src;components;..\..\libs\SfmlGameEngine\include;.</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\libs\SFML\include;ZetScript\include;JsonCpp\include;..\..\libs\HelperCppClasses\include;..\..\libs\jsoncpp\include;..\..\libs\zetscript\src;components;scenes;..\..\libs\SfmlGameEngine\include;.</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);SFML\lib;ZetScript\lib;..\..\libs.static.vs2019</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -176,15 +176,15 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="MushroomNet.cpp" />
-    <ClCompile Include="SceneCloseHandler.cpp" />
-    <ClCompile Include="SceneEndGame.cpp" />
-    <ClCompile Include="SceneGame.cpp" />
-    <ClCompile Include="SceneGameMenu.cpp" />
-    <ClCompile Include="SceneHelp.cpp" />
-    <ClCompile Include="SceneMainMenu.cpp" />
-    <ClCompile Include="SceneOptions.cpp" />
-    <ClCompile Include="SceneStartMenu.cpp" />
-    <ClCompile Include="SceneTask.cpp" />
+    <ClCompile Include="scenes\SceneCloseHandler.cpp" />
+    <ClCompile Include="scenes\SceneEndGame.cpp" />
+    <ClCompile Include="scenes\SceneGame.cpp" />
+    <ClCompile Include="scenes\SceneGameMenu.cpp" />
+    <ClCompile Include="scenes\SceneHelp.cpp" />
+    <ClCompile Include="scenes\SceneMainMenu.cpp" />
+    <ClCompile Include="scenes\SceneOptions.cpp" />
+    <ClCompile Include="scenes\SceneStartMenu.cpp" />
+    <ClCompile Include="scenes\SceneTask.cpp" />
     <ClCompile Include="SeedStore.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\SfmlTools.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Texts.cpp" />
@@ -220,15 +220,15 @@
     <ClInclude Include="GameUnit.h" />
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="MushroomNet.h" />
-    <ClInclude Include="SceneCloseHandler.h" />
-    <ClInclude Include="SceneEndGame.h" />
-    <ClInclude Include="SceneGame.h" />
-    <ClInclude Include="SceneGameMenu.h" />
-    <ClInclude Include="SceneHelp.h" />
-    <ClInclude Include="SceneMainMenu.h" />
-    <ClInclude Include="SceneOptions.h" />
-    <ClInclude Include="SceneStartMenu.h" />
-    <ClInclude Include="SceneTask.h" />
+    <ClInclude Include="scenes\SceneCloseHandler.h" />
+    <ClInclude Include="scenes\SceneEndGame.h" />
+    <ClInclude Include="scenes\SceneGame.h" />
+    <ClInclude Include="scenes\SceneGameMenu.h" />
+    <ClInclude Include="scenes\SceneHelp.h" />
+    <ClInclude Include="scenes\SceneMainMenu.h" />
+    <ClInclude Include="scenes\SceneOptions.h" />
+    <ClInclude Include="scenes\SceneStartMenu.h" />
+    <ClInclude Include="scenes\SceneTask.h" />
     <ClInclude Include="SeedStore.h" />
     <ClInclude Include="SubTerrainBuilder.h" />
     <ClInclude Include="UnitComponent.h" />
