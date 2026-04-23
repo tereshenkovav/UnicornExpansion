@@ -1,9 +1,6 @@
 var game ;
-var UNICORN_TASK ;
 
 function initMap() {
-  UNICORN_TASK = 4 ;
-
   game = new Game() ;
 
   game.addPortal(2,15) ;
@@ -13,20 +10,24 @@ function initMap() {
   game.addEnemy1(17,7) ;
   game.addUnicorn(5,14) ;
 
-  game.incEnergy(300) ;
-  game.setTaskText(String::format(game.getText("MainTask"),UNICORN_TASK)) ;
+  game.incEnergy(50) ;
 
   game.setNewViewPoint(9,14) ;
+
+  game.addMessage("unicorn",5,"$Brief_1_1") ;
+  game.addMessage("unicorn",5,"$Brief_1_2") ;
+  game.addMessage("unicorn",5,"$Brief_1_3") ;
+  game.addMessage("unicorn",5,"$Brief_1_4") ;
+
+  game.allowAction("MakeHarvester") ;
 
   return true ;
 }
 
 function isVictory() {
-  return (game.getCountByComponent("Unicorn")>=UNICORN_TASK) ;
+  return false ;
 }
 
 function isDefeat() {
-  if ((game.getCountByComponent("Unicorn")==0)&&
-      (game.getCountByComponent("Portal")==0)) { return true ; }
   return false ;
 }

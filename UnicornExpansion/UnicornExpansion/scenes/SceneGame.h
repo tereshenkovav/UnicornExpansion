@@ -32,7 +32,8 @@ const int DEFAULT_SCALE = 2;
 class SceneGame: public sfge::Scene
 {
 private:
-    int leveln;
+    std::string company;
+    LevelCode levelcode;
     std::shared_ptr<UserProfile> userprofile;
 
     // Все данные игры, спрайты, тексты, массивы территорий и цветов
@@ -115,10 +116,11 @@ private:
     void fixCameraPosition();
     void updateScale();
     void drawProgressRectsAt(sf::RenderTarget& rendertarget, float perc, float basew, float x, float y, sf::Color color);
-    void loadGame(int leveln);
+    void loadGame();
 
 public:
-    SceneGame(int leven);
+    SceneGame(std::string company, int leven);
+    SceneGame(LevelCode levelcode);
     virtual void Render(sf::RenderTarget& rendertarget) override;
     virtual void Update(float dt, const sf::Vector2i& mousePos, const std::vector<sf::Event>& events) override;
     virtual void Init() override;

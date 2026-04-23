@@ -12,10 +12,10 @@ private:
     sf::RectangleShape textback;
     sfge::UniqueText text_title;
     std::vector<sfge::UniqueButton> buttons;
-    int leveln;
+    LevelCode levelcode;
     bool iswin;
 public:
-    SceneEndGame(const Game& game, int leveln);
+    SceneEndGame(const Game& game, LevelCode levelcode);
     virtual void Render(sf::RenderTarget& rendertarget) override;
     virtual void Update(float dt, const sf::Vector2i& mousePos, const std::vector<sf::Event>& events) override;
     virtual void Init() override;

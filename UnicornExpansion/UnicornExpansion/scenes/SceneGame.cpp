@@ -24,8 +24,12 @@ sf::Vector2f getActionButtonPos(int i) {
 }
 // Конец
 
-SceneGame::SceneGame(int leveln) {
-    this->leveln = leveln;
+SceneGame::SceneGame(std::string company, int leveln) {
+    this->levelcode = { company, leveln };
+}
+
+SceneGame::SceneGame(LevelCode levelcode) {
+    this->levelcode = levelcode;
 }
 
 // Обновление мини-карты
@@ -107,11 +111,12 @@ void SceneGame::drawProgressRectsAt(sf::RenderTarget& rendertarget, float perc, 
 }
 
 // Загрузчик игры из файлов
-void SceneGame::loadGame(int leveln) {
+void SceneGame::loadGame() {
+    auto part = std::format("company/{}/level{}", levelcode.first, levelcode.second);
     bool paramok = game.loadConfigs();
-    bool textok = game.loadTexts(std::format("levels/level{}.strings", leveln));
-    bool mapok = game.loadMap(std::format("levels/level{}.map",leveln));
-    bool scriptok = game.loadScript(std::format("levels/level{}.script",leveln));
+    bool textok = game.loadTexts(part + ".strings");
+    bool mapok = game.loadMap(part + ".map");
+    bool scriptok = game.loadScript(part + ".script");
     
     game.update(0.0); // Первичная инициализация для тумана войны
     tekscale = DEFAULT_SCALE;
@@ -462,7 +467,7 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
         if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
         {
             if ((keyPressed->scancode == sf::Keyboard::Scancode::Escape)||
-                (keyPressed->scancode == sf::Keyboard::Scancode::F10)) getEngine()->AddOverScene(std::make_shared<SceneGameMenu>(&game,leveln));
+                (keyPressed->scancode == sf::Keyboard::Scancode::F10)) getEngine()->AddOverScene(std::make_shared<SceneGameMenu>(&game,levelcode));
             if (keyPressed->scancode == sf::Keyboard::Scancode::F) showfps = !showfps;
             if (keyPressed->scancode == sf::Keyboard::Scancode::Enter) {
                 game.skipAllMessages();
@@ -643,7 +648,7 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
     for (auto effect : game.getOnceAudioEffects())
         snd_audioeffects[effect]->play();
 
-    if (counter_endgame.onceReachNol()) getEngine()->AddOverScene(std::make_shared<SceneEndGame>(game,leveln));
+    if (counter_endgame.onceReachNol()) getEngine()->AddOverScene(std::make_shared<SceneEndGame>(game, levelcode));
 
     // Обновление камеры если нужно
     if (auto newvp = game.getOnceNewViewPoint())
@@ -846,7 +851,7 @@ void SceneGame::Init() {
     if (std::filesystem::exists(getEngine()->getExeDir() + "/developer.json"))
         game.loadDeveloperConfig(getEngine()->getExeDir() + "/developer.json");
 
-    loadGame(leveln);
+    loadGame();
         
     getEngine()->AddOverScene(std::make_shared<SceneTask>(game));
 }

@@ -11,10 +11,11 @@ class SceneGameMenu: public sfge::Scene
 private:
     sf::RectangleShape textback;
     std::vector<sfge::UniqueButton> buttons;
-    int leveln;
+    std::string company;
+    LevelCode levelcode;
     Game* game;
 public:
-    SceneGameMenu(Game * game, int leveln);
+    SceneGameMenu(Game * game, LevelCode levelcode);
     virtual void Render(sf::RenderTarget& rendertarget) override;
     virtual void Update(float dt, const sf::Vector2i& mousePos, const std::vector<sf::Event>& events) override;
     virtual void Init() override;

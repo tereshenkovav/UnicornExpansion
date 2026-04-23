@@ -4,10 +4,10 @@
 #include "SceneGame.h"
 #include "SceneTask.h"
 
-SceneGameMenu::SceneGameMenu(Game * game, int leveln) :Scene()
+SceneGameMenu::SceneGameMenu(Game * game, LevelCode levelcode) :Scene()
 {
     this->game = game;
-    this->leveln = leveln;
+    this->levelcode = levelcode;
 }
 
 void SceneGameMenu::Render(sf::RenderTarget & rendertarget) {
@@ -33,7 +33,7 @@ void SceneGameMenu::Init() {
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_Continue"), 18, 512 - 80, 200, 160, 40));
     buttons.back()->setOnClick([this]() { getEngine()->doExitScene(); });
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_Restart"), 18, 512 - 80, 260, 160, 40));
-    buttons.back()->setOnClick([this]() { getEngine()->SwitchToScene(std::make_shared<SceneGame>(leveln)); });
+    buttons.back()->setOnClick([this]() { getEngine()->SwitchToScene(std::make_shared<SceneGame>(levelcode)); });
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_Task"), 18, 512 - 80, 320, 160, 40));
     buttons.back()->setOnClick([this]() { getEngine()->ReplaceOverScene(std::make_shared<SceneTask>(*game)); });
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_MainMenu"), 18, 512 - 80, 380, 160, 40));
