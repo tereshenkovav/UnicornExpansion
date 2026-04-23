@@ -81,6 +81,11 @@ void Game_startTimer(zetscript::ScriptEngine* _script_engine, Game* _this, zetsc
 	_this->startTimer(value);
 }
 
+void Game_startHiddenTimer(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int value) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	_this->startHiddenTimer(value);
+}
+
 void Game_setTaskText(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::StringScriptObject* value) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	_this->setTaskText(value->getConstChar());
@@ -159,6 +164,7 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
 	engine.registerMemberFunction<Game>("isMushroomsExist", &Game_isMushroomsExist);
 	engine.registerMemberFunction<Game>("getTimer", &Game_getTimer);
 	engine.registerMemberFunction<Game>("startTimer", &Game_startTimer);
+	engine.registerMemberFunction<Game>("startHiddenTimer", &Game_startHiddenTimer);
 	engine.registerMemberFunction<Game>("setNewViewPoint", &Game_setNewViewPoint);
         engine.registerMemberFunction<Game>("addMessage", &Game_addMessage);
         engine.registerMemberFunction<Game>("getText", &Game_getText);

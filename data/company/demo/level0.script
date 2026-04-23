@@ -46,6 +46,9 @@ function initMap() {
   return true ;
 }
 
+function Update() {
+}
+
 function isVictory() {
   return (game.getEnergy()>=MANA_TASK) ;
 }

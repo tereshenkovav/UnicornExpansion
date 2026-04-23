@@ -61,6 +61,7 @@ private:
 	std::string tasktext;
 	MushroomNet mushrooms;
 	float timerleft;
+	bool istimervisible;
 	Countdown counter_showmessage;
 	bool iswin;
 	bool isfail;
@@ -68,9 +69,11 @@ private:
 	zetscript::ScriptEngine script_engine;
 	std::function<bool()> funcvictory;
 	std::function<bool()> funcdefeat;
+	std::function<void()> funcupdate;
 	std::optional<sf::Vector2f> teleportation_effect;
 	std::vector<AudioEffect> audioeffects;
 	Countdown counter_under_attack;
+	Countdown counter_1sec;
 	std::set<int> last_attacked_units;
 	std::set<int> new_attacked_units;
 	std::optional<sf::Vector2f> lasteventpos;
@@ -118,6 +121,7 @@ public:
 	bool incEnergy(int value);
 	int getTimer() const;
 	void startTimer(int value);
+	void startHiddenTimer(int value);
 	void setTaskText(const std::string& value);
 	// Вычисление количества по компонентам
 	int getCountByComponent(const std::string& compname) const;

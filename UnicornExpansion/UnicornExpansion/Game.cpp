@@ -143,6 +143,7 @@ bool Game::loadScript(const std::string& filename) {
 		auto initMap = script_engine.bindScriptFunction<bool()>("initMap");
 		funcvictory = script_engine.bindScriptFunction<bool()>("isVictory");
 		funcdefeat = script_engine.bindScriptFunction<bool()>("isDefeat");
+		funcupdate = script_engine.bindScriptFunction<void()>("Update");
 		initMap();
 	}
 	catch (std::exception& e) {
@@ -162,7 +163,9 @@ bool Game::loadScript(const std::string& filename) {
 	lasteventpos = std::nullopt;
 	// Очистка лазеров
 	lasers.clear();
-	
+
+	counter_1sec.upset(1.0f);
+
 	return true;
 }
 
@@ -607,9 +610,16 @@ void Game::update(float dt)
 	std::erase_if(units, [](const GameUnit& unit){ return unit.isKilled(); });
 
 	try {
-		if (!isGameOver()) iswin = funcvictory();
-		// Обязательно в независимом блоке, чтобы сначала проверяли победу, и если не найдено, то  потом поражение
-		if (!isGameOver()) isfail = funcdefeat();
+		if (!isGameOver()) {
+			counter_1sec.update(dt);
+			if (counter_1sec.onceReachNol()) {
+				counter_1sec.upset(1.0f);
+				funcupdate();
+				iswin = funcvictory();
+				// Обязательно в независимом блоке, чтобы сначала проверяли победу, и если не найдено, то  потом поражение
+				if (!isGameOver()) isfail = funcdefeat();
+			}
+		}
 	}
 	catch (std::exception& e) {
 		// Экспресс-реализация записи ошибки
@@ -640,7 +650,9 @@ bool Game::isGameOver() const
 
 std::optional<std::string> Game::getTimerStr() const
 {
-	return (timerleft > 0)? std::optional(std::format("{:02}:{:02}", (int)(timerleft / 60), (int)(timerleft) % 60)): std::nullopt;
+	if (!istimervisible) return std::nullopt;
+	if (timerleft <= 0) return std::nullopt;
+	return std::format("{:02}:{:02}", (int)(timerleft / 60), (int)(timerleft) % 60);
 }
 
 int Game::getTimer() const
@@ -651,6 +663,13 @@ int Game::getTimer() const
 void Game::startTimer(int value)
 {
 	timerleft = value;
+	istimervisible = true;
+}
+
+void Game::startHiddenTimer(int value)
+{
+	timerleft = value;
+	istimervisible = false;
 }
 
 bool Game::isWin() const

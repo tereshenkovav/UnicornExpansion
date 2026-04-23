@@ -5,23 +5,36 @@ function initMap() {
 
   game.addPortal(2,15) ;
   game.addCrystal(18,5,270) ;
-  game.addCrystal(14,17,180) ;
+  game.addCrystal(9,18,180) ;
   game.addEnemy1(16,1) ;
   game.addEnemy1(17,7) ;
-  game.addUnicorn(5,14) ;
+  game.addUnicorn(7,14) ;
 
   game.incEnergy(50) ;
 
-  game.setNewViewPoint(9,14) ;
+  game.setNewViewPoint(9,15) ;
 
-  game.addMessage("unicorn",5,"$Brief_1_1") ;
-  game.addMessage("unicorn",5,"$Brief_1_2") ;
-  game.addMessage("unicorn",5,"$Brief_1_3") ;
-  game.addMessage("unicorn",5,"$Brief_1_4") ;
+  game.addMessage("unicorn",4,"$Brief_1_1") ;
 
   game.allowAction("MakeHarvester") ;
 
+  game.startHiddenTimer(6) ;
+
   return true ;
+}
+
+function Update() {
+  if (game.getTimer()<=0) {
+    if (!game.isFlag("stage1")) {
+      game.setFlag("stage1") ;
+      game.addMessage("unicorn",5,"$Brief_1_2") ;
+      game.addMessage("unicorn",5,"$Brief_1_3") ;
+/*
+      game.addMessage("unicorn",5,"$Brief_1_4") ;
+      game.addMessage("unicorn",5,"$Brief_1_5") ;
+      game.addMessage("unicorn",5,"$Brief_1_6") ; */
+    }
+  }
 }
 
 function isVictory() {

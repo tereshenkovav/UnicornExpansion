@@ -468,6 +468,8 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
         {
             if ((keyPressed->scancode == sf::Keyboard::Scancode::Escape)||
                 (keyPressed->scancode == sf::Keyboard::Scancode::F10)) getEngine()->AddOverScene(std::make_shared<SceneGameMenu>(&game,levelcode));
+            if (keyPressed->scancode == sf::Keyboard::Scancode::F5) getEngine()->AddOverScene(std::make_shared<SceneTask>(game));
+
             if (keyPressed->scancode == sf::Keyboard::Scancode::F) showfps = !showfps;
             if (keyPressed->scancode == sf::Keyboard::Scancode::Enter) {
                 game.skipAllMessages();
@@ -852,6 +854,4 @@ void SceneGame::Init() {
         game.loadDeveloperConfig(getEngine()->getExeDir() + "/developer.json");
 
     loadGame();
-        
-    getEngine()->AddOverScene(std::make_shared<SceneTask>(game));
 }
