@@ -78,7 +78,7 @@ zetscript::zs_int  Game_getTimer(zetscript::ScriptEngine* _script_engine, Game* 
 
 void Game_startTimer(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int value) {
 	ZS_UNUSUED_PARAM(_script_engine);
-	return _this->startTimer(value);
+	_this->startTimer(value);
 }
 
 void Game_setTaskText(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::StringScriptObject* value) {
@@ -121,6 +121,21 @@ void Game_denyAction(zetscript::ScriptEngine* _script_engine, Game* _this, zetsc
 	_this->denyAction(name->getConstChar());
 }
 
+void Game_setFlag(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::StringScriptObject* name) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	_this->setFlag(name->getConstChar());
+}
+
+void Game_clearFlag(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::StringScriptObject* name) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	_this->clearFlag(name->getConstChar());
+}
+
+bool Game_isFlag(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::StringScriptObject* name) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	return _this->isFlag(name->getConstChar());
+}
+
 void Game_delete(zetscript::ScriptEngine* _script_engine, Game* _this) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	// empty
@@ -149,4 +164,7 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
         engine.registerMemberFunction<Game>("getText", &Game_getText);
         engine.registerMemberFunction<Game>("allowAction", &Game_allowAction);
         engine.registerMemberFunction<Game>("denyAction", &Game_denyAction);
+        engine.registerMemberFunction<Game>("setFlag", &Game_setFlag);
+        engine.registerMemberFunction<Game>("clearFlag", &Game_clearFlag);
+        engine.registerMemberFunction<Game>("isFlag", &Game_isFlag);
 }

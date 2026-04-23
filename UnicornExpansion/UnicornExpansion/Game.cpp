@@ -715,3 +715,18 @@ void Game::denyAction(const std::string& name)
 {
 	if (allowedactions.contains(name)) allowedactions.erase(name);
 }
+
+void Game::setFlag(const std::string& name)
+{
+	if (!flags.contains(name)) flags.insert(name);
+}
+
+void Game::clearFlag(const std::string& name)
+{
+	if (flags.contains(name)) flags.erase(name);
+}
+
+bool Game::isFlag(const std::string& name) const
+{
+	return flags.contains(name);
+}

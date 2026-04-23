@@ -50,6 +50,7 @@ private:
 	std::queue<Message> messages;
 	std::vector<Message> history;
 	std::set<std::string> allowedactions;
+	std::set<std::string> flags;
 	Json::Value jsonActions;
 	Json::Value jsonUnits;
 	Json::Value jsonComponents;
@@ -124,6 +125,9 @@ public:
 	std::string getText(const std::string& name) const;
 	void allowAction(const std::string& name);
 	void denyAction(const std::string& name);
+	void setFlag(const std::string& name);
+	void clearFlag(const std::string& name);
+	bool isFlag(const std::string& name) const;
 	/* Конец скриптового блока */
 
 	// Получить информацию о таймере
