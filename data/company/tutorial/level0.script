@@ -29,6 +29,8 @@ function Update() {
       game.setFlag("stage1") ;
       game.addMessage("unicorn",5,"$Brief_1_2") ;
       game.addMessage("unicorn",5,"$Brief_1_3") ;
+      game.addNewTask("moving","$Task_Moving") ;
+
 /*
       game.addMessage("unicorn",5,"$Brief_1_4") ;
       game.addMessage("unicorn",5,"$Brief_1_5") ;

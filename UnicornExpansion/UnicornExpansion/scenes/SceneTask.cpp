@@ -3,7 +3,7 @@
 
 SceneTask::SceneTask(const Game & game) :Scene()
 {
-    this->task = game.getTaskText();
+    tasks = game.getTasks();
 }
 
 void SceneTask::Render(sf::RenderTarget & rendertarget) {
@@ -31,6 +31,12 @@ void SceneTask::Init() {
     text_title = loadText(getTexts().getStr("Text_Task"), 22, sf::Color::White);
     text_title->setPosition({ 512 - text_title->getGlobalBounds().size.x/2, 110});
 
+    std::string task = "";
+    for (auto& gtask : tasks) {
+        if (gtask.status == GameTaskStatus::Completed) task += getTexts().getStr("Task_Completed") + ": ";
+        if (gtask.status == GameTaskStatus::Cancelled) task += getTexts().getStr("Task_Cancelled") + ": ";
+        task += gtask.text + "\n";
+    }
     text_task = loadText(task, 18, sf::Color::White);
     text_task->setPosition({ 512 - 220, 150 });
 

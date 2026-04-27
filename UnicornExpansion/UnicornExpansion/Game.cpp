@@ -133,7 +133,7 @@ bool Game::loadScript(const std::string& filename) {
 	units.clear();
 	allowedactions.clear();
 	energy = 0.0f;
-	tasktext = "?";
+	tasks.clear();
 	timerleft = 0;
 
 	try {
@@ -324,14 +324,33 @@ int Game::getCountByComponent(const std::string& compname) const
 	return std::count_if(units.begin(), units.end(), [compname](auto& unit) {return unit.hasComponentByName("Component" + compname); });
 }
 
-std::string Game::getTaskText() const
+const std::vector<GameTask>& Game::getTasks() const
 {
-	return tasktext;
+	return tasks;
 }
 
-void Game::setTaskText(const std::string & task)
+void Game::addNewTask(const std::string & code, const std::string& text)
 {
-	tasktext = task;
+	tasks.push_back({ GameTaskStatus::Active, code, trText(text) });
+}
+
+void Game::setTaskCompleted(const std::string& code)
+{
+	for (int i = 0; i < tasks.size(); i++)
+		if (tasks[i].code == code) tasks[i].status = GameTaskStatus::Completed;
+}
+
+void Game::setTaskCancelled(const std::string& code)
+{
+	for (int i = 0; i < tasks.size(); i++)
+		if (tasks[i].code == code) tasks[i].status = GameTaskStatus::Cancelled;
+}
+
+bool Game::isTaskCompleted(const std::string& code) const
+{
+	for (int i = 0; i < tasks.size(); i++)
+		if (tasks[i].code == code) return tasks[i].status == GameTaskStatus::Completed;
+	return false;
 }
 
 void Game::addTeleportationEffect(float x, float y)
@@ -695,9 +714,13 @@ void Game::setNewViewPoint(int x, int y) {
 	new_viewpoint = { x, y };
 }
 
+std::string Game::trText(const std::string& text) const {
+	return (text.at(0) == '$') ? getText(text.substr(1)) : text;
+}
+
 void Game::addMessage(const std::string& icon, int duration, const std::string& text) {
 	// Полезная функция, позволяет автоматически получать строки из внешнего файла, записывая их как $key, без использования game.getText
-	messages.push({ icon, duration, (text.at(0) == '$')?getText(text.substr(1)):text});
+	messages.push({ icon, duration, trText(text)});
 }
 
 void Game::skipTekMessage() {

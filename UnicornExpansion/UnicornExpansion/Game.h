@@ -37,6 +37,14 @@ struct Message {
 	std::string text;
 };
 
+enum class GameTaskStatus { Active, Completed, Cancelled };
+
+struct GameTask {
+	GameTaskStatus status;
+	std::string code;
+	std::string text;
+};
+
 // Основной класс игры - содержит всё, что обрабатывается в игровом цикле
 class Game
 {
@@ -58,7 +66,7 @@ private:
 	Json::Value jsonComponents;
 	Json::Value jsonEnemys;
 	Json::Value jsonDevConfig;
-	std::string tasktext;
+	std::vector<GameTask> tasks;
 	MushroomNet mushrooms;
 	float timerleft;
 	bool istimervisible;
@@ -78,6 +86,8 @@ private:
 	std::set<int> new_attacked_units;
 	std::optional<sf::Vector2f> lasteventpos;
 	void trySetUnderAttackEffect(const GameUnit& unit);
+	// Полезная функция, позволяет автоматически получать строки из внешнего файла, записывая их как $key, без использования game.getText
+	std::string trText(const std::string& text) const;
 public:
 	Game();
 	static bool canWalkOnTerrain(Terrain terr);
@@ -122,7 +132,10 @@ public:
 	int getTimer() const;
 	void startTimer(int value);
 	void startHiddenTimer(int value);
-	void setTaskText(const std::string& value);
+	void addNewTask(const std::string& code, const std::string& text);
+	void setTaskCompleted(const std::string& code);
+	void setTaskCancelled(const std::string& code);
+	bool isTaskCompleted(const std::string& code) const;
 	// Вычисление количества по компонентам
 	int getCountByComponent(const std::string& compname) const;
 	bool isMushroomsExist() const;
@@ -159,8 +172,8 @@ public:
 	bool isGameOver() const;
 	bool isWin() const;
 	bool isFail() const;
-	// Текст игровой задачи
-	std::string getTaskText() const;
+	// Игровые задачи
+	const std::vector<GameTask> & getTasks() const;
 	void addTeleportationEffect(float x, float y);
 	void addGameEvent(AudioEffect effect, sf::Vector2f pos);
 	std::optional<sf::Vector2f> getOnceTeleportationEffect();

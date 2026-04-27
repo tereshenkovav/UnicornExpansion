@@ -86,9 +86,24 @@ void Game_startHiddenTimer(zetscript::ScriptEngine* _script_engine, Game* _this,
 	_this->startHiddenTimer(value);
 }
 
-void Game_setTaskText(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::StringScriptObject* value) {
+void Game_addNewTask(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::StringScriptObject* code, zetscript::StringScriptObject* text) {
 	ZS_UNUSUED_PARAM(_script_engine);
-	_this->setTaskText(value->getConstChar());
+	_this->addNewTask(code->getConstChar(), text->getConstChar());
+}
+
+void Game_setTaskCompleted(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::StringScriptObject* code) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	_this->setTaskCompleted(code->getConstChar());
+}
+
+void Game_setTaskCancelled(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::StringScriptObject* code) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	_this->setTaskCancelled(code->getConstChar());
+}
+
+bool Game_isTaskCompleted(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::StringScriptObject* code) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	return _this->isTaskCompleted(code->getConstChar());
 }
 
 zetscript::zs_int Game_getCountByComponent(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::StringScriptObject* value) {
@@ -159,7 +174,10 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
 	engine.registerMemberFunction<Game>("incEnergy", &Game_incEnergy);
 	engine.registerMemberFunction<Game>("decEnergy", &Game_decEnergy);
 	engine.registerMemberFunction<Game>("getEnergy", &Game_getEnergy);
-	engine.registerMemberFunction<Game>("setTaskText", &Game_setTaskText);
+	engine.registerMemberFunction<Game>("addNewTask", &Game_addNewTask);
+	engine.registerMemberFunction<Game>("setTaskCompleted", &Game_setTaskCompleted);
+	engine.registerMemberFunction<Game>("setTaskCancelled", &Game_setTaskCancelled);
+	engine.registerMemberFunction<Game>("isTaskCompleted", &Game_isTaskCompleted);
 	engine.registerMemberFunction<Game>("getCountByComponent", &Game_getCountByComponent);
 	engine.registerMemberFunction<Game>("isMushroomsExist", &Game_isMushroomsExist);
 	engine.registerMemberFunction<Game>("getTimer", &Game_getTimer);
