@@ -188,6 +188,7 @@ public:
 	void skipTekMessage();
 	void skipAllMessages();
 	std::optional<Message> getTekMessage() const;
+	const std::vector<Message>& getHistory() const;
 	bool isActionAllowed(const std::string name) const;
 	// Обновление игры
 	void update(float dt);

@@ -738,6 +738,11 @@ std::optional<Message> Game::getTekMessage() const {
 	return history.back();
 }
 
+const std::vector<Message>& Game::getHistory() const
+{
+	return history;
+}
+
 bool Game::isActionAllowed(const std::string name) const
 {
 	return allowedactions.contains(name);

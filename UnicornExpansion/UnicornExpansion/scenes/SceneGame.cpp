@@ -2,6 +2,7 @@
 #include "SfmlGameEngine/Engine.h"
 #include "SceneMainMenu.h"
 #include "SceneTask.h"
+#include "SceneJournal.h"
 #include "SceneEndGame.h"
 #include "SceneGameMenu.h"
 
@@ -469,6 +470,7 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
             if ((keyPressed->scancode == sf::Keyboard::Scancode::Escape)||
                 (keyPressed->scancode == sf::Keyboard::Scancode::F10)) getEngine()->AddOverScene(std::make_shared<SceneGameMenu>(&game,levelcode));
             if (keyPressed->scancode == sf::Keyboard::Scancode::F5) getEngine()->AddOverScene(std::make_shared<SceneTask>(game));
+            if (keyPressed->scancode == sf::Keyboard::Scancode::F8) getEngine()->AddOverScene(std::make_shared<SceneJournal>(game));
 
             if (keyPressed->scancode == sf::Keyboard::Scancode::F) showfps = !showfps;
             if (keyPressed->scancode == sf::Keyboard::Scancode::Enter) {

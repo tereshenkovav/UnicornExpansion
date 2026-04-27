@@ -8,5 +8,6 @@ SceneMainMenu.cpp
 SceneOptions.cpp
 SceneStartMenu.cpp
 SceneTask.cpp
+SceneJournal.cpp
 )
 target_include_directories(UnicornExpansion PUBLIC .)

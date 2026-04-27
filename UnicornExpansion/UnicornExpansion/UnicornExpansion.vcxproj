@@ -181,6 +181,7 @@
     <ClCompile Include="scenes\SceneGame.cpp" />
     <ClCompile Include="scenes\SceneGameMenu.cpp" />
     <ClCompile Include="scenes\SceneHelp.cpp" />
+    <ClCompile Include="scenes\SceneJournal.cpp" />
     <ClCompile Include="scenes\SceneMainMenu.cpp" />
     <ClCompile Include="scenes\SceneOptions.cpp" />
     <ClCompile Include="scenes\SceneStartMenu.cpp" />
@@ -225,6 +226,7 @@
     <ClInclude Include="scenes\SceneGame.h" />
     <ClInclude Include="scenes\SceneGameMenu.h" />
     <ClInclude Include="scenes\SceneHelp.h" />
+    <ClInclude Include="scenes\SceneJournal.h" />
     <ClInclude Include="scenes\SceneMainMenu.h" />
     <ClInclude Include="scenes\SceneOptions.h" />
     <ClInclude Include="scenes\SceneStartMenu.h" />
