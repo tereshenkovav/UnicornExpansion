@@ -78,8 +78,7 @@ int GameUnit::getUID() const
 std::string GameUnit::getHealthInfo() const
 {
 	// »справление дл€ запрета вывода нулевого значени€
-	int int_health = ((int)health < 1) ? 1 : (int)health;
-	return std::format("{}/{}", int_health, maxhealth);
+	return std::format("{}/{}", get1Health(), maxhealth);
 }
 
 std::string GameUnit::getShieldInfo() const
@@ -92,8 +91,12 @@ std::string GameUnit::getShieldInfo() const
 
 float GameUnit::getHealthPerMax() const
 {
-	int int_health = ((int)health < 1) ? 1 : (int)health;
-	return int_health / (float)maxhealth;
+	return get1Health() / (float)maxhealth;
+}
+
+int GameUnit::get1Health() const
+{
+	return ((int)health < 1) ? 1 : (int)health;;
 }
 
 float GameUnit::getShieldPerMax() const

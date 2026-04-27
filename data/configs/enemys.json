@@ -1,8 +1,8 @@
 {
   "Enemy1":
-  { "HP": 40,
+  { "HP": 30,
     "Speed": 300,
-    "Attack" : 10
+    "Attack" : 5
   },
   "Enemy2":
   { "HP": 70,

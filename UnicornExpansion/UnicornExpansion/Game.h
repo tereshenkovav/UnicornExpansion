@@ -101,7 +101,6 @@ public:
 	void addUnit(const GameUnit& unit);
 	std::optional<int> findUnitAt(float viewx, float viewy) const;
 	std::vector<int> findVisibleUnitsInRect(float viewx1, float viewy1, float viewx2, float viewy2) const;
-	bool isUnitExist(int uid) const;
 	// Размеры карты
 	int getWidth() const;
 	int getHeight() const;
@@ -147,6 +146,9 @@ public:
 	void setFlag(const std::string& name);
 	void clearFlag(const std::string& name);
 	bool isFlag(const std::string& name) const;
+	bool isUnitNearXY(int uid, int x, int y) const;
+	int getUnitHealth(int uid) const;
+	bool isUnitExist(int uid) const;
 	/* Конец скриптового блока */
 
 	// Получить информацию о таймере

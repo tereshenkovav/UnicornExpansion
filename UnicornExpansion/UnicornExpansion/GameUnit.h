@@ -90,6 +90,7 @@ public:
 	std::string getHealthInfo() const;
 	std::string getShieldInfo() const;
 	float getHealthPerMax() const;
+	int get1Health() const;
 	float getShieldPerMax() const;
 	int getVelocity() const;
 	std::string getCode() const;

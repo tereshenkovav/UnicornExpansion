@@ -772,3 +772,16 @@ bool Game::isFlag(const std::string& name) const
 {
 	return flags.contains(name);
 }
+
+bool Game::isUnitNearXY(int uid, int x, int y) const
+{
+	auto xy = getUnitByUID(uid).getXY();
+	if (xy.x == x) return abs(xy.y - y) <= 1;
+	if (xy.y == y) return abs(xy.x - x) <= 1;
+	return abs(xy.x - x) + abs(xy.y - y) == 2;
+}
+
+int Game::getUnitHealth(int uid) const
+{
+	return getUnitByUID(uid).get1Health();
+}

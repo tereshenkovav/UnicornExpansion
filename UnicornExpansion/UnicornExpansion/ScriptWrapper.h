@@ -14,46 +14,46 @@ Game* Game_new(zetscript::ScriptEngine* _script_engine) {
 	return current_game;
 }
 
-void Game_addPortal(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
+zetscript::zs_int Game_addPortal(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	UnitFactory factory(_this);
-	factory.addPortal(x, y);
+	return factory.addPortal(x, y);
 }
 
-void Game_addEnemy1(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
+zetscript::zs_int Game_addEnemy1(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	UnitFactory factory(_this);
-	factory.addEnemy1(x, y);
+	return factory.addEnemy1(x, y);
 }
 
-void Game_addEnemy2(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
+zetscript::zs_int Game_addEnemy2(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	UnitFactory factory(_this);
-	factory.addEnemy2(x, y);
+	return factory.addEnemy2(x, y);
 }
 
-void Game_addEnemy3(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
+zetscript::zs_int Game_addEnemy3(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	UnitFactory factory(_this);
-	factory.addEnemy3(x, y);
+	return factory.addEnemy3(x, y);
 }
 
-void Game_addCrystal(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y, zetscript::zs_int hp) {
+zetscript::zs_int Game_addCrystal(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y, zetscript::zs_int hp) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	UnitFactory factory(_this);
-	factory.addCrystal(x, y, hp);
+	return factory.addCrystal(x, y, hp);
 }
 
-void Game_addUnicorn(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
+zetscript::zs_int Game_addUnicorn(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	UnitFactory factory(_this);
-	factory.addUnicorn(x, y, _this->getConfigUnit()["Unicorn"]["InitialHP"].asInt());
+	return factory.addUnicorn(x, y, _this->getConfigUnit()["Unicorn"]["InitialHP"].asInt());
 }
 
-void Game_addLair(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y, zetscript::StringScriptObject* seq) {
+zetscript::zs_int Game_addLair(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y, zetscript::StringScriptObject* seq) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	UnitFactory factory(_this);
-	factory.addLair(x, y, seq->getConstChar());
+	return factory.addLair(x, y, seq->getConstChar());
 }
 
 void Game_incEnergy(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int value) {
@@ -156,6 +156,21 @@ bool Game_isFlag(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript
 	return _this->isFlag(name->getConstChar());
 }
 
+bool Game_isUnitNearXY(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int uid, zetscript::zs_int x, zetscript::zs_int y) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	return _this->isUnitNearXY(uid,x,y);
+}
+
+zetscript::zs_int Game_getUnitHealth(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int uid) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	return _this->getUnitHealth(uid);
+}
+
+bool Game_isUnitExist(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int uid) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	return _this->isUnitExist(uid);
+}
+
 void Game_delete(zetscript::ScriptEngine* _script_engine, Game* _this) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	// empty
@@ -191,4 +206,7 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
         engine.registerMemberFunction<Game>("setFlag", &Game_setFlag);
         engine.registerMemberFunction<Game>("clearFlag", &Game_clearFlag);
         engine.registerMemberFunction<Game>("isFlag", &Game_isFlag);
+		engine.registerMemberFunction<Game>("isUnitNearXY", &Game_isUnitNearXY);
+		engine.registerMemberFunction<Game>("getUnitHealth", &Game_getUnitHealth);
+		engine.registerMemberFunction<Game>("isUnitExist", &Game_isUnitExist);
 }
