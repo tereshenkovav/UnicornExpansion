@@ -484,14 +484,9 @@ void Game::update(float dt)
 
 	mushrooms.update(dt);
 	counter_under_attack.update(dt);
-	counter_showmessage.update(dt);
-
-	if ((!counter_showmessage.isActive())&&(!messages.empty())) {
-		history.push_back(messages.front());
-		counter_showmessage.upset(messages.front().duration);
-		messages.pop();
-	}
-
+	
+	for (int i = 0; i < history.size(); i++)
+		if (history[i].duration > 0) history[i].duration -= dt;
 
 	// Временная поправка для позиции лазера у единорога
 	sf::Vector2f laserfixleft{ -23, -25 };
@@ -719,23 +714,40 @@ std::string Game::trText(const std::string& text) const {
 }
 
 void Game::addMessage(const std::string& icon, int duration, const std::string& text) {
+	addMessageLater(icon, duration, 0, text);
+}
+
+void Game::addMessageLater(const std::string& icon, int duration, int delay, const std::string& text) {
 	// Полезная функция, позволяет автоматически получать строки из внешнего файла, записывая их как $key, без использования game.getText
-	messages.push({ icon, duration, trText(text)});
+	history.push_back({ icon, (float)(duration+delay), (float)duration, trText(text) });
 }
 
 void Game::skipTekMessage() {
-	counter_showmessage.reset();
+	bool skipok = false;
+	for (int i = 0; i < history.size(); i++)
+		if (history[i].duration > 0.0f) {
+			if (!skipok) {
+				history[i].duration = 0.0f;
+				skipok = true;
+			}
+			else {
+				if (history[i].duration > history[i].showafter) history[i].duration = history[i].showafter;
+				break;
+			}
+		}
 }
 
 void Game::skipAllMessages() {
-	skipTekMessage();
-	while (!messages.empty()) messages.pop();
+	for (int i = 0; i < history.size(); i++)
+		if (history[i].duration > 0.0f)	history[i].duration = 0.0f;
 }
 
-std::optional<Message> Game::getTekMessage() const {
-	if (history.empty()) return std::nullopt;
-	if (!counter_showmessage.isActive()) return std::nullopt;
-	return history.back();
+std::vector<Message> Game::getTekMessages() const {
+	std::vector<Message> res;
+	for (int i = 0; i < history.size(); i++)
+		if ((history[i].duration > 0.0f)&&(history[i].duration<history[i].showafter))
+			res.push_back(history[i]);
+	return res;
 }
 
 const std::vector<Message>& Game::getHistory() const

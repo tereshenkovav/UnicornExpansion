@@ -405,18 +405,21 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
     }
 
     // Вывод сообщения, если оно есть
-    if (auto msg = game.getTekMessage()) {
-        textback.setPosition({ 1024/2 - 350, 4 });
+    float p = 0;
+    for (auto & msg: game.getTekMessages()) {
+        textback.setPosition({ 1024/2 - 350, 4 + p });
         textback.setSize({ 700, 100 });
         rendertarget.draw(textback);
 
-        text_msg->setString(sfge::SfmlTools::utf2text("\t"+(*msg).text));
+        text_msg->setString(sfge::SfmlTools::utf2text("\t"+msg.text));
+        text_msg->setPosition({ 1024 / 2 - 350 + 100, 8 + p});
         rendertarget.draw(*text_msg);
 
-        if (spr_dialog_icons.count((*msg).icon) > 0) {
-            spr_dialog_icons[(*msg).icon]->setPosition({ 1024 / 2 - 350 + 15, 20 });
-            rendertarget.draw(*spr_dialog_icons[(*msg).icon]);
+        if (spr_dialog_icons.count(msg.icon) > 0) {
+            spr_dialog_icons[msg.icon]->setPosition({ 1024 / 2 - 350 + 15, 20 + p });
+            rendertarget.draw(*spr_dialog_icons[msg.icon]);
         }
+        p += 104;
     }
 
     if (rect_holded) {
@@ -740,8 +743,7 @@ void SceneGame::Init() {
     text_fps->setPosition({ 1024 - 70, 768 - 20 });
 
     text_msg = loadText(18, sf::Color::White);
-    text_msg->setPosition({ 1024/2 - 350 + 100, 8 });
-
+    
     // Прямоугольники интерфейса
     rect_selector.setOutlineThickness(2);
     rect_selector.setFillColor(sf::Color::Transparent);

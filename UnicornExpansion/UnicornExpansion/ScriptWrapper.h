@@ -126,6 +126,11 @@ void Game_addMessage(zetscript::ScriptEngine* _script_engine, Game* _this, zetsc
 	_this->addMessage(icon->getConstChar(),duration,text->getConstChar());
 }
 
+void Game_addMessageLater(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::StringScriptObject* icon, zetscript::zs_int duration, zetscript::zs_int delay, zetscript::StringScriptObject* text) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	_this->addMessageLater(icon->getConstChar(),duration,delay,text->getConstChar());
+}
+
 zetscript::StringScriptObject* Game_getText(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::StringScriptObject* name) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	return _script_engine->newStringScriptObject(_this->getText(name->getConstChar()).data());
@@ -200,6 +205,7 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
 	engine.registerMemberFunction<Game>("startHiddenTimer", &Game_startHiddenTimer);
 	engine.registerMemberFunction<Game>("setNewViewPoint", &Game_setNewViewPoint);
         engine.registerMemberFunction<Game>("addMessage", &Game_addMessage);
+        engine.registerMemberFunction<Game>("addMessageLater", &Game_addMessageLater);
         engine.registerMemberFunction<Game>("getText", &Game_getText);
         engine.registerMemberFunction<Game>("allowAction", &Game_allowAction);
         engine.registerMemberFunction<Game>("denyAction", &Game_denyAction);

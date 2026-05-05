@@ -18,12 +18,10 @@ function initMap() {
 
   game.setNewViewPoint(9,15) ;
 
-  game.addMessage("unicorn",5,"$Brief_1_1") ;
-  game.addMessage("unicorn",5,"$Brief_1_2") ;
-  game.addMessage("unicorn",4,"$Brief_1_3") ;
-  game.addMessage("unicorn",5,"$Brief_1_4") ;
-  game.addMessage("unicorn",5,"$Brief_1_5") ;
-  game.addMessage("unicorn",4,"$Brief_1_6") ;
+  game.addMessage("unicorn",10,"$Brief_1_1") ;
+  game.addMessageLater("unicorn",10,10,"$Brief_1_2") ;
+  game.addMessageLater("unicorn",10,20,"$Brief_1_3") ;
+  game.addMessageLater("unicorn",10,30,"$Brief_1_4") ;
   game.addNewTask("moving","$Task_Moving") ;
 
   return true ;
@@ -35,7 +33,7 @@ function Update() {
       game.setFlag("stage2") ;
       game.setTaskCompleted("moving") ;
       game.addNewTask("makeharvest","$Task_MakeHarvest") ;
-      game.addMessage("unicorn",6,"$Brief_2") ;
+      game.addMessage("unicorn",10,"$Brief_2") ;
       game.allowAction("MakeHarvester") ;
     }
   }
@@ -45,7 +43,7 @@ function Update() {
         game.setFlag("stage3") ;
         game.setTaskCompleted("makeharvest") ;
         game.addNewTask("harvest","$Task_Harvest") ;
-        game.addMessage("unicorn",5,"$Brief_3") ;
+        game.addMessage("unicorn",10,"$Brief_3") ;
       }
   }
 
@@ -54,7 +52,7 @@ function Update() {
         game.setFlag("stage4") ;
         game.setTaskCompleted("harvest") ;
         game.addNewTask("makeunicorn","$Task_MakeUnicorn") ;
-        game.addMessage("unicorn",5,"$Brief_4") ;
+        game.addMessage("unicorn",10,"$Brief_4") ;
         game.allowAction("BuildUnicorn") ;
       }
   }
@@ -64,9 +62,9 @@ function Update() {
         game.setFlag("stage5") ;
         game.setTaskCompleted("makeunicorn") ;
         game.addNewTask("battle","$Task_Battle") ;
-        game.addMessage("unicorn",5,"$Brief_5_1") ;
-        game.addMessage("unicorn",5,"$Brief_5_2") ;
-        game.addMessage("unicorn",5,"$Brief_5_3") ;
+        game.addMessage("unicorn",10,"$Brief_5_1") ;
+        game.addMessageLater("unicorn",10,10,"$Brief_5_2") ;
+        game.addMessageLater("unicorn",10,20,"$Brief_5_3") ;
         game.allowAction("MakeAttacker") ;
         game.startTimer(40) ;
       }
@@ -85,18 +83,18 @@ function Update() {
         game.setFlag("stage7") ;
         game.setTaskCompleted("battle") ;
         game.addNewTask("harvestfinal","$Task_HarvestFinal") ;
-        game.addMessage("unicorn",6,"$Brief_7_1") ;
-        game.addMessage("unicorn",6,"$Brief_7_2") ;
+        game.addMessage("unicorn",10,"$Brief_7_1") ;
+        game.addMessageLater("unicorn",10,10,"$Brief_7_2") ;
     }
   }
 
   if (game.isFlag("stage7")&&(!game.isFlag("stage8"))) {
-      if (game.getEnergy()>=600) {
+      if (game.getEnergy()>=500) {
         game.setFlag("stage8") ;
         game.setTaskCompleted("harvestfinal") ;
-        game.addMessage("unicorn",5,"$Brief_8_1") ;
-        game.addMessage("unicorn",6,"$Brief_8_2") ;
-        game.addMessage("unicorn",6,"$Brief_8_3") ;
+        game.addMessage("unicorn",10,"$Brief_8_1") ;
+        game.addMessageLater("unicorn",10,10,"$Brief_8_2") ;
+        game.addMessageLater("unicorn",10,20,"$Brief_8_3") ;
         game.allowAction("MakeHealer") ;
       }
   }
