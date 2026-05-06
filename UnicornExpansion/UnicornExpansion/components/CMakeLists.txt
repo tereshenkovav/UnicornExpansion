@@ -11,5 +11,7 @@ ComponentPortal.cpp
 ComponentRadar.cpp
 ComponentShield.cpp
 ComponentResource.cpp
-ComponentUnicorn.cpp)
+ComponentUnicorn.cpp
+ComponentMachine.cpp
+)
 target_include_directories(UnicornExpansion PUBLIC .)

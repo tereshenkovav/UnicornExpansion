@@ -16,5 +16,6 @@ public:
 	int addLair(int x, int y, const std::string& spawnseq);
 	int addPortal(int x, int y);
 	int addUnicorn(int x, int y, int hp);
+	int addMachine(int x, int y);
 };
 

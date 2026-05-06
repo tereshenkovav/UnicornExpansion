@@ -14,12 +14,17 @@ function initMap() {
   game.allowAction("UpgradeHealer") ;
   game.allowAction("MakeShield") ;
   game.allowAction("DoShield") ;
+  game.allowAction("MakeTowerAttack") ;
+  game.allowAction("MakeTowerHealer") ;
+  game.allowAction("MakeTowerHarvest") ;
 
   game.addPortal(56,37) ;
   uidhero = game.addUnicorn(3,3) ;
   game.addCrystal(36,9,43) ;
   game.addCrystal(11,15,78) ;
   game.addCrystal(56,24,56) ;
+
+  game.addMachine(27,2) ;
 
   game.addEnemy1(47,12) ;
   game.addEnemy1(33,22) ;

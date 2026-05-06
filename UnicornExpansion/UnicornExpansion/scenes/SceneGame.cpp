@@ -5,6 +5,7 @@
 #include "SceneJournal.h"
 #include "SceneEndGame.h"
 #include "SceneGameMenu.h"
+#include "ComponentMachine.h"
 
 // Размеры камеры и скорость прокрутки камеры
 const int SCROLLSPEED = 10;
@@ -535,8 +536,9 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
                 // Команда движения юнита
                 if (mousePressed->button == sf::Mouse::Button::Right)
                 {
+                    // Здесь назревает рефакторинг на компонент Movable или что-то такое
                     for (int uid : selector.getSelectedUnits())
-                        if (game.getUnitByUID(uid).isComponent<ComponentUnicorn>()) {
+                        if (game.getUnitByUID(uid).isComponent<ComponentUnicorn>() || game.getUnitByUID(uid).isComponent<ComponentMachine>()) {
                             game.setTargetToUnit(uid, worldpos.x / BLOCKW, worldpos.y / BLOCKH);
                             if (((started_galop_uid != uid) || (effect_start->getStatus() != sf::SoundSource::Status::Playing))) {
                                 effect_start->play();

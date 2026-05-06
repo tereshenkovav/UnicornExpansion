@@ -6,6 +6,7 @@
 #include "ComponentEnemyTarget.h"
 #include "ComponentEnemyLair.h"
 #include "ComponentEnemy.h"
+#include "ComponentMachine.h"
 
 UnitFactory::UnitFactory(Game* game)
 {
@@ -80,6 +81,16 @@ int UnitFactory::addUnicorn(int x, int y, int hp)
     unit.setVelocity(param["InitialV"].asInt());
     unit.addComponent(new ComponentUnicorn(game));
     unit.addComponent(new ComponentEnemyTarget(game));
+    game->addUnit(unit);
+    return unit.getUID();
+}
+
+int UnitFactory::addMachine(int x, int y)
+{
+    auto param = game->getConfigUnit()["Machine"];
+    GameUnit unit(x, y, 1, 1, "Machine", param["HP"].asInt(), "machine");
+    unit.setVelocity(param["V"].asInt());
+    unit.addComponent(new ComponentMachine(game));
     game->addUnit(unit);
     return unit.getUID();
 }

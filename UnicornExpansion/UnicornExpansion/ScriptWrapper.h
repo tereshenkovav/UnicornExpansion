@@ -50,6 +50,12 @@ zetscript::zs_int Game_addUnicorn(zetscript::ScriptEngine* _script_engine, Game*
 	return factory.addUnicorn(x, y, _this->getConfigUnit()["Unicorn"]["InitialHP"].asInt());
 }
 
+zetscript::zs_int Game_addMachine(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	UnitFactory factory(_this);
+	return factory.addMachine(x, y);
+}
+
 zetscript::zs_int Game_addLair(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y, zetscript::StringScriptObject* seq) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	UnitFactory factory(_this);
@@ -195,6 +201,7 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
 	engine.registerMemberFunction<Game>("addEnemy3", &Game_addEnemy3);
 	engine.registerMemberFunction<Game>("addCrystal", &Game_addCrystal);
 	engine.registerMemberFunction<Game>("addUnicorn", &Game_addUnicorn);
+	engine.registerMemberFunction<Game>("addMachine", &Game_addMachine);
 	engine.registerMemberFunction<Game>("addLair", &Game_addLair);
 	engine.registerMemberFunction<Game>("incEnergy", &Game_incEnergy);
 	engine.registerMemberFunction<Game>("decEnergy", &Game_decEnergy);

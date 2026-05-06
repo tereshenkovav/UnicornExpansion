@@ -58,5 +58,18 @@
         "Price": 25,
         "Time": 1,
         "Amount": 40
-    }
+    },
+    "MakeTowerAttack": {
+        "Price": 0,
+        "Time": 15
+    },
+    "MakeTowerHealer": {
+        "Price": 0,
+        "Time": 15
+    },
+    "MakeTowerHarvest": {
+        "Price": 0,
+        "Time": 15
+    },
+
 }

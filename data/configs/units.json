@@ -4,6 +4,11 @@
     "InitialHP": 50,
     "InitialV": 200
   },
+  "Machine":
+  {
+    "HP": 200,
+    "V": 100
+  },
   "Portal":
   {
     "HP": 500
