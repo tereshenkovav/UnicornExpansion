@@ -6,11 +6,24 @@
   },
   "Machine":
   {
-    "HP": 200,
+    "HP": 100,
     "V": 100
   },
   "Portal":
   {
     "HP": 500
+  },
+  "HealerTower":
+  {
+    "HP": 100
+  },
+  "HarvestTower":
+  {
+    "HP": 100
+  },
+  "AttackTower":
+  {
+    "HP": 100
   }
+
 }

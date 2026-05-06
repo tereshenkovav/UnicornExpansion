@@ -198,6 +198,15 @@ void Game::addUnit(const GameUnit & unit) {
 	units.push_back(unit);
 }
 
+void Game::deleteUnitLater(int uid)
+{
+	for (int i = 0; i < units.size(); i++)
+		if (units[i].getUID() == uid) {
+			units[i].decHealth(units[i].get1Health());
+			break;
+		}
+}
+
 std::optional<int> Game::findUnitAt(float viewx, float viewy) const
 {
 	// Примитивная реализация

@@ -7,6 +7,9 @@
 #include "ComponentEnemyLair.h"
 #include "ComponentEnemy.h"
 #include "ComponentMachine.h"
+#include "ComponentAttacker.h"
+#include "ComponentHealer.h"
+#include "ComponentHarvester.h"
 
 UnitFactory::UnitFactory(Game* game)
 {
@@ -91,6 +94,37 @@ int UnitFactory::addMachine(int x, int y)
     GameUnit unit(x, y, 1, 1, "Machine", param["HP"].asInt(), "machine");
     unit.setVelocity(param["V"].asInt());
     unit.addComponent(new ComponentMachine(game));
+    unit.addComponent(new ComponentEnemyTarget(game));
+    game->addUnit(unit);
+    return unit.getUID();
+}
+
+int UnitFactory::addHealerTower(int x, int y)
+{
+    auto param = game->getConfigUnit()["HealerTower"];
+    GameUnit unit(x, y, 1, 1, "HealerTower", param["HP"].asInt(), "towerhealer");
+    unit.addComponent(new ComponentHealer(game));
+    unit.addComponent(new ComponentEnemyTarget(game));
+    game->addUnit(unit);
+    return unit.getUID();
+}
+
+int UnitFactory::addHarvestTower(int x, int y)
+{
+    auto param = game->getConfigUnit()["HarvestTower"];
+    GameUnit unit(x, y, 1, 1, "HarvestTower", param["HP"].asInt(), "towerharvest");
+    unit.addComponent(new ComponentHarvester(game));
+    unit.addComponent(new ComponentEnemyTarget(game));
+    game->addUnit(unit);
+    return unit.getUID();
+}
+
+int UnitFactory::addAttackTower(int x, int y)
+{
+    auto param = game->getConfigUnit()["AttackTower"];
+    GameUnit unit(x, y, 1, 1, "AttackTower", param["HP"].asInt(), "towerattack");
+    unit.addComponent(new ComponentAttacker(game));
+    unit.addComponent(new ComponentEnemyTarget(game));
     game->addUnit(unit);
     return unit.getUID();
 }

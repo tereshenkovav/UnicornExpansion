@@ -17,5 +17,8 @@ public:
 	int addPortal(int x, int y);
 	int addUnicorn(int x, int y, int hp);
 	int addMachine(int x, int y);
+	int addHealerTower(int x, int y);
+	int addHarvestTower(int x, int y);
+	int addAttackTower(int x, int y);
 };
 

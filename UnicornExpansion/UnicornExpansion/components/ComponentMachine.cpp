@@ -1,5 +1,6 @@
 #include "ComponentMachine.h"
 #include "Game.h"
+#include "UnitFactory.h"
 
 std::vector<UnitAction> ComponentMachine::getActions() const
 {
@@ -12,8 +13,19 @@ std::vector<UnitAction> ComponentMachine::getActions() const
 
 bool ComponentMachine::applyAction(const UnitAction& action)
 {
-	if (action.code == "do_radar") {
-		game->clearFogAt(game->getUnitByUID(unit_id).getXY(), game->getConfigAction()["DoRadar"]["Distance"].asInt());
+	auto pos = game->getUnitByUID(unit_id).getXY();
+	game->deleteUnitLater(unit_id);
+	UnitFactory factory(game);
+	if (action.code == "make_towerharvest") {
+		factory.addHarvestTower(pos.x, pos.y);
+		return true;
+	}
+	if (action.code == "make_towerhealer") {
+		factory.addHealerTower(pos.x, pos.y);
+		return true;
+	}
+	if (action.code == "make_towerattack") {
+		factory.addAttackTower(pos.x, pos.y);
 		return true;
 	}
 	return false;
