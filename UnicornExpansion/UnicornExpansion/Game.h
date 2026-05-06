@@ -148,6 +148,7 @@ public:
 	void clearFlag(const std::string& name);
 	bool isFlag(const std::string& name) const;
 	bool isUnitNearXY(int uid, int x, int y) const;
+	bool isUnitNearXYDist(int uid, int x, int y, int dist) const;
 	int getUnitHealth(int uid) const;
 	bool isUnitExist(int uid) const;
 	/* Конец скриптового блока */

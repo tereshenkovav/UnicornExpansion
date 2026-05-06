@@ -798,6 +798,12 @@ bool Game::isUnitNearXY(int uid, int x, int y) const
 	return abs(xy.x - x) + abs(xy.y - y) == 2;
 }
 
+bool Game::isUnitNearXYDist(int uid, int x, int y, int dist) const
+{
+	auto xy = getUnitByUID(uid).getXY();
+	return (xy.x - x) * (xy.x - x) + (xy.y - y) * (xy.y - y) <= dist * dist;
+}
+
 int Game::getUnitHealth(int uid) const
 {
 	return getUnitByUID(uid).get1Health();

@@ -166,6 +166,11 @@ bool Game_isUnitNearXY(zetscript::ScriptEngine* _script_engine, Game* _this, zet
 	return _this->isUnitNearXY(uid,x,y);
 }
 
+bool Game_isUnitNearXYDist(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int uid, zetscript::zs_int x, zetscript::zs_int y, zetscript::zs_int dist) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	return _this->isUnitNearXYDist(uid,x,y,dist);
+}
+
 zetscript::zs_int Game_getUnitHealth(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int uid) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	return _this->getUnitHealth(uid);
@@ -212,6 +217,7 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
         engine.registerMemberFunction<Game>("setFlag", &Game_setFlag);
         engine.registerMemberFunction<Game>("clearFlag", &Game_clearFlag);
         engine.registerMemberFunction<Game>("isFlag", &Game_isFlag);
+		engine.registerMemberFunction<Game>("isUnitNearXYDist", &Game_isUnitNearXYDist);
 		engine.registerMemberFunction<Game>("isUnitNearXY", &Game_isUnitNearXY);
 		engine.registerMemberFunction<Game>("getUnitHealth", &Game_getUnitHealth);
 		engine.registerMemberFunction<Game>("isUnitExist", &Game_isUnitExist);

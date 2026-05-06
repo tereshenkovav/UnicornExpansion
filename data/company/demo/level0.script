@@ -1,60 +1,69 @@
 var game ;
-var MANA_TASK ;
-var TIME_LIMIT ;
+var uidhero ;
  
 function initMap() {
   game = new Game() ;
 
-  MANA_TASK = 201 ;
-  TIME_LIMIT = 7 ;
-
-  game.allowAction("BuildUnicorn") ;
   game.allowAction("MakeHarvester") ;
   game.allowAction("MakeAttacker") ;
   game.allowAction("MakeHealer") ;
+  game.allowAction("MakeRadar") ;
+  game.allowAction("DoRadar") ;
+  game.allowAction("UpgradeHarvester") ;
+  game.allowAction("UpgradeAttacker") ;
+  game.allowAction("UpgradeHealer") ;
+  game.allowAction("MakeShield") ;
+  game.allowAction("DoShield") ;
 
-  game.addPortal(13,2) ;
-  game.addUnicorn(16,2) ;
-  game.addUnicorn(17,6) ;
-  game.addCrystal(22,7,210) ;
-  game.addCrystal(1,8,240) ;
-  game.addCrystal(9,9,250) ;
-  game.addCrystal(18,11,370) ;
-  game.addCrystal(15,12,340) ;
-  game.addCrystal(12,14,450) ;
-  game.addCrystal(13,18,230) ;
-  game.addCrystal(9,20,410) ;
-  game.addCrystal(17,21,580) ;
-  game.addCrystal(19,23,590) ;
-  game.addEnemy1(14,15) ;
-  game.addEnemy1(8,21) ;
-  game.addEnemy1(14,20) ;
-  game.addEnemy2(19,22) ;
+  game.addPortal(56,37) ;
+  uidhero = game.addUnicorn(3,3) ;
+  game.addCrystal(36,9,43) ;
+  game.addCrystal(11,15,78) ;
+  game.addCrystal(56,24,56) ;
 
-  game.incEnergy(200) ;
+  game.addEnemy1(47,12) ;
+  game.addEnemy1(33,22) ;
+  game.addEnemy1(5,30) ;
 
-  game.startTimer(TIME_LIMIT*60) ;
+  game.addEnemy1(40,35) ;
+  game.addEnemy1(42,34) ;
+  game.addEnemy1(37,34) ;
+  game.addEnemy1(40,38) ;
+  game.addEnemy2(42,36) ;
+  game.addEnemy2(38,37) ;
 
-  game.setNewViewPoint(12,6) ;
+  game.incEnergy(100) ;
 
-  game.addMessage("unicorn",5,"000") ;
-//  game.addMessage("unicorn",5,"$Brief_1_2") ;
-//  game.addMessage("unicorn",5,"$Brief_1_3") ;
-//  game.addMessage("unicorn",5,"$Brief_1_4") ;
+  game.setNewViewPoint(8,5) ;
 
+  game.addMessage("unicorn",10,"$Brief_1") ;
+  game.addNewTask("findportal","$Task1") ;
   return true ;
 }
 
 function Update() {
+  if (!game.isFlag("point1")) {
+    if (game.isUnitNearXYDist(uidhero,27,2,3)) {
+      game.setFlag("point1") ;
+      game.addMessage("unicorn",10,"$Brief_2_1") ;
+      game.addMessageLater("helper",10,10,"$Brief_2_2") ;
+      game.addNewTask("findmachine","$Task2") ;
+    }
+  }
+
+  if (!game.isFlag("point2")) {
+    if (game.isUnitNearXYDist(uidhero,56,37,4)) {
+      game.setFlag("point2") ;
+      game.addMessage("unicorn",10,"$Brief_3") ;
+    }
+  }
 }
 
 function isVictory() {
-  return (game.getEnergy()>=MANA_TASK) ;
+  return game.isFlag("point2") ;
 }
 
 function isDefeat() {
-  if ((game.getCountByComponent("Unicorn")==0)&&
-      (game.getCountByComponent("Portal")==0)) { return true ; }
-  if (game.getTimer()<=0) { return true ; }
+  if (game.getCountByComponent("Unicorn")==0) { return true ; }
   return false ;
 }
