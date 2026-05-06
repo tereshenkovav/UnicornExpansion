@@ -4,19 +4,16 @@
 #include <SFML/Window.hpp>
 #include "SfmlGameEngine/Scene.h"
 #include "SfmlGameEngine/Button.h"
-#include "Game.h"
 
-class SceneEndGame: public sfge::Scene
+class ScenePostfix: public sfge::Scene
 {
 private:
     sf::RectangleShape textback;
-    sfge::UniqueText text_title;
-    std::vector<sfge::UniqueButton> buttons;
-    LevelCode levelcode;
-    bool iswin;
-    void goNextLevel();
+    sfge::UniqueText text_help;
+    sfge::UniqueButton butok;
+    std::string company ;
 public:
-    SceneEndGame(const Game& game, LevelCode levelcode);
+    ScenePostfix(const std::string & company);
     virtual void Render(sf::RenderTarget& rendertarget) override;
     virtual void Update(float dt, const sf::Vector2i& mousePos, const std::vector<sf::Event>& events) override;
     virtual void Init() override;

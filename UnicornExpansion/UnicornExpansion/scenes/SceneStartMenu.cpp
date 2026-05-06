@@ -4,6 +4,7 @@
 #include "SceneGame.h"
 #include "SceneHelp.h"
 #include "SceneOptions.h"
+#include "SceneCompany.h"
 
 void SceneStartMenu::Render(sf::RenderTarget & rendertarget) {
     rendertarget.draw(*text_caption);
@@ -39,7 +40,7 @@ void SceneStartMenu::Init() {
 
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_DemoCompany"), 18,
         512 - 100, 380, 200, 40));
-    buttons.back()->setOnClick([this]() {getEngine()->SwitchToScene(std::make_shared<SceneGame>("demo", 0)); });
+    buttons.back()->setOnClick([this]() {getEngine()->SwitchToScene(std::make_shared<SceneCompany>("demo")); });
 
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_Options"), 18,
         512 - 100, 440, 200, 40));

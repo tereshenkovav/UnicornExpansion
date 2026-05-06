@@ -68,3 +68,6 @@ Checkbox_Fullscreen=Полноэкранный режим
 Checkbox_VSync=Вертикальная синхронизация
 Task_Completed=Выполнено
 Task_Cancelled=Отменено
+Checkbox_Easy=Легко
+Checkbox_Norm=Средне
+Checkbox_Hard=Сложно

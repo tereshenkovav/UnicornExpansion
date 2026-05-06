@@ -1,6 +1,7 @@
 #include "UserProfile.h"
 #include <json/json.h>
 #include <fstream>
+#include <filesystem>
 
 bool UserProfile::isVoiceOn() const {
 	return voiceon;
@@ -27,6 +28,11 @@ void UserProfile::loadProfile(const std::string& filename)
 	setVSync(jsonProfile["options"]["vsync"].asBool());
 	// Далее уже специфичные для игры
 	setVoiceOn(jsonProfile["options"]["voiceon"].asBool());
+
+	progress.clear();
+	for (int i = 0; i < jsonProfile["progress"].size(); i++)
+		progress.push_back({ jsonProfile["progress"][i]["company"].asString(),
+			jsonProfile["progress"][i]["nextlevel"].asInt() });
 }
 
 void UserProfile::saveProfile() const
@@ -42,8 +48,39 @@ void UserProfile::saveProfile() const
 	// Далее уже специфичные для игры
 	jsonProfile["options"]["voiceon"] = isVoiceOn();
 
+	Json::Value jsonProgress;
+	for (auto& p : progress) {
+		Json::Value company;
+		company["company"] = p.company;
+		company["nextlevel"] = p.nextlevel;
+		jsonProgress.append(company);
+	}
+	jsonProfile["progress"] = jsonProgress;
+
 	Json::StreamWriterBuilder builder;
 	const std::unique_ptr<Json::StreamWriter> writer(builder.newStreamWriter());
 	std::ofstream jsonFile(filename, std::ifstream::binary);
 	writer->write(jsonProfile, &jsonFile);
+}
+
+int UserProfile::getNextLevel(const std::string& company) const
+{
+	for (auto& p : progress)
+		if (p.company == company) return p.nextlevel;
+	return 0;
+}
+
+int UserProfile::getLevelCount(const std::string& company) {
+	for (int i = 0; ; i++)
+		if (!std::filesystem::exists(std::format("company/{}/level{}.map", company, i))) return i;
+}
+
+void UserProfile::setLevelCompleted(const std::string& company, int level)
+{
+	for (int i = 0; i < progress.size(); i++)
+		if (progress[i].company == company) {
+			progress[i].nextlevel = level + 1;
+			return;
+		}
+	progress.push_back({ company,level + 1 });
 }

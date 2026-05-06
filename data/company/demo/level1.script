@@ -5,7 +5,7 @@ var TIME_LIMIT ;
 function initMap() {
   game = new Game() ;
 
-  MANA_TASK = 201 ;
+  MANA_TASK = 201;
   TIME_LIMIT = 7 ;
 
   game.allowAction("BuildUnicorn") ;
@@ -37,7 +37,7 @@ function initMap() {
 
   game.setNewViewPoint(12,6) ;
 
-  game.addMessage("unicorn",5,"000") ;
+  game.addMessage("unicorn",5,"111") ;
 //  game.addMessage("unicorn",5,"$Brief_1_2") ;
 //  game.addMessage("unicorn",5,"$Brief_1_3") ;
 //  game.addMessage("unicorn",5,"$Brief_1_4") ;

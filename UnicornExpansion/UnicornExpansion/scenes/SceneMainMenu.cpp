@@ -1,6 +1,15 @@
 #include "SceneMainMenu.h"
 #include "SfmlGameEngine/Engine.h"
 #include "SceneStartMenu.h"
+#include "ScenePostfix.h"
+
+SceneMainMenu::SceneMainMenu() {
+    this->company = std::nullopt;
+}
+
+SceneMainMenu::SceneMainMenu(const std::string& company) {
+    this->company = company;
+}
 
 void SceneMainMenu::Render(sf::RenderTarget & rendertarget) {
     rendertarget.draw(*spr_intro);
@@ -15,6 +24,9 @@ void SceneMainMenu::Init() {
     spr_title = loadSprite("images/title.png");
     spr_title->setOrigin({ (float)(spr_title->getTexture().getSize().x / 2), 0});
     spr_title->setPosition({ 512, 60 });
-        
-    getEngine()->AddOverScene(std::make_shared<SceneStartMenu>());
+
+    if (company)
+        getEngine()->AddOverScene(std::make_shared<ScenePostfix>(*company));
+    else
+        getEngine()->AddOverScene(std::make_shared<SceneStartMenu>());
 }

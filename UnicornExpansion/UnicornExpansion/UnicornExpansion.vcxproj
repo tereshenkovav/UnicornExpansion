@@ -177,6 +177,7 @@
     <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="MushroomNet.cpp" />
     <ClCompile Include="scenes\SceneCloseHandler.cpp" />
+    <ClCompile Include="scenes\SceneCompany.cpp" />
     <ClCompile Include="scenes\SceneEndGame.cpp" />
     <ClCompile Include="scenes\SceneGame.cpp" />
     <ClCompile Include="scenes\SceneGameMenu.cpp" />
@@ -184,6 +185,7 @@
     <ClCompile Include="scenes\SceneJournal.cpp" />
     <ClCompile Include="scenes\SceneMainMenu.cpp" />
     <ClCompile Include="scenes\SceneOptions.cpp" />
+    <ClCompile Include="scenes\ScenePostfix.cpp" />
     <ClCompile Include="scenes\SceneStartMenu.cpp" />
     <ClCompile Include="scenes\SceneTask.cpp" />
     <ClCompile Include="SeedStore.cpp" />
@@ -222,6 +224,7 @@
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="MushroomNet.h" />
     <ClInclude Include="scenes\SceneCloseHandler.h" />
+    <ClInclude Include="scenes\SceneCompany.h" />
     <ClInclude Include="scenes\SceneEndGame.h" />
     <ClInclude Include="scenes\SceneGame.h" />
     <ClInclude Include="scenes\SceneGameMenu.h" />
@@ -229,6 +232,7 @@
     <ClInclude Include="scenes\SceneJournal.h" />
     <ClInclude Include="scenes\SceneMainMenu.h" />
     <ClInclude Include="scenes\SceneOptions.h" />
+    <ClInclude Include="scenes\ScenePostfix.h" />
     <ClInclude Include="scenes\SceneStartMenu.h" />
     <ClInclude Include="scenes\SceneTask.h" />
     <ClInclude Include="SeedStore.h" />

@@ -1,4 +1,5 @@
 #include "HelperCppClasses/StringTools.h"
+#include <fstream>
 
 std::string clearStringFromEndl(const std::string& str) {
 	std::string res = str;
@@ -66,4 +67,17 @@ bool hasEnding (std::string const &fullString, std::string const &ending) {
     } else {
         return false;
     }
+}
+
+std::string readAllTextFromFile(const std::string& filename, const std::string& defvalue) {
+	std::ifstream fin(filename);
+	if (!fin.is_open()) return defvalue;
+
+	std::string res;
+	std::string line;
+	while (std::getline(fin, line)) {
+		res+= clearLineFromBOM(line);
+	}
+	fin.close();
+	return res;
 }

@@ -665,8 +665,15 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
 
     shader_attack.setUniform("stage", (float)(0.25f + 0.25f * sin(4.0f * M_PI * getEngine()->getAllTime())));
 
-    if (game.isGameOver())
-        if (!counter_endgame.isActive()) counter_endgame.upset(2.0f);
+    if (game.isGameOver()) {
+        if (!counter_endgame.isActive()) {
+            if (game.isWin()) {
+                userprofile->setLevelCompleted(levelcode.first, levelcode.second);
+                userprofile->saveProfile();
+            }
+            counter_endgame.upset(2.0f);
+        }
+    }
 
 }
 

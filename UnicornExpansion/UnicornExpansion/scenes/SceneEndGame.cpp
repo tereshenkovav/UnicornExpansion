@@ -3,10 +3,20 @@
 #include "SceneMainMenu.h"
 #include "SceneGame.h"
 
-SceneEndGame::SceneEndGame(const Game & game, LevelCode code) :Scene()
+SceneEndGame::SceneEndGame(const Game & game, LevelCode levelcode) :Scene()
 {
     iswin = game.isWin();
     this->levelcode = levelcode;
+}
+
+void SceneEndGame::goNextLevel()
+{
+    LevelCode newlevel = levelcode;
+    newlevel.second++;
+    if (newlevel.second >= UserProfile::getLevelCount(newlevel.first))
+        getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>(newlevel.first));
+    else
+        getEngine()->SwitchToScene(std::make_shared<SceneGame>(newlevel));
 }
 
 void SceneEndGame::Render(sf::RenderTarget & rendertarget) {
@@ -35,7 +45,7 @@ void SceneEndGame::Init() {
     
     if (iswin) {
         buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_Continue"), 18, 512 - 80, 280, 160, 40));
-        buttons.back()->setOnClick([this]() { getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>()); });
+        buttons.back()->setOnClick([this]() { goNextLevel(); });
     }
     else {
         buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_Restart"), 18, 512 - 80, 280, 160, 40));

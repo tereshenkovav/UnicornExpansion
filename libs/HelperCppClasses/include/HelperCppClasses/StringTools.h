@@ -19,3 +19,5 @@ std::string replaceFirstString(std::string& str, const std::string& src, const s
 std::string replaceAllString(std::string& str, const std::string& src, const std::string& dst);
 // ѕроверка завершени€ одной строки другой
 bool hasEnding (std::string const &fullString, std::string const &ending) ;
+
+std::string readAllTextFromFile(const std::string & filename, const std::string & defvalue);

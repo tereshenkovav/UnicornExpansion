@@ -20,6 +20,8 @@ enum class Terrain { Ground, Forest, Water, Road };
 enum class LaserType { Harvest, Attack, Heal, Detox };
 enum class AudioEffect { Teleport, FinishTeleport, FinishResearch, FinishUpgrade, UnderAttack };
 
+enum class Difficulty { Easy, Norm, Hard };
+
 using LevelCode = std::pair<std::string, int>;
 
 // Запись для лазера
