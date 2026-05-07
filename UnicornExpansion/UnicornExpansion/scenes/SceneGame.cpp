@@ -795,6 +795,7 @@ void SceneGame::Init() {
     snd_audioeffects[AudioEffect::FinishTeleport]=loadSound("sounds/finish_teleport.ogg");
     snd_audioeffects[AudioEffect::FinishResearch]=loadSound("sounds/finish_research.ogg");
     snd_audioeffects[AudioEffect::FinishUpgrade]=loadSound("sounds/finish_upgrade.ogg");
+    snd_audioeffects[AudioEffect::FinishBuilding] = loadSound("sounds/finish_building.ogg");
     snd_audioeffects[AudioEffect::UnderAttack]=loadSound("sounds/under_attack.ogg");
 
     spr_terrains[Terrain::Ground]=loadSprite("images/terrains/ground.png");

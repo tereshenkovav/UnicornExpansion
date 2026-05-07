@@ -13,19 +13,22 @@ std::vector<UnitAction> ComponentMachine::getActions() const
 
 bool ComponentMachine::applyAction(const UnitAction& action)
 {
-	auto pos = game->getUnitByUID(unit_id).getXY();
+	const GameUnit& unit = game->getUnitByUID(unit_id);
 	game->deleteUnitLater(unit_id);
 	UnitFactory factory(game);
 	if (action.code == "make_towerharvest") {
-		factory.addHarvestTower(pos.x, pos.y);
+		factory.addHarvestTower(unit.getXY().x, unit.getXY().y);
+		game->addGameEvent(AudioEffect::FinishBuilding, unit.getView());
 		return true;
 	}
 	if (action.code == "make_towerhealer") {
-		factory.addHealerTower(pos.x, pos.y);
+		factory.addHealerTower(unit.getXY().x, unit.getXY().y);
+		game->addGameEvent(AudioEffect::FinishBuilding, unit.getView());
 		return true;
 	}
 	if (action.code == "make_towerattack") {
-		factory.addAttackTower(pos.x, pos.y);
+		factory.addAttackTower(unit.getXY().x, unit.getXY().y);
+		game->addGameEvent(AudioEffect::FinishBuilding, unit.getView());
 		return true;
 	}
 	return false;
