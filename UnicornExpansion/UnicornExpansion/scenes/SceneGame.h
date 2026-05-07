@@ -63,6 +63,7 @@ private:
     std::weak_ptr<sfge::Animation> current_teleportation_effect;
     bool mouseholdedonmap = false;
     bool showfps = false;
+    bool showterrain = true;
 
     bool overundo = false;
     std::optional<int> overactionidx = std::nullopt;

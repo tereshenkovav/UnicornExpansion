@@ -38,7 +38,7 @@ SceneGame::SceneGame(LevelCode levelcode) {
 void SceneGame::updateMiniMap() {
     for (int i = 0; i < game.getWidth(); i++)
         for (int j = 0; j < game.getHeight(); j++) {
-            if (game.isFog(i, j))
+            if (game.isFog(i, j)||(!showterrain))
                 minimap.setCellColor(i, j, sf::Color::Black);
             else {
                 if (color_terrains.count(game.getMap(i, j)) > 0) minimap.setCellColor(i, j, color_terrains[game.getMap(i, j)]);
@@ -48,7 +48,7 @@ void SceneGame::updateMiniMap() {
                 if (stage > 0) minimap.addCellColor(i, j, sf::Color{ 160,56,255,uint8_t(64 + 32 * stage) });
             }
         }
-
+    
     // Работаем со всеми юнитами, без деления на свои и чужие
     for (int i = 0; i < game.getUnitCount(); i++)
         for (int dx = 0; dx < game.getUnit(i).getSize().x; dx++)
@@ -478,6 +478,7 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
             if (keyPressed->scancode == sf::Keyboard::Scancode::F8) getEngine()->AddOverScene(std::make_shared<SceneJournal>(game));
 
             if (keyPressed->scancode == sf::Keyboard::Scancode::F) showfps = !showfps;
+            if (keyPressed->scancode == sf::Keyboard::Scancode::Tab) showterrain = !showterrain;
             if (keyPressed->scancode == sf::Keyboard::Scancode::Enter) {
                 game.skipAllMessages();
             }
