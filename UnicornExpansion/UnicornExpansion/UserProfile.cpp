@@ -11,6 +11,16 @@ void UserProfile::setVoiceOn(bool value) {
 	voiceon = value;
 }
 
+Difficulty UserProfile::getLastDifficulty() const
+{
+	return lastdifficulty;
+}
+
+void UserProfile::setLastDifficulty(Difficulty value)
+{
+	lastdifficulty = value;
+}
+
 void UserProfile::loadProfile(const std::string& filename)
 {
 	this->filename = filename;
@@ -28,6 +38,10 @@ void UserProfile::loadProfile(const std::string& filename)
 	setVSync(jsonProfile["options"]["vsync"].asBool());
 	// Далее уже специфичные для игры
 	setVoiceOn(jsonProfile["options"]["voiceon"].asBool());
+	if (jsonProfile["options"]["difficulty"].isInt())
+		lastdifficulty = Difficulty(jsonProfile["options"]["difficulty"].asInt());
+	else
+		lastdifficulty = Difficulty::Norm;
 
 	progress.clear();
 	for (int i = 0; i < jsonProfile["progress"].size(); i++)
@@ -47,6 +61,7 @@ void UserProfile::saveProfile() const
 	jsonProfile["options"]["vsync"] = isVSync();
 	// Далее уже специфичные для игры
 	jsonProfile["options"]["voiceon"] = isVoiceOn();
+	jsonProfile["options"]["difficulty"] = (int)lastdifficulty;
 
 	Json::Value jsonProgress;
 	for (auto& p : progress) {

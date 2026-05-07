@@ -36,7 +36,7 @@ void SceneCompany::Render(sf::RenderTarget & rendertarget) {
 
 void SceneCompany::Update(float dt, const sf::Vector2i & mousePos, const std::vector<sf::Event>& events) {
     for (auto & event : events) {
-
+                
         butcancel->processEvent(event);
         
         bool v = cbeasy->isChecked();
@@ -71,16 +71,23 @@ void SceneCompany::Update(float dt, const sf::Vector2i & mousePos, const std::ve
         
         for (auto& button : buttons)
             button->processEvent(event);
-                
-        if (cbeasy->isChecked()) difficulty = Difficulty::Easy;
-        if (cbnorm->isChecked()) difficulty = Difficulty::Norm;
-        if (cbhard->isChecked()) difficulty = Difficulty::Hard;
         
         if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
         {
             if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
                 getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>());
         };
+    }
+
+    auto newd = Difficulty::Norm;
+    if (cbeasy->isChecked()) newd = Difficulty::Easy;
+    if (cbnorm->isChecked()) newd = Difficulty::Norm;
+    if (cbhard->isChecked()) newd = Difficulty::Hard;
+
+    if (newd != difficulty) {
+        difficulty = newd;
+        userprofile->setLastDifficulty(difficulty);
+        userprofile->saveProfile();
     }
 }
 
@@ -112,7 +119,7 @@ void SceneCompany::Init() {
         1024-116-16, 700, 100, 40);
     butcancel->setOnClick([this]() {getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>()); });
 
-    difficulty = Difficulty::Norm;
+    difficulty = userprofile->getLastDifficulty();
 
     cbeasy = std::make_unique<sfge::Checkbox>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Checkbox_Easy"), 18,
         80, 700, 24, 24);
