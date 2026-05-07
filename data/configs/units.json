@@ -7,7 +7,7 @@
   "Machine":
   {
     "HP": 100,
-    "V": 100
+    "V": 150
   },
   "Portal":
   {
@@ -15,15 +15,15 @@
   },
   "HealerTower":
   {
-    "HP": 100
+    "HP": 70
   },
   "HarvestTower":
   {
-    "HP": 100
+    "HP": 70
   },
   "AttackTower":
   {
-    "HP": 100
+    "HP": 70
   }
 
 }

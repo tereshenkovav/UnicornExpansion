@@ -99,7 +99,6 @@ public:
 	bool loadTexts(const std::string& filename);
 	// Работа с юнитами
 	void addUnit(const GameUnit& unit);
-	void deleteUnitLater(int uid);
 	std::optional<int> findUnitAt(float viewx, float viewy) const;
 	std::vector<int> findVisibleUnitsInRect(float viewx1, float viewy1, float viewx2, float viewy2) const;
 	// Размеры карты
@@ -152,6 +151,7 @@ public:
 	bool isUnitNearXYDist(int uid, int x, int y, int dist) const;
 	int getUnitHealth(int uid) const;
 	bool isUnitExist(int uid) const;
+	void deleteUnitLater(int uid);
 	/* Конец скриптового блока */
 
 	// Получить информацию о таймере

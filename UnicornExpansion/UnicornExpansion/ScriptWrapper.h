@@ -44,6 +44,12 @@ zetscript::zs_int Game_addCrystal(zetscript::ScriptEngine* _script_engine, Game*
 	return factory.addCrystal(x, y, hp);
 }
 
+zetscript::zs_int Game_addEmptyUnit(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y, zetscript::zs_int hp, zetscript::StringScriptObject* name, zetscript::StringScriptObject* code) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	UnitFactory factory(_this);
+	return factory.addEmptyUnit(x, y, hp, name->getConstChar(), code->getConstChar());
+}
+
 zetscript::zs_int Game_addUnicorn(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	UnitFactory factory(_this);
@@ -60,6 +66,11 @@ zetscript::zs_int Game_addLair(zetscript::ScriptEngine* _script_engine, Game* _t
 	ZS_UNUSUED_PARAM(_script_engine);
 	UnitFactory factory(_this);
 	return factory.addLair(x, y, seq->getConstChar());
+}
+
+void Game_deleteUnitLater(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int uid) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	_this->deleteUnitLater(uid);
 }
 
 void Game_incEnergy(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int value) {
@@ -200,6 +211,7 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
 	engine.registerMemberFunction<Game>("addEnemy2", &Game_addEnemy2);
 	engine.registerMemberFunction<Game>("addEnemy3", &Game_addEnemy3);
 	engine.registerMemberFunction<Game>("addCrystal", &Game_addCrystal);
+	engine.registerMemberFunction<Game>("addEmptyUnit", &Game_addEmptyUnit);
 	engine.registerMemberFunction<Game>("addUnicorn", &Game_addUnicorn);
 	engine.registerMemberFunction<Game>("addMachine", &Game_addMachine);
 	engine.registerMemberFunction<Game>("addLair", &Game_addLair);
@@ -228,4 +240,5 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
 		engine.registerMemberFunction<Game>("isUnitNearXY", &Game_isUnitNearXY);
 		engine.registerMemberFunction<Game>("getUnitHealth", &Game_getUnitHealth);
 		engine.registerMemberFunction<Game>("isUnitExist", &Game_isUnitExist);
+		engine.registerMemberFunction<Game>("deleteUnitLater", &Game_deleteUnitLater);
 }

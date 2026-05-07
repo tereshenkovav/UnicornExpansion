@@ -16,6 +16,7 @@
 #include "ComponentEnemyTarget.h"
 #include "ComponentEnemy.h"
 #include "ComponentPortal.h"
+#include "ComponentMachine.h"
 #include "FinderByBestDistance.h"
 #include "UnitFactory.h"
 #include "SeedStore.h"
@@ -479,8 +480,8 @@ void Game::update(float dt)
 	// И потом уже работаем с обновлением юнитов
 	for (int i = 0; i < units.size(); i++) {
 		units[i].update(dt);
-		// Для единоров Разгон тумана войны
-		if (units[i].isComponent<ComponentUnicorn>()) clearFogAt(units[i].getXY(), 6);
+		// Для единоров и машин Разгон тумана войны.
+		if (units[i].isComponent<ComponentUnicorn>()||units[i].isComponent<ComponentMachine>()) clearFogAt(units[i].getXY(), 6);
 	}
 	
 	// Обновление урона от грибов для единорогов

@@ -1,5 +1,9 @@
 var game ;
 var uidhero ;
+var uidm1 ;
+var uidm2 ;
+var uidm3 ;
+var find_count ;
  
 function initMap() {
   game = new Game() ;
@@ -24,7 +28,9 @@ function initMap() {
   game.addCrystal(11,15,78) ;
   game.addCrystal(56,24,56) ;
 
-  game.addMachine(27,2) ;
+  uidm1 = game.addEmptyUnit(27,2,100,"Machine","machine") ;
+  uidm2 = game.addEmptyUnit(58,1,100,"Machine","machine") ;
+  uidm3 = game.addEmptyUnit(4,20,100,"Machine","machine") ;
 
   game.addEnemy1(47,12) ;
   game.addEnemy1(33,22) ;
@@ -41,6 +47,8 @@ function initMap() {
 
   game.setNewViewPoint(8,5) ;
 
+  find_count = 0 ;
+
   game.addMessage("unicorn",10,"$Brief_1") ;
   game.addNewTask("findportal","$Task1") ;
   return true ;
@@ -48,12 +56,42 @@ function initMap() {
 
 function Update() {
   if (!game.isFlag("point1")) {
-    if (game.isUnitNearXYDist(uidhero,27,2,3)) {
+    if (game.isUnitNearXYDist(uidhero,27,2,4)) {
       game.setFlag("point1") ;
       game.addMessage("unicorn",10,"$Brief_2_1") ;
       game.addMessageLater("helper",10,10,"$Brief_2_2") ;
       game.addNewTask("findmachine","$Task2") ;
     }
+  }
+
+  if (game.isUnitExist(uidm1)) {
+    if (game.isUnitNearXY(uidhero,27,2)) {
+      game.deleteUnitLater(uidm1) ;
+      game.addMachine(27,2) ;
+      find_count++ ;
+    }
+  }
+
+  if (game.isUnitExist(uidm2)) {
+    if (game.isUnitNearXY(uidhero,58,1)) {
+      game.deleteUnitLater(uidm2) ;
+      game.addMachine(58,1) ;
+      find_count++ ;
+    }
+  }
+
+  if (game.isUnitExist(uidm3)) {
+    if (game.isUnitNearXY(uidhero,4,20)) {
+      game.deleteUnitLater(uidm3) ;
+      game.addMachine(4,20) ;
+      find_count++ ;
+    }
+  }
+
+  if ((find_count==3)&&(!game.isFlag("findall"))) {
+    game.setFlag("findall") ;
+    game.setTaskCompleted("findmachine") ;
+    game.addMessage("unicorn",10,"$Brief_M") ;
   }
 
   if (!game.isFlag("point2")) {

@@ -16,6 +16,13 @@ UnitFactory::UnitFactory(Game* game)
     this->game = game;
 }
 
+int UnitFactory::addEmptyUnit(int x, int y, int hp, const std::string & name, const std::string& code)
+{
+    GameUnit unit(x, y, 1, 1, name, hp, code);
+    game->addUnit(unit);
+    return unit.getUID();
+}
+
 int UnitFactory::addCrystal(int x, int y, int hp)
 {
     GameUnit unit(x, y, 1, 1, "Crystal", hp, "crystal");
