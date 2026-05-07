@@ -86,7 +86,6 @@ private:
 	std::optional<sf::Vector2f> teleportation_effect;
 	std::vector<AudioEffect> audioeffects;
 	Countdown counter_under_attack;
-	Countdown counter_1sec;
 	std::set<int> last_attacked_units;
 	std::set<int> new_attacked_units;
 	std::optional<sf::Vector2f> lasteventpos;

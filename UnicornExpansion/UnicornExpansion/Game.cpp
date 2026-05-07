@@ -169,9 +169,7 @@ bool Game::loadScript(const std::string& filename) {
 	lasteventpos = std::nullopt;
 	// Очистка лазеров
 	lasers.clear();
-
-	counter_1sec.upset(1.0f);
-
+		
 	return true;
 }
 
@@ -650,14 +648,10 @@ void Game::update(float dt)
 
 	try {
 		if (!isGameOver()) {
-			counter_1sec.update(dt);
-			if (counter_1sec.onceReachNol()) {
-				counter_1sec.upset(1.0f);
-				funcupdate();
-				iswin = funcvictory();
-				// Обязательно в независимом блоке, чтобы сначала проверяли победу, и если не найдено, то  потом поражение
-				if (!isGameOver()) isfail = funcdefeat();
-			}
+			funcupdate();
+			iswin = funcvictory();
+			// Обязательно в независимом блоке, чтобы сначала проверяли победу, и если не найдено, то  потом поражение
+			if (!isGameOver()) isfail = funcdefeat();
 		}
 	}
 	catch (std::exception& e) {
