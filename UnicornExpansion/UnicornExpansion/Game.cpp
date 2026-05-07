@@ -208,7 +208,7 @@ void Game::deleteUnitLater(int uid)
 {
 	for (int i = 0; i < units.size(); i++)
 		if (units[i].getUID() == uid) {
-			units[i].decHealth(units[i].get1Health());
+			units[i].setKilled();
 			break;
 		}
 }

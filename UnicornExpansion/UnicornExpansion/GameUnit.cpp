@@ -89,6 +89,11 @@ std::string GameUnit::getShieldInfo() const
 	return std::format("{}/{}", int_shield, *full_shield);
 }
 
+void GameUnit::setKilled()
+{
+	health = 0.0f;
+}
+
 float GameUnit::getHealthPerMax() const
 {
 	return get1Health() / (float)maxhealth;
