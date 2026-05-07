@@ -38,16 +38,16 @@
         "Time": 10
     },
     "UpgradeHarvester": {
-        "Price": [50, 75],
-        "Time": [20, 35]
+        "Price": [50, 75, 120, 170, 250],
+        "Time": [20, 30, 45, 70, 100]
     },
     "UpgradeAttacker": {
-        "Price": [70, 100],
-        "Time": [25, 40]
+        "Price": [70, 105, 160, 240, 350],
+        "Time": [25, 40, 60, 90, 130]
     },
     "UpgradeHealer": {
-        "Price": [60, 90],
-        "Time": [22, 37]
+        "Price": [60, 90, 150, 230, 340],
+        "Time": [20, 30, 45, 70, 100]
     },
     "DoRadar": {
         "Price": 30,
