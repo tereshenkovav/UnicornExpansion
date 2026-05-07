@@ -103,7 +103,7 @@ int UnitFactory::addHealerTower(int x, int y)
 {
     auto param = game->getConfigUnit()["HealerTower"];
     GameUnit unit(x, y, 1, 1, "HealerTower", param["HP"].asInt(), "towerhealer");
-    unit.addComponent(new ComponentHealer(game));
+    unit.addComponent(new ComponentHealerTower(game));
     unit.addComponent(new ComponentEnemyTarget(game));
     game->addUnit(unit);
     return unit.getUID();
@@ -113,7 +113,7 @@ int UnitFactory::addHarvestTower(int x, int y)
 {
     auto param = game->getConfigUnit()["HarvestTower"];
     GameUnit unit(x, y, 1, 1, "HarvestTower", param["HP"].asInt(), "towerharvest");
-    unit.addComponent(new ComponentHarvester(game));
+    unit.addComponent(new ComponentHarvesterTower(game));
     unit.addComponent(new ComponentEnemyTarget(game));
     game->addUnit(unit);
     return unit.getUID();
@@ -123,7 +123,7 @@ int UnitFactory::addAttackTower(int x, int y)
 {
     auto param = game->getConfigUnit()["AttackTower"];
     GameUnit unit(x, y, 1, 1, "AttackTower", param["HP"].asInt(), "towerattack");
-    unit.addComponent(new ComponentAttacker(game));
+    unit.addComponent(new ComponentAttackerTower(game));
     unit.addComponent(new ComponentEnemyTarget(game));
     game->addUnit(unit);
     return unit.getUID();

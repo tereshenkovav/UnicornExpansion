@@ -27,5 +27,18 @@
   },
   "Lair": {
     "SpawnInterval": 30
-  }
+  },
+  "TowerAttacker": {
+     "Value": 12,
+     "Distance": 300
+   },
+  "TowerHarvester": {
+     "Value": 6,
+     "Distance": 300
+   },
+  "TowerHealer": {
+     "Value": 9,
+     "Distance": 300,
+     "Cost": 15
+   }
 }

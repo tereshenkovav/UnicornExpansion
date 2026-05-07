@@ -23,17 +23,17 @@ std::vector<UnitAction> ComponentUnicorn::getActions() const
 bool ComponentUnicorn::applyAction(const UnitAction& action)
 {
 	if (action.code == "make_harvester") {
-		game->addComponentToUnitByUID(unit_id, new ComponentHarvester(game));
+		game->addComponentToUnitByUID(unit_id, new ComponentHarvesterUnicorn(game));
 		game->addGameEvent(AudioEffect::FinishResearch, game->getUnitByUID(this->unit_id).getView());
 		return true;
 	}
 	if (action.code == "make_attacker") {
-		game->addComponentToUnitByUID(unit_id, new ComponentAttacker(game));
+		game->addComponentToUnitByUID(unit_id, new ComponentAttackerUnicorn(game));
 		game->addGameEvent(AudioEffect::FinishResearch, game->getUnitByUID(this->unit_id).getView());
 		return true;
 	}
 	if (action.code == "make_healer") {
-		game->addComponentToUnitByUID(unit_id, new ComponentHealer(game));
+		game->addComponentToUnitByUID(unit_id, new ComponentHealerUnicorn(game));
 		game->addGameEvent(AudioEffect::FinishResearch, game->getUnitByUID(this->unit_id).getView());
 		return true;
 	}

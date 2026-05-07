@@ -1,12 +1,6 @@
 #include "ComponentHarvester.h"
 #include "Game.h"
 
-ComponentHarvester::ComponentHarvester(Game* game) :UnitComponent(game)
-{
-	harvest_rate = game->getConfigComponent()["Harvester"]["Value"].asInt();
-	tek_upgrade_pos = 0;
-}
-
 int ComponentHarvester::getHarvestRate() const
 {
 	return harvest_rate;
@@ -14,17 +8,29 @@ int ComponentHarvester::getHarvestRate() const
 
 int ComponentHarvester::getHarvestDistance() const
 {
-	return game->getConfigComponent()["Harvester"]["Distance"].asInt();
+	return harvest_dist;
 }
 
-std::vector<UnitAction> ComponentHarvester::getActions() const
+std::string ComponentHarvester::getComponentInfo() const
+{
+	return "$Info_HarvestRate$: " + std::to_string(harvest_rate);
+}
+
+ComponentHarvesterUnicorn::ComponentHarvesterUnicorn(Game* game):ComponentHarvester(game)
+{
+	harvest_rate = game->getConfigComponent()["Harvester"]["Value"].asInt();
+	harvest_dist = game->getConfigComponent()["Harvester"]["Distance"].asInt();
+	tek_upgrade_pos = 0;
+}
+
+std::vector<UnitAction> ComponentHarvesterUnicorn::getActions() const
 {
 	std::vector<UnitAction> actions;
 	addActionIfAllowed(&actions, "upgrade_harvester", "UpgradeHarvester", tek_upgrade_pos);
 	return actions;
 }
 
-bool ComponentHarvester::applyAction(const UnitAction& action)
+bool ComponentHarvesterUnicorn::applyAction(const UnitAction& action)
 {
 	if (action.code == "upgrade_harvester") {
 		harvest_rate += game->getConfigComponent()["Harvester"]["UpgradeStep"].asInt();
@@ -35,17 +41,18 @@ bool ComponentHarvester::applyAction(const UnitAction& action)
 	return false;
 }
 
-std::string ComponentHarvester::getComponentInfo() const
-{
-	return "$Info_HarvestRate$: "+std::to_string(harvest_rate);
-}
-
-std::string ComponentHarvester::getCodePostfix() const
+std::string ComponentHarvesterUnicorn::getCodePostfix() const
 {
 	return "harvester";
 }
 
-int ComponentHarvester::getOrder() const
+int ComponentHarvesterUnicorn::getOrder() const
 {
 	return 1;
+}
+
+ComponentHarvesterTower::ComponentHarvesterTower(Game* game) :ComponentHarvester(game)
+{
+	harvest_rate = game->getConfigComponent()["TowerHarvester"]["Value"].asInt();
+	harvest_dist = game->getConfigComponent()["TowerHarvester"]["Distance"].asInt();
 }

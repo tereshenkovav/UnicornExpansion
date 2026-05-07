@@ -1,17 +1,6 @@
 #include "ComponentAttacker.h"
 #include "Game.h"
 
-ComponentAttacker::ComponentAttacker(Game* game):UnitComponent(game)
-{
-	attack_value = game->getConfigComponent()["Attacker"]["Value"].asInt();
-	tek_upgrade_pos = 0;
-}
-
-std::string ComponentAttacker::getComponentInfo() const
-{
-	return "$Info_AttackLevel$: "+std::to_string(attack_value);
-}
-
 int ComponentAttacker::getAttackValue() const
 {
 	return attack_value;
@@ -19,27 +8,39 @@ int ComponentAttacker::getAttackValue() const
 
 int ComponentAttacker::getAttackDistance() const
 {
-	return game->getConfigComponent()["Attacker"]["Distance"].asInt();
+	return attack_dist;
 }
 
-std::string ComponentAttacker::getCodePostfix() const
+std::string ComponentAttacker::getComponentInfo() const
+{
+	return "$Info_AttackLevel$: " + std::to_string(attack_value);
+}
+
+ComponentAttackerUnicorn::ComponentAttackerUnicorn(Game* game):ComponentAttacker(game)
+{
+	attack_value = game->getConfigComponent()["Attacker"]["Value"].asInt();
+	attack_dist = game->getConfigComponent()["Attacker"]["Distance"].asInt();
+	tek_upgrade_pos = 0;
+}
+
+std::string ComponentAttackerUnicorn::getCodePostfix() const
 {
 	return "attacker";
 }
 
-int ComponentAttacker::getOrder() const
+int ComponentAttackerUnicorn::getOrder() const
 {
 	return 2;
 }
 
-std::vector<UnitAction> ComponentAttacker::getActions() const
+std::vector<UnitAction> ComponentAttackerUnicorn::getActions() const
 {
 	std::vector<UnitAction> actions;
 	addActionIfAllowed(&actions, "upgrade_attacker", "UpgradeAttacker", tek_upgrade_pos);
 	return actions;
 }
 
-bool ComponentAttacker::applyAction(const UnitAction& action)
+bool ComponentAttackerUnicorn::applyAction(const UnitAction& action)
 {
 	if (action.code == "upgrade_attacker") {
 		attack_value += game->getConfigComponent()["Attacker"]["UpgradeStep"].asInt();
@@ -48,4 +49,10 @@ bool ComponentAttacker::applyAction(const UnitAction& action)
 		return true;
 	}
 	return false;
+}
+
+ComponentAttackerTower::ComponentAttackerTower(Game* game) :ComponentAttacker(game)
+{
+	attack_value = game->getConfigComponent()["TowerAttacker"]["Value"].asInt();
+	attack_dist = game->getConfigComponent()["TowerAttacker"]["Distance"].asInt();
 }
