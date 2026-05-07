@@ -35,6 +35,12 @@ function initMap() {
   game.addEnemy1(47,12) ;
   game.addEnemy1(33,22) ;
   game.addEnemy1(5,30) ;
+  if (game.isHard1()) {
+    game.addEnemy2(45,13) ;
+  }
+  if (game.isHard2()) {
+    game.addEnemy2(32,21) ;
+  }
 
   game.addEnemy1(40,35) ;
   game.addEnemy1(42,34) ;
@@ -42,6 +48,14 @@ function initMap() {
   game.addEnemy1(40,38) ;
   game.addEnemy2(42,36) ;
   game.addEnemy2(38,37) ;
+  if (game.isHard1()) {
+    game.addEnemy2(42,38) ;
+    game.addEnemy2(36,35) ;
+  }
+  if (game.isHard2()) {
+    game.addEnemy3(38,35) ;
+    game.addEnemy3(37,38) ;
+  }
 
   game.incEnergy(100) ;
 

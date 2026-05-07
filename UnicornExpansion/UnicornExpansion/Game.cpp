@@ -55,6 +55,11 @@ Game::Game() {
 	units.reserve(1024);
 }
 
+void Game::setDifficulty(Difficulty value)
+{
+	difficulty = value;
+}
+
 bool Game::loadMap(const std::string& filename) {
 	std::map<char, Terrain> mapchars;
 	mapchars['+'] = Terrain::Ground;
@@ -206,6 +211,16 @@ void Game::deleteUnitLater(int uid)
 			units[i].decHealth(units[i].get1Health());
 			break;
 		}
+}
+
+bool Game::isHard1() const
+{
+	return (difficulty == Difficulty::Norm) || (difficulty == Difficulty::Hard);
+}
+
+bool Game::isHard2() const
+{
+	return (difficulty == Difficulty::Hard);
 }
 
 std::optional<int> Game::findUnitAt(float viewx, float viewy) const

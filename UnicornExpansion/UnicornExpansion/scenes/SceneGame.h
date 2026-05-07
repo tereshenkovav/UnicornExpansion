@@ -119,7 +119,7 @@ private:
     void loadGame();
 
 public:
-    SceneGame(std::string company, int leven);
+    SceneGame(std::string company, int leven, Difficulty difficulty);
     SceneGame(LevelCode levelcode);
     virtual void Render(sf::RenderTarget& rendertarget) override;
     virtual void Update(float dt, const sf::Vector2i& mousePos, const std::vector<sf::Event>& events) override;

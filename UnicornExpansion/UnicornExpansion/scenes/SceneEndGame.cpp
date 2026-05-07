@@ -12,9 +12,9 @@ SceneEndGame::SceneEndGame(const Game & game, LevelCode levelcode) :Scene()
 void SceneEndGame::goNextLevel()
 {
     LevelCode newlevel = levelcode;
-    newlevel.second++;
-    if (newlevel.second >= UserProfile::getLevelCount(newlevel.first))
-        getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>(newlevel.first));
+    newlevel.level++;
+    if (newlevel.level >= UserProfile::getLevelCount(newlevel.company))
+        getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>(newlevel.company));
     else
         getEngine()->SwitchToScene(std::make_shared<SceneGame>(newlevel));
 }

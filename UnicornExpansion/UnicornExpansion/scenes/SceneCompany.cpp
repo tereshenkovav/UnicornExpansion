@@ -133,6 +133,6 @@ void SceneCompany::Init() {
         if (i<=userprofile->getNextLevel(company)) {
             buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), sfge::SfmlTools::utf2text(companylevels[i]), 18,
                 600 + 16 + 16 + 38, 64 + i * 54, 300, 40));
-            buttons.back()->setOnClick([this, i]() {getEngine()->SwitchToScene(std::make_shared<SceneGame>(company, i)); });
+            buttons.back()->setOnClick([this, i]() {getEngine()->SwitchToScene(std::make_shared<SceneGame>(company, i, difficulty)); });
         }
 }

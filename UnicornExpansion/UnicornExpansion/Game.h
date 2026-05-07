@@ -22,7 +22,11 @@ enum class AudioEffect { Teleport, FinishTeleport, FinishResearch, FinishUpgrade
 
 enum class Difficulty { Easy, Norm, Hard };
 
-using LevelCode = std::pair<std::string, int>;
+struct LevelCode {
+	std::string company;
+	int level;
+	Difficulty difficulty;
+};
 
 // Запись для лазера
 struct Laser {
@@ -74,6 +78,7 @@ private:
 	bool iswin;
 	bool isfail;
 	Vector2D<bool> fog;
+	Difficulty difficulty;
 	zetscript::ScriptEngine script_engine;
 	std::function<bool()> funcvictory;
 	std::function<bool()> funcdefeat;
@@ -90,6 +95,7 @@ private:
 	std::string trText(const std::string& text) const;
 public:
 	Game();
+	void setDifficulty(Difficulty value);
 	static bool canWalkOnTerrain(Terrain terr);
 	// Загрузка данных из файлов
 	bool loadMap(const std::string& filename);
@@ -152,6 +158,8 @@ public:
 	int getUnitHealth(int uid) const;
 	bool isUnitExist(int uid) const;
 	void deleteUnitLater(int uid);
+	bool isHard1() const;
+	bool isHard2() const;
 	/* Конец скриптового блока */
 
 	// Получить информацию о таймере

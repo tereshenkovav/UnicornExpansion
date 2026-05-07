@@ -26,8 +26,8 @@ sf::Vector2f getActionButtonPos(int i) {
 }
 // Конец
 
-SceneGame::SceneGame(std::string company, int leveln) {
-    this->levelcode = { company, leveln };
+SceneGame::SceneGame(std::string company, int leveln, Difficulty difficulty) {
+    this->levelcode = { company, leveln, difficulty };
 }
 
 SceneGame::SceneGame(LevelCode levelcode) {
@@ -114,7 +114,8 @@ void SceneGame::drawProgressRectsAt(sf::RenderTarget& rendertarget, float perc, 
 
 // Загрузчик игры из файлов
 void SceneGame::loadGame() {
-    auto part = std::format("company/{}/level{}", levelcode.first, levelcode.second);
+    game.setDifficulty(levelcode.difficulty);
+    auto part = std::format("company/{}/level{}", levelcode.company, levelcode.level);
     bool paramok = game.loadConfigs();
     bool textok = game.loadTexts(part + ".strings");
     bool mapok = game.loadMap(part + ".map");
@@ -670,7 +671,7 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
     if (game.isGameOver()) {
         if (!counter_endgame.isActive()) {
             if (game.isWin()) {
-                userprofile->setLevelCompleted(levelcode.first, levelcode.second);
+                userprofile->setLevelCompleted(levelcode.company, levelcode.level);
                 userprofile->saveProfile();
             }
             counter_endgame.upset(2.0f);
