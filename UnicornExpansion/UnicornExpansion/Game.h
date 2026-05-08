@@ -92,6 +92,7 @@ private:
 	void trySetUnderAttackEffect(const GameUnit& unit);
 	// Полезная функция, позволяет автоматически получать строки из внешнего файла, записывая их как $key, без использования game.getText
 	std::string trText(const std::string& text) const;
+	static GameUnit staticemptyunit;
 public:
 	Game();
 	void setDifficulty(Difficulty value);

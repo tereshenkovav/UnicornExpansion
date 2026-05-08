@@ -22,6 +22,8 @@
 #include "SeedStore.h"
 #include "ScriptWrapper.h"
 
+GameUnit Game::staticemptyunit;
+
 std::string prepLine(const std::string& str) {
 	return trimString(clearLineFromBOM(clearStringFromEndl(str)));
 }
@@ -253,7 +255,7 @@ const GameUnit& Game::getUnitByUID(int uid) const
 	for (int i = 0; i < units.size(); i++)
 		if (units[i].getUID() == uid)
 			return units[i];
-	return GameUnit();
+	return staticemptyunit;
 }
 
 void Game::setTargetToUnit(int uid, int targetx, int targety)
