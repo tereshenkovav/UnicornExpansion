@@ -5,42 +5,66 @@ var TIME_LIMIT ;
 function initMap() {
   game = new Game() ;
 
-  MANA_TASK = 201;
-  TIME_LIMIT = 7 ;
+  MANA_TASK = 2000;
+  if (game.isHard1()) { MANA_TASK+=2000 ; }
+  if (game.isHard2()) { MANA_TASK+=2000 ; }
 
-  game.allowAction("BuildUnicorn") ;
+  TIME_LIMIT = 8 ;
+
   game.allowAction("MakeHarvester") ;
   game.allowAction("MakeAttacker") ;
   game.allowAction("MakeHealer") ;
+  game.allowAction("MakeRadar") ;
+  game.allowAction("DoRadar") ;
+  game.allowAction("UpgradeHarvester") ;
+  game.allowAction("UpgradeAttacker") ;
+  game.allowAction("UpgradeHealer") ;
+  game.allowAction("MakeShield") ;
+  game.allowAction("DoShield") ;
+  game.allowAction("MakeTowerAttack") ;
+  game.allowAction("MakeTowerHealer") ;
+  game.allowAction("MakeTowerHarvest") ;
+  game.allowAction("BuildUnicorn") ;
 
-  game.addPortal(13,2) ;
-  game.addUnicorn(16,2) ;
-  game.addUnicorn(17,6) ;
-  game.addCrystal(22,7,210) ;
-  game.addCrystal(1,8,240) ;
-  game.addCrystal(9,9,250) ;
-  game.addCrystal(18,11,370) ;
-  game.addCrystal(15,12,340) ;
-  game.addCrystal(12,14,450) ;
-  game.addCrystal(13,18,230) ;
-  game.addCrystal(9,20,410) ;
-  game.addCrystal(17,21,580) ;
-  game.addCrystal(19,23,590) ;
-  game.addEnemy1(14,15) ;
-  game.addEnemy1(8,21) ;
-  game.addEnemy1(14,20) ;
-  game.addEnemy2(19,22) ;
+  game.addPortal(14,4) ;
+  game.addUnicorn(14,7) ;
+  game.addCrystal(10,12,300) ;
+  game.addCrystal(20,13,450) ;
+  game.addCrystal(4,23,530) ;
+  game.addCrystal(25,27,760) ;
+  game.addCrystal(4,37,470) ;
+  game.addCrystal(28,40,810) ;
+  game.addCrystal(19,43,890) ;
+  game.addCrystal(17,45,970) ;
+  game.addCrystal(15,48,1200) ;
+  game.addCrystal(13,49,1600) ;
+  game.addCrystal(16,50,2400) ;
+
+  game.addEnemy1(8,22) ;
+  game.addEnemy1(23,24) ;
+
+  game.addEnemy1(14,36) ;
+  game.addEnemy1(13,33) ;
+  game.addEnemy1(15,32) ;
+  game.addEnemy2(14,34) ;
+
+  game.addEnemy1(15,53) ;
+  game.addEnemy1(16,52) ;
+  game.addEnemy1(17,54) ;
+  game.addEnemy1(14,56) ;
+  game.addEnemy2(13,53) ;
+  game.addEnemy2(15,54) ;
+  game.addEnemy3(14,52) ;
 
   game.incEnergy(200) ;
 
   game.startTimer(TIME_LIMIT*60) ;
 
-  game.setNewViewPoint(12,6) ;
+  game.setNewViewPoint(14,6) ;
 
-  game.addMessage("unicorn",5,"111") ;
-//  game.addMessage("unicorn",5,"$Brief_1_2") ;
-//  game.addMessage("unicorn",5,"$Brief_1_3") ;
-//  game.addMessage("unicorn",5,"$Brief_1_4") ;
+  game.addMessage("unicorn",10,String::format(game.getText("Brief_1_1"),MANA_TASK)) ;
+  game.addMessageLater("unicorn",10,10,"$Brief_1_2") ;
+  game.addNewTask("collect",String::format(game.getText("Task"),MANA_TASK,TIME_LIMIT)) ;
 
   return true ;
 }
