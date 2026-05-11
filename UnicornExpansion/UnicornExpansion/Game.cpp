@@ -17,6 +17,7 @@
 #include "ComponentEnemy.h"
 #include "ComponentPortal.h"
 #include "ComponentMachine.h"
+#include "ComponentAcademy.h"
 #include "FinderByBestDistance.h"
 #include "UnitFactory.h"
 #include "SeedStore.h"
@@ -513,6 +514,15 @@ void Game::update(float dt)
 	for (int i = 0; i < history.size(); i++)
 		if (history[i].duration > 0) history[i].duration -= dt;
 
+	// Поиск изучения в академии
+	bool allowworkinaction = false;
+	for (int i = 0; i < units.size(); i++)
+		if (const auto* academy= units[i].getComponent<ComponentAcademy>())
+			if (academy->allowWorkWhileAction()) {
+				allowworkinaction = true;
+				break;
+			}
+
 	// Временная поправка для позиции лазера у единорога
 	sf::Vector2f laserfixleft{ -23, -25 };
 	sf::Vector2f laserfixright{ 21, -25 };
@@ -521,7 +531,7 @@ void Game::update(float dt)
 	lasers.clear();
 	for (int i = 0; i < units.size(); i++) {
 		if (const auto* harvester = units[i].getComponent<ComponentHarvester>()) {
-			if ((!units[i].isWorkingTask())&&(!units[i].isTargeted())) {
+			if (((!units[i].isWorkingTask()) || allowworkinaction) && (!units[i].isTargeted())) {
 				FinderByBestDistance finder(harvester->getHarvestDistance(), units[i].getView());
 				for (int j = 0; j < units.size(); j++)
 					if (units[j].isComponent<ComponentResource>())
@@ -535,7 +545,7 @@ void Game::update(float dt)
 			}
 		}
 		if (auto* healer = units[i].getComponent<ComponentHealer>()) {
-			if ((!units[i].isWorkingTask()) && (!units[i].isTargeted())) {
+			if (((!units[i].isWorkingTask()) || allowworkinaction) && (!units[i].isTargeted())) {
 				FinderByBestDistance finder(healer->getHealerDistance(), units[i].getView());
 				for (int j = 0; j < units.size(); j++)
 					if (units[j].isComponent<ComponentUnicorn>())
@@ -559,7 +569,7 @@ void Game::update(float dt)
 			}
 		}
 		if (const auto* attacker = units[i].getComponent<ComponentAttacker>()) {
-			if ((!units[i].isWorkingTask()) && (!units[i].isTargeted())) {
+			if (((!units[i].isWorkingTask()) || allowworkinaction) && (!units[i].isTargeted())) {
 				FinderByBestDistance finder(attacker->getAttackDistance(), units[i].getView());
 				// Сначала ищем врагов, которые могут атаковать танк в ответ
 				for (int j = 0; j < units.size(); j++)
@@ -584,7 +594,7 @@ void Game::update(float dt)
 			}
 		}
 		if (const auto* detoxer = units[i].getComponent<ComponentDetoxer>()) {
-			if ((!units[i].isWorkingTask()) && (!units[i].isTargeted())) {
+			if (((!units[i].isWorkingTask()) || allowworkinaction) && (!units[i].isTargeted())) {
 				FinderByBestDistance finder(detoxer->getDetoxDistance(), units[i].getView());
 				// Ищем грибные зоны
 				for (int x = 0; x < width; x++)
