@@ -89,6 +89,7 @@ private:
 	std::set<int> last_attacked_units;
 	std::set<int> new_attacked_units;
 	std::optional<sf::Vector2f> lasteventpos;
+	bool magiceconomy = false;
 	void trySetUnderAttackEffect(const GameUnit& unit);
 	// Полезная функция, позволяет автоматически получать строки из внешнего файла, записывая их как $key, без использования game.getText
 	std::string trText(const std::string& text) const;
@@ -201,6 +202,7 @@ public:
 	std::vector<Message> getTekMessages() const;
 	const std::vector<Message>& getHistory() const;
 	bool isActionAllowed(const std::string name) const;
+	bool isMagicEconomy() const;
 	// Обновление игры
 	void update(float dt);
 	// Шаблонный метод - поиск юнитов по компонентам

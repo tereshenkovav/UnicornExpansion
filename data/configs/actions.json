@@ -23,49 +23,60 @@
     },
     "MakeHarvester": {
         "Price": 40,
-        "Time": 10
+        "Time": 10,
+        "MagicEconomy":true
     },
     "MakeAttacker": {
         "Price": 60,
-        "Time": 15
+        "Time": 15,
+        "MagicEconomy":true
     },
     "MakeHealer": {
         "Price": 50,
-        "Time": 12
+        "Time": 12,
+        "MagicEconomy":true
     },
     "MakeRadar": {
         "Price": 30,
-        "Time": 7
+        "Time": 7,
+        "MagicEconomy":true
     },
     "MakeShield": {
         "Price": 20,
-        "Time": 10
+        "Time": 10,
+        "MagicEconomy":true
     },
     "MakeDetoxer": {
         "Price": 40,
-        "Time": 10
+        "Time": 10,
+        "MagicEconomy":true
     },
     "UpgradeHarvester": {
         "Price": [50, 75, 120, 170, 250],
-        "Time": [20, 30, 45, 70, 100]
+        "Time": [20, 30, 45, 70, 100],
+        "MagicEconomy":true
     },
     "UpgradeAttacker": {
         "Price": [70, 105, 160, 240, 350],
-        "Time": [25, 40, 60, 90, 130]
+        "Time": [25, 40, 60, 90, 130],
+        "MagicEconomy":true
     },
     "UpgradeHealer": {
         "Price": [60, 90, 150, 230, 340],
-        "Time": [20, 30, 45, 70, 100]
+        "Time": [20, 30, 45, 70, 100],
+        "MagicEconomy":true
     },
     "DoRadar": {
         "Price": 30,
         "Time": 3,
-        "Distance": 14
+        "Distance": 14,
+        "MagicEconomy":true
     },
     "DoShield": {
         "Price": 25,
         "Time": 1,
-        "Amount": 40
+        "Amount": 40,
+        "MagicEconomy":true
     },
     "MakeTowerAttack": {
         "Price": 0,

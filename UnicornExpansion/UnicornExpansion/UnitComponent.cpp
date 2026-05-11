@@ -19,15 +19,24 @@ void UnitComponent::addActionIfAllowed(std::vector<UnitAction>* actions, const s
 {
     if (!game->isActionAllowed(caption)) return;
     auto config = game->getConfigAction()[caption];
-    actions->push_back({ code,caption,config["Price"].asInt(), config["Time"].asInt(), (UnitComponent*)this });
+    int price = config["Price"].asInt();
+    if (config["MagicEconomy"].isBool())
+        if (config["MagicEconomy"].asBool())
+            if (game->isMagicEconomy()) price = (int)(price * 0.8); // Пока вставим константой
+    actions->push_back({ code,caption, price, config["Time"].asInt(), (UnitComponent*)this });
 }
 
 void UnitComponent::addActionIfAllowed(std::vector<UnitAction>* actions, const std::string& code, const std::string& caption, int idx) const
 {
     if (!game->isActionAllowed(caption)) return;
     auto config = game->getConfigAction()[caption];
-    if (idx < config["Price"].size())
-        actions->push_back({ code,caption,config["Price"][idx].asInt(), config["Time"][idx].asInt(), (UnitComponent*)this});
+    if (idx < config["Price"].size()) {
+        int price = config["Price"][idx].asInt();
+        if (config["MagicEconomy"].isBool())
+            if (config["MagicEconomy"].asBool())
+                if (game->isMagicEconomy()) price = (int)(price * 0.8); // Пока вставим константой
+        actions->push_back({ code,caption, price, config["Time"][idx].asInt(), (UnitComponent*)this });
+    }
 }
 
 std::vector<UnitAction> UnitComponent::getActions() const

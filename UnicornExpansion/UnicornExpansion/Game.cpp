@@ -516,12 +516,12 @@ void Game::update(float dt)
 
 	// ѕоиск изучени€ в академии
 	bool allowworkinaction = false;
+	magiceconomy = false;
 	for (int i = 0; i < units.size(); i++)
-		if (const auto* academy= units[i].getComponent<ComponentAcademy>())
-			if (academy->allowWorkWhileAction()) {
-				allowworkinaction = true;
-				break;
-			}
+		if (const auto* academy = units[i].getComponent<ComponentAcademy>()) {
+			if (academy->allowWorkWhileAction()) allowworkinaction = true;
+			if (academy->isMagicEconomy()) magiceconomy = true;
+		}
 
 	// ¬ременна€ поправка дл€ позиции лазера у единорога
 	sf::Vector2f laserfixleft{ -23, -25 };
@@ -789,6 +789,11 @@ const std::vector<Message>& Game::getHistory() const
 bool Game::isActionAllowed(const std::string name) const
 {
 	return allowedactions.contains(name);
+}
+
+bool Game::isMagicEconomy() const
+{
+	return magiceconomy;
 }
 
 std::string Game::getText(const std::string& name) const
