@@ -13,6 +13,14 @@
         "Price": 100,
         "Time": 20
     },
+    "ResearchWorkInAction": {
+        "Price": 300
+        "Time": 50
+    },
+    "ResearchMagicEconomy": {
+        "Price": 400
+        "Time": 70
+    },
     "MakeHarvester": {
         "Price": 40,
         "Time": 10

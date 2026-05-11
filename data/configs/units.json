@@ -13,6 +13,10 @@
   {
     "HP": 500
   },
+  "Academy":
+  {
+    "HP": 300
+  },
   "HealerTower":
   {
     "HP": 70

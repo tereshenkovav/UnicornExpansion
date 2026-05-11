@@ -1,4 +1,5 @@
 target_sources(UnicornExpansion PRIVATE
+ComponentAcademy.cpp
 ComponentAttacker.cpp
 ComponentDetoxer.cpp
 ComponentEnemy.cpp

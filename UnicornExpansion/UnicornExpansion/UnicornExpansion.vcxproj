@@ -155,6 +155,7 @@
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Engine.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Scene.cpp" />
     <ClCompile Include="ClickerCounter.cpp" />
+    <ClCompile Include="components\ComponentAcademy.cpp" />
     <ClCompile Include="components\ComponentAttacker.cpp" />
     <ClCompile Include="components\ComponentDetoxer.cpp" />
     <ClCompile Include="components\ComponentEnemy.cpp" />
@@ -205,6 +206,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClickerCounter.h" />
+    <ClInclude Include="components\ComponentAcademy.h" />
     <ClInclude Include="components\ComponentAttacker.h" />
     <ClInclude Include="components\ComponentDetoxer.h" />
     <ClInclude Include="components\ComponentEnemy.h" />
