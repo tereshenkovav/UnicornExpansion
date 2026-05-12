@@ -12,6 +12,7 @@
 #include "ComponentHarvester.h"
 #include "ComponentAcademy.h"
 #include "ComponentMachinary.h"
+#include "ComponentBuilding.h"
 
 UnitFactory::UnitFactory(Game* game)
 {
@@ -82,6 +83,7 @@ int UnitFactory::addPortal(int x, int y)
     GameUnit unit(x, y, 2, 2, "Portal", param["HP"].asInt(), "portal");
     unit.addComponent(new ComponentPortal(game));
     unit.addComponent(new ComponentEnemyTarget(game));
+    unit.addComponent(new ComponentBuilding(game));
     game->addUnit(unit);
     return unit.getUID();
 }
@@ -92,6 +94,7 @@ int UnitFactory::addAcademy(int x, int y)
     GameUnit unit(x, y, 2, 2, "Academy", param["HP"].asInt(), "academy");
     unit.addComponent(new ComponentAcademy(game));
     unit.addComponent(new ComponentEnemyTarget(game));
+    unit.addComponent(new ComponentBuilding(game));
     game->addUnit(unit);
     return unit.getUID();
 }
@@ -102,6 +105,7 @@ int UnitFactory::addMachinary(int x, int y)
     GameUnit unit(x, y, 2, 2, "Machinary", param["HP"].asInt(), "machinary");
     unit.addComponent(new ComponentMachinary(game));
     unit.addComponent(new ComponentEnemyTarget(game));
+    unit.addComponent(new ComponentBuilding(game));
     game->addUnit(unit);
     return unit.getUID();
 }
@@ -134,6 +138,7 @@ int UnitFactory::addHealerTower(int x, int y)
     GameUnit unit(x, y, 1, 1, "HealerTower", param["HP"].asInt(), "towerhealer");
     unit.addComponent(new ComponentHealerTower(game));
     unit.addComponent(new ComponentEnemyTarget(game));
+    unit.addComponent(new ComponentBuilding(game));
     game->addUnit(unit);
     return unit.getUID();
 }
@@ -144,6 +149,7 @@ int UnitFactory::addHarvestTower(int x, int y)
     GameUnit unit(x, y, 1, 1, "HarvestTower", param["HP"].asInt(), "towerharvest");
     unit.addComponent(new ComponentHarvesterTower(game));
     unit.addComponent(new ComponentEnemyTarget(game));
+    unit.addComponent(new ComponentBuilding(game));
     game->addUnit(unit);
     return unit.getUID();
 }
@@ -154,6 +160,7 @@ int UnitFactory::addAttackTower(int x, int y)
     GameUnit unit(x, y, 1, 1, "AttackTower", param["HP"].asInt(), "towerattack");
     unit.addComponent(new ComponentAttackerTower(game));
     unit.addComponent(new ComponentEnemyTarget(game));
+    unit.addComponent(new ComponentBuilding(game));
     game->addUnit(unit);
     return unit.getUID();
 }

@@ -1,5 +1,6 @@
 #include "ComponentPortal.h"
 #include "UnitFactory.h"
+#include "ComponentBuilding.h"
 
 ComponentPortal::ComponentPortal(Game* game): UnitComponent(game)
 {
@@ -17,6 +18,7 @@ std::vector<UnitAction> ComponentPortal::getActions() const
 	addActionIfAllowed(&actions, "upgrade_hp", "UpgradeUnicornHP", tek_upgrade_pos);
 	addActionIfAllowed(&actions, "upgrade_count", "IncreaseUnicornCount", tek_increase_pos);
 	if (!fastbuild) addActionIfAllowed(&actions, "fastbuild", "ResearchFastBuild");
+	addActionIfAllowed(&actions, "base_shield", "SetupBaseShield");
 	return actions;
 }
 
@@ -49,6 +51,12 @@ bool ComponentPortal::applyAction(const UnitAction& action)
 		max_unicorn_count += game->getConfigAction()["IncreaseUnicornCount"]["Value"].asInt();
 		tek_increase_pos++;
 		game->addGameEvent(AudioEffect::FinishUpgrade, game->getUnitByUID(this->unit_id).getView());
+		return true;
+	}
+	if (action.code == "base_shield") {
+		for (int i=0; i<game->getUnitCount(); i++)
+			if (game->getUnit(i).isComponent<ComponentBuilding>())
+				game->setShieldToUnit(game->getUnit(i).getUID(), game->getConfigAction()["SetupBaseShield"]["Amount"].asInt());
 		return true;
 	}
 	return false;

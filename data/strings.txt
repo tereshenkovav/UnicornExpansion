@@ -21,6 +21,7 @@ Action_MakeRadar=Изучить разведку
 Action_MakeShield=Изучить щит
 Action_DoRadar=Разведать местность
 Action_DoShield=Наложить на себя щит
+Action_SetupBaseShield=Наложить щит на здания
 Action_MakeDetoxer=Изучить очистку от грибов
 Action_MakeTowerAttack=Трансформировать в лазерную башню
 Action_MakeTowerHealer=Трансформировать в лечебную башню

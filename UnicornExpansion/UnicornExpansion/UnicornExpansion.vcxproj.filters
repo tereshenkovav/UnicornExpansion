@@ -183,6 +183,9 @@
     <ClCompile Include="components\ComponentMachinary.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="components\ComponentBuilding.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="version.h">
@@ -315,6 +318,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="components\ComponentMachinary.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="components\ComponentBuilding.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

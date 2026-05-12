@@ -86,6 +86,11 @@
         "Amount": 40,
         "MagicEconomy":true
     },
+    "SetupBaseShield": {
+        "Price": 100,
+        "Time": 1,
+        "Amount": 40
+    },
     "MakeTowerAttack": {
         "Price": 0,
         "Time": 15
