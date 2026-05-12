@@ -21,6 +21,10 @@
         "Price": 400,
         "Time": 70
     },
+    "ConstructMachine": {
+        "Price": 70,
+        "Time": 60
+    },
     "MakeHarvester": {
         "Price": 40,
         "Time": 10,

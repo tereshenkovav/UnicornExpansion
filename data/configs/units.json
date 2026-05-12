@@ -17,6 +17,10 @@
   {
     "HP": 300
   },
+  "Machinary":
+  {
+    "HP": 400
+  },
   "HealerTower":
   {
     "HP": 70

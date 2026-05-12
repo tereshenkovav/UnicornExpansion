@@ -7,6 +7,7 @@ ComponentEnemyLair.cpp
 ComponentEnemyTarget.cpp
 ComponentHarvester.cpp
 ComponentHealer.cpp
+ComponentMachinary.cpp
 ComponentMeleeEnemy.cpp
 ComponentPortal.cpp
 ComponentRadar.cpp

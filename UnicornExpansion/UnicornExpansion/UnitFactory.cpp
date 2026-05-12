@@ -11,6 +11,7 @@
 #include "ComponentHealer.h"
 #include "ComponentHarvester.h"
 #include "ComponentAcademy.h"
+#include "ComponentMachinary.h"
 
 UnitFactory::UnitFactory(Game* game)
 {
@@ -90,6 +91,16 @@ int UnitFactory::addAcademy(int x, int y)
     auto param = game->getConfigUnit()["Academy"];
     GameUnit unit(x, y, 2, 2, "Academy", param["HP"].asInt(), "academy");
     unit.addComponent(new ComponentAcademy(game));
+    unit.addComponent(new ComponentEnemyTarget(game));
+    game->addUnit(unit);
+    return unit.getUID();
+}
+
+int UnitFactory::addMachinary(int x, int y)
+{
+    auto param = game->getConfigUnit()["Machinary"];
+    GameUnit unit(x, y, 2, 2, "Machinary", param["HP"].asInt(), "machinary");
+    unit.addComponent(new ComponentMachinary(game));
     unit.addComponent(new ComponentEnemyTarget(game));
     game->addUnit(unit);
     return unit.getUID();

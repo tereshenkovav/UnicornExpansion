@@ -27,9 +27,11 @@ function initMap() {
   game.allowAction("BuildUnicorn") ;
   game.allowAction("ResearchWorkInAction") ;
   game.allowAction("ResearchMagicEconomy") ;
+  game.allowAction("ConstructMachine") ;
 
   game.addPortal(14,4) ;
   game.addAcademy(18,5) ;
+  game.addMachinary(10,6) ;
   game.addUnicorn(14,7) ;
   game.addCrystal(10,12,300) ;
   game.addCrystal(20,13,450) ;

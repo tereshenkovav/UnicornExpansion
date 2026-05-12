@@ -180,6 +180,9 @@
     <ClCompile Include="components\ComponentAcademy.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="components\ComponentMachinary.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="version.h">
@@ -309,6 +312,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="components\ComponentAcademy.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="components\ComponentMachinary.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

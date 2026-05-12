@@ -160,6 +160,7 @@
     <ClCompile Include="components\ComponentDetoxer.cpp" />
     <ClCompile Include="components\ComponentEnemy.cpp" />
     <ClCompile Include="components\ComponentHealer.cpp" />
+    <ClCompile Include="components\ComponentMachinary.cpp" />
     <ClCompile Include="components\ComponentMachine.cpp" />
     <ClCompile Include="components\ComponentMeleeEnemy.cpp" />
     <ClCompile Include="components\ComponentEnemyLair.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="components\ComponentDetoxer.h" />
     <ClInclude Include="components\ComponentEnemy.h" />
     <ClInclude Include="components\ComponentHealer.h" />
+    <ClInclude Include="components\ComponentMachinary.h" />
     <ClInclude Include="components\ComponentMachine.h" />
     <ClInclude Include="components\ComponentMeleeEnemy.h" />
     <ClInclude Include="components\ComponentEnemyLair.h" />
