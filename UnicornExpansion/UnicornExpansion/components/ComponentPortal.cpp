@@ -6,16 +6,17 @@ ComponentPortal::ComponentPortal(Game* game): UnitComponent(game)
 	unicorn_hp = game->getConfigUnit()["Unicorn"]["InitialHP"].asInt();
 	tek_upgrade_pos = 0;
 	tek_increase_pos = 0;
+	fastbuild = false;
 	max_unicorn_count = game->getConfigComponent()["Portal"]["InitialUnicornCount"].asInt();
 }
 
 std::vector<UnitAction> ComponentPortal::getActions() const
 {
 	std::vector<UnitAction> actions;
-	addActionIfAllowed(&actions,"build", "BuildUnicorn");
+	addActionIfAllowed(&actions,"build", "BuildUnicorn",fastbuild?0.67f:1.0f);
 	addActionIfAllowed(&actions, "upgrade_hp", "UpgradeUnicornHP", tek_upgrade_pos);
 	addActionIfAllowed(&actions, "upgrade_count", "IncreaseUnicornCount", tek_increase_pos);
-
+	if (!fastbuild) addActionIfAllowed(&actions, "fastbuild", "ResearchFastBuild");
 	return actions;
 }
 
@@ -31,6 +32,11 @@ bool ComponentPortal::applyAction(const UnitAction& action)
 			game->addGameEvent(AudioEffect::Teleport, unit.getView());
 			game->addGameEvent(AudioEffect::FinishTeleport, unit.getView());
 		}
+		return true;
+	}
+	if (action.code == "fastbuild") {
+		fastbuild = true;
+		game->addGameEvent(AudioEffect::FinishResearch, game->getUnitByUID(this->unit_id).getView());
 		return true;
 	}
 	if (action.code == "upgrade_hp") {
@@ -61,7 +67,9 @@ bool ComponentPortal::canApplyAction(const UnitAction& action, std::string* msgc
 
 std::string ComponentPortal::getComponentInfo() const
 {
-	return "$Info_HPNewUnicorn$: "+std::to_string(unicorn_hp);
+	std::string str = "$Info_HPNewUnicorn$: "+std::to_string(unicorn_hp);
+	if (fastbuild) str += "\n$Info_FastBuild$";
+	return str;
 }
 
 int ComponentPortal::getMaxUnicornCount() const

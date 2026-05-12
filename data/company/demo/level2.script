@@ -22,6 +22,7 @@ function initMap() {
   game.allowAction("ResearchMagicEconomy") ;
   game.allowAction("ConstructMachine") ;
   game.allowAction("IncreaseUnicornCount") ;
+  game.allowAction("ResearchFastBuild") ;
 
   game.addPortal(14,4) ;
   game.addAcademy(18,5) ;

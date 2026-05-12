@@ -15,7 +15,8 @@ UnitComponent::~UnitComponent()
 {
 }
 
-void UnitComponent::addActionIfAllowed(std::vector<UnitAction>* actions, const std::string & code, const std::string& caption) const
+// Методы сильно дублируются
+void UnitComponent::addActionIfAllowed(std::vector<UnitAction>* actions, const std::string & code, const std::string& caption, float fasttime) const
 {
     if (!game->isActionAllowed(caption)) return;
     auto config = game->getConfigAction()[caption];
@@ -23,10 +24,12 @@ void UnitComponent::addActionIfAllowed(std::vector<UnitAction>* actions, const s
     if (config["MagicEconomy"].isBool())
         if (config["MagicEconomy"].asBool())
             if (game->isMagicEconomy()) price = (int)(price * 0.8); // Пока вставим константой
-    actions->push_back({ code,caption, price, config["Time"].asInt(), (UnitComponent*)this });
+    int time = (int)(config["Time"].asInt() * fasttime);
+    actions->push_back({ code,caption, price, time, (UnitComponent*)this });
 }
 
-void UnitComponent::addActionIfAllowed(std::vector<UnitAction>* actions, const std::string& code, const std::string& caption, int idx) const
+// Методы сильно дублируются
+void UnitComponent::addActionIfAllowed(std::vector<UnitAction>* actions, const std::string& code, const std::string& caption, int idx, float fasttime) const
 {
     if (!game->isActionAllowed(caption)) return;
     auto config = game->getConfigAction()[caption];
@@ -35,7 +38,8 @@ void UnitComponent::addActionIfAllowed(std::vector<UnitAction>* actions, const s
         if (config["MagicEconomy"].isBool())
             if (config["MagicEconomy"].asBool())
                 if (game->isMagicEconomy()) price = (int)(price * 0.8); // Пока вставим константой
-        actions->push_back({ code,caption, price, config["Time"][idx].asInt(), (UnitComponent*)this });
+        int time = (int)(config["Time"][idx].asInt() * fasttime);
+        actions->push_back({ code,caption, price, time, (UnitComponent*)this });
     }
 }
 

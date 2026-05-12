@@ -9,6 +9,7 @@ private:
 	int tek_upgrade_pos;
 	int tek_increase_pos;
 	int max_unicorn_count;
+	bool fastbuild;
 public:
 	ComponentPortal(Game* game);
 	virtual std::vector<UnitAction> getActions() const;
