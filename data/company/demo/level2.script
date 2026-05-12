@@ -31,16 +31,25 @@ function initMap() {
   game.addUnicorn(14,7) ;
   game.addUnicorn(16,8) ;
   game.addUnicorn(12,9) ;
-  game.addCrystal(35,14,300) ;
-  game.addCrystal(36,30,430) ;
-  game.addCrystal(32,37,510) ;
+  game.addCrystal(35,14,40) ;
+  game.addCrystal(38,20,45) ;
+  game.addCrystal(34,25,25) ;
+  game.addCrystal(36,30,50) ;
+  game.addCrystal(37,36,65) ;
+  game.addCrystal(32,37,70) ;
+  game.addCrystal(39,15,45) ;
+  game.addCrystal(42,21,35) ;
+  game.addCrystal(40,23,50) ;
+  game.addCrystal(39,31,24) ;
+  game.addCrystal(41,35,60) ;
+  game.addCrystal(38,38,65) ;
 
   game.incEnergy(1000) ;
 
   TIME_DEFEND = 2;
   if (game.isHard1()) { TIME_DEFEND+=2 ; }
   if (game.isHard2()) { TIME_DEFEND+=2 ; }
-  game.startTimer(TIME_DEFEND*60) ;
+  game.startHiddenTimer(TIME_DEFEND*60) ;
 
   game.setNewViewPoint(14,6) ;
 
@@ -102,7 +111,7 @@ function Update() {
      }
   }
 
-  if ((game.getTimer()<TIME_DEFEND*60-5*60-20)&&(!game.isFlag("wave3"))) {
+  if ((game.getTimer()<TIME_DEFEND*60-5*60-10)&&(!game.isFlag("wave3"))) {
      game.addMessage("unicorn",10,"$Brief_4") ;
      game.setFlag("wave3") ;
 
@@ -142,7 +151,6 @@ function isVictory() {
 }
 
 function isDefeat() {
-  if ((game.getCountByComponent("Unicorn")==0)&&
-      (game.getCountByComponent("Portal")==0)) { return true ; }
+  if (game.getCountByComponent("Portal")==0) { return true ; }
   return false ;
 }
