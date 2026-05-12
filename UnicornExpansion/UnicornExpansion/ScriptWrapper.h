@@ -220,6 +220,11 @@ bool Game_isUnitExist(zetscript::ScriptEngine* _script_engine, Game* _this, zets
 	return _this->isUnitExist(uid);
 }
 
+void Game_setTargetToUnit(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int uid, zetscript::zs_int x, zetscript::zs_int y) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	_this->setTargetToUnit(uid,x,y);
+}
+
 void Game_delete(zetscript::ScriptEngine* _script_engine, Game* _this) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	// empty
@@ -267,4 +272,5 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
 		engine.registerMemberFunction<Game>("getUnitHealth", &Game_getUnitHealth);
 		engine.registerMemberFunction<Game>("isUnitExist", &Game_isUnitExist);
 		engine.registerMemberFunction<Game>("deleteUnitLater", &Game_deleteUnitLater);
+		engine.registerMemberFunction<Game>("setTargetToUnit", &Game_setTargetToUnit);
 }

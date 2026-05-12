@@ -1,60 +1,146 @@
 var game ;
-var MANA_TASK ;
-var TIME_LIMIT ;
+var TIME_DEFEND ;
  
 function initMap() {
   game = new Game() ;
 
-  MANA_TASK = 201 ;
-  TIME_LIMIT = 7 ;
-
-  game.allowAction("BuildUnicorn") ;
   game.allowAction("MakeHarvester") ;
   game.allowAction("MakeAttacker") ;
   game.allowAction("MakeHealer") ;
+  game.allowAction("MakeRadar") ;
+  game.allowAction("DoRadar") ;
+  game.allowAction("UpgradeHarvester") ;
+  game.allowAction("UpgradeAttacker") ;
+  game.allowAction("UpgradeHealer") ;
+  game.allowAction("MakeShield") ;
+  game.allowAction("DoShield") ;
+  game.allowAction("MakeTowerAttack") ;
+  game.allowAction("MakeTowerHealer") ;
+  game.allowAction("MakeTowerHarvest") ;
+  game.allowAction("BuildUnicorn") ;
+  game.allowAction("ResearchWorkInAction") ;
+  game.allowAction("ResearchMagicEconomy") ;
+  game.allowAction("ConstructMachine") ;
+  game.allowAction("IncreaseUnicornCount") ;
 
-  game.addPortal(13,2) ;
-  game.addUnicorn(16,2) ;
-  game.addUnicorn(17,6) ;
-  game.addCrystal(22,7,210) ;
-  game.addCrystal(1,8,240) ;
-  game.addCrystal(9,9,250) ;
-  game.addCrystal(18,11,370) ;
-  game.addCrystal(15,12,340) ;
-  game.addCrystal(12,14,450) ;
-  game.addCrystal(13,18,230) ;
-  game.addCrystal(9,20,410) ;
-  game.addCrystal(17,21,580) ;
-  game.addCrystal(19,23,590) ;
-  game.addEnemy1(14,15) ;
-  game.addEnemy1(8,21) ;
-  game.addEnemy1(14,20) ;
-  game.addEnemy2(19,22) ;
+  game.addPortal(14,4) ;
+  game.addAcademy(18,5) ;
+  game.addMachinary(10,6) ;
+  game.addUnicorn(14,7) ;
+  game.addUnicorn(16,8) ;
+  game.addUnicorn(12,9) ;
+  game.addCrystal(35,14,300) ;
+  game.addCrystal(36,30,430) ;
+  game.addCrystal(32,37,510) ;
 
-  game.incEnergy(200) ;
+  game.incEnergy(1000) ;
 
-  game.startTimer(TIME_LIMIT*60) ;
+  TIME_DEFEND = 2;
+  if (game.isHard1()) { TIME_DEFEND+=2 ; }
+  if (game.isHard2()) { TIME_DEFEND+=2 ; }
+  game.startTimer(TIME_DEFEND*60) ;
 
-  game.setNewViewPoint(12,6) ;
+  game.setNewViewPoint(14,6) ;
 
-  game.addMessage("unicorn",5,"222") ;
-//  game.addMessage("unicorn",5,"$Brief_1_2") ;
-//  game.addMessage("unicorn",5,"$Brief_1_3") ;
-//  game.addMessage("unicorn",5,"$Brief_1_4") ;
+  game.addMessage("unicorn",10,"$Brief_1_1") ;
+  game.addMessageLater("unicorn",10,10,"$Brief_1_2") ;
+  game.addNewTask("defend","$Task") ;
 
   return true ;
 }
 
 function Update() {
+  if ((game.getTimer()<TIME_DEFEND*60-60-30)&&(!game.isFlag("wave1"))) {
+     game.addMessage("unicorn",10,"$Brief_2") ;
+     game.setFlag("wave1") ;
+
+     var uids = [] ;
+     uids.push(game.addEnemy1(39,10)) ;
+     uids.push(game.addEnemy1(39,11)) ;
+     uids.push(game.addEnemy2(39,12)) ;
+     uids.push(game.addEnemy1(39,13)) ;
+
+     uids.push(game.addEnemy1(1,39)) ;
+     uids.push(game.addEnemy1(2,39)) ;
+     uids.push(game.addEnemy2(3,39)) ;
+     uids.push(game.addEnemy1(4,39)) ;
+
+     uids.push(game.addEnemy1(39,25)) ;
+     uids.push(game.addEnemy2(38,26)) ;
+     uids.push(game.addEnemy2(37,27)) ;
+     uids.push(game.addEnemy1(36,28)) ;
+
+     for (var uid in uids) {
+       game.setTargetToUnit(uid,14,4) ;
+     }
+  }
+
+  if ((game.getTimer()<TIME_DEFEND*60-3*60-20)&&(!game.isFlag("wave2"))) {
+     game.addMessage("unicorn",10,"$Brief_3") ;
+     game.setFlag("wave2") ;
+
+     var uids = [] ;
+     uids.push(game.addEnemy3(39,10)) ;
+     uids.push(game.addEnemy2(39,11)) ;
+     uids.push(game.addEnemy2(39,12)) ;
+     uids.push(game.addEnemy3(39,13)) ;
+
+     uids.push(game.addEnemy1(1,39)) ;
+     uids.push(game.addEnemy2(2,39)) ;
+     uids.push(game.addEnemy2(3,39)) ;
+     uids.push(game.addEnemy1(4,39)) ;
+
+     uids.push(game.addEnemy1(39,25)) ;
+     uids.push(game.addEnemy2(38,26)) ;
+     uids.push(game.addEnemy2(37,27)) ;
+     uids.push(game.addEnemy1(36,28)) ;
+
+     for (var uid in uids) {
+       game.setTargetToUnit(uid,14,4) ;
+     }
+  }
+
+  if ((game.getTimer()<TIME_DEFEND*60-5*60-20)&&(!game.isFlag("wave3"))) {
+     game.addMessage("unicorn",10,"$Brief_4") ;
+     game.setFlag("wave3") ;
+
+     var uids = [] ;
+     uids.push(game.addEnemy3(39,10)) ;
+     uids.push(game.addEnemy3(39,11)) ;
+     uids.push(game.addEnemy3(39,12)) ;
+     uids.push(game.addEnemy3(39,13)) ;
+
+     uids.push(game.addEnemy3(1,39)) ;
+     uids.push(game.addEnemy2(2,39)) ;
+     uids.push(game.addEnemy2(3,39)) ;
+     uids.push(game.addEnemy3(4,39)) ;
+
+     uids.push(game.addEnemy3(39,25)) ;
+     uids.push(game.addEnemy2(38,26)) ;
+     uids.push(game.addEnemy2(37,27)) ;
+     uids.push(game.addEnemy3(36,28)) ;
+
+     for (var uid in uids) {
+       game.setTargetToUnit(uid,14,4) ;
+     }
+  }
+
+  if ((game.getTimer()<1)&&(!game.isFlag("final"))) {
+     game.addUnicorn(13,3) ;
+     game.addUnicorn(14,3) ;
+     game.addUnicorn(13,4) ;
+     game.setNewViewPoint(14,6) ;
+     game.addMessage("unicorn",10,"$Brief_Final") ;
+     game.setFlag("final") ;
+  }
 }
 
 function isVictory() {
-  return (game.getEnergy()>=MANA_TASK) ;
+  return (game.getTimer()<=0) ;
 }
 
 function isDefeat() {
   if ((game.getCountByComponent("Unicorn")==0)&&
       (game.getCountByComponent("Portal")==0)) { return true ; }
-  if (game.getTimer()<=0) { return true ; }
   return false ;
 }

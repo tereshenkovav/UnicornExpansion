@@ -121,8 +121,6 @@ public:
 	int getUnitCount() const;
 	const GameUnit & getUnit(int i) const;
 	const GameUnit & getUnitByUID(int uid) const;
-	// Установка цели для движения юнита
-	void setTargetToUnit(int uid, int targetx, int targety);
 	// Отправить юниту действие
 	bool sendUnitAction(int uid, const UnitAction & action);
 	// Отмена действия у юнита
@@ -161,6 +159,8 @@ public:
 	void deleteUnitLater(int uid);
 	bool isHard1() const;
 	bool isHard2() const;
+	// Установка цели для движения юнита
+	void setTargetToUnit(int uid, int targetx, int targety);
 	/* Конец скриптового блока */
 
 	// Получить информацию о таймере
