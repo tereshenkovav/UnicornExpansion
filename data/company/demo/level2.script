@@ -31,16 +31,16 @@ function initMap() {
   game.addUnicorn(14,7) ;
   game.addUnicorn(16,8) ;
   game.addUnicorn(12,9) ;
-  game.addCrystal(35,14,40) ;
-  game.addCrystal(38,20,45) ;
-  game.addCrystal(34,25,25) ;
+  game.addCrystalPoor(35,14,80) ;
+  game.addCrystalPoor(38,20,85) ;
+  game.addCrystalPoor(34,25,55) ;
   game.addCrystal(36,30,50) ;
-  game.addCrystal(37,36,65) ;
-  game.addCrystal(32,37,70) ;
-  game.addCrystal(39,15,45) ;
+  game.addCrystalPoor(37,36,135) ;
+  game.addCrystalPoor(32,37,130) ;
+  game.addCrystalPoor(39,15,95) ;
   game.addCrystal(42,21,35) ;
-  game.addCrystal(40,23,50) ;
-  game.addCrystal(39,31,24) ;
+  game.addCrystalPoor(40,23,80) ;
+  game.addCrystalPoor(39,31,44) ;
   game.addCrystal(41,35,60) ;
   game.addCrystal(38,38,65) ;
 

@@ -34,6 +34,22 @@ int UnitFactory::addCrystal(int x, int y, int hp)
     return unit.getUID();
 }
 
+int UnitFactory::addCrystalRich(int x, int y, int hp)
+{
+    GameUnit unit(x, y, 1, 1, "Crystal", hp, "crystal_rich");
+    unit.addComponent(new ComponentResource(game, ResourceType::Rich));
+    game->addUnit(unit);
+    return unit.getUID();
+}
+
+int UnitFactory::addCrystalPoor(int x, int y, int hp)
+{
+    GameUnit unit(x, y, 1, 1, "Crystal", hp, "crystal_poor");
+    unit.addComponent(new ComponentResource(game, ResourceType::Poor));
+    game->addUnit(unit);
+    return unit.getUID();
+}
+
 int UnitFactory::addEnemy1(int x, int y)
 {
     auto param = game->getConfigEnemy()["Enemy1"];

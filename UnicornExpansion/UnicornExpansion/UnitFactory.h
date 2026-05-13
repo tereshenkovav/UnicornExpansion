@@ -11,6 +11,8 @@ public:
 	UnitFactory(Game* game);
 	int addEmptyUnit(int x, int y, int hp, const std::string& name, const std::string& code);
 	int addCrystal(int x, int y, int hp);
+	int addCrystalRich(int x, int y, int hp);
+	int addCrystalPoor(int x, int y, int hp);
 	int addEnemy1(int x, int y);
 	int addEnemy2(int x, int y);
 	int addEnemy3(int x, int y);

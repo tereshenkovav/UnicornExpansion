@@ -537,7 +537,7 @@ void Game::update(float dt)
 					if (units[j].isComponent<ComponentResource>())
 						finder.addPos(units[j].getView(), j);
 				if (auto res_idx = finder.getBestIndex()) {
-					energy += harvester->getHarvestRate() * dt;
+					energy += harvester->getHarvestRate() * units[*res_idx].getComponent<ComponentResource>()->getResourceEfficient() * dt;
 					units[*res_idx].decHealth(harvester->getHarvestRate() * dt);
 					lasers.push_back({ units[i].getView() + (units[i].getLastMoving() == Moving::Left ? laserfixleft : laserfixright),
 						units[*res_idx].getView(), LaserType::Harvest, SeedStore::getSeedByUIDAndLaserType(units[i].getUID(),LaserType::Harvest) });

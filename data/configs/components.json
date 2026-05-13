@@ -40,5 +40,9 @@
      "Value": 9,
      "Distance": 300,
      "Cost": 15
+   },
+  "Resource": {
+     "PoorEfficient": 0.5,
+     "RichEfficient": 2.0
    }
 }
