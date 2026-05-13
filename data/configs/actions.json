@@ -14,11 +14,11 @@
         "Time": 20
     },
     "BuildAcademy": {
-        "Price": 250,
+        "Price": 200,
         "Time": 40
     },
     "BuildMachinary": {
-        "Price": 300,
+        "Price": 250,
         "Time": 50
     },
     "ResearchFastBuild": {
@@ -26,11 +26,11 @@
         "Time": 40
     },
     "ResearchWorkInAction": {
-        "Price": 300,
+        "Price": 200,
         "Time": 50
     },
     "ResearchMagicEconomy": {
-        "Price": 400,
+        "Price": 250,
         "Time": 70
     },
     "ConstructMachine": {
