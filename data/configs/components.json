@@ -23,7 +23,8 @@
     "ViewDistance": 300
   },
   "Portal": {
-    "InitialUnicornCount": 3
+    "InitialUnicornCount": 3,
+    "InitialBuildingCount": 2
   },
   "Lair": {
     "SpawnInterval": 30

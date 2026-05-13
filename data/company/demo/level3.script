@@ -27,6 +27,8 @@ function initMap() {
   game.allowAction("IncreaseUnicornCount") ;
   game.allowAction("ResearchFastBuild") ;
   game.allowAction("SetupBaseShield") ;
+  game.allowAction("BuildAcademy") ;
+  game.allowAction("BuildMachinary") ;
 
   game.addPortal(13,32) ;
 

@@ -13,6 +13,14 @@
         "Price": 100,
         "Time": 20
     },
+    "BuildAcademy": {
+        "Price": 250,
+        "Time": 40
+    },
+    "BuildMachinary": {
+        "Price": 300,
+        "Time": 50
+    },
     "ResearchFastBuild": {
         "Price": 120,
         "Time": 40

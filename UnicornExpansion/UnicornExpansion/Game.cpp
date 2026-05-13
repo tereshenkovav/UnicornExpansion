@@ -314,6 +314,44 @@ std::optional<sf::Vector2i> Game::getFirstFreePosNear(const GameUnit & unit) con
 	return std::nullopt;
 }
 
+// Грубая и неточная реализация
+std::optional<sf::Vector2i> Game::getFirstFreePosFor2x2Building(const GameUnit& unit) const
+{
+	std::vector<sf::Vector2i> nears;
+	for (int i = -5; i < unit.getSize().x + 5; i++) {
+		nears.push_back({ i, -5 });
+		nears.push_back({ i, +5 });
+	}
+
+	for (int i = -5; i < unit.getSize().x + 5; i++) {
+		nears.push_back({ -5, i });
+		nears.push_back({ +5, i });
+	}
+
+	Vector2D<bool> busymap(width, height, false);
+	busymap.setOutboundValue(false);
+
+	// Нужно вынести в отдельный блок построения полной карты занятости
+	for (int x = 0; x < width; x++)
+		for (int y = 0; y < height; y++)
+			if (!canWalkOnTerrain(getMap(x, y))) busymap.setValue(x, y, true);
+	for (int j = 0; j < units.size(); j++)
+		units[j].updateBusyMap(busymap);
+
+	while (nears.size() > 0) {
+		int idx = rand() % nears.size();
+		auto p = nears[idx] + unit.getXY();
+		if	((!busymap.getValue(p.x, p.y)) &&
+			(!busymap.getValue(p.x + 1, p.y)) &&
+			(!busymap.getValue(p.x, p.y + 1)) &&
+			(!busymap.getValue(p.x + 1, p.y + 1)))
+			return sf::Vector2i({ p.x, p.y });
+		nears.erase(nears.begin() + idx);
+	}
+
+	return std::nullopt;
+}
+
 int Game::getEnergy() const
 {
 	return (int)energy;

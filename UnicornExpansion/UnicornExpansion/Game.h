@@ -203,6 +203,9 @@ public:
 	const std::vector<Message>& getHistory() const;
 	bool isActionAllowed(const std::string name) const;
 	bool isMagicEconomy() const;
+
+	std::optional<sf::Vector2i> getFirstFreePosFor2x2Building(const GameUnit& unit) const;
+
 	// Обновление игры
 	void update(float dt);
 	// Шаблонный метод - поиск юнитов по компонентам
