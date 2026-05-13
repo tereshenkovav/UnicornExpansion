@@ -268,6 +268,11 @@ void Game::setTargetToUnit(int uid, int targetx, int targety)
 		}
 }
 
+void Game::clearFogAt(int x, int y, int dist)
+{
+	clearFogAt({ x,y }, dist);
+}
+
 bool Game::sendUnitAction(int uid, const UnitAction & action)
 {
 	for (int i = 0; i < units.size(); i++)

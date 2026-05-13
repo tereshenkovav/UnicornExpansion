@@ -161,6 +161,7 @@ public:
 	bool isHard2() const;
 	// Установка цели для движения юнита
 	void setTargetToUnit(int uid, int targetx, int targety);
+	void clearFogAt(int x, int y, int dist);
 	/* Конец скриптового блока */
 
 	// Получить информацию о таймере
