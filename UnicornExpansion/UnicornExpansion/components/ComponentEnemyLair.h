@@ -2,13 +2,18 @@
 #include "UnitComponent.h"
 #include <vector>
 
+struct Spawning {
+	int time;
+	char letter;
+};
+
 // Компонент, определяющий признак логова - способность порождать врагов
 class ComponentEnemyLair:  public UnitComponent
 {
 private:
 	float nextmonster;
-	std::vector<char> spawns;
-	std::vector<char> leftspawns;
+	std::vector<Spawning> spawns;
+	std::vector<Spawning> leftspawns;
 	std::vector<int> myunits; // Список юнитов, порожденных в логове
 public:
 	// Создание компонента с указанием последовательности спавна врагов

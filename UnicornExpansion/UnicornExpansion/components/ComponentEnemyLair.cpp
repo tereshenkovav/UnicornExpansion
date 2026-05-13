@@ -7,28 +7,27 @@
 
 ComponentEnemyLair::ComponentEnemyLair(Game* game, const std::string & spawnseq):UnitComponent(game)
 {
-	nextmonster = game->getConfigComponent()["Lair"]["SpawnInterval"].asInt();
-	for (size_t i = 0; i < spawnseq.size(); i++)
-		spawns.push_back(spawnseq[i]);
+	for (size_t i = 0; i < spawnseq.size(); i+=2)
+		spawns.push_back({ 10 * (spawnseq[i] - '0'), spawnseq[i + 1] });
 	leftspawns = spawns;
+	nextmonster = leftspawns[0].time;
 }
 
 void ComponentEnemyLair::update(float dt)
 {
 	nextmonster -= dt;
 	if (nextmonster <= 0) {
-		nextmonster = game->getConfigComponent()["Lair"]["SpawnInterval"].asInt();
 		const GameUnit& unit = game->getUnitByUID(unit_id);
 		auto pos = game->getFirstFreePosNear(unit);
 		if (pos) {
 			UnitFactory factory(game);
 			// Порождаем юнитов по паттерну - каждая буква это свой тип юнита
-			int rnd = rand() % leftspawns.size();
-			if (leftspawns[rnd] == 'a') myunits.push_back(factory.addEnemy1((*pos).x, (*pos).y));
-			if (leftspawns[rnd] == 'b') myunits.push_back(factory.addEnemy2((*pos).x, (*pos).y));
-			if (leftspawns[rnd] == 'c') myunits.push_back(factory.addEnemy3((*pos).x, (*pos).y));
+			//int rnd = rand() % leftspawns.size();
+			if (leftspawns[0].letter == 'a') myunits.push_back(factory.addEnemy1((*pos).x, (*pos).y));
+			if (leftspawns[0].letter == 'b') myunits.push_back(factory.addEnemy2((*pos).x, (*pos).y));
+			if (leftspawns[0].letter == 'c') myunits.push_back(factory.addEnemy3((*pos).x, (*pos).y));
 
-			leftspawns.erase(leftspawns.begin() + rnd);
+			leftspawns.erase(leftspawns.begin());
 			// Код отправки в атаку на ангар
 			if (leftspawns.size() == 0) {
 				leftspawns = spawns;
@@ -46,6 +45,7 @@ void ComponentEnemyLair::update(float dt)
 				}
 			}
 		}
+		nextmonster = leftspawns[0].time;
 	}
 }
 

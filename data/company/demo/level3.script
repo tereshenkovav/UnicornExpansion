@@ -33,9 +33,9 @@ function initMap() {
   game.addPortal(13,32) ;
 
   uidrich = game.addCrystalRich(37,37,7000) ;
-  uidcave1 = game.addLair(10,7,"aa") ;
-  uidcave2 = game.addLair(11,10,"aa") ;
-  uidcave3 = game.addLair(14,8,"aa") ;
+  uidcave1 = game.addLair(10,6,"4a") ;
+  uidcave2 = game.addLair(11,11,"3a3a3b") ;
+  uidcave3 = game.addLair(16,8,"3a3a3a3b3b3c3c") ;
 
   game.incEnergy(400) ;
 

@@ -26,9 +26,6 @@
     "InitialUnicornCount": 3,
     "InitialBuildingCount": 2
   },
-  "Lair": {
-    "SpawnInterval": 30
-  },
   "TowerAttacker": {
      "Value": 12,
      "Distance": 300
