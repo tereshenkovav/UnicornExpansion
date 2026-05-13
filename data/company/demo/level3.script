@@ -1,8 +1,5 @@
 var game ;
 var uidrich ;
-var uidcave1 ;
-var uidcave2 ;
-var uidcave3 ;
  
 function initMap() {
   game = new Game() ;
@@ -32,27 +29,36 @@ function initMap() {
 
   game.addPortal(13,32) ;
 
-  uidrich = game.addCrystalRich(37,37,7000) ;
-  uidcave1 = game.addLair(10,6,"4a") ;
-  uidcave2 = game.addLair(11,11,"3a3a3b") ;
-  uidcave3 = game.addLair(16,8,"3a3a3a3b3b3c3c") ;
+  uidrich = game.addCrystalRich(37,37,6000) ;
+  game.addLair(10,6,"4a") ;
+  game.addLair(11,11,"3a3a3b") ;
+  if (game.isHard1()) {
+    game.addLair(16,8,"3a3a3a3b3b3c3c") ;
+  }
 
   game.incEnergy(400) ;
 
   game.setNewViewPoint(13,32) ;
 
-  game.addMessage("unicorn",10,"$Brief_1_1") ;
+  if (game.isHard2()) {
+    game.addMessage("unicorn",10,"$Brief_1_1_Hard2") ;
+  }
+  else {
+    game.addMessage("unicorn",10,"$Brief_1_1") ;
+  }
   game.addMessageLater("unicorn",10,10,"$Brief_1_2") ;
+
   game.addNewTask("rich","$MainTask") ;
+  if (game.isHard2()) {
+    game.addNewTask("amount","$ManaTask") ;
+  }
   game.addNewTask("caves","$SecondTask") ;
 
   return true ;
 }
 
 function Update() {
-  if ((!game.isUnitExist(uidcave1))&&
-     (!game.isUnitExist(uidcave2))&&
-     (!game.isUnitExist(uidcave3))&&
+  if ((game.getCountByComponent("EnemyLair")==0)&&
      (!game.isFlag("nocaves"))) {
      game.setFlag("nocaves") ;
      game.setTaskCompleted("caves") ;
@@ -61,16 +67,30 @@ function Update() {
 
   if ((!game.isUnitExist(uidrich))&&(!game.isFlag("rich"))) {
      game.setFlag("rich") ;
-     game.addMessage("unicorn",10,"$Brief_3") ;
+     if (game.isHard2()) {
+       if (game.getEnergy()>=10000) {
+         game.setFlag("win") ;
+         game.addMessage("unicorn",10,"$Brief_3_Win") ;
+       }
+       else {
+         game.setFlag("fail") ;
+         game.addMessage("unicorn",10,"$Brief_3_Fail") ;
+       }
+     }
+     else {
+       game.setFlag("win") ;
+       game.addMessage("unicorn",10,"$Brief_3") ;
+     }
   }
 }
 
 function isVictory() {
-  return game.isFlag("rich") ;
+  return game.isFlag("win") ;
 }
 
 function isDefeat() {
   if ((game.getCountByComponent("Unicorn")==0)&&
       (game.getCountByComponent("Portal")==0)) { return true ; }
+  if (game.isFlag("fail")) { return true ; }
   return false ;
 }
