@@ -1,60 +1,74 @@
 var game ;
-var MANA_TASK ;
-var TIME_LIMIT ;
+var uidrich ;
+var uidcave1 ;
+var uidcave2 ;
+var uidcave3 ;
  
 function initMap() {
   game = new Game() ;
 
-  MANA_TASK = 201 ;
-  TIME_LIMIT = 7 ;
-
-  game.allowAction("BuildUnicorn") ;
   game.allowAction("MakeHarvester") ;
   game.allowAction("MakeAttacker") ;
   game.allowAction("MakeHealer") ;
+  game.allowAction("MakeRadar") ;
+  game.allowAction("DoRadar") ;
+  game.allowAction("UpgradeHarvester") ;
+  game.allowAction("UpgradeAttacker") ;
+  game.allowAction("UpgradeHealer") ;
+  game.allowAction("MakeShield") ;
+  game.allowAction("DoShield") ;
+  game.allowAction("MakeTowerAttack") ;
+  game.allowAction("MakeTowerHealer") ;
+  game.allowAction("MakeTowerHarvest") ;
+  game.allowAction("BuildUnicorn") ;
+  game.allowAction("ResearchWorkInAction") ;
+  game.allowAction("ResearchMagicEconomy") ;
+  game.allowAction("ConstructMachine") ;
+  game.allowAction("IncreaseUnicornCount") ;
+  game.allowAction("ResearchFastBuild") ;
+  game.allowAction("SetupBaseShield") ;
 
-  game.addPortal(13,2) ;
-  game.addUnicorn(16,2) ;
-  game.addUnicorn(17,6) ;
-  game.addCrystal(22,7,210) ;
-  game.addCrystal(1,8,240) ;
-  game.addCrystal(9,9,250) ;
-  game.addCrystal(18,11,370) ;
-  game.addCrystal(15,12,340) ;
-  game.addCrystal(12,14,450) ;
-  game.addCrystal(13,18,230) ;
-  game.addCrystal(9,20,410) ;
-  game.addCrystal(17,21,580) ;
-  game.addCrystal(19,23,590) ;
-  game.addEnemy1(14,15) ;
-  game.addEnemy1(8,21) ;
-  game.addEnemy1(14,20) ;
-  game.addEnemy2(19,22) ;
+  game.addPortal(13,32) ;
 
-  game.incEnergy(200) ;
+  uidrich = game.addCrystalRich(37,37,7000) ;
+  uidcave1 = game.addLair(10,7,"aa") ;
+  uidcave2 = game.addLair(11,10,"aa") ;
+  uidcave3 = game.addLair(14,8,"aa") ;
 
-  game.startTimer(TIME_LIMIT*60) ;
+  game.incEnergy(400) ;
 
-  game.setNewViewPoint(12,6) ;
+  game.setNewViewPoint(13,32) ;
 
-  game.addMessage("unicorn",5,"333") ;
-//  game.addMessage("unicorn",5,"$Brief_1_2") ;
-//  game.addMessage("unicorn",5,"$Brief_1_3") ;
-//  game.addMessage("unicorn",5,"$Brief_1_4") ;
+  game.addMessage("unicorn",10,"$Brief_1_1") ;
+  game.addMessageLater("unicorn",10,10,"$Brief_1_2") ;
+  game.addNewTask("rich","$MainTask") ;
+  game.addNewTask("caves","$SecondTask") ;
 
   return true ;
 }
 
 function Update() {
+  if ((!game.isUnitExist(uidcave1))&&
+     (!game.isUnitExist(uidcave2))&&
+     (!game.isUnitExist(uidcave3))&&
+     (!game.isFlag("nocaves"))) {
+     game.setFlag("nocaves") ;
+     game.setTaskCompleted("caves") ;
+     game.addMessage("unicorn",10,"$Brief_2") ;
+  }
+
+  if ((!game.isUnitExist(uidrich))&&(!game.isFlag("rich"))) {
+     game.setFlag("rich") ;
+     game.addMessage("unicorn",10,"$Brief_3") ;
+  }
 }
 
 function isVictory() {
-  return (game.getEnergy()>=MANA_TASK) ;
+  return game.isFlag("rich") ;
 }
 
 function isDefeat() {
   if ((game.getCountByComponent("Unicorn")==0)&&
       (game.getCountByComponent("Portal")==0)) { return true ; }
-  if (game.getTimer()<=0) { return true ; }
   return false ;
 }
