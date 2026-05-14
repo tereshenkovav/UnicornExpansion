@@ -567,12 +567,26 @@ void Game::update(float dt)
 		}
 
 	// ¬ременна€ поправка дл€ позиции лазера у единорога
-	sf::Vector2f laserfixleft{ -23, -25 };
-	sf::Vector2f laserfixright{ 21, -25 };
+	sf::Vector2f laserfixleftunicorn{ -23, -25 };
+	sf::Vector2f laserfixrightunicorn{ 21, -25 };
+
+	sf::Vector2f laserfixlefttower{ 0, -25 };
+	sf::Vector2f laserfixrighttower{ 0, -25 };
+
+	sf::Vector2f laserfixleft;
+	sf::Vector2f laserfixright;
 
 	// ѕостроение лазеров дл€ рендера и действи€ с ними
 	lasers.clear();
 	for (int i = 0; i < units.size(); i++) {
+		if (units[i].isComponent<ComponentUnicorn>()) {
+			laserfixleft = laserfixleftunicorn;
+			laserfixright = laserfixrightunicorn;
+		}
+		else {
+			laserfixleft = laserfixlefttower;
+			laserfixright = laserfixrighttower;
+		}
 		if (const auto* harvester = units[i].getComponent<ComponentHarvester>()) {
 			if (((!units[i].isWorkingTask()) || allowworkinaction) && (!units[i].isTargeted())) {
 				FinderByBestDistance finder(harvester->getHarvestDistance(), units[i].getView());

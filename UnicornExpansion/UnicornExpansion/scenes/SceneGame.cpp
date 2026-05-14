@@ -23,7 +23,7 @@ sf::Color getColorByHPNorm(float hp_norm) {
 
 sf::Vector2f getActionButtonPos(int i) {
     const int ACTION_COL_COUNT = 5;
-    return { (float)(1024 - 400 + 8 + (i % ACTION_COL_COUNT) * 76), (float)(768 - 192 + 10 + (i / ACTION_COL_COUNT) * 76) };
+    return { (float)(1024 - 400 + 8 + (i % ACTION_COL_COUNT) * 76), (float)(768 - 192 + 10 + (i / ACTION_COL_COUNT) * 72) };
 }
 // Конец
 
@@ -741,7 +741,7 @@ void SceneGame::Init() {
 
     text_caption = loadText(24,sf::Color::White);
     text_action = loadText(16);
-    text_action->setPosition({ 1024 - 400 + 8, 720 });
+    text_action->setPosition({ 1024 - 400 + 8, 712 });
     text_hp = loadText(18);
     text_info = loadText(16,sf::Color::White);
 
