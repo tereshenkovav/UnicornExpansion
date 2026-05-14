@@ -216,7 +216,8 @@ void Engine::Run(std::shared_ptr<Scene> scene)
         for (auto& scene : scenes) scene->Render(*window);
         // Курсор в конце сцены        
         if (auto cursor = currentcursor.lock()) {
-            int delta = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) ? 4 : 0;
+            int delta = (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) ||
+                         sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) ? 4 : 0;
             cursor->setPosition({ (float)mousepos.x + delta,(float)mousepos.y + delta });
             window->draw(*cursor);
         }
