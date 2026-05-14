@@ -1,6 +1,11 @@
 #include "UnitComponent.h"
 #include "Game.h"
 
+std::string UnitAction::getReqStr() const {
+    if (energy == 0) return "$Text_NoPay$";
+    return std::format("$Text_Energy$ {}", energy);
+}
+
 UnitComponent::UnitComponent(Game* game)
 {
     this->game = game;

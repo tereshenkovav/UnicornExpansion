@@ -358,8 +358,7 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
                 }
                                 
                 if ((overactionidx) && (*overactionidx == i) &&(!counter_errmsg.isActive())) {
-                    text_action->setString(sfge::SfmlTools::utf2text(std::format("{}\n{} {}",
-                        getTexts().getStr("Action_" + actions[i].caption),getTexts().getStr("Text_Energy"),actions[i].energy)));
+                    text_action->setString(getTexts().getSfmlStrReplacedConsts("$Action_"+actions[i].caption+"$\n"+actions[i].getReqStr()));
                     text_action->setFillColor(sf::Color::White);
                     rendertarget.draw(*text_action);
                 }

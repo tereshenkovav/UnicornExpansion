@@ -13,6 +13,7 @@ struct UnitAction {
 	int energy;
 	int time;
 	UnitComponent* component;
+	std::string getReqStr() const;
 };
 
 // Класс компонента - от него создаем прочие.

@@ -2,6 +2,7 @@ Text_GameCaption=Экспансия единорогов
 Text_GameCaption1=Общедоступная демо-версия RTS
 Text_Energy=Магия:
 Text_UnicornCount=Пони:
+Text_NoPay=Без расходов
 Msg_NotEnoughEnergy=Недостаточно магии
 Msg_NotEnoughControl=Телепортировано максимум единорогов
 Msg_TooManyBuildings=Установлено максимум зданий
