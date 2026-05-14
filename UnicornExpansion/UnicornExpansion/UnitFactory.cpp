@@ -13,6 +13,7 @@
 #include "ComponentAcademy.h"
 #include "ComponentMachinary.h"
 #include "ComponentBuilding.h"
+#include "ComponentMultiselect.h"
 
 UnitFactory::UnitFactory(Game* game)
 {
@@ -133,6 +134,7 @@ int UnitFactory::addUnicorn(int x, int y, int hp)
     unit.setVelocity(param["InitialV"].asInt());
     unit.addComponent(new ComponentUnicorn(game));
     unit.addComponent(new ComponentEnemyTarget(game));
+    unit.addComponent(new ComponentMultiselect(game));
     game->addUnit(unit);
     return unit.getUID();
 }
@@ -144,6 +146,7 @@ int UnitFactory::addMachine(int x, int y)
     unit.setVelocity(param["V"].asInt());
     unit.addComponent(new ComponentMachine(game));
     unit.addComponent(new ComponentEnemyTarget(game));
+    unit.addComponent(new ComponentMultiselect(game));
     game->addUnit(unit);
     return unit.getUID();
 }

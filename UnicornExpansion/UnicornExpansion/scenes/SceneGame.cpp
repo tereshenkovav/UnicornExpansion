@@ -6,6 +6,7 @@
 #include "SceneEndGame.h"
 #include "SceneGameMenu.h"
 #include "ComponentMachine.h"
+#include "ComponentMultiselect.h"
 
 // Размеры камеры и скорость прокрутки камеры
 const int SCROLLSPEED = 10;
@@ -583,12 +584,12 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
                     // Выделяем всех единорогов в списке
                     selector.unSelectAll();
                     for (int uid : uids)
-                        if (game.getUnitByUID(uid).isComponent<ComponentUnicorn>())
+                        if (game.getUnitByUID(uid).isComponent<ComponentMultiselect>())
                             selector.invertUnit(uid);
                     // Если никто не выделился, то пробуем тогда выделить одного не-единорога
                     if (selector.isNoSelected())
                         for (int uid : uids)
-                            if (!game.getUnitByUID(uid).isComponent<ComponentUnicorn>()) {
+                            if (!game.getUnitByUID(uid).isComponent<ComponentMultiselect>()) {
                                 selector.invertUnit(uid);
                                 break;
                             }

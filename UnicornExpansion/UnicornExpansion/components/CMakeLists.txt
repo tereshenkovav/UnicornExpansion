@@ -10,6 +10,7 @@ ComponentHarvester.cpp
 ComponentHealer.cpp
 ComponentMachinary.cpp
 ComponentMeleeEnemy.cpp
+ComponentMultiselect.cpp
 ComponentPortal.cpp
 ComponentRadar.cpp
 ComponentShield.cpp

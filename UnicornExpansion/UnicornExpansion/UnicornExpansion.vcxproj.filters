@@ -186,6 +186,9 @@
     <ClCompile Include="components\ComponentBuilding.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="components\ComponentMultiselect.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="version.h">
@@ -321,6 +324,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="components\ComponentBuilding.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="components\ComponentMultiselect.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
