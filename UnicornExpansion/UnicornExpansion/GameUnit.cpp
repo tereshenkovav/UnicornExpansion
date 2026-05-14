@@ -237,10 +237,8 @@ void GameUnit::decHealth(float value)
 		shield -= value;
 		if (shield <= 0.0f)	full_shield = std::nullopt;
 	}
-	else {
+	else
 		health -= value;
-		if (health < 0.0f) health = 0.0f;
-	}
 }
 
 void GameUnit::incHealth(float value)

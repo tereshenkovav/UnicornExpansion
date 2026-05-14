@@ -11,7 +11,7 @@ int ComponentHealer::getHealerDistance() const
 	return heal_dist;
 }
 
-int ComponentHealer::getHealerEnergyCost() const
+float ComponentHealer::getHealerEnergyCost() const
 {
 	return heal_cost;
 }
@@ -51,7 +51,7 @@ ComponentHealerUnicorn::ComponentHealerUnicorn(Game* game) :ComponentHealer(game
 {
 	heal_rate = game->getConfigComponent()["Healer"]["Value"].asInt();
 	heal_dist = game->getConfigComponent()["Healer"]["Distance"].asInt();
-	heal_cost = game->getConfigComponent()["Healer"]["Cost"].asInt();
+	heal_cost = game->getConfigComponent()["Healer"]["Cost"].asFloat();
 	tek_upgrade_pos = 0;
 	locked_left = 0.0f;
 }
@@ -88,6 +88,6 @@ ComponentHealerTower::ComponentHealerTower(Game* game) :ComponentHealer(game)
 {
 	heal_rate = game->getConfigComponent()["TowerHealer"]["Value"].asInt();
 	heal_dist = game->getConfigComponent()["TowerHealer"]["Distance"].asInt();
-	heal_cost = game->getConfigComponent()["TowerHealer"]["Cost"].asInt();
+	heal_cost = game->getConfigComponent()["TowerHealer"]["Cost"].asFloat();
 	locked_left = 0.0f;
 }

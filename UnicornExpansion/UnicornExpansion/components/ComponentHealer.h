@@ -7,7 +7,7 @@ class ComponentHealer : public UnitComponent
 protected:
 	int heal_rate;
 	int heal_dist;
-	int heal_cost;
+	float heal_cost;
 	float locked_left;
 	bool isactive;
 public:
@@ -15,7 +15,7 @@ public:
 	// Скорость, дальность и расход энергии на ремонт
 	int getHealerRate() const;
 	int getHealerDistance() const;
-	int getHealerEnergyCost() const;
+	float getHealerEnergyCost() const;
 	virtual std::string getComponentInfo() const;
 	virtual void update(float dt);
 	bool isActive() const;
