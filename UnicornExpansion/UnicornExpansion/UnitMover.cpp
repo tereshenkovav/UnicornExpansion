@@ -18,12 +18,13 @@ void UnitMover::updateUnit(GameUnit & unit) const {
 	if (!unit.isTargeted()) return ;
 	if (unit.isMoving()) return ;
 	
-	if (busymap->getValue(unit.getTarget().x,unit.getTarget().y)) {
-		if (abs(unit.getXY().x - unit.getTarget().x)+
-			abs(unit.getXY().y - unit.getTarget().y) == 1) {
-			unit.resetTarget();// Здесь сбрасываем, мы подошли вплотную к занятой точке
-			return;
-		}
+	if (busymap->getValue(unit.getTarget().x, unit.getTarget().y)) {
+		for (int i = 0; i < dxy.size(); i++)
+			if ((unit.getXY().x + dxy[i].x == unit.getTarget().x) &&
+				(unit.getXY().y + dxy[i].y == unit.getTarget().y)) {
+				unit.resetTarget();// Здесь сбрасываем, мы подошли вплотную к занятой точке в зоне dxy
+				return;
+			}
 	}
 
 	WayFinder finder(busymap);
