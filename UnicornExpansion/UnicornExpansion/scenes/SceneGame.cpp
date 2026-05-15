@@ -178,6 +178,13 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
                 }
             }
 
+    // Крестик после территорий, но до юнитов
+    if (showcross) {
+        spr_cross->setPosition((*showcross).first);
+        spr_cross->setColor({ 255,255,255,(uint8_t)(*showcross).second });
+        rendertarget.draw(*spr_cross);
+    }
+
     // Вывод юнитов
     for (int i = 0; i < game.getUnitCount(); i++)
         if (!game.isFog(game.getUnit(i).getXY().x, game.getUnit(i).getXY().y))
@@ -542,6 +549,7 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
                     for (int uid : selector.getSelectedUnits())
                         if (game.getUnitByUID(uid).isComponent<ComponentUnicorn>() || game.getUnitByUID(uid).isComponent<ComponentMachine>()) {
                             game.setTargetToUnit(uid, worldpos.x / BLOCKW, worldpos.y / BLOCKH);
+                            showcross = std::pair(worldpos, 255);
                             if (((started_galop_uid != uid) || (effect_start->getStatus() != sf::SoundSource::Status::Playing))) {
                                 effect_start->play();
                                 started_galop_uid = uid;
@@ -659,6 +667,12 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
     for (auto effect : game.getOnceAudioEffects())
         snd_audioeffects[effect]->play();
 
+    // Здесь нужен эффект прозрачности по времени
+    if (showcross) {
+        (*showcross).second -= 255 * dt;
+        if ((*showcross).second <= 0) showcross = std::nullopt;
+    }
+
     if (counter_endgame.onceReachNol()) getEngine()->AddOverScene(std::make_shared<SceneEndGame>(game, levelcode));
 
     // Обновление камеры если нужно
@@ -686,6 +700,9 @@ void SceneGame::Init() {
 
     spr_border = loadSprite("images/border.png");
     spr_border->setPosition({ 0, 768 - 192 });
+
+    spr_cross = loadSprite("images/cross.png");
+    spr_cross->setOrigin({ 16,16 });
 
     spr_but_action = loadSprite("images/button.png") ;
     undo = loadSprite("images/undo.png");

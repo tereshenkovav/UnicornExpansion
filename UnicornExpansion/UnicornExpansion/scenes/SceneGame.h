@@ -67,6 +67,7 @@ private:
 
     bool overundo = false;
     std::optional<int> overactionidx = std::nullopt;
+    std::optional<std::pair<sf::Vector2f,float>> showcross = std::nullopt;
 
     // Сдвиговые значения для маркеров способностей
     std::array<int, 8> marker_dx = { 11, 0, 11, 0, 11, 0, 11, 0 };
@@ -110,6 +111,8 @@ private:
     sf::Shader shader_attack;
 
     sf::RectangleShape rect_pblocks;
+
+    sfge::UniqueSprite spr_cross;
 
     void updateMiniMap();
     float getScale05per20();
