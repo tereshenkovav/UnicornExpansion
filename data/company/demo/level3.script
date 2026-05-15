@@ -28,8 +28,8 @@ function initMap() {
   game.allowAction("BuildMachinary") ;
 
   game.addPortal(13,32) ;
-  game.clearFogAt(13,32,5) ;
-  game.clearFogAt(37,37,5) ;
+  game.clearFogAt(13,32,7) ;
+  game.clearFogAt(37,37,7) ;
   game.clearFogAt(13,9,7) ;
 
   uidrich = game.addCrystalRich(37,37,6000) ;

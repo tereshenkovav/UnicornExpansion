@@ -739,7 +739,7 @@ void SceneGame::Init() {
     view.setSize({ VIEW_SIZE_X, VIEW_SIZE_Y });
     view.setViewport(sf::FloatRect({ 0.0,0.0 }, { 1.0,0.75 }));
 
-    text_caption = loadText(24,sf::Color::White);
+    text_caption = loadText(20,sf::Color::White);
     text_action = loadText(16);
     text_action->setPosition({ 1024 - 400 + 8, 712 });
     text_hp = loadText(18);
