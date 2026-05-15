@@ -5,10 +5,15 @@ WayFinder::WayFinder(Vector2D<bool> * map)
 	this->map = map ;
 	dists.resize(map->getWidth(),map->getHeight()) ;
 	dists.setOutboundValue(-1) ;
-	dxy[0].x=1 ; dxy[0].y=0 ;
-	dxy[1].x=-1 ; dxy[1].y=0 ;
-	dxy[2].x=0 ; dxy[2].y=1 ;
-	dxy[3].x=0 ; dxy[3].y=-1 ;
+	// Порядок здесь имеет значение, сначала идут прямые, потом диагональные
+	dxy[0].x = 1;  dxy[0].y = 0;
+	dxy[1].x = 0;  dxy[1].y = 1;
+	dxy[2].x = 0;  dxy[2].y = -1;
+	dxy[3].x = -1; dxy[3].y = 0;
+	dxy[4].x = 1;  dxy[4].y = -1;
+	dxy[5].x = 1;  dxy[5].y = 1;
+	dxy[6].x = -1; dxy[6].y = 1;
+	dxy[7].x = -1; dxy[7].y = -1;
 }
 
 std::vector<Step> WayFinder::fillWayByDists(int x, int y) const {
@@ -29,15 +34,17 @@ std::vector<Step> WayFinder::fillWayByDists(int x, int y) const {
 				step.x = x ;
 				step.y = y ;
 				way.push_back(step) ;
+				break;
 			}
 		}
+
 	return way ;
 }
 
 std::vector<Step> WayFinder::findWay(int startx, int starty, int dstx, int dsty) {
 	dists.fill(0) ;
 	std::vector<Step> way ;
-	
+
 	int tekdist = 1 ;
 	dists.setValue(startx,starty,tekdist) ;
 

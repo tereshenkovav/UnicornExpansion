@@ -11,14 +11,17 @@ const int BLOCKW = 64 ;
 const int BLOCKH = 64 ;
 
 // Типы движения
-enum class Moving { None, Left, Right, Up, Down } ;
+enum class Moving { None, Left, Right, Up, Down, LeftUp, RightUp, LeftDown, RightDown } ;
 
 // Базовый юнит - его особые свойства задаются компонентами, а здесь только то, что общее для всех, за исключением опций движения
 class GameUnit
 {
 private:
 	float v ;
-	float treach ;
+	float vfix;
+	float treach;
+	float treach_line ;
+	float treach_diag;
 	std::string caption;
 	int maxhealth;
 	std::string code;

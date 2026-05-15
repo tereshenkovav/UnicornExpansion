@@ -20,7 +20,7 @@ class WayFinder
 private:
 	Vector2D<bool>* map ;
 	Vector2D<int> dists ;
-	std::array<Step,4> dxy ;
+	std::array<Step,8> dxy ;
 	std::vector<Step> fillWayByDists(int x, int y) const ;
 public:
 	// Создаем класс

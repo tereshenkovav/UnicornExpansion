@@ -45,13 +45,22 @@ void UnitMover::updateUnit(GameUnit & unit) const {
 		unit.resetTarget();// Здесь сбрасываем, пока не нашли
 	}
 	else {
-		// Жестко завязано на то, что движение только по 4 стороны без диагоналей
+		// Движение на все 8 направлений
 		auto newpos = way[way.size() - 2];
-		if (newpos.x == unit.getXY().x) {
-			if (newpos.y > unit.getXY().y) unit.moveTo(Moving::Down); else unit.moveTo(Moving::Up);
+
+		if (newpos.x < unit.getXY().x) {
+			if (newpos.y < unit.getXY().y) unit.moveTo(Moving::LeftUp); else
+			if (newpos.y > unit.getXY().y) unit.moveTo(Moving::LeftDown); else
+			unit.moveTo(Moving::Left);
+		}
+		else
+		if (newpos.x > unit.getXY().x) {
+			if (newpos.y < unit.getXY().y) unit.moveTo(Moving::RightUp); else
+			if (newpos.y > unit.getXY().y) unit.moveTo(Moving::RightDown); else
+			unit.moveTo(Moving::Right);
 		}
 		else {
-			if (newpos.x > unit.getXY().x) unit.moveTo(Moving::Right); else unit.moveTo(Moving::Left);
+			if (newpos.y < unit.getXY().y) unit.moveTo(Moving::Up); else unit.moveTo(Moving::Down);
 		}
 	}
 }

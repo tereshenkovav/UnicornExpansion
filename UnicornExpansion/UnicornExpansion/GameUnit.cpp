@@ -25,7 +25,9 @@ GameUnit::GameUnit(int unitx, int unity, int unitw, int unith, const std::string
 	workall = 1.0f;
 
 	v = 0 ;
-	treach = 1.0f;
+	vfix = 0 ;
+	treach_line = 1.0f;
+	treach_line = sqrt(2.0f);
 	this->caption = caption;
 
 	moving = Moving::None ;
@@ -42,20 +44,30 @@ GameUnit::GameUnit() {
 }
 
 int GameUnit::getMovingDx() const {
-	if (moving==Moving::Left) return -1 ;
-	if (moving==Moving::Right) return 1 ;
+	if (moving == Moving::Left) return -1;
+	if (moving == Moving::LeftUp) return -1;
+	if (moving == Moving::LeftDown) return -1;
+
+	if (moving == Moving::Right) return 1;
+	if (moving == Moving::RightDown) return 1;
+	if (moving == Moving::RightUp) return 1;
 	return 0;
 }
 
 int GameUnit::getMovingDy() const {
-	if (moving==Moving::Up) return -1 ;
-	if (moving==Moving::Down) return 1 ;
+	if (moving == Moving::Up) return -1;
+	if (moving == Moving::LeftUp) return -1;
+	if (moving == Moving::RightUp) return -1;
+
+	if (moving == Moving::Down) return 1;
+	if (moving == Moving::LeftDown) return 1;
+	if (moving == Moving::RightDown) return 1;
 	return 0;
 }
 
 sf::Vector2f GameUnit::getView() const {
-	return sf::Vector2f({ unitx * BLOCKW + unitw * BLOCKW / 2.0f + tmoving * v * getMovingDx(),
-		unity * BLOCKH + unith * BLOCKH / 2.0f + tmoving * v * getMovingDy() });
+	return sf::Vector2f({ unitx * BLOCKW + unitw * BLOCKW / 2.0f + tmoving * v * vfix * getMovingDx(),
+		unity * BLOCKH + unith * BLOCKH / 2.0f + tmoving * v * vfix * getMovingDy() });
 }
 
 sf::Vector2f GameUnit::getSizeView() const {
@@ -150,6 +162,14 @@ void GameUnit::moveTo(Moving moving) {
 	this->moving = moving ;
 	if (moving != Moving::None) this->lastmoving = moving;
 	tmoving = 0.0f ;
+	if ((moving == Moving::Left) || (moving == Moving::Right) || (moving == Moving::Up) || (moving == Moving::Down)) {
+		treach = treach_line;
+		vfix = 1.0;
+	}
+	if ((moving == Moving::LeftUp) || (moving == Moving::RightUp) || (moving == Moving::LeftDown) || (moving == Moving::RightDown)) {
+		treach = treach_diag;
+		vfix = 1.0/sqrt(2.0);
+	}
 }
 
 bool GameUnit::isMoving() const {
@@ -187,7 +207,8 @@ int GameUnit::getVelocity() const
 void GameUnit::setVelocity(int v)
 {
 	this->v = v;
-	treach = (float)BLOCKW / v;
+	treach_line = (float)BLOCKW / v;
+	treach_diag = (float)(sqrt(2.0f)*BLOCKW) / v;
 }
 
 void GameUnit::update(float dt) {
