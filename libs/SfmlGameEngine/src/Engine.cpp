@@ -8,6 +8,7 @@ Engine::Engine(unsigned int width, unsigned int height)
     this->width = width;
     this->height = height;
     this->profile = std::make_shared<Profile>();
+    this->logger = std::make_shared<Logger>();
 }
 
 void Engine::setStopUpdatingForLostFocus(bool value)
@@ -131,6 +132,15 @@ std::shared_ptr<Profile> Engine::getProfile() const {
 void Engine::setUserProfile(std::shared_ptr<Profile> userprofile)
 {
     profile = userprofile;
+}
+
+std::shared_ptr<Logger> Engine::getLogger() const {
+    return logger;
+}
+
+void Engine::setUserLogger(std::shared_ptr<Logger> userlogger)
+{
+    logger = userlogger;
 }
 
 void Engine::updateByProfile() {

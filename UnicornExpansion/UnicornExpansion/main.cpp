@@ -8,6 +8,7 @@
 #include "SceneCloseHandler.h"
 #include "HelperCppClasses/StringTools.h"
 #include "UserProfile.h"
+#include "SfmlGameEngine/Logger.h"
 
 #pragma comment (lib, "sfml-graphics.lib")
 #pragma comment (lib, "sfml-system.lib")
@@ -71,6 +72,7 @@ int main(int argc, char* argv[])
     engine.setStopUpdatingForLostFocus(true);
     engine.setUserProfile(profile);
     engine.setCloseHandlerScene(std::make_shared<SceneCloseHandler>());
+    engine.setUserLogger(std::make_shared<sfge::LoggerFile>(profiledir + "game.log"));
     engine.Run(std::make_shared<SceneMainMenu>());
         
     return 0;

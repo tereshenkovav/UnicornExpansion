@@ -154,6 +154,7 @@
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Button.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Engine.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Scene.cpp" />
+    <ClCompile Include="..\..\libs\SfmlGameEngine\src\Logger.cpp" />
     <ClCompile Include="ClickerCounter.cpp" />
     <ClCompile Include="components\ComponentAcademy.cpp" />
     <ClCompile Include="components\ComponentAttacker.cpp" />

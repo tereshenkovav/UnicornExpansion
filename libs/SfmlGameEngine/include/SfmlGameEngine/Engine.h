@@ -6,6 +6,7 @@
 #include "SfmlGameEngine/Texts.h"
 #include "SfmlGameEngine/Colors.h"
 #include "SfmlGameEngine/Profile.h"
+#include "SfmlGameEngine/Logger.h"
 #include <map>
 
 namespace sfge {
@@ -49,6 +50,8 @@ private:
     std::shared_ptr<Profile> profile;
     // Метка текущего состояния окна
     bool isfullscr = false;
+    // Логгер
+    std::shared_ptr<Logger> logger;
     // Пересоздание окна с настройками профиля
     void createWindow();
 public:
@@ -94,6 +97,9 @@ public:
     // Установка пользовательского профиля, если не вызвать, то будет объект Profile по умолчанию
     void setUserProfile(std::shared_ptr<Profile> userprofile);
     std::shared_ptr<Profile> getProfile() const;
+    // Установка пользовательского логгера, если не вызвать, то будет объект Logger по умолчанию, без кода
+    void setUserLogger(std::shared_ptr<Logger> userprofile);
+    std::shared_ptr<Logger> getLogger() const;
     // Обновить параметры окна по профилю
     void updateByProfile();
     void setCloseHandlerScene(std::shared_ptr<Scene> scene);
