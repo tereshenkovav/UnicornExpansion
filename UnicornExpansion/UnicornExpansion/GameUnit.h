@@ -70,7 +70,7 @@ public:
 	bool isXYInUnit(float x, float y) const;
 	bool isUnitInRect(float x1, float y1, float x2, float y2) const;
 	// Ориентация юнита по последнему движению
-	Moving getLastMoving() const;
+	bool isUnitRotatedLeft() const;
 	// Проверка, находятся ли юниты рядом
 	bool isUnitNearUnit(const GameUnit& unit) const;
 	// Движение юнита

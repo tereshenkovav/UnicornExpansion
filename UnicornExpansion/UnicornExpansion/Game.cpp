@@ -596,7 +596,7 @@ void Game::update(float dt)
 				if (auto res_idx = finder.getBestIndex()) {
 					energy += harvester->getHarvestRate() * units[*res_idx].getComponent<ComponentResource>()->getResourceEfficient() * dt;
 					units[*res_idx].decHealth(harvester->getHarvestRate() * dt);
-					lasers.push_back({ units[i].getView() + (units[i].getLastMoving() == Moving::Left ? laserfixleft : laserfixright),
+					lasers.push_back({ units[i].getView() + (units[i].isUnitRotatedLeft() ? laserfixleft : laserfixright),
 						units[*res_idx].getView(), LaserType::Harvest, SeedStore::getSeedByUIDAndLaserType(units[i].getUID(),LaserType::Harvest) });
 				}
 			}
@@ -615,7 +615,7 @@ void Game::update(float dt)
 							energy -= healer->getHealerEnergyCost() * dt;
 							healer->setActive(true);
 							units[*res_idx].incHealth(healer->getHealerRate() * dt);
-							lasers.push_back({ units[i].getView() + (units[i].getLastMoving() == Moving::Left ? laserfixleft : laserfixright),
+							lasers.push_back({ units[i].getView() + (units[i].isUnitRotatedLeft() ? laserfixleft : laserfixright),
 								units[*res_idx].getView(), LaserType::Heal, SeedStore::getSeedByUIDAndLaserType(units[i].getUID(),LaserType::Heal) });
 						}
 					}
@@ -643,7 +643,7 @@ void Game::update(float dt)
 				// После этого, уже пытаемся атаковать
 				if (auto res_idx = finder.getBestIndex()) {
 					units[*res_idx].decHealth(attacker->getAttackValue() * dt);
-					lasers.push_back({ units[i].getView() + (units[i].getLastMoving() == Moving::Left ? laserfixleft : laserfixright),
+					lasers.push_back({ units[i].getView() + (units[i].isUnitRotatedLeft() ? laserfixleft : laserfixright),
 						units[*res_idx].getView(), LaserType::Attack, SeedStore::getSeedByUIDAndLaserType(units[i].getUID(),LaserType::Attack) });
 					if (auto* meleeenemy = units[*res_idx].getComponent<ComponentMeleeEnemy>())
 						meleeenemy->setTargetToUnit(units[i].getUID());
@@ -660,7 +660,7 @@ void Game::update(float dt)
 							finder.addPos(sf::Vector2f(BLOCKW * x + m.x, BLOCKH * y + m.y), m.index);
 				if (auto res_idx = finder.getBestIndex()) {
 					mushrooms.attackMushrooms(*res_idx, detoxer->getDetoxValue()* dt);
-					lasers.push_back({ units[i].getView() + (units[i].getLastMoving() == Moving::Left ? laserfixleft : laserfixright),
+					lasers.push_back({ units[i].getView() + (units[i].isUnitRotatedLeft() ? laserfixleft : laserfixright),
 						*finder.getBestPos(), LaserType::Detox, SeedStore::getSeedByUIDAndLaserType(units[i].getUID(),LaserType::Detox) });
 				}
 			}

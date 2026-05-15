@@ -189,7 +189,7 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
     for (int i = 0; i < game.getUnitCount(); i++)
         if (!game.isFog(game.getUnit(i).getXY().x, game.getUnit(i).getXY().y))
             if (spr_units.count(game.getUnit(i).getCode()) > 0) {
-                bool movleft = game.getUnit(i).getLastMoving() == Moving::Left;
+                bool movleft = game.getUnit(i).isUnitRotatedLeft();
                 spr_units[game.getUnit(i).getCode()]->setPosition(game.getUnit(i).getView());
                 spr_units[game.getUnit(i).getCode()]->setScale({ movleft ? -1.0f : 1.0f,1 });
                 if (game.isUnitUnderAttack(game.getUnit(i).getUID()))

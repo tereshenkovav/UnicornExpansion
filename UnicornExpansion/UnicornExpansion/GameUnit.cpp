@@ -138,9 +138,9 @@ bool GameUnit::isUnitInRect(float x1, float y1, float x2, float y2) const
 		(getView().y - getSizeView().y / 2.0f < y2) && (y1 < getView().y + getSizeView().y / 2.0f);
 }
 
-Moving GameUnit::getLastMoving() const
+bool GameUnit::isUnitRotatedLeft() const
 {
-	return lastmoving;
+	return (lastmoving==Moving::Left)|| (lastmoving == Moving::LeftUp)||(lastmoving == Moving::LeftDown);
 }
 
 bool GameUnit::isUnitNearUnit(const GameUnit& unit) const
