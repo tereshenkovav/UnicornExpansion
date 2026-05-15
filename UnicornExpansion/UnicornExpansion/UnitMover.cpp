@@ -31,14 +31,11 @@ void UnitMover::updateUnit(GameUnit & unit) const {
 	auto way = finder.findWay(unit.getXY().x, unit.getXY().y, unit.getTarget().x,unit.getTarget().y);
 
 	if (way.size() < 2) {
-		// Цель недостижима, ищем рядом в клетках по ближайшему пути(не лучший вариант, но будет работать для неплотных групп)
-		std::vector<Step> bestway;
+		// Цель недостижима, ищем рядом в клетках без выбора оптимального
 		for (int i = 0; i < dxy.size(); i++) {
 			way = finder.findWay(unit.getXY().x, unit.getXY().y, unit.getTarget().x + dxy[i].x, unit.getTarget().y + dxy[i].y);
-			if (way.size() >= 2)
-				if ((bestway.size() == 0) || (way.size() < bestway.size())) bestway = way;
+			if (way.size() >= 2) break;
 		}
-		way = bestway;
 	}
 
 	if (way.size() < 2) {

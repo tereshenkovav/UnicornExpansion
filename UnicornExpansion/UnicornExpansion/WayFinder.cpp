@@ -21,8 +21,7 @@ std::vector<Step> WayFinder::fillWayByDists(int x, int y) const {
 
 	std::vector<Step> way ;
 	
-	Step step = {x,y} ;
-	way.push_back(step) ;
+	way.push_back({x,y});
 
 	for (int w=dist-1; w>0; w--)
 		for (int k=0; k<dxy.size(); k++) {
@@ -31,9 +30,7 @@ std::vector<Step> WayFinder::fillWayByDists(int x, int y) const {
 			if (dists.getValue(nx,ny)==w) {
 				x=nx ;
 				y=ny ;
-				step.x = x ;
-				step.y = y ;
-				way.push_back(step) ;
+				way.push_back({ x,y });
 				break;
 			}
 		}
@@ -48,22 +45,25 @@ std::vector<Step> WayFinder::findWay(int startx, int starty, int dstx, int dsty)
 	int tekdist = 1 ;
 	dists.setValue(startx,starty,tekdist) ;
 
-	// Алгоритм на каждой итерации обходит всю карту, но можно реализовать через запись в векторе последней волны обхода
+	std::vector<Step> wave;
+	std::vector<Step> newwave;
+	newwave.reserve(2 * (dists.getWidth() + dists.getHeight()));
+	wave.push_back({ startx,starty });
+
 	while (true) {
-		int cntfilled = 0 ;
-		for (int i=0; i<map->getWidth(); i++) 
-			for (int j=0; j<map->getHeight(); j++)
-				if (dists.getValue(i,j)==tekdist)
+		for (int i = 0; i < wave.size(); i++)
 					for (int k=0; k<dxy.size(); k++) {
-						int nx = i+dxy[k].x ;
-						int ny = j+dxy[k].y ;
+						int nx = wave[i].x + dxy[k].x ;
+						int ny = wave[i].y + dxy[k].y ;
 						if ((dists.getValue(nx,ny)==0)&&(!map->getValue(nx,ny))) {
 							dists.setValue(nx,ny,tekdist+1) ;
-							cntfilled++ ;
+							newwave.push_back({ nx,ny });
 							if ((nx==dstx)&&(ny==dsty)) return fillWayByDists(nx,ny) ;
 						}
 					}
-		if (cntfilled==0) return way ;
+		if (newwave.size() == 0) return way;
+		wave = std::move(newwave);
+		newwave = std::vector<Step>();
 		tekdist++ ;
 	}	
 }
