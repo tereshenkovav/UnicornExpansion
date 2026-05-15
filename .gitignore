@@ -402,3 +402,4 @@ UnicornExpansion/UnicornExpansion/version.h
 setup/windows/*.zip
 setup/windows/*.exe
 *build-*/
+data/company/system

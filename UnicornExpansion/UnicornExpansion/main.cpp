@@ -9,6 +9,7 @@
 #include "HelperCppClasses/StringTools.h"
 #include "UserProfile.h"
 #include "SfmlGameEngine/Logger.h"
+#include "SceneGame.h"
 
 #pragma comment (lib, "sfml-graphics.lib")
 #pragma comment (lib, "sfml-system.lib")
@@ -73,7 +74,13 @@ int main(int argc, char* argv[])
     engine.setUserProfile(profile);
     engine.setCloseHandlerScene(std::make_shared<SceneCloseHandler>());
     engine.setUserLogger(std::make_shared<sfge::LoggerFile>(profiledir + "game.log"));
-    engine.Run(std::make_shared<SceneMainMenu>());
+
+    // Специальный отладочный код, при передаче второго аргумента - вызываем system-карту
+    // Уйдет после реализации консоли управления
+    if (argc > 2)
+        engine.Run(std::make_shared<SceneGame>("system", std::stoi(std::string(argv[2])), Difficulty::Norm));
+    else
+        engine.Run(std::make_shared<SceneMainMenu>());
         
     return 0;
 }
