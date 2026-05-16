@@ -39,17 +39,19 @@ int main(int argc, char* argv[])
             std::filesystem::current_path(exedir + "/data");
 
     // Обработка домашнего каталога для платформ
-    char buf[_MAX_PATH];
-    size_t bufcount;
 #ifdef __GNUC__
 #ifdef __MINGW32__
+    char buf[_MAX_PATH];
+    size_t bufcount;
     getenv_s(&bufcount, buf, _MAX_PATH, "LOCALAPPDATA");
     auto profiledir = std::string(buf) + "\\UnicornExpansion\\";
 #else
-    getenv_s(&bufcount, buf, _MAX_PATH, "HOME");
+    const char * buf = getenv("HOME");
     auto profiledir = std::string(buf) + "/.local/share/UnicornExpansion/";
 #endif
 #else
+    char buf[_MAX_PATH];
+    size_t bufcount;
     getenv_s(&bufcount, buf, _MAX_PATH, "LOCALAPPDATA");
     auto profiledir = std::string(buf) + "\\UnicornExpansion\\" ;
 #endif

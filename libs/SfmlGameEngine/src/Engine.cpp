@@ -1,5 +1,5 @@
 #include "SfmlGameEngine/Engine.h"
-#include "SfmlGameEngine/SFMLTools.h"
+#include "SfmlGameEngine/SfmlTools.h"
 
 namespace sfge {
 

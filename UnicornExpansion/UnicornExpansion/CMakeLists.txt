@@ -24,4 +24,7 @@ add_subdirectory(components)
 add_subdirectory(scenes)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+
+if (WIN32)
 target_link_options(UnicornExpansion PRIVATE -mwindows)
+endif (WIN32)
