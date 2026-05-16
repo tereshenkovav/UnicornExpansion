@@ -6,6 +6,7 @@ SceneGame.cpp
 SceneGameMenu.cpp
 SceneHelp.cpp
 SceneMainMenu.cpp
+SceneMsgBox.cpp
 SceneOptions.cpp
 SceneStartMenu.cpp
 SceneTask.cpp

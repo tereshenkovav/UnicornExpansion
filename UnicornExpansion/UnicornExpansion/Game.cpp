@@ -144,6 +144,7 @@ bool Game::loadScript(const std::string& filename) {
 	energy = 0.0f;
 	tasks.clear();
 	timerleft = 0;
+	errmsg = std::nullopt;
 
 	try {
 		script_engine.clear();
@@ -156,12 +157,8 @@ bool Game::loadScript(const std::string& filename) {
 		initMap();
 	}
 	catch (std::exception& e) {
-		// Ёкспресс-реализаци€ записи ошибки
-		std::ofstream fout("errog.log");
-		if (fout.is_open()) {
-			fout << e.what() << std::endl;
-			fout.close();
-		}
+		errmsg = std::string("Error script init\n")+e.what();
+		return false;
 	}
 		
 	// ѕришлось добавить сюда, чтобы где-то инициализировало
@@ -724,12 +721,7 @@ void Game::update(float dt)
 		}
 	}
 	catch (std::exception& e) {
-		// Ёкспресс-реализаци€ записи ошибки
-		std::ofstream fout("errortest.log");
-		if (fout.is_open()) {
-			fout << e.what() << std::endl;
-			fout.close();
-		}
+		errmsg = std::string("Error script update\n")+e.what();
 	}
 }
 
@@ -851,6 +843,11 @@ bool Game::isActionAllowed(const std::string name) const
 bool Game::isMagicEconomy() const
 {
 	return magiceconomy;
+}
+
+std::optional<std::string> Game::getErrMsg() const
+{
+	return errmsg;
 }
 
 std::string Game::getText(const std::string& name) const

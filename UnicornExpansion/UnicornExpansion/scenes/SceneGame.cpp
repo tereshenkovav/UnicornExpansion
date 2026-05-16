@@ -7,6 +7,7 @@
 #include "SceneGameMenu.h"
 #include "ComponentMachine.h"
 #include "ComponentMultiselect.h"
+#include "SceneMsgBox.h"
 
 // Размеры камеры и скорость прокрутки камеры
 const int SCROLLSPEED = 10;
@@ -121,8 +122,17 @@ void SceneGame::loadGame() {
     bool textok = game.loadTexts(part + ".strings");
     bool mapok = game.loadMap(part + ".map");
     bool scriptok = game.loadScript(part + ".script");
-    
+    if (game.getErrMsg()) {
+        getEngine()->SwitchToScene(std::make_shared<SceneMsgBox>(*game.getErrMsg(), [this]() { getEngine()->doClose(); }));
+        getEngine()->getLogger()->WriteLog(*game.getErrMsg());
+    }
+
     game.update(0.0); // Первичная инициализация для тумана войны
+    if (game.getErrMsg()) {
+        getEngine()->SwitchToScene(std::make_shared<SceneMsgBox>(*game.getErrMsg(), [this]() { getEngine()->doClose(); }));
+        getEngine()->getLogger()->WriteLog(*game.getErrMsg());
+    }
+
     tekscale = DEFAULT_SCALE;
     updateScale();
 
@@ -632,7 +642,13 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
 
     laser_apply->update(dt);
     aura->update(dt);
+
     game.update(dt);
+    if (game.getErrMsg()) {
+        getEngine()->SwitchToScene(std::make_shared<SceneMsgBox>(*game.getErrMsg(), [this]() { getEngine()->doClose(); }));
+        getEngine()->getLogger()->WriteLog(*game.getErrMsg());
+    }
+
     for (int uid : selector.getSelectedUnits())
         if (!game.isUnitExist(uid)) selector.unSelectUnit(uid);
 

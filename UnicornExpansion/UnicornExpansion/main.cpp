@@ -77,6 +77,7 @@ int main(int argc, char* argv[])
     engine.setCloseHandlerScene(std::make_shared<SceneCloseHandler>());
     engine.setUserLogger(std::make_shared<sfge::LoggerFile>(profiledir + "game.log"));
 
+    engine.getLogger()->WriteLog("Game running");
     // Специальный отладочный код, при передаче второго аргумента - вызываем system-карту
     // Уйдет после реализации консоли управления
     if (argc > 2)

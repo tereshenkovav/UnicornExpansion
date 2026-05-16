@@ -90,6 +90,7 @@ private:
 	std::set<int> new_attacked_units;
 	std::optional<sf::Vector2f> lasteventpos;
 	bool magiceconomy = false;
+	std::optional<std::string> errmsg = std::nullopt;
 	void trySetUnderAttackEffect(const GameUnit& unit);
 	// Полезная функция, позволяет автоматически получать строки из внешнего файла, записывая их как $key, без использования game.getText
 	std::string trText(const std::string& text) const;
@@ -204,7 +205,7 @@ public:
 	const std::vector<Message>& getHistory() const;
 	bool isActionAllowed(const std::string name) const;
 	bool isMagicEconomy() const;
-
+	std::optional<std::string> getErrMsg() const;
 	std::optional<sf::Vector2i> getFirstFreePosFor2x2Building(const GameUnit& unit) const;
 
 	// Обновление игры

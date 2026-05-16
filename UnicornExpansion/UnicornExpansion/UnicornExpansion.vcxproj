@@ -190,6 +190,7 @@
     <ClCompile Include="scenes\SceneHelp.cpp" />
     <ClCompile Include="scenes\SceneJournal.cpp" />
     <ClCompile Include="scenes\SceneMainMenu.cpp" />
+    <ClCompile Include="scenes\SceneMsgBox.cpp" />
     <ClCompile Include="scenes\SceneOptions.cpp" />
     <ClCompile Include="scenes\ScenePostfix.cpp" />
     <ClCompile Include="scenes\SceneStartMenu.cpp" />
@@ -242,6 +243,7 @@
     <ClInclude Include="scenes\SceneHelp.h" />
     <ClInclude Include="scenes\SceneJournal.h" />
     <ClInclude Include="scenes\SceneMainMenu.h" />
+    <ClInclude Include="scenes\SceneMsgBox.h" />
     <ClInclude Include="scenes\SceneOptions.h" />
     <ClInclude Include="scenes\ScenePostfix.h" />
     <ClInclude Include="scenes\SceneStartMenu.h" />
