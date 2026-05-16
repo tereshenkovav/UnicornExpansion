@@ -16,7 +16,7 @@ class UserProfile: public sfge::Profile
 private:
     bool voiceon = true ;
     std::vector<CompanyProgress> progress;
-    Difficulty lastdifficulty;
+    Difficulty lastdifficulty = Difficulty::Norm;
     std::string filename;
 protected:
 public:
