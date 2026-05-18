@@ -151,6 +151,11 @@ void SceneGame::loadGame() {
 
 }
 
+void SceneGame::muteLaserSounds()
+{
+    effect_fire->setVolume(0.0f);
+}
+
 void SceneGame::Render(sf::RenderTarget & rendertarget) {
     rendertarget.setView(view);
 
@@ -489,10 +494,19 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
     for (auto & event : events) {
         if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
         {
-            if ((keyPressed->scancode == sf::Keyboard::Scancode::Escape)||
-                (keyPressed->scancode == sf::Keyboard::Scancode::F10)) getEngine()->AddOverScene(std::make_shared<SceneGameMenu>(&game,levelcode));
-            if (keyPressed->scancode == sf::Keyboard::Scancode::F5) getEngine()->AddOverScene(std::make_shared<SceneTask>(game));
-            if (keyPressed->scancode == sf::Keyboard::Scancode::F8) getEngine()->AddOverScene(std::make_shared<SceneJournal>(game));
+            if ((keyPressed->scancode == sf::Keyboard::Scancode::Escape) ||
+                (keyPressed->scancode == sf::Keyboard::Scancode::F10)) {
+                muteLaserSounds();
+                getEngine()->AddOverScene(std::make_shared<SceneGameMenu>(&game, levelcode));
+            }
+            if (keyPressed->scancode == sf::Keyboard::Scancode::F5) {
+                muteLaserSounds();
+                getEngine()->AddOverScene(std::make_shared<SceneTask>(game));
+            }
+            if (keyPressed->scancode == sf::Keyboard::Scancode::F8) {
+                muteLaserSounds();
+                getEngine()->AddOverScene(std::make_shared<SceneJournal>(game));
+            }
 
             if (keyPressed->scancode == sf::Keyboard::Scancode::F) showfps = !showfps;
             if (keyPressed->scancode == sf::Keyboard::Scancode::Tab) showterrain = !showterrain;
@@ -689,7 +703,10 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
         if ((*showcross).second <= 0) showcross = std::nullopt;
     }
 
-    if (counter_endgame.onceReachNol()) getEngine()->AddOverScene(std::make_shared<SceneEndGame>(game, levelcode));
+    if (counter_endgame.onceReachNol()) {
+        muteLaserSounds();
+        getEngine()->AddOverScene(std::make_shared<SceneEndGame>(game, levelcode));
+    }
 
     // Обновление камеры если нужно
     if (auto newvp = game.getOnceNewViewPoint())
