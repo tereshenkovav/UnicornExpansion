@@ -31,7 +31,7 @@ GameUnit::GameUnit(int unitx, int unity, int unitw, int unith, const std::string
 	this->caption = caption;
 
 	moving = Moving::None ;
-	lastmoving = Moving::Up ;
+	lastmoving = Moving::Right ;
 	tmoving = 0.0f ;
 
 	targeted = false ;
@@ -141,6 +141,11 @@ bool GameUnit::isUnitInRect(float x1, float y1, float x2, float y2) const
 bool GameUnit::isUnitRotatedLeft() const
 {
 	return (lastmoving==Moving::Left)|| (lastmoving == Moving::LeftUp)||(lastmoving == Moving::LeftDown);
+}
+
+Moving GameUnit::getLastMoving() const
+{
+	return lastmoving;
 }
 
 bool GameUnit::isUnitNearUnit(const GameUnit& unit) const

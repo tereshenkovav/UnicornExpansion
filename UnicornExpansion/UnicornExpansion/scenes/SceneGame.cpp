@@ -205,12 +205,23 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
         if (!game.isFog(game.getUnit(i).getXY().x, game.getUnit(i).getXY().y))
             if (spr_units.count(game.getUnit(i).getCode()) > 0) {
                 bool movleft = game.getUnit(i).isUnitRotatedLeft();
-                spr_units[game.getUnit(i).getCode()]->setPosition(game.getUnit(i).getView());
-                spr_units[game.getUnit(i).getCode()]->setScale({ movleft ? -1.0f : 1.0f,1 });
+                std::string sprcode = game.getUnit(i).getCode();
+                if (game.getUnit(i).isComponent<ComponentMachine>()) {
+                    std::string dirsuff = "";
+                    if (game.getUnit(i).getLastMoving() == Moving::Up) dirsuff = "_t";
+                    if ((game.getUnit(i).getLastMoving() == Moving::LeftUp) ||
+                        (game.getUnit(i).getLastMoving() == Moving::RightUp)) dirsuff = "_rt";
+                    if ((game.getUnit(i).getLastMoving() == Moving::LeftDown) ||
+                        (game.getUnit(i).getLastMoving() == Moving::RightDown)) dirsuff = "_rb";
+                    if (game.getUnit(i).getLastMoving() == Moving::Down) dirsuff = "_b";
+                    sprcode = sprcode + dirsuff;
+                }
+                spr_units[sprcode]->setPosition(game.getUnit(i).getView());
+                spr_units[sprcode]->setScale({ movleft ? -1.0f : 1.0f,1 });
                 if (game.isUnitUnderAttack(game.getUnit(i).getUID()))
-                    rendertarget.draw(*spr_units[game.getUnit(i).getCode()], &shader_attack);
+                    rendertarget.draw(*spr_units[sprcode], &shader_attack);
                 else
-                    rendertarget.draw(*spr_units[game.getUnit(i).getCode()]);
+                    rendertarget.draw(*spr_units[sprcode]);
 
                 if (game.getUnit(i).isComponent<ComponentUnicorn>()) {
                     int marker_x = game.getUnit(i).getView().x + (movleft ? 1 : -1) * (game.getUnit(i).getSizeView().x / 2 - 15);
@@ -757,6 +768,14 @@ void SceneGame::Init() {
         spr_icons[str] = loadSprite(filename.path().string());
         spr_icons[str]->setOrigin({ spr_units[str]->getTexture().getSize().x / 2.0f,spr_units[str]->getTexture().getSize().y / 2.0f });
         spr_icons[str]->setScale({ 48.0f / spr_units[str]->getTexture().getSize().x, 48.0f / spr_units[str]->getTexture().getSize().y });
+    }
+
+    // Догрузка машин по направлениям
+    std::vector<std::string> dirsuff = { "machine_t", "machine_b", "machine_rb", "machine_rt"};
+    for (auto& str : dirsuff) {
+        spr_units[str] = loadSprite("images/units/" + str + ".png");
+        spr_units[str]->setOrigin({ spr_units[str]->getTexture().getSize().x / 2.0f,
+            spr_units[str]->getTexture().getSize().y / 2.0f });
     }
 
     // Используется загрузка каталога в целом, можно вынести как процедуру
