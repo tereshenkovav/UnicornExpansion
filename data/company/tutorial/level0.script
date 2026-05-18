@@ -10,8 +10,6 @@ function initMap() {
   game.addPortal(2,15) ;
   game.addCrystal(18,5,1200) ;
   uidcrystall = game.addCrystal(9,18,1500) ;
-  game.addEnemy2(16,1) ;
-  game.addEnemy1(17,7) ;
   uid1 = game.addUnicorn(7,14) ;
 
   game.incEnergy(80) ;
@@ -96,6 +94,8 @@ function Update() {
         game.addMessageLater("unicorn",10,10,"$Brief_8_2") ;
         game.addMessageLater("unicorn",10,20,"$Brief_8_3") ;
         game.allowAction("MakeHealer") ;
+        game.addEnemy2(16,1) ;
+        game.addEnemy1(17,7) ;
       }
   }
 

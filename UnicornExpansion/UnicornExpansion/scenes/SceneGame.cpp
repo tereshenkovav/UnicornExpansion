@@ -506,13 +506,13 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
                     fixCameraPosition();
                 }
             }
-            if (keyPressed->scancode == sf::Keyboard::Scancode::NumpadMinus) {
+            if ((keyPressed->scancode == sf::Keyboard::Scancode::NumpadMinus) || (keyPressed->scancode == sf::Keyboard::Scancode::Hyphen)) {
                 if (tekscale < 6) {
                     tekscale++;
                     updateScale();
                 }
             }
-            if (keyPressed->scancode == sf::Keyboard::Scancode::NumpadPlus) {
+            if ((keyPressed->scancode == sf::Keyboard::Scancode::NumpadPlus) || (keyPressed->scancode == sf::Keyboard::Scancode::Equal)) {
                 if (tekscale > 0) {
                     tekscale--;
                     updateScale();
