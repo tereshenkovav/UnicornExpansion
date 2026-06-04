@@ -567,8 +567,8 @@ void Game::update(float dt)
 	sf::Vector2f laserfixleftunicorn{ -23, -25 };
 	sf::Vector2f laserfixrightunicorn{ 21, -25 };
 
-	sf::Vector2f laserfixlefttower{ 0, -25 };
-	sf::Vector2f laserfixrighttower{ 0, -25 };
+	sf::Vector2f laserfixlefttower{ -10, -30 };
+	sf::Vector2f laserfixrighttower{ -10, -30 };
 
 	sf::Vector2f laserfixleft;
 	sf::Vector2f laserfixright;
