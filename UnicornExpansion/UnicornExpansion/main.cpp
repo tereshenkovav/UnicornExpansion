@@ -75,7 +75,11 @@ int main(int argc, char* argv[])
     engine.setCloseHandlerScene(std::make_shared<SceneCloseHandler>());
     engine.setUserLogger(std::make_shared<sfge::LoggerFile>(profiledir + "game.log"));
     engine.getLanguages().loadFromFile("languages");
-    engine.getLanguages().setCurrentByFile("deflang");
+    // Если язык был выставлен в профиле, то используем его, иначе грузим из файла
+    if (engine.getProfile()->getLanguage().length() > 0)
+        engine.getLanguages().setCurrentByValue(engine.getProfile()->getLanguage());
+    else
+        engine.getLanguages().setCurrentByFile("deflang");
     // Тексты и заголовок - после загрузки языка
     engine.loadTexts("strings.txt");
     engine.setCaption(engine.getTexts().getStr("Text_GameCaption"));

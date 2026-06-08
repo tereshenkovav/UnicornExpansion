@@ -35,13 +35,14 @@ void Languages::setCurrentByFile(const std::string& filename) {
 	std::ifstream fin(filename);
 	if (!fin.is_open()) return;
 
-	if (std::getline(fin, line))
-	{
-		line = trimString(clearLineFromBOM(clearStringFromEndl(line)));
-		for (int i = 0; i < all.size(); i++)
-			if (all[i] == line) tek = i;
-	}
+	if (std::getline(fin, line)) setCurrentByValue(trimString(clearLineFromBOM(clearStringFromEndl(line))));
 	fin.close();
+}
+
+void Languages::setCurrentByValue(const std::string& value)
+{
+	for (int i = 0; i < all.size(); i++)
+		if (all[i] == value) tek = i;
 }
 
 void Languages::switchCurrent() {

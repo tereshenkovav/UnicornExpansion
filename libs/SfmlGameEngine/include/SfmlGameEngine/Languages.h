@@ -18,6 +18,7 @@ public:
 	// Загрузка языков из файла
 	void loadFromFile(const std::string& filename);
 	void setCurrentByFile(const std::string& filename);
+	void setCurrentByValue(const std::string& value);
 	void switchCurrent();
 	std::string getCurrent() const;
 	std::string getCurrentUpper() const;

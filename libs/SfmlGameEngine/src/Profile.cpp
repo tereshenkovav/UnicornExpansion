@@ -18,6 +18,11 @@ bool Profile::isVSync() const {
 	return vsync;
 }
 
+std::string Profile::getLanguage() const
+{
+	return language;
+}
+
 void Profile::setSoundOn(bool value) {
 	soundon = value;
 }
@@ -32,6 +37,11 @@ void Profile::setFullScreen(bool value) {
 
 void Profile::setVSync(bool value) {
 	vsync = value;
+}
+
+void Profile::setLanguage(const std::string& value)
+{
+	language = value;
 }
 
 }

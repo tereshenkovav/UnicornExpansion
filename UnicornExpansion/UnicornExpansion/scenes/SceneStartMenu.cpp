@@ -9,6 +9,8 @@
 
 void SceneStartMenu::SwitchLanguage() {
     getEngine()->getLanguages().switchCurrent();
+    getEngine()->getProfile()->setLanguage(getEngine()->getLanguages().getCurrent());
+    std::static_pointer_cast<UserProfile>(getProfile())->saveProfile();
     getEngine()->loadTexts("strings.txt");
     getEngine()->setCaption(getEngine()->getTexts().getStr("Text_GameCaption"));
     getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>());
