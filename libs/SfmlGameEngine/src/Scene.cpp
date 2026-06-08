@@ -1,6 +1,7 @@
 #include "SfmlGameEngine/Scene.h"
 #include "SfmlGameEngine/Engine.h"
 #include "SfmlGameEngine/SfmlTools.h"
+#include "HelperCppClasses/StringTools.h"
 
 namespace sfge {
 
@@ -75,6 +76,37 @@ const Colors& Scene::getColors() const
 std::shared_ptr<Profile> Scene::getProfile() const
 {
 	return engine->getProfile();
+}
+
+void Scene::drawTextInBlockWidth(sf::RenderTarget& rendertarget,
+	sf::Text& text, const std::string& str, float x, float y, float width, int redlinewidth)
+{
+	auto s1 = str;
+	auto words = splitString(replaceAllString(s1,"\\n", "\\break "), " ");
+	if (words.size() == 0) return;
+
+	auto line = std::string(redlinewidth, ' ') + words[0];
+	for (int i = 1; i < words.size(); i++) {
+		text.setString(SfmlTools::utf2text(line + "  " + words[i]));
+		bool isnewline = line.ends_with("\\break");
+		if ((text.getLocalBounds().size.x >= width) || isnewline) {
+			line = replaceAllString(line, "\\break", "");
+			text.setString(SfmlTools::utf2text(line));
+			text.setPosition({ x, y });
+			rendertarget.draw(text);
+			y += text.getFont().getLineSpacing(text.getCharacterSize());
+			line = words[i];
+			if (isnewline) line = std::string(redlinewidth, ' ') + line;
+		}
+		else
+			line += " " + words[i];
+	}
+	if (line.size() > 0) {
+		line = replaceAllString(line, "\\break", "");
+		text.setString(SfmlTools::utf2text(line));
+		text.setPosition({ x, y });
+		rendertarget.draw(text);
+	}
 }
 
 }

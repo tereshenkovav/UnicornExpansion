@@ -39,7 +39,7 @@ public:
     virtual void Update(float dt, const sf::Vector2i& mousePos, const std::vector<sf::Event>& events);
     virtual void Init();
     virtual void UnInit();
-
+    void drawTextInBlockWidth(sf::RenderTarget& rendertarget, sf::Text& text, const std::string& str, float x, float y, float w, int redlinewidth);
     void setEngine(Engine* engine);
 };
 

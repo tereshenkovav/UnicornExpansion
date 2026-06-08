@@ -25,6 +25,7 @@ private:
     std::string company;
     Difficulty difficulty;
     std::vector<std::string> companylevels;
+    std::string companyinfo;
     void updateCheckboxes();
 public:
     SceneCompany(const std::string& company);

@@ -24,7 +24,8 @@ void SceneCompany::Render(sf::RenderTarget & rendertarget) {
     rendertarget.draw(textback);
     rendertarget.draw(textback1);
     rendertarget.draw(*text_caption);
-    rendertarget.draw(*text_info);
+
+    drawTextInBlockWidth(rendertarget, *text_info, companyinfo, 32, 100, 600-32, 5);
     
     rendertarget.draw(*cbeasy);
     rendertarget.draw(*cbnorm);
@@ -111,10 +112,9 @@ void SceneCompany::Init() {
     text_caption = loadText(readAllTextFromFile(std::format("company/{}/name.txt", company), "Unknown company"), 24, sf::Color::White);
     text_caption->setPosition({ 16 + 300 - text_caption->getGlobalBounds().size.x / 2, 32 });
     
-    auto str = readAllTextFromFile(std::format("company/{}/descr.txt", company), "Unknown description");
-    text_info = loadText(replaceAllString(str, "\\n", "\n"), 20, sf::Color(192, 192, 192));
-    text_info->setPosition({ 32, 100 });
-
+    companyinfo = readAllTextFromFile(std::format("company/{}/descr.txt", company), "Unknown description");
+    text_info = loadText(20, sf::Color(192, 192, 192));
+    
     butcancel = std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_MainMenu"), 18,
         1024-116-16, 700, 100, 40);
     butcancel->setOnClick([this]() {getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>()); });
