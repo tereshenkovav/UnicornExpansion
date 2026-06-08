@@ -14,6 +14,7 @@ set(sources
     include/SfmlGameEngine/Scene.h
     include/SfmlGameEngine/Engine.h
     include/SfmlGameEngine/Texts.h
+    include/SfmlGameEngine/Languages.h
     include/SfmlGameEngine/Colors.h
     include/SfmlGameEngine/Button.h
     include/SfmlGameEngine/Profile.h
@@ -24,6 +25,7 @@ set(sources
     src/Scene.cpp
     src/Engine.cpp
     src/Texts.cpp
+    src/Languages.cpp
     src/Colors.cpp
     src/Button.cpp
     src/Profile.cpp

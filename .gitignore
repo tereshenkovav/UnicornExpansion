@@ -403,3 +403,4 @@ setup/windows/*.zip
 setup/windows/*.exe
 *build-*/
 data/company/system
+data/deflang

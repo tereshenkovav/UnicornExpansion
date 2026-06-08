@@ -143,6 +143,10 @@ void Engine::setUserLogger(std::shared_ptr<Logger> userlogger)
     logger = userlogger;
 }
 
+Languages& Engine::getLanguages() {
+    return languages;
+}
+
 void Engine::updateByProfile() {
     if (window) window->setVerticalSyncEnabled(profile->isVSync());
     sf::Listener::setGlobalVolume(profile->isSoundOn() ? 100.0f : 0.0f);

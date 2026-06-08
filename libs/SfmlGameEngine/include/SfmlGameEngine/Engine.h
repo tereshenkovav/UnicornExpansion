@@ -7,6 +7,7 @@
 #include "SfmlGameEngine/Colors.h"
 #include "SfmlGameEngine/Profile.h"
 #include "SfmlGameEngine/Logger.h"
+#include "SfmlGameEngine/Languages.h"
 #include <map>
 
 namespace sfge {
@@ -52,6 +53,8 @@ private:
     bool isfullscr = false;
     // Логгер
     std::shared_ptr<Logger> logger;
+    // Языки
+    Languages languages;
     // Пересоздание окна с настройками профиля
     void createWindow();
 public:
@@ -100,6 +103,7 @@ public:
     // Установка пользовательского логгера, если не вызвать, то будет объект Logger по умолчанию, без кода
     void setUserLogger(std::shared_ptr<Logger> userprofile);
     std::shared_ptr<Logger> getLogger() const;
+    Languages & getLanguages();
     // Обновить параметры окна по профилю
     void updateByProfile();
     void setCloseHandlerScene(std::shared_ptr<Scene> scene);

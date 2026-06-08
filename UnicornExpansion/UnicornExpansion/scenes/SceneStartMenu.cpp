@@ -6,6 +6,11 @@
 #include "SceneOptions.h"
 #include "SceneCompany.h"
 
+void SceneStartMenu::SwitchLanguage() {
+    getEngine()->getLanguages().switchCurrent();
+    Init();
+}
+
 void SceneStartMenu::Render(sf::RenderTarget & rendertarget) {
     rendertarget.draw(*text_caption);
     rendertarget.draw(*text_version);
@@ -34,28 +39,35 @@ void SceneStartMenu::Init() {
     text_version = loadText(VERSION, 28, getColors().getColor("textbackborder"));
     text_version->setPosition({ 512 - text_version->getGlobalBounds().size.x/2, 768 - 50});
 
+    buttons.clear();
+
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_Training"), 18,
-        512 - 100, 320, 200, 40));
+        512 - 100, 290, 200, 40));
     buttons.back()->setOnClick([this]() {getEngine()->SwitchToScene(std::make_shared<SceneGame>("tutorial", 0, Difficulty::Norm)); });
 
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_DemoCompany"), 18,
-        512 - 100, 380, 200, 40));
+        512 - 100, 350, 200, 40));
     buttons.back()->setOnClick([this]() {getEngine()->SwitchToScene(std::make_shared<SceneCompany>("demo")); });
 
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_Options"), 18,
-        512 - 100, 440, 200, 40));
+        512 - 100, 410, 200, 40));
     buttons.back()->setOnClick([this]() {getEngine()->ReplaceOverScene(std::make_shared<SceneOptions>()); });
 
+    buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(),
+        getTexts().getSfmlStr("Text_Language")+": "+getEngine()->getLanguages().getCurrentUpper(), 18,
+        512 - 100, 470, 200, 40));
+    buttons.back()->setOnClick([this]() {SwitchLanguage(); });
+
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_Help"), 18,
-        512 - 100, 500, 200, 40));
+        512 - 100, 530, 200, 40));
     buttons.back()->setOnClick([this]() {getEngine()->ReplaceOverScene(std::make_shared<SceneHelp>(HelpType::Help)); });
 
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_About"), 18,
-        512 - 100, 560, 200, 40));
+        512 - 100, 590, 200, 40));
     buttons.back()->setOnClick([this]() {getEngine()->ReplaceOverScene(std::make_shared<SceneHelp>(HelpType::About)); });
 
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_Quit"), 18,
-        512 - 100, 620, 200, 40));
+        512 - 100, 650, 200, 40));
     buttons.back()->setOnClick([this]() {getEngine()->doClose(); });
 
     snd_click = loadSound("sounds/click.ogg");

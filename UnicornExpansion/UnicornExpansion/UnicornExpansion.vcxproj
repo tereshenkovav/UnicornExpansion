@@ -198,6 +198,7 @@
     <ClCompile Include="SeedStore.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\SfmlTools.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Texts.cpp" />
+    <ClCompile Include="..\..\libs\SfmlGameEngine\src\Languages.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Colors.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Profile.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Checkbox.cpp" />

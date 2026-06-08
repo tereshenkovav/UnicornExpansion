@@ -76,6 +76,8 @@ int main(int argc, char* argv[])
     engine.setUserProfile(profile);
     engine.setCloseHandlerScene(std::make_shared<SceneCloseHandler>());
     engine.setUserLogger(std::make_shared<sfge::LoggerFile>(profiledir + "game.log"));
+    engine.getLanguages().loadFromFile("languages");
+    engine.getLanguages().setCurrentByFile("deflang");
 
     engine.getLogger()->WriteLog("Game running");
     // Специальный отладочный код, при передаче второго аргумента - вызываем system-карту
