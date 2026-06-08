@@ -65,9 +65,7 @@ int main(int argc, char* argv[])
 
     sfge::Engine engine(1024, 768);
     engine.setExeDir(exedir);
-    engine.loadTexts("strings.txt");
     engine.loadColors("colors.dat");
-    engine.setCaption(engine.getTexts().getStr("Text_GameCaption"));
     engine.setIcon("images/icon.png");
     engine.loadDefaultFont("arial.ttf");
     engine.loadDefaultCursor("images/cursor_def.png");
@@ -78,6 +76,9 @@ int main(int argc, char* argv[])
     engine.setUserLogger(std::make_shared<sfge::LoggerFile>(profiledir + "game.log"));
     engine.getLanguages().loadFromFile("languages");
     engine.getLanguages().setCurrentByFile("deflang");
+    // “ексты и заголовок - после загрузки €зыка
+    engine.loadTexts("strings.txt");
+    engine.setCaption(engine.getTexts().getStr("Text_GameCaption"));
 
     engine.getLogger()->WriteLog("Game running");
     // —пециальный отладочный код, при передаче второго аргумента - вызываем system-карту

@@ -91,7 +91,7 @@ void Engine::ReplaceOverScene(std::shared_ptr<Scene> scene)
 
 void Engine::loadTexts(const std::string& filename)
 {
-    texts.loadFromFile(filename);
+    texts.loadFromFile(languages.getFileNameByLangIfExist(filename));
 }
 
 const Texts& Engine::getTexts() const

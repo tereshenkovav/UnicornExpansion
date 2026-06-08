@@ -5,10 +5,13 @@
 #include "SceneHelp.h"
 #include "SceneOptions.h"
 #include "SceneCompany.h"
+#include "SceneMainMenu.h"
 
 void SceneStartMenu::SwitchLanguage() {
     getEngine()->getLanguages().switchCurrent();
-    Init();
+    getEngine()->loadTexts("strings.txt");
+    getEngine()->setCaption(getEngine()->getTexts().getStr("Text_GameCaption"));
+    getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>());
 }
 
 void SceneStartMenu::Render(sf::RenderTarget & rendertarget) {

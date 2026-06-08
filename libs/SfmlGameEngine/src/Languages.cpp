@@ -61,7 +61,7 @@ std::string Languages::getCurrentUpper() const
 std::string Languages::getFileNameByLangIfExist(const std::string& filename) {
 	std::filesystem::path fi(filename);
 	auto ext = fi.extension().generic_string();
-	auto langfile = fi.extension().replace_extension(getCurrent()+std::string(".")+ext);
+	auto langfile = fi.replace_extension(getCurrent()+ext);
 	if (std::filesystem::exists(langfile)) return langfile.generic_string(); else return filename;
 }
 

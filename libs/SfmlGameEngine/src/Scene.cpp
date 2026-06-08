@@ -28,13 +28,13 @@ Engine* Scene::getEngine() const
 
 UniqueSprite Scene::loadSprite(const std::string& filename)
 {
-	textures.push_back(std::make_unique<sf::Texture>(filename));
+	textures.push_back(std::make_unique<sf::Texture>(getEngine()->getLanguages().getFileNameByLangIfExist(filename)));
 	return std::make_unique<sf::Sprite>(*textures.back());
 }
 
 UniqueSound Scene::loadSound(const std::string& filename)
 {
-	sounds.push_back(std::make_unique<sf::SoundBuffer>(filename));
+	sounds.push_back(std::make_unique<sf::SoundBuffer>(getEngine()->getLanguages().getFileNameByLangIfExist(filename)));
 	return std::make_unique<sf::Sound>(*sounds.back());
 }
 
