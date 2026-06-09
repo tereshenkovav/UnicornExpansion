@@ -446,9 +446,7 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
         textback.setSize({ 700, 100 });
         rendertarget.draw(textback);
 
-        text_msg->setString(sfge::SfmlTools::utf2text("\t"+msg.text));
-        text_msg->setPosition({ 1024 / 2 - 350 + 100, 8 + p});
-        rendertarget.draw(*text_msg);
+        drawTextInBlockWidth(rendertarget, *text_msg, msg.text, 1024 / 2 - 350 + 100, 8 + p, 700 - 100, 5);
 
         if (spr_dialog_icons.count(msg.icon) > 0) {
             spr_dialog_icons[msg.icon]->setPosition({ 1024 / 2 - 350 + 15, 20 + p });

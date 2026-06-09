@@ -9,7 +9,7 @@ SceneTask::SceneTask(const Game & game) :Scene()
 void SceneTask::Render(sf::RenderTarget & rendertarget) {
     rendertarget.draw(textback);
     rendertarget.draw(*text_title);
-    rendertarget.draw(*text_task);
+    drawTextInBlockWidth(rendertarget, *text_task, task, 512 - 220, 150, 460, 0);
     rendertarget.draw(*butok);
 }
 
@@ -31,15 +31,14 @@ void SceneTask::Init() {
     text_title = loadText(getTexts().getStr("Text_Task"), 22, sf::Color::White);
     text_title->setPosition({ 512 - text_title->getGlobalBounds().size.x/2, 110});
 
-    std::string task = "";
+    task = "";
     for (auto& gtask : tasks) {
         if (gtask.status == GameTaskStatus::Completed) task += getTexts().getStr("Task_Completed") + ": ";
         if (gtask.status == GameTaskStatus::Cancelled) task += getTexts().getStr("Task_Cancelled") + ": ";
-        task += gtask.text + "\n";
+        task += gtask.text + "\\n";
     }
-    text_task = loadText(task, 18, sf::Color::White);
-    text_task->setPosition({ 512 - 220, 150 });
-
+    text_task = loadText("", 18, sf::Color::White);
+    
     butok = std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), "OK", 22, 512 - 40, 640, 80, 40);
     butok->setOnClick([this]() { getEngine()->doExitScene(); });
 }

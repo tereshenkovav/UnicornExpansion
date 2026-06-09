@@ -14,6 +14,7 @@ private:
     sfge::UniqueText text_title;
     sfge::UniqueButton butok;
     std::vector<GameTask> tasks;
+    std::string task ;
 public:
     SceneTask(const Game & game);
     virtual void Render(sf::RenderTarget& rendertarget) override;

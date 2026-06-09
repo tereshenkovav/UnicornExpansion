@@ -6,9 +6,9 @@ SceneJournal::SceneJournal(const Game & game) :Scene()
     msg = "";
     int cnt = 0;
     for (int i = game.getHistory().size()-1; i >= 0; i--) {
-        msg = std::format("\t{}. {}\n", i + 1, game.getHistory()[i].text) + msg;
+        msg = std::format("{}. {}\\n", i + 1, game.getHistory()[i].text) + msg;
         if (++cnt == 6) {
-            if (i > 0) msg = "\t...\n" + msg;
+            if (i > 0) msg = "...\\n" + msg;
             break;
         }
     }
@@ -17,7 +17,7 @@ SceneJournal::SceneJournal(const Game & game) :Scene()
 void SceneJournal::Render(sf::RenderTarget & rendertarget) {
     rendertarget.draw(textback);
     rendertarget.draw(*text_title);
-    rendertarget.draw(*text_msgs);
+    drawTextInBlockWidth(rendertarget, *text_msgs, msg, 1024 / 2 - 350 + 40, 150, 650, 5);
     rendertarget.draw(*butok);
 }
 
@@ -39,9 +39,8 @@ void SceneJournal::Init() {
     text_title = loadText(getTexts().getStr("Text_Journal"), 22, sf::Color::White);
     text_title->setPosition({ 512 - text_title->getGlobalBounds().size.x/2, 110});
     
-    text_msgs = loadText(msg, 18, sf::Color::White);
-    text_msgs->setPosition({ 1024 / 2 - 350 + 50, 150 });
-
+    text_msgs = loadText("", 18, sf::Color::White);
+    
     butok = std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), "OK", 22, 512 - 40, 640, 80, 40);
     butok->setOnClick([this]() { getEngine()->doExitScene(); });
 }
