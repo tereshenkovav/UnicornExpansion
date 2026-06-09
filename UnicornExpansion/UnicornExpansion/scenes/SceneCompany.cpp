@@ -109,10 +109,10 @@ void SceneCompany::Init() {
     textback1.setPosition({ 600 + 16 + 16 , 16 });
     textback1.setSize({ 376, 768 - 32 });
 
-    text_caption = loadText(readAllTextFromFile(std::format("company/{}/name.txt", company), "Unknown company"), 24, sf::Color::White);
+    text_caption = loadText(readAllTextFromFile(std::format("company/{}/name.{}.txt", company,getEngine()->getLanguages().getCurrent()), "Unknown company"), 24, sf::Color::White);
     text_caption->setPosition({ 16 + 300 - text_caption->getGlobalBounds().size.x / 2, 32 });
     
-    companyinfo = readAllTextFromFile(std::format("company/{}/descr.txt", company), "Unknown description");
+    companyinfo = readAllTextFromFile(std::format("company/{}/descr.{}.txt", company, getEngine()->getLanguages().getCurrent()), "Unknown description");
     text_info = loadText(20, sf::Color(192, 192, 192));
     
     butcancel = std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_MainMenu"), 18,
@@ -132,7 +132,7 @@ void SceneCompany::Init() {
     companylevels.clear();
     sfge::Texts text;
     for (int i = 0; i<UserProfile::getLevelCount(company); i++) {
-        text.loadFromFile(std::format("company/{}/level{}.strings", company, i));
+        text.loadFromFile(std::format("company/{}/level{}.{}.strings", company, i, getEngine()->getLanguages().getCurrent()));
         companylevels.push_back(std::format("{}. {}", i + 1, text.getStr("MapName")));
     }
 

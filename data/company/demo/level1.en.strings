@@ -1,0 +1,4 @@
+MapName=New plan
+Task=Harvest {0} magic in {1} minutes.
+Brief_1_1=It's bad. The portal is unstable, teleportation is possible, but I cannot contact through it, call buildings, order improvements. We need to fix the portal as soon as possible, charging it with magic. {0} should be enough.
+Brief_1_2=I think there are no more than 8 minutes left. We must hurry. Fortunately, unicorn teleportation is working, as well as the previously installed academy and workshop.

@@ -1,0 +1,11 @@
+MapName=Magic must flow
+MainTask=Completely extract the rich crystal
+ManaTask=Harvest at least 10,000 magic
+SecondTask=Destroy monster caves (optional)
+Brief_1_1=The unicorns found have discovered a deserted island with a rare crystal. We must completely extract it. The portal has already been installed and reconnaissance of the area has been completed.
+Brief_1_1_Hard2=The unicorns found have discovered a deserted island with a rare crystal. The portal has already been installed and reconnaissance of the area has been completed. The task is to completely extract the crystal and harvest at least 10,000 magic.
+Brief_1_2=There are caves here from where hostile creatures constantly spawns. If possible, it is worth destroying the caves.
+Brief_2=Great, the monsters won't bother us anymore. We continue to mine the crystal!
+Brief_3=The crystal has been completely extracted. The task is completed!
+Brief_3_Win=The crystal has been completely extracted and we have harvest enough magic. The task is completed!
+Brief_3_Fail=The crystal is completely extracted, but there is too little magic. Our mission is a failure.

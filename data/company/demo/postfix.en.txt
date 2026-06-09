@@ -1,0 +1,11 @@
+Congratulations! You have completed the demo campaign.\n
+\n
+The full version of the game is under development, it will include:\n
+- A campaign with 20+ missions, including secret and optional\n
+- Complex game store and lore of the Expansion world\n
+- New buildings and improvements in them\n
+- Mechanics of equipment and amulets for unicorns\n
+- Checkpoints in missions\n
+- Player achievement system\n
+\n
+Follow the updates of the project on\ntav-developer.itch.io/unicorn-expansion

@@ -119,7 +119,7 @@ void SceneGame::loadGame() {
     game.setDifficulty(levelcode.difficulty);
     auto part = std::format("company/{}/level{}", levelcode.company, levelcode.level);
     bool paramok = game.loadConfigs();
-    bool textok = game.loadTexts(part + ".strings");
+    bool textok = game.loadTexts(std::format("{}.{}.strings", part, getEngine()->getLanguages().getCurrent()));
     bool mapok = game.loadMap(part + ".map");
     bool scriptok = game.loadScript(part + ".script");
     if (game.getErrMsg()) {
