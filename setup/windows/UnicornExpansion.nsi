@@ -19,7 +19,7 @@ XPStyle on
 ReserveFile /plugin InstallOptions.dll
 ReserveFile "runapp_${GAMELANG}.ini"
 
-OutFile "UnicornExpansion-${VERSION}-Win64.exe"
+OutFile "UnicornExpansion-${UPPERLANG}-${VERSION}-Win64.exe"
 
 var is_update
 
@@ -96,9 +96,9 @@ Section "$(GameGameName)"
   SetOutPath $INSTDIR\data
   File /r ..\..\data\*
 
-;  FileOpen $0 "$INSTDIR\data\deflang.json" w
-;  FileWrite $0 '"${GAMELANG}"'
-;  FileClose $0
+  FileOpen $0 "$INSTDIR\data\deflang" w
+  FileWrite $0 "${GAMELANG}"
+  FileClose $0
 
   StrCmp $is_update "1" Skip2
   

@@ -50,4 +50,8 @@ cp -r ../../data $appdir/usr
 
 export ARCH=x86_64
 
-appimagetool-x86_64.AppImage $appdir /tmp/UnicornExpansion-$VERSION-x86_64.AppImage
+echo "ru" > $appdir/usr/data/deflang
+appimagetool-x86_64.AppImage $appdir /tmp/UnicornExpansion-RU-$VERSION-x86_64.AppImage
+
+echo "en" > $appdir/usr/data/deflang
+appimagetool-x86_64.AppImage $appdir /tmp/UnicornExpansion-EN-$VERSION-x86_64.AppImage

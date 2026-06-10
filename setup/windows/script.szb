@@ -1,8 +1,11 @@
 SetCompressor Deflate
 SetCompressionLevel 9
-ZipFile UnicornExpansion-%VERSION%-Win64.zip
+ZipFile UnicornExpansion-$LANGH$-%VERSION%-Win64.zip
 
 Files %BINDIR%\sfml-*.dll
 File %BINDIR%\UnicornExpansion.exe
 
 Dir ..\..\data
+
+SetOutPath data
+Text $LANGL$ deflang

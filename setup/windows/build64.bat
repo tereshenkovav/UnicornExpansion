@@ -14,5 +14,9 @@ msbuild.exe ..\..\UnicornExpansion\UnicornExpansion.sln /p:Configuration=Release
 
 SET BINDIR=..\..\UnicornExpansion\x64\Release
 
+del ..\..\data\deflang
+
 "C:\Program Files (x86)\NSIS\makensis.exe" /DBINDIR=%BINDIR% /DVERSION=%VERSION% /DGAMELANG=ru /DUPPERLANG=RU UnicornExpansion.nsi
-SmartZipBuilder.exe script.szb
+"C:\Program Files (x86)\NSIS\makensis.exe" /DBINDIR=%BINDIR% /DVERSION=%VERSION% /DGAMELANG=en /DUPPERLANG=EN UnicornExpansion.nsi
+SmartZipBuilder.exe script.szb /LANGL=ru /LANGH=RU
+SmartZipBuilder.exe script.szb /LANGL=en /LANGH=EN
