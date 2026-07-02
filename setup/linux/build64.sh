@@ -35,15 +35,13 @@ mkdir $appdir/usr
 mkdir $appdir/usr/bin
 mkdir $appdir/usr/lib
 
-cp /usr/lib64/libicui18n.so* $appdir/usr/lib
-cp /usr/lib64/libicuuc.so* $appdir/usr/lib
-cp /usr/lib64/libicudata.so* $appdir/usr/lib
-cp /usr/lib64/libvorbis* $appdir/usr/lib
-cp /usr/lib64/libopenal.so* $appdir/usr/lib
-cp /usr/lib64/libatomic.so* $appdir/usr/lib
-cp /usr/lib64/libGLU.so* $appdir/usr/lib
-cp /usr/lib64/libogg.so* $appdir/usr/lib
-cp /usr/lib64/libFLAC.so* $appdir/usr/lib
+cp /usr/lib/x86_64-linux-gnu/libicui18n.so* $appdir/usr/lib
+cp /usr/lib/x86_64-linux-gnu/libicuuc.so* $appdir/usr/lib
+cp /usr/lib/x86_64-linux-gnu/libicudata.so* $appdir/usr/lib
+cp /usr/lib/x86_64-linux-gnu/libvorbis* $appdir/usr/lib
+cp /usr/lib/x86_64-linux-gnu/libatomic.so* $appdir/usr/lib
+cp /usr/lib/x86_64-linux-gnu/libogg.so* $appdir/usr/lib
+cp /usr/lib/x86_64-linux-gnu/libFLAC.so* $appdir/usr/lib
 
 cp ../../bin/UnicornExpansion $appdir/usr/bin
 cp -r ../../data $appdir/usr

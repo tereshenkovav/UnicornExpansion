@@ -78,3 +78,30 @@ git submodule update
 готовый бинарный файл будет размещен в каталоге bin,
 запускать его нужно командой `./UnicornExpansion ../data`
 Сборка проверена на gcc версии 15.
+
+#### Указания по сборке для Ubuntu 24.04 под WSL2
+
+Нужно установить инструменты для сборки, библиотеки зависимостей SFML
+и утилиту AppImage:
+```
+sudo apt update
+sudo apt install build-essential
+sudo apt install cmake
+sudo apt install \
+    libxrandr-dev \
+    libxcursor-dev \
+    libxi-dev \
+    libudev-dev \
+    libfreetype-dev \
+    libflac-dev \
+    libvorbis-dev \
+    libgl1-mesa-dev \
+    libegl1-mesa-dev \
+    libfreetype-dev \
+    libharfbuzz-dev \
+    libmbedtls-dev \
+    libssh2-1-dev
+sudo apt install libfuse2
+wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+sudo install -m 0755 appimagetool-x86_64.AppImage /usr/local/bin/appimagetool-x86_64.AppImage
+```
