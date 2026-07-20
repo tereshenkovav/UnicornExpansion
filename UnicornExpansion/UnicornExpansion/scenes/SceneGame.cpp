@@ -36,6 +36,20 @@ SceneGame::SceneGame(LevelCode levelcode) {
     this->levelcode = levelcode;
 }
 
+void SceneGame::doScalePlus() {
+    if (tekscale < 6) {
+        tekscale++;
+        updateScale();
+    }
+}
+
+void SceneGame::doScaleMinus() {
+    if (tekscale > 0) {
+        tekscale--;
+        updateScale();
+    }
+}
+
 // Обновление мини-карты
 void SceneGame::updateMiniMap() {
     for (int i = 0; i < game.getWidth(); i++)
@@ -529,18 +543,10 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
                     fixCameraPosition();
                 }
             }
-            if ((keyPressed->scancode == sf::Keyboard::Scancode::NumpadMinus) || (keyPressed->scancode == sf::Keyboard::Scancode::Hyphen)) {
-                if (tekscale < 6) {
-                    tekscale++;
-                    updateScale();
-                }
-            }
-            if ((keyPressed->scancode == sf::Keyboard::Scancode::NumpadPlus) || (keyPressed->scancode == sf::Keyboard::Scancode::Equal)) {
-                if (tekscale > 0) {
-                    tekscale--;
-                    updateScale();
-                }
-            }
+            if ((keyPressed->scancode == sf::Keyboard::Scancode::NumpadMinus) || (keyPressed->scancode == sf::Keyboard::Scancode::Hyphen))
+                doScalePlus();
+            if ((keyPressed->scancode == sf::Keyboard::Scancode::NumpadPlus) || (keyPressed->scancode == sf::Keyboard::Scancode::Equal))
+                doScaleMinus();
         };
         if (const auto* mousePressed = event.getIf<sf::Event::MouseButtonPressed>()) {
             // Зона игры
@@ -636,6 +642,10 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
                 }
                 rect_holded = std::nullopt;
             }
+        }
+        if (const auto* mouseWheelScrolled = event.getIf<sf::Event::MouseWheelScrolled>()) {
+            if (mouseWheelScrolled->delta < 0) doScalePlus();
+            if (mouseWheelScrolled->delta > 0) doScaleMinus();
         }
     } // Конец проверки событий
 

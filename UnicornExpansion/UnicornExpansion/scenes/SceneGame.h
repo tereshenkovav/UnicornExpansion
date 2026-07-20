@@ -122,6 +122,8 @@ private:
     void drawProgressRectsAt(sf::RenderTarget& rendertarget, float perc, float basew, float x, float y, sf::Color color);
     void loadGame();
     void muteLaserSounds();
+    void doScalePlus();
+    void doScaleMinus();
 public:
     SceneGame(std::string company, int leven, Difficulty difficulty);
     SceneGame(LevelCode levelcode);
