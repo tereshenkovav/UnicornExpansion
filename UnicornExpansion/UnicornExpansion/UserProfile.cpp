@@ -11,6 +11,14 @@ void UserProfile::setVoiceOn(bool value) {
 	voiceon = value;
 }
 
+bool UserProfile::isHideFullHealthBar() const {
+	return hidefullhealthbar;
+}
+
+void UserProfile::setHideFullHealthBar(bool value) {
+	hidefullhealthbar = value;
+}
+
 Difficulty UserProfile::getLastDifficulty() const
 {
 	return lastdifficulty;
@@ -39,6 +47,7 @@ void UserProfile::loadProfile(const std::string& filename)
 	setLanguage(jsonProfile["options"]["language"].asString());
 	// Далее уже специфичные для игры
 	setVoiceOn(jsonProfile["options"]["voiceon"].asBool());
+	setHideFullHealthBar(jsonProfile["options"]["hidefullhealthbar"].asBool());
 	if (jsonProfile["options"]["difficulty"].isInt())
 		lastdifficulty = Difficulty(jsonProfile["options"]["difficulty"].asInt());
 	else
@@ -63,6 +72,7 @@ void UserProfile::saveProfile() const
 	jsonProfile["options"]["language"] = getLanguage();
 	// Далее уже специфичные для игры
 	jsonProfile["options"]["voiceon"] = isVoiceOn();
+	jsonProfile["options"]["hidefullhealthbar"] = isHideFullHealthBar();
 	jsonProfile["options"]["difficulty"] = (int)lastdifficulty;
 
 	Json::Value jsonProgress;

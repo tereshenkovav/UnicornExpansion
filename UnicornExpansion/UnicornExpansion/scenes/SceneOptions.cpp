@@ -5,6 +5,7 @@
 void SceneOptions::saveOptions() {
     getProfile()->setSoundOn(cbsound->isChecked());
     userprofile->setVoiceOn(cbvoice->isChecked());
+    userprofile->setHideFullHealthBar(cbhidefullhealthbar->isChecked());
     getProfile()->setFullScreen(cbfullscreen->isChecked());
     getProfile()->setVSync(cbvsync->isChecked());
     getEngine()->updateByProfile();
@@ -21,6 +22,8 @@ void SceneOptions::Render(sf::RenderTarget & rendertarget) {
     rendertarget.draw(*cbfullscreen);
     rendertarget.draw(*cbvsync);
 
+    rendertarget.draw(*cbhidefullhealthbar);
+
     rendertarget.draw(*butsave);
     rendertarget.draw(*butcancel);
 }
@@ -34,6 +37,7 @@ void SceneOptions::Update(float dt, const sf::Vector2i & mousePos, const std::ve
         cbvoice->processEvent(event);
         cbfullscreen->processEvent(event);
         cbvsync->processEvent(event);
+        cbhidefullhealthbar->processEvent(event);
 
         cbvoice->setDisabled(!cbsound->isChecked());
 
@@ -77,4 +81,7 @@ void SceneOptions::Init() {
     cbvsync = std::make_unique<sfge::Checkbox>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Checkbox_VSync"), 18,
         512 - 160, 400, 24, 24);
     cbvsync->setChecked(getProfile()->isVSync());
+    cbhidefullhealthbar = std::make_unique<sfge::Checkbox>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Checkbox_HideFullHealthBar"), 18,
+        512 - 160, 440, 24, 24);
+    cbhidefullhealthbar->setChecked(userprofile->isHideFullHealthBar());
 }

@@ -18,6 +18,7 @@ private:
     sfge::UniqueCheckbox cbfullscreen;
     sfge::UniqueCheckbox cbvsync;
     sfge::UniqueCheckbox cbvoice;
+    sfge::UniqueCheckbox cbhidefullhealthbar;
     void saveOptions();
     std::shared_ptr<UserProfile> userprofile;
 public:

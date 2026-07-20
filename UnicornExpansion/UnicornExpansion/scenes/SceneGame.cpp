@@ -263,7 +263,8 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
     // Полоски здоровья, щита и прогресса выводим после юнитов
     for (int i = 0; i < game.getUnitCount(); i++)
         if (!game.isFog(game.getUnit(i).getXY().x, game.getUnit(i).getXY().y)) {
-            drawProgressRectsAt(rendertarget, game.getUnit(i).getHealthPerMax(), game.getUnit(i).getSizeView().x,
+            if (!(game.getUnit(i).isFullHealth() && userprofile->isHideFullHealthBar()))
+                drawProgressRectsAt(rendertarget, game.getUnit(i).getHealthPerMax(), game.getUnit(i).getSizeView().x,
                 game.getUnit(i).getView().x - game.getUnit(i).getSizeView().x / 2.0f,
                 game.getUnit(i).getView().y - game.getUnit(i).getSizeView().y / 2.0f - 8,
                 getColorByHPNorm(game.getUnit(i).getHealthPerMax()));

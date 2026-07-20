@@ -15,6 +15,7 @@ class UserProfile: public sfge::Profile
 {
 private:
     bool voiceon = true ;
+    bool hidefullhealthbar = true;
     std::vector<CompanyProgress> progress;
     Difficulty lastdifficulty = Difficulty::Norm;
     std::string filename;
@@ -22,6 +23,8 @@ protected:
 public:
     bool isVoiceOn() const ;
     void setVoiceOn(bool value) ;
+    bool isHideFullHealthBar() const;
+    void setHideFullHealthBar(bool value);
     Difficulty getLastDifficulty() const;
     void setLastDifficulty(Difficulty value);
     void loadProfile(const std::string & filename);

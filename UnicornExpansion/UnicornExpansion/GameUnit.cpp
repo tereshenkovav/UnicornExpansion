@@ -111,6 +111,11 @@ float GameUnit::getHealthPerMax() const
 	return get1Health() / (float)maxhealth;
 }
 
+bool GameUnit::isFullHealth() const
+{
+	return health == (float)maxhealth;
+}
+
 int GameUnit::get1Health() const
 {
 	return ((int)health < 1) ? 1 : (int)health;;

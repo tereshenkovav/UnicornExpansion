@@ -94,6 +94,7 @@ public:
 	std::string getHealthInfo() const;
 	std::string getShieldInfo() const;
 	void setKilled();
+	bool isFullHealth() const;
 	float getHealthPerMax() const;
 	int get1Health() const;
 	float getShieldPerMax() const;

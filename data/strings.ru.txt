@@ -85,6 +85,7 @@ Checkbox_Sound=Звуковые эффекты
 Checkbox_Voice=Озвучка юнитов
 Checkbox_Fullscreen=Полноэкранный режим
 Checkbox_VSync=Вертикальная синхронизация
+Checkbox_HideFullHealthBar=Скрывать индикаторы здоровых юнитов
 Task_Completed=Выполнено
 Task_Cancelled=Отменено
 Checkbox_Easy=Легко
