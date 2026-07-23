@@ -128,6 +128,19 @@ void SceneGame::drawProgressRectsAt(sf::RenderTarget& rendertarget, float perc, 
     }
 }
 
+void SceneGame::drawProgressRectsAt(sf::RenderTarget& rendertarget, float perc, float basew, sf::Vector2f pos, sf::Color color) {
+    drawProgressRectsAt(rendertarget, perc, basew, pos.x, pos.y, color);
+}
+
+sf::Vector2f getPosMultiIcon(int i) {
+    const int UNIT_IN_ROW = 10;
+    const int UNIT_STEP_X = 64;
+    const int UNIT_STEP_Y = 84;
+    float px = 512 - 240 / 2 - 64 + 12;
+    float py = 768 - 182 + 34;
+    return { px + (i % UNIT_IN_ROW) * UNIT_STEP_X, py + (i / UNIT_IN_ROW) * UNIT_STEP_Y };
+}
+
 // Загрузчик игры из файлов
 void SceneGame::loadGame() {
     game.setDifficulty(levelcode.difficulty);
@@ -414,24 +427,15 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
         }
     }
     if (selector.isSelectedMulti()) {
-        const int UNIT_IN_ROW = 10;
-        const int UNIT_STEP_X = 64;
-        const int UNIT_STEP_Y = 84;
-        // Здесь мы привязываем к позиции text_back без его вывода
-        textback.setSize({ 240, 182 });
-        textback.setPosition({ 512 - textback.getSize().x / 2 - 64, 768 - textback.getSize().y });
         for (int i = 0; i < selector.getSelectedUnits().size(); i++) {
             const GameUnit& selunit = game.getUnitByUID(selector.getSelectedUnits()[i]);
             drawProgressRectsAt(rendertarget, selunit.getHealthPerMax(), 48,
-                textback.getPosition().x + 12 + (i % UNIT_IN_ROW) * UNIT_STEP_X, textback.getPosition().y + 64 + (i / UNIT_IN_ROW) * UNIT_STEP_Y,
-                getColorByHPNorm(selunit.getHealthPerMax()));
+                getPosMultiIcon(i)+ sf::Vector2f{0, 30 }, getColorByHPNorm(selunit.getHealthPerMax()));
             if (selunit.getShieldPerMax() > 0.0f)
                 drawProgressRectsAt(rendertarget, selunit.getShieldPerMax(), 48,
-                    textback.getPosition().x + 12 + (i % UNIT_IN_ROW) * UNIT_STEP_X, textback.getPosition().y + 70 + (i / UNIT_IN_ROW) * UNIT_STEP_Y,
-                    sf::Color(107, 230, 255));
+                    getPosMultiIcon(i) + sf::Vector2f{0, 36 }, sf::Color(107, 230, 255));
             if (spr_icons.count(selunit.getCode()) > 0) {
-                spr_icons[selunit.getCode()]->setPosition({ textback.getPosition().x + 12 + 48 / 2 + (i % UNIT_IN_ROW) * UNIT_STEP_X,
-                    textback.getPosition().y + 34 + (i / UNIT_IN_ROW) * UNIT_STEP_Y });
+                spr_icons[selunit.getCode()]->setPosition(getPosMultiIcon(i) + sf::Vector2f{ 25, 0 });
                 rendertarget.draw(*spr_icons[selunit.getCode()]);
             }
         }
@@ -617,6 +621,14 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
                                 game.sendUnitAction(selector.getSelectedUID(), actions[*overactionidx]);
                         }
                         if (overundo) game.cancelUnitWorkingAction(selector.getSelectedUID());
+
+                        if (selector.isSelectedMulti())
+                            for (int i = 0; i < selector.getSelectedUnits().size(); i++)
+                                if ((getPosMultiIcon(i).x + 25 -24 < mousePos.x) &&
+                                    (getPosMultiIcon(i).x + 25 + 24 > mousePos.x) &&
+                                    (getPosMultiIcon(i).y - 24 < mousePos.y) &&
+                                    (getPosMultiIcon(i).y + 24 > mousePos.y))
+                                    selector.selectOneUnit(selector.getSelectedUnits()[i]);
                 }
         }
         // Применение рамки только по отжатию

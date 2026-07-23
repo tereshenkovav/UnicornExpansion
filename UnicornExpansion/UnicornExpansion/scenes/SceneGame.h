@@ -120,6 +120,7 @@ private:
     void fixCameraPosition();
     void updateScale();
     void drawProgressRectsAt(sf::RenderTarget& rendertarget, float perc, float basew, float x, float y, sf::Color color);
+    void drawProgressRectsAt(sf::RenderTarget& rendertarget, float perc, float basew, sf::Vector2f pos, sf::Color color);
     void loadGame();
     void muteLaserSounds();
     void doScalePlus();
