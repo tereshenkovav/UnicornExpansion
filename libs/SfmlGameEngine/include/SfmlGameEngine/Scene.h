@@ -30,6 +30,7 @@ protected:
     // Загрузка ресурсов игры с автоудалением потом их текстур и буферов
     UniqueSprite loadSprite(const std::string& filename);
     UniqueSound loadSound(const std::string& filename);
+    std::unique_ptr<sf::SoundBuffer> loadSoundBuffer(const std::string& filename);
     UniqueText loadText(int size);
     UniqueText loadText(const std::string & str, int size);
     UniqueText loadText(int size, sf::Color color);

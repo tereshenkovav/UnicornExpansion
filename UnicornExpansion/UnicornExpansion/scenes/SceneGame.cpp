@@ -734,8 +734,10 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
     }
 
     // Обработка разных эффектов
-    for (auto effect : game.getOnceAudioEffects())
-        snd_audioeffects[effect]->play();
+    for (auto effect : game.getOnceAudioEffects()) {
+        snd_audioeffects.push_back(std::make_unique<sf::Sound>(*snd_audioeffects_buffer[effect]));
+        snd_audioeffects.back()->play();
+    }
 
     // Здесь нужен эффект прозрачности по времени
     if (showcross) {
@@ -902,17 +904,17 @@ void SceneGame::Init() {
 
     rect_holded = std::nullopt;
 
-    snd_audioeffects[AudioEffect::Teleport]=loadSound("sounds/teleport.ogg");
+    snd_audioeffects_buffer[AudioEffect::Teleport]=loadSoundBuffer("sounds/teleport.ogg");
     // В файле finish_teleport добавлена пауза в начале, чтобы можно было использовать совместно с эффектом телепортации
-    snd_audioeffects[AudioEffect::FinishTeleport]=loadSound("sounds/finish_teleport.ogg");
-    snd_audioeffects[AudioEffect::FinishResearch]=loadSound("sounds/finish_research.ogg");
-    snd_audioeffects[AudioEffect::FinishUpgrade]=loadSound("sounds/finish_upgrade.ogg");
-    snd_audioeffects[AudioEffect::FinishBuilding] = loadSound("sounds/finish_building.ogg");
-    snd_audioeffects[AudioEffect::FinishConstruct] = loadSound("sounds/finish_construct.ogg");
-    snd_audioeffects[AudioEffect::UnderAttack]=loadSound("sounds/under_attack.ogg");
-    snd_audioeffects[AudioEffect::MonsterKilled] = loadSound("sounds/monster_killed.ogg");
-    snd_audioeffects[AudioEffect::TowerKilled] = loadSound("sounds/tower_killed.ogg");
-    snd_audioeffects[AudioEffect::CrystallKilled] = loadSound("sounds/crystal_killed.ogg");
+    snd_audioeffects_buffer[AudioEffect::FinishTeleport] = loadSoundBuffer("sounds/finish_teleport.ogg");
+    snd_audioeffects_buffer[AudioEffect::FinishResearch]= loadSoundBuffer("sounds/finish_research.ogg");
+    snd_audioeffects_buffer[AudioEffect::FinishUpgrade]= loadSoundBuffer("sounds/finish_upgrade.ogg");
+    snd_audioeffects_buffer[AudioEffect::FinishBuilding] = loadSoundBuffer("sounds/finish_building.ogg");
+    snd_audioeffects_buffer[AudioEffect::FinishConstruct] = loadSoundBuffer("sounds/finish_construct.ogg");
+    snd_audioeffects_buffer[AudioEffect::UnderAttack]= loadSoundBuffer("sounds/under_attack.ogg");
+    snd_audioeffects_buffer[AudioEffect::MonsterKilled] = loadSoundBuffer("sounds/monster_killed.ogg");
+    snd_audioeffects_buffer[AudioEffect::TowerKilled] = loadSoundBuffer("sounds/tower_killed.ogg");
+    snd_audioeffects_buffer[AudioEffect::CrystallKilled] = loadSoundBuffer("sounds/crystal_killed.ogg");
 
     spr_terrains[Terrain::Ground]=loadSprite("images/terrains/ground.png");
     spr_terrains[Terrain::Water]=loadSprite("images/terrains/water.png");

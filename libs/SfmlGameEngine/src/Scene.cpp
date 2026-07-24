@@ -39,6 +39,11 @@ UniqueSound Scene::loadSound(const std::string& filename)
 	return std::make_unique<sf::Sound>(*sounds.back());
 }
 
+std::unique_ptr<sf::SoundBuffer> Scene::loadSoundBuffer(const std::string& filename)
+{
+	return std::make_unique<sf::SoundBuffer>(getEngine()->getLanguages().getFileNameByLangIfExist(filename));
+}
+
 UniqueText Scene::loadText(const std::string& str, int size)
 {
 	return std::make_unique<sf::Text>(*engine->getDefaultFont(),SfmlTools::utf2text(str),size);

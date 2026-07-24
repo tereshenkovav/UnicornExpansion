@@ -49,7 +49,8 @@ private:
     std::map<LaserType, std::shared_ptr<sfge::Animation>> anim_lasers;
     std::map<TerrainSubType, sfge::UniqueSprite> spr_trees;
     std::vector<sfge::UniqueSound> snd_unicorn_clicks;
-    std::map<AudioEffect, sfge::UniqueSound> snd_audioeffects;
+    std::map<AudioEffect, std::unique_ptr<sf::SoundBuffer>> snd_audioeffects_buffer;
+    std::vector<sfge::UniqueSound> snd_audioeffects;
     sf::View view;
     Countdown counter_errmsg;
     MiniMap minimap;
