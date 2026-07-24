@@ -21,6 +21,8 @@ void SceneStartMenu::Render(sf::RenderTarget & rendertarget) {
     rendertarget.draw(*text_version);
 
     for (auto& button : buttons) rendertarget.draw(*button);
+
+    rendertarget.draw(*spr_lang);
 }
 
 void SceneStartMenu::Update(float dt, const sf::Vector2i & mousePos, const std::vector<sf::Event>& events) {
@@ -44,6 +46,8 @@ void SceneStartMenu::Init() {
     text_version = loadText(VERSION, 28, getColors().getColor("textbackborder"));
     text_version->setPosition({ 512 - text_version->getGlobalBounds().size.x/2, 768 - 50});
 
+    spr_lang = loadSprite("images/lang.png");
+
     buttons.clear();
 
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_Training"), 18,
@@ -62,6 +66,7 @@ void SceneStartMenu::Init() {
         getTexts().getSfmlStr("Text_Language")+": "+getEngine()->getLanguages().getCurrentUpper(), 18,
         512 - 100, 470, 200, 40));
     buttons.back()->setOnClick([this]() {SwitchLanguage(); });
+    spr_lang->setPosition({ 512 + 64, 470 + (40 - spr_lang->getTexture().getSize().y)/2.0f});
 
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_Help"), 18,
         512 - 100, 530, 200, 40));

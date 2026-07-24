@@ -12,6 +12,7 @@ private:
     sfge::UniqueText text_version;
     sfge::UniqueSound snd_click;
     std::vector<sfge::UniqueButton> buttons;
+    sfge::UniqueSprite spr_lang;
     void SwitchLanguage();
 public:
     virtual void Render(sf::RenderTarget& rendertarget) override;
