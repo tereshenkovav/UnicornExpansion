@@ -209,6 +209,14 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
                     }
             }
 
+    // Декорации
+    for (int i = 0; i < game.getDecorCount(); i++)
+        // На данном этапе, разрешаем вывод декораций без учета тумана войны
+        if (spr_decors.count(game.getDecor(i).code) > 0) {
+            spr_decors[game.getDecor(i).code]->setPosition(game.getDecor(i).pos);
+            rendertarget.draw(*spr_decors[game.getDecor(i).code]);
+        }
+
     // Вывод грибов
     for (int i = 0; i < game.getWidth(); i++)
         for (int j = 0; j < game.getHeight(); j++)
@@ -624,7 +632,7 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
 
                         if (selector.isSelectedMulti())
                             for (int i = 0; i < selector.getSelectedUnits().size(); i++)
-                                if ((getPosMultiIcon(i).x + 25 -24 < mousePos.x) &&
+                                if ((getPosMultiIcon(i).x + 25 - 24 < mousePos.x) &&
                                     (getPosMultiIcon(i).x + 25 + 24 > mousePos.x) &&
                                     (getPosMultiIcon(i).y - 24 < mousePos.y) &&
                                     (getPosMultiIcon(i).y + 24 > mousePos.y))
@@ -824,6 +832,18 @@ void SceneGame::Init() {
     for (auto& filename : std::filesystem::directory_iterator(pathload)) {
         spr_mushrooms.push_back(loadSprite(filename.path().string()));
         spr_mushrooms.back()->setOrigin({ spr_mushrooms.back()->getTexture().getSize().x / 2.0f, spr_mushrooms.back()->getTexture().getSize().y / 2.0f});
+    }
+
+    // Используется загрузка каталога в целом, можно вынести как процедуру
+    pathload = "images/decors/";
+    for (auto& filename : std::filesystem::directory_iterator(pathload)) {
+        auto str = filename.path().string();
+        replaceFirstString(str, pathload, "");
+        replaceFirstString(str, ".png", "");
+
+        spr_decors[str] = loadSprite(filename.path().string());
+        spr_decors[str]->setOrigin({ spr_decors[str]->getTexture().getSize().x / 2.0f,
+            spr_decors[str]->getTexture().getSize().y / 2.0f });
     }
 
     view.setSize({ VIEW_SIZE_X, VIEW_SIZE_Y });

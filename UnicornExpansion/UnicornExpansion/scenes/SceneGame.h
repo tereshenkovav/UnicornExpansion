@@ -41,6 +41,7 @@ private:
     std::map<std::string, sfge::UniqueSprite> spr_icons;
     std::map<std::string, sfge::UniqueSprite> spr_actions;
     std::map<std::string, sfge::UniqueSprite> spr_dialog_icons;
+    std::map<std::string, sfge::UniqueSprite> spr_decors;
     std::map<Terrain, sfge::UniqueSprite> spr_terrains;
     std::vector<sfge::UniqueSprite> spr_mushrooms;
     std::map<Terrain, sf::Color> color_terrains;

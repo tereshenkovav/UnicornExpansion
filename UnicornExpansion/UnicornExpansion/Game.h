@@ -36,6 +36,14 @@ struct Laser {
 	float timeshift;
 };
 
+// Запись для декорации
+struct Decor {
+	sf::Vector2f pos;
+	std::string code;
+	float left;
+	bool timeless;
+};
+
 struct Message {
 	std::string icon;
 	float duration;
@@ -62,6 +70,7 @@ private:
 	sfge::Texts texts;
 	Vector2D<Terrain> map;
 	std::vector<GameUnit> units;
+	std::vector<Decor> decors;
 	std::vector<Laser> lasers;
 	std::vector<Message> history;
 	std::set<std::string> allowedactions;
@@ -128,6 +137,10 @@ public:
 	bool cancelUnitWorkingAction(int uid);
 	// Искать первую свободную точку рядом с юнитом
 	std::optional<sf::Vector2i> getFirstFreePosNear(const GameUnit & unit) const;
+
+	// Декорации
+	int getDecorCount() const;
+	const Decor& getDecor(int i) const;
 
 	/* Этот блок функций подключен в скрипты */
 	// Работа с энергией

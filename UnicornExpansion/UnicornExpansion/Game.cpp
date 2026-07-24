@@ -140,6 +140,7 @@ bool Game::loadDeveloperConfig(const std::string& filename)
 
 bool Game::loadScript(const std::string& filename) {
 	units.clear();
+	decors.clear();
 	allowedactions.clear();
 	energy = 0.0f;
 	tasks.clear();
@@ -246,6 +247,16 @@ int Game::getUnitCount() const {
 const GameUnit& Game::getUnit(int i) const
 {
 	return units[i];
+}
+
+int Game::getDecorCount() const
+{
+	return decors.size();
+}
+
+const Decor& Game::getDecor(int i) const
+{
+	return decors[i];
 }
 
 const GameUnit& Game::getUnitByUID(int uid) const
@@ -703,14 +714,27 @@ void Game::update(float dt)
 	last_attacked_units = new_attacked_units;
 
 	// При удалении единорога дать эффект вспышки (обработка перед самым удалением)
+	// Для прочих юнитов добавить останки на 30 секунд
 	for (auto & unit: units)
-		if (unit.isKilled() && unit.isComponent<ComponentUnicorn>()) {
-			addTeleportationEffect(unit.getView().x, unit.getView().y);
-			addGameEvent(AudioEffect::Teleport, unit.getView());
+		if (unit.isKilled()) {
+			if (unit.isComponent<ComponentUnicorn>()) {
+				addTeleportationEffect(unit.getView().x, unit.getView().y);
+				addGameEvent(AudioEffect::Teleport, unit.getView());
+			}
+			else {
+				decors.push_back({{ unit.getView().x, unit.getView().y}, unit.getCode()+"_corp", 30.0f, false});
+			}
 		}
 
 	// Удаление уничтоженных юнитов
 	std::erase_if(units, [](const GameUnit& unit){ return unit.isKilled(); });
+
+	// Обновление декораций
+	for (int i = 0; i < decors.size(); i++)
+		if (!decors[i].timeless) decors[i].left -= dt;
+
+	// Удаление просроченных декораций
+	std::erase_if(decors, [](const Decor& decor) { return decor.left<=0.0f; });
 
 	try {
 		if (!isGameOver()) {
