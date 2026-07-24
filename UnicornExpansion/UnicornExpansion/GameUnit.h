@@ -46,6 +46,7 @@ private:
 	float health;
 	float shield;
 	std::optional<int> full_shield;
+	bool removed;
 
 	std::vector<UnitComponent*> components;
 	std::vector<std::string> postfixes;
@@ -93,7 +94,7 @@ public:
 	std::string getCaption() const;
 	std::string getHealthInfo() const;
 	std::string getShieldInfo() const;
-	void setKilled();
+	void setRemoved();
 	bool isFullHealth() const;
 	float getHealthPerMax() const;
 	int get1Health() const;
@@ -110,6 +111,8 @@ public:
 	void setShield(int value);
 	// Признак убитого юнита
 	bool isKilled() const;
+	// Признак удаленного юнита (без убийства)
+	bool isRemoved() const;
 	// Возможность вызвать действие
 	bool canSendAction(const UnitAction& action, std::string* msgcode) const;
 	const std::vector<std::string>& getPostfixes() const;

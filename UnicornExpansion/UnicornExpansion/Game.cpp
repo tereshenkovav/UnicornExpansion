@@ -207,7 +207,7 @@ void Game::deleteUnitLater(int uid)
 {
 	for (int i = 0; i < units.size(); i++)
 		if (units[i].getUID() == uid) {
-			units[i].setKilled();
+			units[i].setRemoved();
 			break;
 		}
 }
@@ -726,8 +726,8 @@ void Game::update(float dt)
 			}
 		}
 
-	// Удаление уничтоженных юнитов
-	std::erase_if(units, [](const GameUnit& unit){ return unit.isKilled(); });
+	// Удаление уничтоженных или удаленных вручную юнитов
+	std::erase_if(units, [](const GameUnit& unit){ return unit.isKilled() || unit.isRemoved(); });
 
 	// Обновление декораций
 	for (int i = 0; i < decors.size(); i++)

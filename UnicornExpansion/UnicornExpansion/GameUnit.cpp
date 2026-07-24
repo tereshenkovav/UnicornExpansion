@@ -35,6 +35,7 @@ GameUnit::GameUnit(int unitx, int unity, int unitw, int unith, const std::string
 	tmoving = 0.0f ;
 
 	targeted = false ;
+	removed = false;
 }
 
 GameUnit::GameUnit() {
@@ -101,9 +102,9 @@ std::string GameUnit::getShieldInfo() const
 	return std::format("{}/{}", int_shield, *full_shield);
 }
 
-void GameUnit::setKilled()
+void GameUnit::setRemoved()
 {
-	health = 0.0f;
+	removed = true;
 }
 
 float GameUnit::getHealthPerMax() const
@@ -287,6 +288,11 @@ void GameUnit::setShield(int value)
 bool GameUnit::isKilled() const
 {
 	return health <= 0.0f;
+}
+
+bool GameUnit::isRemoved() const
+{
+	return removed;
 }
 
 std::string GameUnit::getComponentsInfo() const
