@@ -18,7 +18,8 @@
 // Перечисления территорий и типов лазера
 enum class Terrain { Ground, Forest, Water, Road };
 enum class LaserType { Harvest, Attack, Heal, Detox };
-enum class AudioEffect { Teleport, FinishTeleport, FinishResearch, FinishUpgrade, FinishBuilding, FinishConstruct, UnderAttack };
+enum class AudioEffect { Teleport, FinishTeleport, FinishResearch, FinishUpgrade, FinishBuilding, FinishConstruct, UnderAttack,
+  MonsterKilled, TowerKilled, CrystallKilled};
 
 enum class Difficulty { Easy, Norm, Hard };
 

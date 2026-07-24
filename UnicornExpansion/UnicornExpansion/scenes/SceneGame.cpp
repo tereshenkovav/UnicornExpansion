@@ -910,6 +910,9 @@ void SceneGame::Init() {
     snd_audioeffects[AudioEffect::FinishBuilding] = loadSound("sounds/finish_building.ogg");
     snd_audioeffects[AudioEffect::FinishConstruct] = loadSound("sounds/finish_construct.ogg");
     snd_audioeffects[AudioEffect::UnderAttack]=loadSound("sounds/under_attack.ogg");
+    snd_audioeffects[AudioEffect::MonsterKilled] = loadSound("sounds/monster_killed.ogg");
+    snd_audioeffects[AudioEffect::TowerKilled] = loadSound("sounds/tower_killed.ogg");
+    snd_audioeffects[AudioEffect::CrystallKilled] = loadSound("sounds/crystal_killed.ogg");
 
     spr_terrains[Terrain::Ground]=loadSprite("images/terrains/ground.png");
     spr_terrains[Terrain::Water]=loadSprite("images/terrains/water.png");
