@@ -191,6 +191,7 @@ public:
 	// Установка щита для юнита
 	void setShieldToUnit(int uid, int value);
 	// Работа с лазерами
+	int getLaserCount(LaserType lt) const;
 	int getLaserCount() const;
 	Laser getLaser(int i) const;
 	// Получение параметров игры

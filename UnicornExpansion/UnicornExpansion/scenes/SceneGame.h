@@ -46,6 +46,7 @@ private:
     std::vector<sfge::UniqueSprite> spr_mushrooms;
     std::map<Terrain, sf::Color> color_terrains;
     std::map<LaserType, sf::Color> color_lasers;
+    std::map<LaserType, sfge::UniqueSound> effect_lasers;
     std::map<LaserType, std::shared_ptr<sfge::Animation>> anim_lasers;
     std::map<TerrainSubType, sfge::UniqueSprite> spr_trees;
     std::vector<sfge::UniqueSound> snd_unicorn_clicks;
@@ -95,7 +96,6 @@ private:
     sf::RectangleShape rect_progress;
     sf::RectangleShape textback;
 
-    sfge::UniqueSound effect_fire;
     sfge::UniqueSound effect_start;
 
     ClickerCounter clickcounter;

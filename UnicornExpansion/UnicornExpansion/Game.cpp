@@ -494,9 +494,13 @@ void Game::setShieldToUnit(int uid, int value) {
 		if (units[i].getUID() == uid) units[i].setShield(value);
 }
 
-int Game::getLaserCount() const
-{
+int Game::getLaserCount() const {
 	return lasers.size();
+}
+
+int Game::getLaserCount(LaserType lt) const
+{
+	return std::count_if(lasers.begin(), lasers.end(), [lt](auto& laser) {return laser.type == lt; });
 }
 
 Laser Game::getLaser(int i) const

@@ -180,7 +180,8 @@ void SceneGame::loadGame() {
 
 void SceneGame::muteLaserSounds()
 {
-    effect_fire->setVolume(0.0f);
+    for (auto & v: effect_lasers)
+        v.second->setVolume(0.0f);
 }
 
 void SceneGame::Render(sf::RenderTarget & rendertarget) {
@@ -525,7 +526,8 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
     // Установка курсора, если нужно
     if ((overundo)||(overactionidx)||(overunituid)) getEngine()->setCursor(1);
     
-    effect_fire->setVolume(game.getLaserCount() > 0 ? 100.0f : 0.0f);
+    for (auto & v: effect_lasers)
+        v.second->setVolume(game.getLaserCount(v.first) > 0 ? 100.0f : 0.0f);
 
     for (auto & event : events) {
         if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
@@ -890,10 +892,16 @@ void SceneGame::Init() {
     rect_pblocks.setOutlineColor(sf::Color{ 64,64,64 });
 
     // Звуки лазера и старта
-    effect_fire = loadSound("sounds/laser.ogg");
-    effect_fire->setVolume(0.0f);
-    effect_fire->setLooping(true);
-    effect_fire->play();
+    effect_lasers[LaserType::Attack] = loadSound("sounds/laser.ogg");
+    effect_lasers[LaserType::Harvest] = loadSound("sounds/laser_harvest.ogg");
+    effect_lasers[LaserType::Heal] = loadSound("sounds/laser_heal.ogg");
+    effect_lasers[LaserType::Detox] = loadSound("sounds/laser.ogg");
+
+    for (auto& v : effect_lasers) {
+        v.second->setVolume(0.0f);
+        v.second->setLooping(true);
+        v.second->play();
+    }
 
     effect_start = loadSound("sounds/start.ogg");
     for (int i = 0; i <= 2; i++)
