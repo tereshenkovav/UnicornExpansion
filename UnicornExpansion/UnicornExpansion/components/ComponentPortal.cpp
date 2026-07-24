@@ -101,6 +101,11 @@ bool ComponentPortal::canApplyAction(const UnitAction& action, std::string* msgc
 			*msgcode = "Msg_TooManyBuildings";
 			return false;
 		}
+	if (action.code == "build_academy")
+		if (game->getCountUnitWithComponent<ComponentAcademy>() > 0) {
+			*msgcode = "Msg_OnlyOneAcademyAllowed";
+			return false;
+		}
 	return true;
 }
 

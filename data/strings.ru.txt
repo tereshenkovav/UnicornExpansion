@@ -6,6 +6,7 @@ Text_NoPay=Без расходов
 Msg_NotEnoughEnergy=Недостаточно магии
 Msg_NotEnoughControl=Телепортировано максимум единорогов
 Msg_TooManyBuildings=Установлено максимум зданий
+Msg_OnlyOneAcademyAllowed=Можно построить только одну академию единорогов
 Action_BuildUnicorn=Вызвать единорога
 Action_BuildAcademy=Установить академию единорогов
 Action_BuildMachinary=Установить мастерскую единорогов

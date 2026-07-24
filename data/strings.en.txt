@@ -6,6 +6,7 @@ Text_NoPay=No magic
 Msg_NotEnoughEnergy=Not enough magic
 Msg_NotEnoughControl=Maximum of unicorns teleported
 Msg_TooManyBuildings=A maximum of buildings installed
+Msg_OnlyOneAcademyAllowed=You can only build one unicorn academy
 Action_BuildUnicorn=Teleport a unicorn
 Action_BuildAcademy=Build a unicorn academy
 Action_BuildMachinary=Build a unicorn workshop
