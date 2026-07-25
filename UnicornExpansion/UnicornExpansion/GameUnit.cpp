@@ -33,8 +33,9 @@ GameUnit::GameUnit(int unitx, int unity, int unitw, int unith, const std::string
 	moving = Moving::None ;
 	lastmoving = Moving::Right ;
 	tmoving = 0.0f ;
+	target = std::nullopt;
+	secondarytarget = std::nullopt;
 
-	targeted = false ;
 	removed = false;
 }
 
@@ -129,7 +130,9 @@ float GameUnit::getShieldPerMax() const
 }
 
 sf::Vector2i GameUnit::getTarget() const {
-	return sf::Vector2i(targetx,targety) ;
+	if (secondarytarget) return *secondarytarget;
+	if (target) return *target;
+	return { 0,0 };
 }
 
 bool GameUnit::isXYInUnit(float x, float y) const
@@ -188,21 +191,24 @@ bool GameUnit::isMoving() const {
 }
 
 bool GameUnit::isTargeted() const {
-	return targeted ;
+	return target || secondarytarget ;
 }
 
 void GameUnit::setTarget(int x, int y) {
 	// Не учитываем размеры юнита
 	if ((x == unitx) && (y == unity)) return;
-	// Запрет на движение при выполнении действия (сейчас отключен)
-	//if (worktek >= 0) return;
-	targetx = x ;
-	targety = y ;
-	targeted = true ;
+	target = { x, y };
 }
 	
 void GameUnit::resetTarget() {
-	targeted = false ;
+	if (secondarytarget) secondarytarget = std::nullopt ; else
+		if (target) target = std::nullopt;
+}
+
+void GameUnit::setSecondaryTarget(int x, int y) {
+	// Не учитываем размеры юнита
+	if ((x == unitx) && (y == unity)) return;
+	secondarytarget = { x, y };
 }
 
 std::string GameUnit::getCaption() const
@@ -238,11 +244,13 @@ void GameUnit::update(float dt) {
 			unity+=getMovingDy() ;
 			moving=Moving::None ;
 			tmoving=0.0f ;
-			if (targeted) {
+			if (target) {
 				// Не учитываем размеры юнита
-				if ((unitx==targetx)&&(unity==targety)) resetTarget() ;
-				// Остановим движение при поступившем действии (сейчас отключено)
-				//if (worktek >= 0) resetTarget();
+				if ((unitx==(*target).x)&&(unity== (*target).y)) target=std::nullopt ;
+			}
+			if (secondarytarget) {
+				// Не учитываем размеры юнита
+				if ((unitx == (*secondarytarget).x) && (unity == (*secondarytarget).y)) secondarytarget = std::nullopt;
 			}
 		}
 	}

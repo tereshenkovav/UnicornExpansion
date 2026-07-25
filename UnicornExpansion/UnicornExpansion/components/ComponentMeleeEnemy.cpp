@@ -35,7 +35,7 @@ void ComponentMeleeEnemy::update(float dt)
 {
 	if (targeted_unit_id) {
 		if (game->isUnitExist(*targeted_unit_id))
-			game->setTargetToUnit(unit_id,
+			game->setSecondaryTargetToUnit(unit_id,
 				game->getUnitByUID(*targeted_unit_id).getXY().x, game->getUnitByUID(*targeted_unit_id).getXY().y);
 		else
 			targeted_unit_id = std::nullopt;

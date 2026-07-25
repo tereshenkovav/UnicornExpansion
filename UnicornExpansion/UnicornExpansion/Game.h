@@ -179,6 +179,8 @@ public:
 	void clearFogAt(int x, int y, int dist);
 	/* Конец скриптового блока */
 
+	void setSecondaryTargetToUnit(int uid, int targetx, int targety);
+
 	// Получить информацию о таймере
 	std::optional<std::string> getTimerStr() const;
 

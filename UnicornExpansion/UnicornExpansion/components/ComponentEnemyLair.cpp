@@ -40,7 +40,8 @@ void ComponentEnemyLair::update(float dt)
 					for (size_t i = 0; i < myunits.size(); i++)
 						if (game->isUnitExist(myunits[i]))
 							if (auto* enemymelee = game->getUnitByUID(myunits[i]).getComponent<ComponentMeleeEnemy>())
-								enemymelee->setTargetToUnit(*portal_id);
+								game->setTargetToUnit(myunits[i], game->getUnitByUID(*portal_id).getXY().x,
+									game->getUnitByUID(*portal_id).getXY().y);
 					myunits.clear();
 				}
 			}

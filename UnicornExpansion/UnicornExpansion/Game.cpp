@@ -276,6 +276,15 @@ void Game::setTargetToUnit(int uid, int targetx, int targety)
 		}
 }
 
+void Game::setSecondaryTargetToUnit(int uid, int targetx, int targety)
+{
+	for (int i = 0; i < units.size(); i++)
+		if (units[i].getUID() == uid) {
+			units[i].setSecondaryTarget(targetx, targety);
+			return;
+		}
+}
+
 void Game::clearFogAt(int x, int y, int dist)
 {
 	clearFogAt({ x,y }, dist);

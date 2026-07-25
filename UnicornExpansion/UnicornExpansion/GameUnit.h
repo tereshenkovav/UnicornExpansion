@@ -32,10 +32,9 @@ private:
 
 	int uid;
 
-	int targetx ;
-	int targety ;
-	bool targeted ;
-	
+	std::optional<sf::Vector2i> target;
+	std::optional<sf::Vector2i> secondarytarget;
+
 	float tmoving ;
 	Moving moving ;
 	Moving lastmoving;
@@ -89,6 +88,7 @@ public:
 	bool isWorkingTask() const;
 	// Установка цели и сброс её
 	void setTarget(int x, int y) ;
+	void setSecondaryTarget(int x, int y);
 	void resetTarget() ;
 	// Получение свойств юнита и его действия доступные
 	std::string getCaption() const;
