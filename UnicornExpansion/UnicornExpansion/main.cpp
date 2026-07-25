@@ -91,6 +91,6 @@ int main(int argc, char* argv[])
         engine.Run(std::make_shared<SceneGame>("system", std::stoi(std::string(argv[2])), Difficulty::Norm));
     else
         engine.Run(std::make_shared<SceneMainMenu>());
-        
+
     return 0;
 }

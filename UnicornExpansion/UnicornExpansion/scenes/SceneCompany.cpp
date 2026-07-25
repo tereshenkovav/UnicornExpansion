@@ -112,7 +112,7 @@ void SceneCompany::Init() {
     text_caption = loadText(readAllTextFromFile(std::format("company/{}/name.{}.txt", company,getEngine()->getLanguages().getCurrent()), "Unknown company"), 24, sf::Color::White);
     text_caption->setPosition({ 16 + 300 - text_caption->getGlobalBounds().size.x / 2, 32 });
     
-    companyinfo = readAllTextFromFile(std::format("company/{}/descr.{}.txt", company, getEngine()->getLanguages().getCurrent()), "Unknown description");
+    companyinfo = readAllTextFromFile(std::format("company/{}/descr.{}.txt", company, getEngine()->getLanguages().getCurrent()), "Unknown description", "\\n");
     text_info = loadText(20, sf::Color(192, 192, 192));
     
     butcancel = std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_MainMenu"), 18,

@@ -35,7 +35,7 @@ void ScenePostfix::Init() {
     textback.setPosition({ 512 - 400, 200 });
     textback.setSize({ 800, 480 });
         
-    auto str = readAllTextFromFile(std::format("company/{}/postfix.{}.txt", company, getEngine()->getLanguages().getCurrent()), "Unknown postfix");
+    auto str = readAllTextFromFile(std::format("company/{}/postfix.{}.txt", company, getEngine()->getLanguages().getCurrent()), "Unknown postfix", "\\n");
     text_help = loadText(replaceAllString(str, "\\n", "\n"), 20, sf::Color::White);
     text_help->setPosition({ 160, 220});
 

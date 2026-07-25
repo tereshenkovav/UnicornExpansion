@@ -69,14 +69,14 @@ bool hasEnding (std::string const &fullString, std::string const &ending) {
     }
 }
 
-std::string readAllTextFromFile(const std::string& filename, const std::string& defvalue) {
+std::string readAllTextFromFile(const std::string& filename, const std::string& defvalue, const std::string & endline) {
 	std::ifstream fin(filename);
 	if (!fin.is_open()) return defvalue;
 
 	std::string res;
 	std::string line;
 	while (std::getline(fin, line)) {
-		res+= clearLineFromBOM(line);
+		res+= clearLineFromBOM(line) + endline;
 	}
 	fin.close();
 	return res;

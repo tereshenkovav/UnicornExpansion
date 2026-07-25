@@ -87,7 +87,11 @@ void Scene::drawTextInBlockWidth(sf::RenderTarget& rendertarget,
 	sf::Text& text, const std::string& str, float x, float y, float width, int redlinewidth)
 {
 	auto s1 = str;
-	auto words = splitString(replaceAllString(s1,"\\n", "\\break "), " ");
+	s1 = replaceAllString(s1, "\\n", "\\break ");
+	s1 = replaceAllString(s1, "\r\n", "\\break ");
+	s1 = replaceAllString(s1, "\r", "\\break ");
+	s1 = replaceAllString(s1, "\n", "\\break ");
+	auto words = splitString(s1, " ");
 	if (words.size() == 0) return;
 
 	auto line = std::string(redlinewidth, ' ') + words[0];

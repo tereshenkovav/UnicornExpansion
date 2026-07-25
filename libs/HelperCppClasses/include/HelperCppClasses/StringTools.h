@@ -20,4 +20,4 @@ std::string replaceAllString(std::string& str, const std::string& src, const std
 // ѕроверка завершени€ одной строки другой
 bool hasEnding (std::string const &fullString, std::string const &ending) ;
 
-std::string readAllTextFromFile(const std::string & filename, const std::string & defvalue);
+std::string readAllTextFromFile(const std::string & filename, const std::string & defvalue, const std::string & endline = "");
