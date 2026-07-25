@@ -189,7 +189,6 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
 
     for (int i = 0; i < game.getWidth(); i++)
         for (int j = 0; j < game.getHeight(); j++)
-            if (!game.isFog(i, j)) {
                 if (auto treeblock = stbuilder.getTerrainSubType(i, j)) {
                     // Этот трюк нужен, чтобы сначала вывелись территории и фрагменты леса нижние, а потом - верхние, закрывающие пони
                     if (!((*treeblock == TerrainSubType::TreeTop) || (*treeblock == TerrainSubType::TreeTopLeft) || (*treeblock == TerrainSubType::TreeTopRight))) {
@@ -208,11 +207,9 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
                         spr_terrains[game.getMap(i, j)]->setPosition(sf::Vector2f(i * BLOCKW, j * BLOCKH));
                         rendertarget.draw(*spr_terrains[game.getMap(i, j)]);
                     }
-            }
 
     // Декорации
     for (int i = 0; i < game.getDecorCount(); i++)
-        // На данном этапе, разрешаем вывод декораций без учета тумана войны
         if (spr_decors.count(game.getDecor(i).code) > 0) {
             spr_decors[game.getDecor(i).code]->setPosition(game.getDecor(i).pos);
             rendertarget.draw(*spr_decors[game.getDecor(i).code]);
@@ -220,8 +217,7 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
 
     // Вывод грибов
     for (int i = 0; i < game.getWidth(); i++)
-        for (int j = 0; j < game.getHeight(); j++)
-            if (!game.isFog(i, j)) {
+        for (int j = 0; j < game.getHeight(); j++) {
                 auto& mset = game.getMushrooms(i, j);
                 for (auto& m : mset) {
                     spr_mushrooms[m.spriteid]->setPosition(sf::Vector2f(i * BLOCKW + m.x, j * BLOCKH + m.y));
@@ -238,7 +234,6 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
 
     // Вывод юнитов
     for (int i = 0; i < game.getUnitCount(); i++)
-        if (!game.isFog(game.getUnit(i).getXY().x, game.getUnit(i).getXY().y))
             if (spr_units.count(game.getUnit(i).getCode()) > 0) {
                 bool movleft = game.getUnit(i).isUnitRotatedLeft();
                 std::string sprcode = game.getUnit(i).getCode();
@@ -273,18 +268,15 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
     // И здесь вывод только верхних фрагментов леса
     for (int i = 0; i < game.getWidth(); i++)
         for (int j = 0; j < game.getHeight(); j++)
-            if (!game.isFog(i, j)) {
                 if (auto treeblock = stbuilder.getTerrainSubType(i, j)) {
                     if ((*treeblock == TerrainSubType::TreeTop) || (*treeblock == TerrainSubType::TreeTopLeft) || (*treeblock == TerrainSubType::TreeTopRight)) {
                         spr_trees[*treeblock]->setPosition(sf::Vector2f(i * BLOCKW, j * BLOCKH));
                         rendertarget.draw(*spr_trees[*treeblock]);
                     }
                 }
-            }
 
     // Полоски здоровья, щита и прогресса выводим после юнитов
-    for (int i = 0; i < game.getUnitCount(); i++)
-        if (!game.isFog(game.getUnit(i).getXY().x, game.getUnit(i).getXY().y)) {
+    for (int i = 0; i < game.getUnitCount(); i++) {
             if (!(game.getUnit(i).isFullHealth() && userprofile->isHideFullHealthBar()))
                 drawProgressRectsAt(rendertarget, game.getUnit(i).getHealthPerMax(), game.getUnit(i).getSizeView().x,
                 game.getUnit(i).getView().x - game.getUnit(i).getSizeView().x / 2.0f,
@@ -313,7 +305,12 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
     // Фрагменты тумана в конце
     for (int i = 0; i < game.getWidth(); i++)
         for (int j = 0; j < game.getHeight(); j++)
-            if (!game.isFog(i, j))
+            if (game.isFog(i, j)) {
+                auto & sprfog = fogbuilder.getFogBaseSprite();
+                sprfog.setPosition(sf::Vector2f(i* BLOCKW, j* BLOCKH));
+                rendertarget.draw(sprfog);
+            }
+            else
                 if (auto sprfog = fogbuilder.getFogSprite(i, j)) {
                     (*sprfog).setPosition(sf::Vector2f(i * BLOCKW, j * BLOCKH));
                     rendertarget.draw(*sprfog);

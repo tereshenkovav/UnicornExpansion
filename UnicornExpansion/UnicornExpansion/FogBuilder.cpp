@@ -5,6 +5,11 @@ FogBuilder::FogBuilder()
 {
 	sf::Image img;
 
+	// Базовый блок тумана
+	img.resize({ BLOCKW, BLOCKH }, sf::Color{ 0,0,0,255 });
+	texs.push_back(std::make_unique<sf::Texture>(img));
+	basefog = std::make_unique<sf::Sprite>(*texs.back());
+
 	img.resize({ BLOCKW, BLOCKH }, sf::Color{ 0,0,0,0 });
 	for (unsigned int i = 0; i < BLOCKW; i++)
 		for (unsigned int j = 0; j < BLOCKH / 4; j++)
@@ -169,4 +174,8 @@ void FogBuilder::updateByGame(const Game& game)
 std::optional<sf::Sprite> FogBuilder::getFogSprite(int x, int y) const
 {
 	if (map[x][y]) return *fogs.at(*(map[x][y])); else return std::nullopt;
+}
+
+sf::Sprite & FogBuilder::getFogBaseSprite() const {
+	return *basefog;
 }

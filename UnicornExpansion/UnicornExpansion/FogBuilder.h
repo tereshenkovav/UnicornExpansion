@@ -14,7 +14,7 @@ class FogBuilder
 private:
 	int width;
 	int height;
-	sf::Texture tex;
+	std::unique_ptr<sf::Sprite> basefog;
 	std::map<FogType, std::unique_ptr<sf::Sprite>> fogs;
 	std::vector<std::unique_ptr<sf::Texture>> texs;
 	std::vector<std::vector<std::optional<FogType>>> map;
@@ -23,6 +23,6 @@ public:
 	void initByGame(const Game& game);
 	void updateByGame(const Game& game);
 	std::optional<sf::Sprite> getFogSprite(int x, int y) const;
-
+	sf::Sprite & getFogBaseSprite() const;
 };
 
