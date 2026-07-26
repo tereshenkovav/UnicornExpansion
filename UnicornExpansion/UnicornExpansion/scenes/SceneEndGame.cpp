@@ -2,6 +2,7 @@
 #include "SfmlGameEngine/Engine.h"
 #include "SceneMainMenu.h"
 #include "SceneGame.h"
+#include "CompanyInfo.h"
 
 SceneEndGame::SceneEndGame(const Game & game, LevelCode levelcode) :Scene()
 {
@@ -13,7 +14,8 @@ void SceneEndGame::goNextLevel()
 {
     LevelCode newlevel = levelcode;
     newlevel.level++;
-    if (newlevel.level >= UserProfile::getLevelCount(newlevel.company))
+    CompanyInfo comp(newlevel.company,getEngine()->getLanguages().getCurrent());
+    if (newlevel.level >= comp.getLevelCount())
         getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>(newlevel.company));
     else
         getEngine()->SwitchToScene(std::make_shared<SceneGame>(newlevel));

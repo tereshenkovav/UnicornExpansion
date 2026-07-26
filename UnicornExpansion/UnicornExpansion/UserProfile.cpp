@@ -97,11 +97,6 @@ int UserProfile::getNextLevel(const std::string& company) const
 	return 0;
 }
 
-int UserProfile::getLevelCount(const std::string& company) {
-	for (int i = 0; ; i++)
-		if (!std::filesystem::exists(std::format("company/{}/level{}.map", company, i))) return i;
-}
-
 void UserProfile::setLevelCompleted(const std::string& company, int level)
 {
 	for (int i = 0; i < progress.size(); i++)

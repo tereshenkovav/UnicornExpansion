@@ -8,6 +8,7 @@
 #include "ComponentMachine.h"
 #include "ComponentMultiselect.h"
 #include "SceneMsgBox.h"
+#include "CompanyInfo.h"
 
 // Размеры камеры и скорость прокрутки камеры
 const int SCROLLSPEED = 10;
@@ -144,11 +145,11 @@ sf::Vector2f getPosMultiIcon(int i) {
 // Загрузчик игры из файлов
 void SceneGame::loadGame() {
     game.setDifficulty(levelcode.difficulty);
-    auto part = std::format("company/{}/level{}", levelcode.company, levelcode.level);
+    CompanyInfo comp(levelcode.company, getEngine()->getLanguages().getCurrent());
     bool paramok = game.loadConfigs();
-    bool textok = game.loadTexts(std::format("{}.{}.strings", part, getEngine()->getLanguages().getCurrent()));
-    bool mapok = game.loadMap(part + ".map");
-    bool scriptok = game.loadScript(part + ".script");
+    bool textok = game.loadTexts(comp.getLevelStringsFileName(levelcode.level));
+    bool mapok = game.loadMap(comp.getLevelMapFileName(levelcode.level));
+    bool scriptok = game.loadScript(comp.getLevelScriptFileName(levelcode.level));
     if (game.getErrMsg()) {
         getEngine()->SwitchToScene(std::make_shared<SceneMsgBox>(*game.getErrMsg(), [this]() { getEngine()->doClose(); }));
         getEngine()->getLogger()->WriteLog(*game.getErrMsg());

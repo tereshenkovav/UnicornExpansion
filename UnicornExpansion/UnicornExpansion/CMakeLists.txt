@@ -1,6 +1,7 @@
 add_executable(UnicornExpansion
 main.cpp
 ClickerCounter.cpp
+CompanyInfo.cpp
 FinderByBestDistance.cpp
 FogBuilder.cpp
 Game.cpp

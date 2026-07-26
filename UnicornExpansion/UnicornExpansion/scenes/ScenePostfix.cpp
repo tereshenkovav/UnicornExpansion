@@ -3,6 +3,7 @@
 #include "SceneStartMenu.h"
 #include "HelperCppClasses/StringTools.h"
 #include <fstream>
+#include "CompanyInfo.h"
 
 ScenePostfix::ScenePostfix(const std::string & company) {
     this->company = company;
@@ -34,8 +35,9 @@ void ScenePostfix::Init() {
     textback.setFillColor(sf::Color{ 40, 40, 40, 192 });
     textback.setPosition({ 512 - 400, 200 });
     textback.setSize({ 800, 480 });
-        
-    auto str = readAllTextFromFile(std::format("company/{}/postfix.{}.txt", company, getEngine()->getLanguages().getCurrent()), "Unknown postfix", "\\n");
+
+    CompanyInfo comp(company, getEngine()->getLanguages().getCurrent());
+    auto str = readAllTextFromFile(comp.getPostfixFileName(), "Unknown postfix", "\\n");
     text_help = loadText(replaceAllString(str, "\\n", "\n"), 20, sf::Color::White);
     text_help->setPosition({ 160, 220});
 

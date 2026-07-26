@@ -31,5 +31,4 @@ public:
     void saveProfile() const;
     int getNextLevel(const std::string& company) const;
     void setLevelCompleted(const std::string& company, int level);
-    static int getLevelCount(const std::string& company);
 };
