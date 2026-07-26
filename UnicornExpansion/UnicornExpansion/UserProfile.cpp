@@ -106,7 +106,7 @@ void UserProfile::setLevelCompleted(const std::string& company, int level)
 {
 	for (int i = 0; i < progress.size(); i++)
 		if (progress[i].company == company) {
-			progress[i].nextlevel = level + 1;
+			progress[i].nextlevel = std::max(progress[i].nextlevel,level + 1);
 			return;
 		}
 	progress.push_back({ company,level + 1 });
