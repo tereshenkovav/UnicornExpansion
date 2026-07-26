@@ -1,3 +1,34 @@
+// Начало системы событий
+var events_cond ;
+var events_func ;
+
+function initEvents() {
+  events_cond=[] ;
+  events_func=[] ;
+}
+
+function addEvent(cond,func) {
+  events_cond.push(cond) ;
+  events_func.push(func) ;
+}
+
+function processEvents() {
+  var i=0 ;
+  while (i<events_cond.length) {
+    var cond = events_cond[i] ;
+    if (cond()) {
+      var func = events_func[i] ;
+      func() ;
+      events_cond.eraseAt(i) ;
+      events_func.eraseAt(i) ;
+    }
+    else {
+      i++ ;
+    }
+  }
+}
+// Конец системы событий
+
 var game ;
 var uid1 ;
 var uidcrystall ;
@@ -6,6 +37,70 @@ var uidenemy2 ;
 
 function initMap() {
   game = new Game() ;
+
+  // Обязательный вызов инициализации системы событий
+  initEvents() ;
+
+  addEvent(function() { return game.isUnitNearXY(uid1,9,18) },
+    function() {
+      game.setTaskCompleted("moving") ;
+      game.addNewTask("makeharvest","$Task_MakeHarvest") ;
+      game.addMessage("unicorn",10,"$Brief_2") ;
+      game.allowAction("MakeHarvester") ;
+    }) ;
+
+  addEvent(function() { return game.getUnitHealth(uidcrystall)<1500 },
+      function() {
+        game.setTaskCompleted("makeharvest") ;
+        game.addNewTask("harvest","$Task_Harvest") ;
+        game.addMessage("unicorn",10,"$Brief_3") ;
+      }) ;
+
+  addEvent(function() { return game.getEnergy()>=100 },
+      function() {
+        game.setTaskCompleted("harvest") ;
+        game.addNewTask("makeunicorn","$Task_MakeUnicorn") ;
+        game.addMessage("unicorn",10,"$Brief_4") ;
+        game.allowAction("BuildUnicorn") ;
+      }) ;
+
+  addEvent(function() { return game.getCountByComponent("Unicorn")==2 },
+      function() {
+        game.setTaskCompleted("makeunicorn") ;
+        game.addNewTask("battle","$Task_Battle") ;
+        game.addMessage("unicorn",10,"$Brief_5_1") ;
+        game.addMessageLater("unicorn",10,10,"$Brief_5_2") ;
+        game.addMessageLater("unicorn",10,20,"$Brief_5_3") ;
+        game.allowAction("MakeAttacker") ;
+        game.startTimer(40) ;
+
+        addEvent(function() { return game.getTimer()<=0 },
+          function() {
+            uidenemy1 = game.addEnemy1(5,12) ;
+            uidenemy2 = game.addEnemy1(8,16) ;
+
+            addEvent(function() {
+              return (!game.isUnitExist(uidenemy1))&&(!game.isUnitExist(uidenemy2))
+            },
+            function() {
+              game.setTaskCompleted("battle") ;
+              game.addNewTask("harvestfinal","$Task_HarvestFinal") ;
+              game.addMessage("unicorn",10,"$Brief_7_1") ;
+              game.addMessageLater("unicorn",10,10,"$Brief_7_2") ;
+            }) ;
+        }) ;
+    }) ;
+
+  addEvent(function() { return  game.getEnergy()>=500 },
+    function() {
+      game.setTaskCompleted("harvestfinal") ;
+      game.addMessage("unicorn",10,"$Brief_8_1") ;
+      game.addMessageLater("unicorn",10,10,"$Brief_8_2") ;
+      game.addMessageLater("unicorn",10,20,"$Brief_8_3") ;
+      game.allowAction("MakeHealer") ;
+      game.addEnemy2(16,1) ;
+      game.addEnemy1(17,7) ;
+    }) ;
 
   game.addPortal(2,15) ;
   game.addCrystal(18,5,1200) ;
@@ -26,79 +121,7 @@ function initMap() {
 }
 
 function Update() {
-  if (!game.isFlag("stage2")) {
-    if (game.isUnitNearXY(uid1,9,18)) {
-      game.setFlag("stage2") ;
-      game.setTaskCompleted("moving") ;
-      game.addNewTask("makeharvest","$Task_MakeHarvest") ;
-      game.addMessage("unicorn",10,"$Brief_2") ;
-      game.allowAction("MakeHarvester") ;
-    }
-  }
-
-  if (game.isFlag("stage2")&&(!game.isFlag("stage3"))) {
-      if (game.getUnitHealth(uidcrystall)<1500) {
-        game.setFlag("stage3") ;
-        game.setTaskCompleted("makeharvest") ;
-        game.addNewTask("harvest","$Task_Harvest") ;
-        game.addMessage("unicorn",10,"$Brief_3") ;
-      }
-  }
-
-  if (game.isFlag("stage3")&&(!game.isFlag("stage4"))) {
-      if (game.getEnergy()>=100) {
-        game.setFlag("stage4") ;
-        game.setTaskCompleted("harvest") ;
-        game.addNewTask("makeunicorn","$Task_MakeUnicorn") ;
-        game.addMessage("unicorn",10,"$Brief_4") ;
-        game.allowAction("BuildUnicorn") ;
-      }
-  }
-
-  if (game.isFlag("stage4")&&(!game.isFlag("stage5"))) {
-      if (game.getCountByComponent("Unicorn")==2) {
-        game.setFlag("stage5") ;
-        game.setTaskCompleted("makeunicorn") ;
-        game.addNewTask("battle","$Task_Battle") ;
-        game.addMessage("unicorn",10,"$Brief_5_1") ;
-        game.addMessageLater("unicorn",10,10,"$Brief_5_2") ;
-        game.addMessageLater("unicorn",10,20,"$Brief_5_3") ;
-        game.allowAction("MakeAttacker") ;
-        game.startTimer(40) ;
-      }
-  }
-
-  if (game.isFlag("stage5")&&(!game.isFlag("stage6"))) {
-    if (game.getTimer()<=0) {
-        game.setFlag("stage6") ;
-        uidenemy1 = game.addEnemy1(5,12) ;
-        uidenemy2 = game.addEnemy1(8,16) ;
-    }
-  }
-
-  if (game.isFlag("stage6")&&(!game.isFlag("stage7"))) {
-    if ((!game.isUnitExist(uidenemy1))&&(!game.isUnitExist(uidenemy2))) {
-        game.setFlag("stage7") ;
-        game.setTaskCompleted("battle") ;
-        game.addNewTask("harvestfinal","$Task_HarvestFinal") ;
-        game.addMessage("unicorn",10,"$Brief_7_1") ;
-        game.addMessageLater("unicorn",10,10,"$Brief_7_2") ;
-    }
-  }
-
-  if (game.isFlag("stage7")&&(!game.isFlag("stage8"))) {
-      if (game.getEnergy()>=500) {
-        game.setFlag("stage8") ;
-        game.setTaskCompleted("harvestfinal") ;
-        game.addMessage("unicorn",10,"$Brief_8_1") ;
-        game.addMessageLater("unicorn",10,10,"$Brief_8_2") ;
-        game.addMessageLater("unicorn",10,20,"$Brief_8_3") ;
-        game.allowAction("MakeHealer") ;
-        game.addEnemy2(16,1) ;
-        game.addEnemy1(17,7) ;
-      }
-  }
-
+  processEvents() ;
 }
 
 function isVictory() {
