@@ -41,6 +41,10 @@ public:
     virtual void Init();
     virtual void UnInit();
     void drawTextInBlockWidth(sf::RenderTarget& rendertarget, sf::Text& text, const std::string& str, float x, float y, float w, int redlinewidth);
+    void drawSpriteAt(sf::RenderTarget& rendertarget, sf::Sprite& sprite, float x, float y);
+    void drawSpriteAt(sf::RenderTarget& rendertarget, sf::Sprite& sprite, sf::Vector2f pos);
+    void drawShapeAt(sf::RenderTarget& rendertarget, sf::Shape& shape, float x, float y);
+    void drawShapeAt(sf::RenderTarget& rendertarget, sf::Shape& shape, sf::Vector2f pos);
     void setEngine(Engine* engine);
 };
 

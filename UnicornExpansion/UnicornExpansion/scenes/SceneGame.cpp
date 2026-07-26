@@ -123,10 +123,7 @@ void SceneGame::updateScale() {
 void SceneGame::drawProgressRectsAt(sf::RenderTarget& rendertarget, float perc, float basew, float x, float y, sf::Color color) {
     rect_pblocks.setFillColor(color);
     int cntrect = ((int)(basew * perc) / (rect_pblocks.getSize().x + 2)) + 1;
-    for (int j = 0; j < cntrect; j++) {
-        rect_pblocks.setPosition({ x + j * (rect_pblocks.getSize().x + 2), y });
-        rendertarget.draw(rect_pblocks);
-    }
+    for (int j = 0; j < cntrect; j++) drawShapeAt(rendertarget, rect_pblocks, { x + j * (rect_pblocks.getSize().x + 2), y });
 }
 
 void SceneGame::drawProgressRectsAt(sf::RenderTarget& rendertarget, float perc, float basew, sf::Vector2f pos, sf::Color color) {
@@ -193,44 +190,34 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
                 if (auto treeblock = stbuilder.getTerrainSubType(i, j)) {
                     // Этот трюк нужен, чтобы сначала вывелись территории и фрагменты леса нижние, а потом - верхние, закрывающие пони
                     if (!((*treeblock == TerrainSubType::TreeTop) || (*treeblock == TerrainSubType::TreeTopLeft) || (*treeblock == TerrainSubType::TreeTopRight))) {
-                        spr_trees[*treeblock]->setPosition(sf::Vector2f(i * BLOCKW, j * BLOCKH));
-                        rendertarget.draw(*spr_trees[*treeblock]);
+                        drawSpriteAt(rendertarget, *spr_trees[*treeblock], i * BLOCKW, j * BLOCKH);
                     }
                     else {
-                        if (spr_terrains.count(game.getMap(i, j)) > 0) {
-                            spr_terrains[game.getMap(i, j)]->setPosition(sf::Vector2f(i * BLOCKW, j * BLOCKH));
-                            rendertarget.draw(*spr_terrains[game.getMap(i, j)]);
-                        }
+                        if (spr_terrains.count(game.getMap(i, j)) > 0)
+                            drawSpriteAt(rendertarget, *spr_terrains[game.getMap(i, j)], i * BLOCKW, j * BLOCKH );
                     }
                 }
                 else
-                    if (spr_terrains.count(game.getMap(i, j)) > 0) {
-                        spr_terrains[game.getMap(i, j)]->setPosition(sf::Vector2f(i * BLOCKW, j * BLOCKH));
-                        rendertarget.draw(*spr_terrains[game.getMap(i, j)]);
-                    }
+                    if (spr_terrains.count(game.getMap(i, j)) > 0)
+                        drawSpriteAt(rendertarget, *spr_terrains[game.getMap(i, j)], i * BLOCKW, j * BLOCKH );
 
     // Декорации
     for (int i = 0; i < game.getDecorCount(); i++)
-        if (spr_decors.count(game.getDecor(i).code) > 0) {
-            spr_decors[game.getDecor(i).code]->setPosition(game.getDecor(i).pos);
-            rendertarget.draw(*spr_decors[game.getDecor(i).code]);
-        }
+        if (spr_decors.count(game.getDecor(i).code) > 0)
+            drawSpriteAt(rendertarget, *spr_decors[game.getDecor(i).code], game.getDecor(i).pos);
 
     // Вывод грибов
     for (int i = 0; i < game.getWidth(); i++)
         for (int j = 0; j < game.getHeight(); j++) {
                 auto& mset = game.getMushrooms(i, j);
-                for (auto& m : mset) {
-                    spr_mushrooms[m.spriteid]->setPosition(sf::Vector2f(i * BLOCKW + m.x, j * BLOCKH + m.y));
-                    rendertarget.draw(*spr_mushrooms[m.spriteid]);
-                }
+                for (auto& m : mset)
+                    drawSpriteAt(rendertarget, *spr_mushrooms[m.spriteid], i * BLOCKW + m.x, j * BLOCKH + m.y );
             }
 
     // Крестик после территорий, но до юнитов
     if (showcross) {
-        spr_cross->setPosition((*showcross).first);
         spr_cross->setColor({ 255,255,255,(uint8_t)(*showcross).second });
-        rendertarget.draw(*spr_cross);
+        drawSpriteAt(rendertarget,*spr_cross, (*showcross).first);
     }
 
     // Вывод юнитов
@@ -269,12 +256,9 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
     // И здесь вывод только верхних фрагментов леса
     for (int i = 0; i < game.getWidth(); i++)
         for (int j = 0; j < game.getHeight(); j++)
-                if (auto treeblock = stbuilder.getTerrainSubType(i, j)) {
-                    if ((*treeblock == TerrainSubType::TreeTop) || (*treeblock == TerrainSubType::TreeTopLeft) || (*treeblock == TerrainSubType::TreeTopRight)) {
-                        spr_trees[*treeblock]->setPosition(sf::Vector2f(i * BLOCKW, j * BLOCKH));
-                        rendertarget.draw(*spr_trees[*treeblock]);
-                    }
-                }
+                if (auto treeblock = stbuilder.getTerrainSubType(i, j))
+                    if ((*treeblock == TerrainSubType::TreeTop) || (*treeblock == TerrainSubType::TreeTopLeft) || (*treeblock == TerrainSubType::TreeTopRight))
+                        drawSpriteAt(rendertarget, *spr_trees[*treeblock], i * BLOCKW, j * BLOCKH);
 
     // Полоски здоровья, щита и прогресса выводим после юнитов
     for (int i = 0; i < game.getUnitCount(); i++) {
@@ -306,16 +290,11 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
     // Фрагменты тумана в конце
     for (int i = 0; i < game.getWidth(); i++)
         for (int j = 0; j < game.getHeight(); j++)
-            if (game.isFog(i, j)) {
-                auto & sprfog = fogbuilder.getFogBaseSprite();
-                sprfog.setPosition(sf::Vector2f(i* BLOCKW, j* BLOCKH));
-                rendertarget.draw(sprfog);
-            }
+            if (game.isFog(i, j))
+                drawSpriteAt(rendertarget, fogbuilder.getFogBaseSprite(), i* BLOCKW, j* BLOCKH);
             else
-                if (auto sprfog = fogbuilder.getFogSprite(i, j)) {
-                    (*sprfog).setPosition(sf::Vector2f(i * BLOCKW, j * BLOCKH));
-                    rendertarget.draw(*sprfog);
-                }
+                if (auto sprfog = fogbuilder.getFogSprite(i, j))
+                    drawSpriteAt(rendertarget, *sprfog, i * BLOCKW, j * BLOCKH);
 
     for (int uid : selector.getSelectedUnits()) {
         if (game.getUnitByUID(uid).isComponent<ComponentResource>())
@@ -367,10 +346,8 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
             drawProgressRectsAt(rendertarget, selunit.getShieldPerMax(), 48, textback.getPosition().x + 12, textback.getPosition().y + 82,
                 sf::Color(107, 230, 255));
 
-        if (spr_icons.count(selunit.getCode()) > 0) {
-            spr_icons[selunit.getCode()]->setPosition({ textback.getPosition().x + 12 + 48 / 2, textback.getPosition().y + 34 });
-            rendertarget.draw(*spr_icons[selunit.getCode()]);
-        }
+        if (spr_icons.count(selunit.getCode()) > 0)
+            drawSpriteAt(rendertarget, *spr_icons[selunit.getCode()], { textback.getPosition().x + 12 + 48 / 2, textback.getPosition().y + 34 });
 
         text_caption->setString(getTexts().getSfmlStr("Unit_" + selunit.getCaption()));
         text_caption->setPosition({ textback.getPosition().x + 78, textback.getPosition().y + 18 });
@@ -403,8 +380,7 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
             rendertarget.draw(rect_progress);
             text_progress->setString(std::to_string((int)(100 * progress)) + "%");
             rendertarget.draw(*text_progress);
-            spr_actions[current_action_code]->setPosition({ (float)(textback.getPosition().x + 200 - 32), textback.getPosition().y + 8 });
-            rendertarget.draw(*spr_actions[current_action_code]);
+            drawSpriteAt(rendertarget, *spr_actions[current_action_code], { textback.getPosition().x + 200 - 32, textback.getPosition().y + 8 });
             if (overundo) rendertarget.draw(*undo, &shader_bright); else rendertarget.draw(*undo);
         }
         else {
@@ -441,10 +417,8 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
             if (selunit.getShieldPerMax() > 0.0f)
                 drawProgressRectsAt(rendertarget, selunit.getShieldPerMax(), 48,
                     getPosMultiIcon(i) + sf::Vector2f{0, 36 }, sf::Color(107, 230, 255));
-            if (spr_icons.count(selunit.getCode()) > 0) {
-                spr_icons[selunit.getCode()]->setPosition(getPosMultiIcon(i) + sf::Vector2f{ 25, 0 });
-                rendertarget.draw(*spr_icons[selunit.getCode()]);
-            }
+            if (spr_icons.count(selunit.getCode()) > 0)
+                drawSpriteAt(rendertarget, *spr_icons[selunit.getCode()], getPosMultiIcon(i) + sf::Vector2f{ 25, 0 });
         }
     }
 
@@ -474,10 +448,8 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
 
         drawTextInBlockWidth(rendertarget, *text_msg, msg.text, 1024 / 2 - 350 + 100, 8 + p, 700 - 100, 5);
 
-        if (spr_dialog_icons.count(msg.icon) > 0) {
-            spr_dialog_icons[msg.icon]->setPosition({ 1024 / 2 - 350 + 15, 20 + p });
-            rendertarget.draw(*spr_dialog_icons[msg.icon]);
-        }
+        if (spr_dialog_icons.count(msg.icon) > 0)
+            drawSpriteAt(rendertarget, *spr_dialog_icons[msg.icon], { 1024 / 2 - 350 + 15, 20 + p });
         p += 104;
     }
 

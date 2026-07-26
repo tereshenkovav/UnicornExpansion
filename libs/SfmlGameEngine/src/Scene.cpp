@@ -83,6 +83,24 @@ std::shared_ptr<Profile> Scene::getProfile() const
 	return engine->getProfile();
 }
 
+void Scene::drawSpriteAt(sf::RenderTarget& rendertarget, sf::Sprite& sprite, float x, float y) {
+	drawSpriteAt(rendertarget, sprite, { x,y });
+}
+
+void Scene::drawSpriteAt(sf::RenderTarget& rendertarget, sf::Sprite& sprite, sf::Vector2f pos) {
+	sprite.setPosition(pos);
+	rendertarget.draw(sprite);
+}
+
+void Scene::drawShapeAt(sf::RenderTarget& rendertarget, sf::Shape& shape, float x, float y) {
+	drawShapeAt(rendertarget, shape, { x,y });
+}
+
+void Scene::drawShapeAt(sf::RenderTarget& rendertarget, sf::Shape& shape, sf::Vector2f pos) {
+	shape.setPosition(pos);
+	rendertarget.draw(shape);
+}
+
 void Scene::drawTextInBlockWidth(sf::RenderTarget& rendertarget,
 	sf::Text& text, const std::string& str, float x, float y, float width, int redlinewidth)
 {
