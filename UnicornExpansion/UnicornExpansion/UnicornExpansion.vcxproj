@@ -202,6 +202,7 @@
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Colors.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Profile.cpp" />
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Checkbox.cpp" />
+    <ClCompile Include="..\..\libs\SfmlGameEngine\src\CheckboxGroup.cpp" />
     <ClCompile Include="SubTerrainBuilder.cpp" />
     <ClCompile Include="UnitComponent.cpp" />
     <ClCompile Include="UnitFactory.cpp" />

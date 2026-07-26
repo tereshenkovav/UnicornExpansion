@@ -19,6 +19,7 @@ set(sources
     include/SfmlGameEngine/Button.h
     include/SfmlGameEngine/Profile.h
     include/SfmlGameEngine/Checkbox.h
+    include/SfmlGameEngine/CheckboxGroup.h
     include/SfmlGameEngine/Logger.h
     src/Animation.cpp
     src/SfmlTools.cpp
@@ -30,6 +31,7 @@ set(sources
     src/Button.cpp
     src/Profile.cpp
     src/Checkbox.cpp
+    src/CheckboxGroup.cpp
     src/Logger.cpp
 )
 

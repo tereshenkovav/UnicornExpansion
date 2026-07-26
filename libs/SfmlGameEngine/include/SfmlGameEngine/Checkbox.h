@@ -13,9 +13,9 @@ private:
 	sf::VertexArray vertex;
 	bool checked = false;
 	bool disabled = false;
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 public:
 	Checkbox(const sf::Font& font, const sf::String & text, int size, int x, int y, int w, int h);
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	bool isMouseOver(sf::Vector2i mousePos) const;
 	bool isChecked() const;
 	void setChecked(bool value);

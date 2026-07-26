@@ -135,6 +135,9 @@
     <ClCompile Include="..\..\libs\SfmlGameEngine\src\Checkbox.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\libs\SfmlGameEngine\src\CheckboxGroup.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
     <ClCompile Include="UserProfile.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
