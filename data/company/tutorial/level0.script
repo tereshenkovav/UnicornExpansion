@@ -1,34 +1,3 @@
-// Начало системы событий
-var events_cond ;
-var events_func ;
-
-function initEvents() {
-  events_cond=[] ;
-  events_func=[] ;
-}
-
-function addEvent(cond,func) {
-  events_cond.push(cond) ;
-  events_func.push(func) ;
-}
-
-function processEvents() {
-  var i=0 ;
-  while (i<events_cond.length) {
-    var cond = events_cond[i] ;
-    if (cond()) {
-      var func = events_func[i] ;
-      func() ;
-      events_cond.eraseAt(i) ;
-      events_func.eraseAt(i) ;
-    }
-    else {
-      i++ ;
-    }
-  }
-}
-// Конец системы событий
-
 var game ;
 var uid1 ;
 var uidcrystall ;

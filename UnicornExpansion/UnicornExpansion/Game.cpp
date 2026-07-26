@@ -150,6 +150,7 @@ bool Game::loadScript(const std::string& filename) {
 	try {
 		script_engine.clear();
 		registerTypeGameInScript(script_engine);
+		script_engine.compileFile(zetscript::String("userscripts/events.script"));
 		script_engine.compileFile(zetscript::String(filename.c_str()));
 		auto initMap = script_engine.bindScriptFunction<bool()>("initMap");
 		funcvictory = script_engine.bindScriptFunction<bool()>("isVictory");
