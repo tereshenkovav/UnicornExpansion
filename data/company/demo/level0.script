@@ -22,7 +22,7 @@ function initMap() {
   game.allowAction("MakeTowerHealer") ;
   game.allowAction("MakeTowerHarvest") ;
 
-  game.addPortal(56,37) ;
+  game.addEmptyUnit(56,37,500,"Portal","portal") ;
   uidhero = game.addUnicorn(3,3) ;
   game.addCrystal(36,9,43) ;
   game.addCrystal(11,15,78) ;

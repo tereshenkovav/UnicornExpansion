@@ -14,6 +14,7 @@
 #include "ComponentMachinary.h"
 #include "ComponentBuilding.h"
 #include "ComponentMultiselect.h"
+#include "ComponentClearFog.h"
 
 UnitFactory::UnitFactory(Game* game)
 {
@@ -101,6 +102,7 @@ int UnitFactory::addPortal(int x, int y)
     unit.addComponent(new ComponentPortal(game));
     unit.addComponent(new ComponentEnemyTarget(game));
     unit.addComponent(new ComponentBuilding(game));
+    unit.addComponent(new ComponentClearFog(game));
     game->addUnit(unit);
     return unit.getUID();
 }
@@ -112,6 +114,7 @@ int UnitFactory::addAcademy(int x, int y)
     unit.addComponent(new ComponentAcademy(game));
     unit.addComponent(new ComponentEnemyTarget(game));
     unit.addComponent(new ComponentBuilding(game));
+    unit.addComponent(new ComponentClearFog(game));
     game->addUnit(unit);
     return unit.getUID();
 }
@@ -123,6 +126,7 @@ int UnitFactory::addMachinary(int x, int y)
     unit.addComponent(new ComponentMachinary(game));
     unit.addComponent(new ComponentEnemyTarget(game));
     unit.addComponent(new ComponentBuilding(game));
+    unit.addComponent(new ComponentClearFog(game));
     game->addUnit(unit);
     return unit.getUID();
 }
@@ -135,6 +139,7 @@ int UnitFactory::addUnicorn(int x, int y, int hp)
     unit.addComponent(new ComponentUnicorn(game));
     unit.addComponent(new ComponentEnemyTarget(game));
     unit.addComponent(new ComponentMultiselect(game));
+    unit.addComponent(new ComponentClearFog(game));
     game->addUnit(unit);
     return unit.getUID();
 }
@@ -147,6 +152,7 @@ int UnitFactory::addMachine(int x, int y)
     unit.addComponent(new ComponentMachine(game));
     unit.addComponent(new ComponentEnemyTarget(game));
     unit.addComponent(new ComponentMultiselect(game));
+    unit.addComponent(new ComponentClearFog(game));
     game->addUnit(unit);
     return unit.getUID();
 }
@@ -158,6 +164,7 @@ int UnitFactory::addHealerTower(int x, int y)
     unit.addComponent(new ComponentHealerTower(game));
     unit.addComponent(new ComponentEnemyTarget(game));
     unit.addComponent(new ComponentBuilding(game));
+    unit.addComponent(new ComponentClearFog(game));
     game->addUnit(unit);
     return unit.getUID();
 }
@@ -169,6 +176,7 @@ int UnitFactory::addHarvestTower(int x, int y)
     unit.addComponent(new ComponentHarvesterTower(game));
     unit.addComponent(new ComponentEnemyTarget(game));
     unit.addComponent(new ComponentBuilding(game));
+    unit.addComponent(new ComponentClearFog(game));
     game->addUnit(unit);
     return unit.getUID();
 }
@@ -180,6 +188,7 @@ int UnitFactory::addAttackTower(int x, int y)
     unit.addComponent(new ComponentAttackerTower(game));
     unit.addComponent(new ComponentEnemyTarget(game));
     unit.addComponent(new ComponentBuilding(game));
+    unit.addComponent(new ComponentClearFog(game));
     game->addUnit(unit);
     return unit.getUID();
 }

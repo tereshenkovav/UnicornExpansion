@@ -22,6 +22,7 @@
 #include "UnitFactory.h"
 #include "SeedStore.h"
 #include "ScriptWrapper.h"
+#include "ComponentClearFog.h"
 
 GameUnit Game::staticemptyunit;
 
@@ -561,8 +562,8 @@ void Game::update(float dt)
 	// И потом уже работаем с обновлением юнитов
 	for (int i = 0; i < units.size(); i++) {
 		units[i].update(dt);
-		// Для единоров и машин Разгон тумана войны.
-		if (units[i].isComponent<ComponentUnicorn>()||units[i].isComponent<ComponentMachine>()) clearFogAt(units[i].getXY(), 6);
+		// Разгон тумана войны для юнитов с этим компонентом
+		if (units[i].isComponent<ComponentClearFog>()) clearFogAt(units[i].getXY(), 6);
 	}
 	
 	// Обновление урона от грибов для единорогов
