@@ -549,11 +549,11 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
                                 if (selector.isNoSelected())
                                     selector.selectOneUnit(*overunituid);
                                 else {
-                                    if (game.getUnitByUID(*overunituid).isComponent<ComponentUnicorn>()) {
-                                        bool allunicorn = true;
+                                    if (game.getUnitByUID(*overunituid).isComponent<ComponentMultiselect>()) {
+                                        bool allmulti = true;
                                         for (int selid : selector.getSelectedUnits())
-                                            allunicorn = allunicorn && game.getUnitByUID(selector.getSelectedUID()).isComponent<ComponentUnicorn>();
-                                        if (allunicorn) selector.invertUnit(*overunituid);
+                                            allmulti = allmulti && game.getUnitByUID(selector.getSelectedUID()).isComponent<ComponentMultiselect>();
+                                        if (allmulti) selector.invertUnit(*overunituid);
                                     }
                                 }
                             }
