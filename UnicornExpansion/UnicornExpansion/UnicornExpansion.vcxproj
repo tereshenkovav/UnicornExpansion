@@ -169,6 +169,7 @@
     <ClCompile Include="components\ComponentMeleeEnemy.cpp" />
     <ClCompile Include="components\ComponentEnemyLair.cpp" />
     <ClCompile Include="components\ComponentEnemyTarget.cpp" />
+    <ClCompile Include="components\ComponentMovable.cpp" />
     <ClCompile Include="components\ComponentMultiselect.cpp" />
     <ClCompile Include="components\ComponentPortal.cpp" />
     <ClCompile Include="components\ComponentHarvester.cpp" />
@@ -228,6 +229,7 @@
     <ClInclude Include="components\ComponentMeleeEnemy.h" />
     <ClInclude Include="components\ComponentEnemyLair.h" />
     <ClInclude Include="components\ComponentEnemyTarget.h" />
+    <ClInclude Include="components\ComponentMovable.h" />
     <ClInclude Include="components\ComponentMultiselect.h" />
     <ClInclude Include="components\ComponentPortal.h" />
     <ClInclude Include="components\ComponentHarvester.h" />
