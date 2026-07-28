@@ -35,7 +35,7 @@ private:
     std::string company;
     LevelCode levelcode;
     std::shared_ptr<UserProfile> userprofile;
-
+    std::set<AudioEffect> effects_posed;
     // Все данные игры, спрайты, тексты, массивы территорий и цветов
     std::map<std::string, sfge::UniqueSprite> spr_units;
     std::map<std::string, sfge::UniqueSprite> spr_icons;

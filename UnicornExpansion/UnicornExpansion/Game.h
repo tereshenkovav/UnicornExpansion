@@ -23,6 +23,11 @@ enum class AudioEffect { Teleport, FinishTeleport, FinishResearch, FinishUpgrade
 
 enum class Difficulty { Easy, Norm, Hard };
 
+struct AudioEffectPosed {
+	AudioEffect effect;
+	sf::Vector2f pos;
+};
+
 struct LevelCode {
 	std::string company;
 	int level;
@@ -94,7 +99,7 @@ private:
 	std::function<bool()> funcdefeat;
 	std::function<void()> funcupdate;
 	std::optional<sf::Vector2f> teleportation_effect;
-	std::vector<AudioEffect> audioeffects;
+	std::vector<AudioEffectPosed> audioeffects;
 	Countdown counter_under_attack;
 	std::set<int> last_attacked_units;
 	std::set<int> new_attacked_units;
@@ -210,7 +215,7 @@ public:
 	void addTeleportationEffect(float x, float y);
 	void addGameEvent(AudioEffect effect, sf::Vector2f pos);
 	std::optional<sf::Vector2f> getOnceTeleportationEffect();
-	std::vector<AudioEffect> getOnceAudioEffects();
+	std::vector<AudioEffectPosed> getOnceAudioEffects();
 	const std::vector<Mushroom> & getMushrooms(int x, int y) const;
 	bool isMushroomsAt(int x, int y) const;
 	bool isUnitUnderAttack(int uid) const;

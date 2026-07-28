@@ -500,7 +500,7 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
     
     // Расчеты громкости лазеров
     VolumeCalculator volcalc(getEngine()->getWorldPosByView(view, { 0, 0 }),
-        getEngine()->getWorldPosByView(view, { (int)(VIEW_SIZE_X), (int)VIEW_SIZE_Y }), 33.0f);
+        getEngine()->getWorldPosByView(view, { (int)(VIEW_SIZE_X), (int)VIEW_SIZE_Y }), 20.0f);
     for (auto& v : effect_lasers) {
         float laservol = 0.0f;
         for (int i = 0; i < game.getLaserCount(); i++)
@@ -717,7 +717,8 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
 
     // Обработка разных эффектов
     for (auto effect : game.getOnceAudioEffects()) {
-        snd_audioeffects.push_back(std::make_unique<sf::Sound>(*snd_audioeffects_buffer[effect]));
+        snd_audioeffects.push_back(std::make_unique<sf::Sound>(*snd_audioeffects_buffer[effect.effect]));
+        if (effects_posed.contains(effect.effect)) snd_audioeffects.back()->setVolume(volcalc.getVolume(effect.pos));
         snd_audioeffects.back()->play();
     }
 
@@ -969,6 +970,8 @@ void SceneGame::Init() {
     shader_gray.setUniform("texture", sf::Shader::CurrentTexture);
     shader_bright.setUniform("texture", sf::Shader::CurrentTexture);
     shader_attack.setUniform("texture", sf::Shader::CurrentTexture);
+
+    effects_posed = { AudioEffect::Teleport, AudioEffect::MonsterKilled, AudioEffect::TowerKilled };
 
     if (std::filesystem::exists(getEngine()->getExeDir() + "/developer.json"))
         game.loadDeveloperConfig(getEngine()->getExeDir() + "/developer.json");

@@ -448,7 +448,7 @@ void Game::addTeleportationEffect(float x, float y)
 
 void Game::addGameEvent(AudioEffect effect, sf::Vector2f pos)
 {
-	audioeffects.push_back(effect);
+	audioeffects.push_back({ effect,pos });
 	lasteventpos = pos;
 }
 
@@ -462,7 +462,7 @@ std::optional<sf::Vector2f> Game::getOnceTeleportationEffect()
 	return std::nullopt;
 }
 
-std::vector<AudioEffect> Game::getOnceAudioEffects()
+std::vector<AudioEffectPosed> Game::getOnceAudioEffects()
 {
 	auto buf = audioeffects;
 	audioeffects.clear();
