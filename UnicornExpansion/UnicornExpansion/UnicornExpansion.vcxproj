@@ -212,6 +212,7 @@
     <ClCompile Include="UnitMover.cpp" />
     <ClCompile Include="UnitSelector.cpp" />
     <ClCompile Include="UserProfile.cpp" />
+    <ClCompile Include="VolumeCalculator.cpp" />
     <ClCompile Include="WayFinder.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -264,6 +265,7 @@
     <ClInclude Include="UnitSelector.h" />
     <ClInclude Include="UserProfile.h" />
     <ClInclude Include="version.h" />
+    <ClInclude Include="VolumeCalculator.h" />
     <ClInclude Include="WayFinder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

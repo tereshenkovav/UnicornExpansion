@@ -10,6 +10,7 @@
 #include "SceneMsgBox.h"
 #include "CompanyInfo.h"
 #include "ComponentMovable.h"
+#include "VolumeCalculator.h"
 
 // Размеры камеры и скорость прокрутки камеры
 const int SCROLLSPEED = 10;
@@ -497,8 +498,16 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
     // Установка курсора, если нужно
     if ((overundo)||(overactionidx)||(overunituid)) getEngine()->setCursor(1);
     
-    for (auto & v: effect_lasers)
-        v.second->setVolume(game.getLaserCount(v.first) > 0 ? 100.0f : 0.0f);
+    // Расчеты громкости лазеров
+    VolumeCalculator volcalc(getEngine()->getWorldPosByView(view, { 0, 0 }),
+        getEngine()->getWorldPosByView(view, { (int)(VIEW_SIZE_X), (int)VIEW_SIZE_Y }), 33.0f);
+    for (auto& v : effect_lasers) {
+        float laservol = 0.0f;
+        for (int i = 0; i < game.getLaserCount(); i++)
+            if (game.getLaser(i).type == v.first)
+                laservol = std::max(laservol, volcalc.getVolume(game.getLaser(i).pos2));
+        v.second->setVolume(laservol);
+    }
 
     for (auto & event : events) {
         if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())

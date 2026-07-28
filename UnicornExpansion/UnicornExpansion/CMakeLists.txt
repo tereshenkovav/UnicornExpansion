@@ -16,6 +16,7 @@ UnitMover.cpp
 UnitSelector.cpp
 WayFinder.cpp
 UserProfile.cpp
+VolumeCalculator.cpp
 )
 
 # Добавление каталога с классами компонент, сцен и установка текущего каталога
