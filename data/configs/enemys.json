@@ -14,6 +14,11 @@
     "Speed": 100,
     "Attack" : 30
   },
+  "Enemy4":
+  { "HP": 2000,
+    "Speed": 220,
+    "Attack" : 50
+  },
   "Lair":
   {
     "HP": 1000

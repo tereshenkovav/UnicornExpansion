@@ -37,6 +37,15 @@ int UnitFactory::addCrystal(int x, int y, int hp)
     return unit.getUID();
 }
 
+int UnitFactory::addCrystalEnemyTargeted(int x, int y, int hp)
+{
+    GameUnit unit(x, y, 1, 1, "Crystal", hp, "crystal");
+    unit.addComponent(new ComponentResource(game));
+    unit.addComponent(new ComponentEnemyTarget(game));
+    game->addUnit(unit);
+    return unit.getUID();
+}
+
 int UnitFactory::addCrystalRich(int x, int y, int hp)
 {
     GameUnit unit(x, y, 1, 1, "Crystal", hp, "crystal_rich");
@@ -79,6 +88,17 @@ int UnitFactory::addEnemy3(int x, int y)
 {
     auto param = game->getConfigEnemy()["Enemy3"];
     GameUnit unit(x, y, 1, 1, "Slime", param["HP"].asInt(), "monster3");
+    unit.addComponent(new ComponentMeleeEnemy(game, param["Attack"].asInt()));
+    unit.addComponent(new ComponentEnemy(game));
+    unit.setVelocity(param["Speed"].asInt());
+    game->addUnit(unit);
+    return unit.getUID();
+}
+
+int UnitFactory::addEnemy4(int x, int y)
+{
+    auto param = game->getConfigEnemy()["Enemy4"];
+    GameUnit unit(x, y, 1, 1, "Dragon", param["HP"].asInt(), "monster_dragon");
     unit.addComponent(new ComponentMeleeEnemy(game, param["Attack"].asInt()));
     unit.addComponent(new ComponentEnemy(game));
     unit.setVelocity(param["Speed"].asInt());

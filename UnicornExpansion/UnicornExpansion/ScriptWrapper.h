@@ -50,10 +50,22 @@ zetscript::zs_int Game_addEnemy3(zetscript::ScriptEngine* _script_engine, Game* 
 	return factory.addEnemy3(x, y);
 }
 
+zetscript::zs_int Game_addEnemy4(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	UnitFactory factory(_this);
+	return factory.addEnemy4(x, y);
+}
+
 zetscript::zs_int Game_addCrystal(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y, zetscript::zs_int hp) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	UnitFactory factory(_this);
 	return factory.addCrystal(x, y, hp);
+}
+
+zetscript::zs_int Game_addCrystalEnemyTargeted(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y, zetscript::zs_int hp) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	UnitFactory factory(_this);
+	return factory.addCrystalEnemyTargeted(x, y, hp);
 }
 
 zetscript::zs_int Game_addCrystalRich(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y, zetscript::zs_int hp) {
@@ -256,7 +268,9 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
 	engine.registerMemberFunction<Game>("addEnemy1", &Game_addEnemy1);
 	engine.registerMemberFunction<Game>("addEnemy2", &Game_addEnemy2);
 	engine.registerMemberFunction<Game>("addEnemy3", &Game_addEnemy3);
+	engine.registerMemberFunction<Game>("addEnemy4", &Game_addEnemy4);
 	engine.registerMemberFunction<Game>("addCrystal", &Game_addCrystal);
+	engine.registerMemberFunction<Game>("addCrystalEnemyTargeted", &Game_addCrystalEnemyTargeted);
 	engine.registerMemberFunction<Game>("addCrystalRich", &Game_addCrystalRich);
 	engine.registerMemberFunction<Game>("addCrystalPoor", &Game_addCrystalPoor);
 	engine.registerMemberFunction<Game>("addEmptyUnit", &Game_addEmptyUnit);

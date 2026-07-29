@@ -11,11 +11,13 @@ public:
 	UnitFactory(Game* game);
 	int addEmptyUnit(int x, int y, int hp, const std::string& name, const std::string& code);
 	int addCrystal(int x, int y, int hp);
+	int addCrystalEnemyTargeted(int x, int y, int hp);
 	int addCrystalRich(int x, int y, int hp);
 	int addCrystalPoor(int x, int y, int hp);
 	int addEnemy1(int x, int y);
 	int addEnemy2(int x, int y);
 	int addEnemy3(int x, int y);
+	int addEnemy4(int x, int y);
 	int addLair(int x, int y, const std::string& spawnseq);
 	int addPortal(int x, int y);
 	int addAcademy(int x, int y);

@@ -43,6 +43,7 @@ Unit_Crystal=Волшебные кристаллы
 Unit_Slime=Слизень
 Unit_Octopus=Октопус
 Unit_Bat=Нетопырь
+Unit_Dragon=Дракон
 Unit_Lair=Логово
 Info_MovementSpeed=Скорость движения
 Info_AttackLevel=Сила атаки

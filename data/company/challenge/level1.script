@@ -1,0 +1,87 @@
+var game ;
+ 
+function initMap() {
+  game = new Game() ;
+
+  game.allowAction("MakeHarvester") ;
+  game.allowAction("MakeAttacker") ;
+  game.allowAction("MakeHealer") ;
+  game.allowAction("MakeRadar") ;
+  game.allowAction("DoRadar") ;
+  game.allowAction("UpgradeHarvester") ;
+  game.allowAction("UpgradeAttacker") ;
+  game.allowAction("UpgradeHealer") ;
+  game.allowAction("MakeShield") ;
+  game.allowAction("DoShield") ;
+  game.allowAction("MakeTowerAttack") ;
+  game.allowAction("MakeTowerHealer") ;
+  game.allowAction("MakeTowerHarvest") ;
+  game.allowAction("BuildUnicorn") ;
+  game.allowAction("ResearchWorkInAction") ;
+  game.allowAction("ResearchMagicEconomy") ;
+  game.allowAction("ConstructMachine") ;
+  game.allowAction("IncreaseUnicornCount") ;
+  game.allowAction("ResearchFastBuild") ;
+  game.allowAction("SetupBaseShield") ;
+  game.allowAction("BuildAcademy") ;
+  game.allowAction("BuildMachinary") ;
+
+  game.addPortal(3,8) ;
+  game.addAcademy(4,5) ;
+  game.addMachinary(5,11) ;
+  game.addUnicorn(8,8) ;
+  game.addUnicorn(9,10) ;
+
+  var addhp = 500 ;
+  if (game.isHard2()) {
+    addhp-=250 ;
+  }
+  if (game.isHard1()) {
+    addhp-=250 ;
+  }
+
+  game.addCrystalEnemyTargeted(17,4,addhp+2560) ;
+  game.addCrystalEnemyTargeted(20,5,addhp+1770) ;
+  game.addCrystalEnemyTargeted(22,6,addhp+2100) ;
+  game.addCrystalEnemyTargeted(25,6,addhp+1200) ;
+  game.addCrystalEnemyTargeted(27,7,addhp+2400) ;
+  game.addCrystalEnemyTargeted(30,13,addhp+1200) ;
+  game.addCrystalEnemyTargeted(32,14,addhp+2350) ;
+  game.addCrystalEnemyTargeted(35,11,addhp+1110) ;
+  game.addCrystalEnemyTargeted(37,12,addhp+2230) ;
+  game.addCrystalEnemyTargeted(40,9,addhp+2730) ;
+
+  var uid = game.addEnemy4(48,9) ;
+  game.setTargetToUnit(uid,3,9) ;
+
+  if (!game.isHard2()) {
+    game.incEnergy(100) ;
+  }
+  if (!game.isHard1()) {
+    game.incEnergy(100) ;
+  }
+  game.incEnergy(200) ;
+
+  game.clearFogAt(20,8,7) ;
+  game.clearFogAt(30,10,7) ;
+  game.clearFogAt(40,10,7) ;
+  game.setNewViewPoint(10,10) ;
+
+  game.addMessage("unicorn",10,"$Brief_1") ;
+  game.addNewTask("protect","$Task1") ;
+  game.addNewTask("dragon","$Task2") ;
+  return true ;
+}
+
+function Update() {
+}
+
+function isVictory() {
+  if (game.getCountByComponent("Enemy")==0) { return true ; }
+  return false ;
+}
+
+function isDefeat() {
+  if (game.getCountByComponent("Portal")==0) { return true ; }
+  return false ;
+}

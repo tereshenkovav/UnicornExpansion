@@ -704,7 +704,9 @@ void Game::update(float dt)
 				if (!idx_attack) idx_attack = targets[0];
 
 				units[*idx_attack].decHealth(enemy->getAttackValue() * dt);
-				trySetUnderAttackEffect(units[*idx_attack]);
+				// Экспресс-заплатка, чтобы не было сигнала об атаке по кристаллам в миссии с драконом
+				if (!units[*idx_attack].isComponent<ComponentResource>())
+					trySetUnderAttackEffect(units[*idx_attack]);
 			}
 
 			// Блок отвечает за преследование танка, вошедшего в зону зрения

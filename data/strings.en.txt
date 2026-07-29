@@ -43,6 +43,7 @@ Unit_Crystal=Magic crystal
 Unit_Slime=Slime
 Unit_Octopus=Octopus
 Unit_Bat=Bat
+Unit_Dragon=Dragon
 Unit_Lair=Lair
 Info_MovementSpeed=Movement
 Info_AttackLevel=Attack

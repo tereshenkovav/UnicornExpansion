@@ -40,7 +40,7 @@ function initMap() {
 
   game.addMessage("unicorn",10,"$Brief_1") ;
   game.addNewTask("protect","$Task1") ;
-  game.addNewTask("protect","$Task2") ;
+  game.addNewTask("harvest","$Task2") ;
   return true ;
 }
 

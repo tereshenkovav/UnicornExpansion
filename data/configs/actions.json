@@ -5,8 +5,8 @@
         "Value": 20
     },
     "IncreaseUnicornCount": {
-        "Price": [150, 300],
-        "Time": [40, 55],
+        "Price": [150, 250, 400, 650, 1100 ],
+        "Time": [40, 55, 75, 100, 140],
         "Value": 2
     },
     "BuildUnicorn": {
