@@ -1,0 +1,86 @@
+var game ;
+var waven ;
+ 
+function initMap() {
+  game = new Game() ;
+
+  game.allowAction("MakeTowerAttack") ;
+  game.allowAction("MakeTowerHealer") ;
+  game.allowAction("MakeTowerHarvest") ;
+  game.allowAction("ConstructMachine") ;
+
+  game.addPortal(6,6) ;
+  game.addMachinary(10,6) ;
+  game.addMachinary(6,10) ;
+  if (!game.isHard1()) {
+    game.addMachinary(9,9) ;
+  }
+  game.addMachine(13,9) ;
+  game.addMachine(8,14) ;
+  if (!game.isHard1()) {
+    game.addMachine(12,13) ;
+  }
+
+  game.addCrystal(20,19,150) ;
+  game.addCrystal(25,19,210) ;
+  game.addCrystal(17,23,430) ;
+  game.addCrystal(17,14,760) ;
+  game.addCrystal(30,19,870) ;
+  game.addCrystal(23,22,1000) ;
+  game.addCrystal(21,24,1100) ;
+  game.addCrystal(22,13,1200) ;
+
+  game.incEnergy(300) ;
+
+  game.clearFogAt(20,19,12) ;
+  game.setNewViewPoint(20,19) ;
+
+  game.startHiddenTimer(20) ;
+  waven=0 ;
+
+  game.addMessage("unicorn",10,"$Brief_1") ;
+  game.addNewTask("protect","$Task1") ;
+  game.addNewTask("protect","$Task2") ;
+  return true ;
+}
+
+function Update() {
+  if (game.getTimer()<1) {
+    game.startHiddenTimer(30) ;
+
+    var uids = [] ;
+    if (waven==0) {
+      uids.push(game.addEnemy1(39,29)) ;
+      if (game.isHard2()) {
+        uids.push(game.addEnemy1(30,29)) ;
+        uids.push(game.addEnemy1(20,29)) ;
+      }
+    }
+    if (waven==1) {
+      uids.push(game.addEnemy2(39,2)) ;
+      if (game.isHard2()) {
+        uids.push(game.addEnemy2(39,29)) ;
+      }
+    }
+    if (waven==2) {
+      uids.push(game.addEnemy3(2,29)) ;
+    }
+
+    for (var uid in uids) {
+      game.setTargetToUnit(uid,6,6) ;
+    }
+
+    waven++ ;
+    if (waven==3) { waven=0 ; }
+  }
+}
+
+function isVictory() {
+  if (game.getEnergy()>=5000) { return true ; }
+  return false ;
+}
+
+function isDefeat() {
+  if (game.getCountByComponent("Portal")==0) { return true ; }
+  return false ;
+}

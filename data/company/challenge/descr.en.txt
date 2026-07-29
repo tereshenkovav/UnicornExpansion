@@ -1,0 +1,5 @@
+Two maps in the "challenge" format to test your skills.
+
+In the first scenario, you need to harvest resources using only unicorn machines. The task is complicated by the fact that the portal is continuously attacked by hostile creatures.
+
+In the second scenario, you need to stop a very strong enemy before he destroys the portal. Fortunately for the player, monster gets slow-down on the way by destroying crystals.

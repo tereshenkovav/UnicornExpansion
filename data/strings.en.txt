@@ -66,6 +66,7 @@ Text_Task=Mission tasks
 Text_Quit=Exit
 Text_Training=Tutorial
 Text_DemoCompany=Demo-company
+Text_Challenge=Challenges
 Text_Continue=Continue
 Text_Restart=Restart
 Text_MainMenu=Exit
