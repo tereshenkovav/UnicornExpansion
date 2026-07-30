@@ -3,6 +3,7 @@
 #include "SceneMainMenu.h"
 #include "SceneGame.h"
 #include "CompanyInfo.h"
+#include "SceneCompany.h"
 
 SceneEndGame::SceneEndGame(const Game & game, LevelCode levelcode) :Scene()
 {
@@ -15,10 +16,24 @@ void SceneEndGame::goNextLevel()
     LevelCode newlevel = levelcode;
     newlevel.level++;
     CompanyInfo comp(newlevel.company,getEngine()->getLanguages().getCurrent());
-    if (newlevel.level >= comp.getLevelCount())
-        getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>(newlevel.company));
+    if (comp.isNoCompanySequence()) {
+        getEngine()->SwitchToScene(std::make_shared<SceneCompany>(levelcode.company));
+    }
+    else {
+        if (newlevel.level >= comp.getLevelCount())
+            getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>(newlevel.company));
+        else
+            getEngine()->SwitchToScene(std::make_shared<SceneGame>(newlevel));
+    }
+}
+
+void SceneEndGame::goOutOfLevel()
+{
+    CompanyInfo comp(levelcode.company, getEngine()->getLanguages().getCurrent());
+    if (comp.isNoCompanyMenu())
+        getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>());
     else
-        getEngine()->SwitchToScene(std::make_shared<SceneGame>(newlevel));
+        getEngine()->SwitchToScene(std::make_shared<SceneCompany>(levelcode.company));
 }
 
 void SceneEndGame::Render(sf::RenderTarget & rendertarget) {
@@ -54,5 +69,5 @@ void SceneEndGame::Init() {
         buttons.back()->setOnClick([this]() { getEngine()->SwitchToScene(std::make_shared<SceneGame>(levelcode)); });
     }
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_MainMenu"), 18, 512 - 80, 340, 160, 40));
-    buttons.back()->setOnClick([this]() { getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>()); });
+    buttons.back()->setOnClick([this]() { goOutOfLevel(); });
 }

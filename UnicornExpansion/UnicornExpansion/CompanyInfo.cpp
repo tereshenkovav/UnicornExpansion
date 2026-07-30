@@ -39,3 +39,18 @@ std::string CompanyInfo::getDescrFileName() const {
 std::string CompanyInfo::getPostfixFileName() const {
 	return std::format("company/{}/postfix.{}.txt", company, lang);
 }
+
+bool CompanyInfo::isAllowedAllMaps() const {
+	// Карты испытаний всегда открыты
+	return company == "challenge";
+}
+
+bool CompanyInfo::isNoCompanyMenu() const {
+	// Обучение возвращаем в главное меню
+	return company == "tutorial";
+}
+
+bool CompanyInfo::isNoCompanySequence() const {
+	// Для испытаний не нужно переключаться к следующей карте
+	return company == "challenge";
+}

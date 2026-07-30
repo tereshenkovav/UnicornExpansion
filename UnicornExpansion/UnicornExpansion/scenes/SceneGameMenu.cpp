@@ -4,6 +4,17 @@
 #include "SceneGame.h"
 #include "SceneTask.h"
 #include "SceneJournal.h"
+#include "CompanyInfo.h"
+#include "SceneCompany.h"
+
+void SceneGameMenu::goOutOfLevel()
+{
+    CompanyInfo comp(levelcode.company, getEngine()->getLanguages().getCurrent());
+    if (comp.isNoCompanyMenu())
+        getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>());
+    else
+        getEngine()->SwitchToScene(std::make_shared<SceneCompany>(levelcode.company));
+}
 
 SceneGameMenu::SceneGameMenu(Game * game, LevelCode levelcode) :Scene()
 {
@@ -40,5 +51,5 @@ void SceneGameMenu::Init() {
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_Journal"), 18, 512 - 90, 380, 180, 40));
     buttons.back()->setOnClick([this]() { getEngine()->ReplaceOverScene(std::make_shared<SceneJournal>(*game)); });
     buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_MainMenu"), 18, 512 - 90, 440, 180, 40));
-    buttons.back()->setOnClick([this]() { getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>()); });
+    buttons.back()->setOnClick([this]() { goOutOfLevel(); });
 }

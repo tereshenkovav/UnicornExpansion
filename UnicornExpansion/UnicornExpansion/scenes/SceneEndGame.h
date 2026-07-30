@@ -15,6 +15,7 @@ private:
     LevelCode levelcode;
     bool iswin;
     void goNextLevel();
+    void goOutOfLevel();
 public:
     SceneEndGame(const Game& game, LevelCode levelcode);
     virtual void Render(sf::RenderTarget& rendertarget) override;

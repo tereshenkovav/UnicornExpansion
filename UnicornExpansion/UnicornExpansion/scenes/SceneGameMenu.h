@@ -14,6 +14,7 @@ private:
     std::string company;
     LevelCode levelcode;
     Game* game;
+    void goOutOfLevel();
 public:
     SceneGameMenu(Game * game, LevelCode levelcode);
     virtual void Render(sf::RenderTarget& rendertarget) override;
