@@ -1,4 +1,5 @@
 #include "VolumeCalculator.h"
+#include "math.h"
 
 VolumeCalculator::VolumeCalculator(sf::Vector2f poslt, sf::Vector2f posrb, float minvol) {
 	this->minvol = minvol;
