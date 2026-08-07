@@ -29,6 +29,7 @@ protected:
     std::shared_ptr<Profile> getProfile() const;
     // Загрузка ресурсов игры с автоудалением потом их текстур и буферов
     UniqueSprite loadSprite(const std::string& filename);
+    UniqueSprite loadSprite(const sf::Image& source, int x, int y, int w, int h);
     UniqueSound loadSound(const std::string& filename);
     std::unique_ptr<sf::SoundBuffer> loadSoundBuffer(const std::string& filename);
     UniqueText loadText(int size);

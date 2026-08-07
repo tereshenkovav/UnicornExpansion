@@ -30,6 +30,15 @@ Engine* Scene::getEngine() const
 UniqueSprite Scene::loadSprite(const std::string& filename)
 {
 	textures.push_back(std::make_unique<sf::Texture>(getEngine()->getLanguages().getFileNameByLangIfExist(filename)));
+	textures.back()->setSmooth(true);
+	return std::make_unique<sf::Sprite>(*textures.back());
+}
+
+UniqueSprite Scene::loadSprite(const sf::Image& img, int x, int y, int w, int h)
+{
+	textures.push_back(std::make_unique<sf::Texture>());
+	textures.back()->loadFromImage(img, false, { { x, y }, { w, h } });
+	textures.back()->setSmooth(true);
 	return std::make_unique<sf::Sprite>(*textures.back());
 }
 

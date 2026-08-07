@@ -227,7 +227,7 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
             if (spr_units.count(game.getUnit(i).getCode()) > 0) {
                 bool movleft = game.getUnit(i).isUnitRotatedLeft();
                 std::string sprcode = game.getUnit(i).getCode();
-                if (game.getUnit(i).isComponent<ComponentMachine>()) {
+                if (game.getUnit(i).isComponent<ComponentMovable>()) {
                     std::string dirsuff = "";
                     if (game.getUnit(i).getLastMoving() == Moving::Up) dirsuff = "_t";
                     if ((game.getUnit(i).getLastMoving() == Moving::LeftUp) ||
@@ -322,7 +322,7 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
     minimap.drawTo(&rendertarget);
 
     textback.setPosition({ 6, 6 });
-    textback.setSize({ 120, 50 });
+    textback.setSize({ 130, 50 });
     rendertarget.draw(textback);
 
     // Информация по ресурсам и танкам
@@ -784,13 +784,29 @@ void SceneGame::Init() {
         spr_icons[str]->setScale({ 48.0f / spr_units[str]->getTexture().getSize().x, 48.0f / spr_units[str]->getTexture().getSize().y });
     }
 
-    // Догрузка машин по направлениям
-    std::vector<std::string> dirsuff = { "machine_t", "machine_b", "machine_rb", "machine_rt"};
-    for (auto& str : dirsuff) {
-        spr_units[str] = loadSprite("images/units/" + str + ".png");
-        spr_units[str]->setOrigin({ spr_units[str]->getTexture().getSize().x / 2.0f,
-            spr_units[str]->getTexture().getSize().y / 2.0f });
-    }
+    // Догрузка единорогов по направлениям (вынести в процедуру)
+    sf::Image source;
+    source.loadFromFile("images/unicorn.png");
+
+    const int unitsize = 64;
+    spr_units["unicorn"] = loadSprite(source, 0, 0, unitsize, unitsize);
+    spr_units["unicorn"]->setOrigin({ unitsize / 2 , unitsize / 2 });
+
+    spr_icons["unicorn"] = loadSprite(source, 0, 0, unitsize, unitsize);
+    spr_icons["unicorn"]->setOrigin({ unitsize / 2 , unitsize / 2 });
+    spr_icons["unicorn"]->setScale({ 64.0f / unitsize, 64.0f / unitsize });
+
+    spr_units["unicorn_b"] = loadSprite(source, 6 * unitsize, 0, unitsize, unitsize);
+    spr_units["unicorn_b"]->setOrigin({ unitsize / 2 , unitsize / 2 });
+
+    spr_units["unicorn_t"] = loadSprite(source, 2 * unitsize, 0, unitsize, unitsize);
+    spr_units["unicorn_t"]->setOrigin({ unitsize / 2 , unitsize / 2 });
+
+    spr_units["unicorn_rb"] = loadSprite(source, 7 * unitsize, 0, unitsize, unitsize);
+    spr_units["unicorn_rb"]->setOrigin({ unitsize / 2 , unitsize / 2 });
+
+    spr_units["unicorn_rt"] = loadSprite(source, 1 * unitsize, 0, unitsize, unitsize);
+    spr_units["unicorn_rt"]->setOrigin({ unitsize / 2 , unitsize / 2 });
 
     // Используется загрузка каталога в целом, можно вынести как процедуру
     pathload = "images/actions/";
