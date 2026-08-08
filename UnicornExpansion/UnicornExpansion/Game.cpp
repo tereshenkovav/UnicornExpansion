@@ -589,27 +589,25 @@ void Game::update(float dt)
 			if (academy->isMagicEconomy()) magiceconomy = true;
 		}
 
-	// Временная поправка для позиции лазера у единорога
-	sf::Vector2f laserfixleftunicorn{ -23, -25 };
-	sf::Vector2f laserfixrightunicorn{ 21, -25 };
-
-	sf::Vector2f laserfixlefttower{ -10, -30 };
-	sf::Vector2f laserfixrighttower{ -10, -30 };
-
-	sf::Vector2f laserfixleft;
-	sf::Vector2f laserfixright;
+	// Временная поправка для позиции лазера
+	sf::Vector2f laserfix;
 
 	// Построение лазеров для рендера и действия с ними
 	lasers.clear();
 	for (int i = 0; i < units.size(); i++) {
-		if (units[i].isComponent<ComponentUnicorn>()) {
-			laserfixleft = laserfixleftunicorn;
-			laserfixright = laserfixrightunicorn;
-		}
-		else {
-			laserfixleft = laserfixlefttower;
-			laserfixright = laserfixrighttower;
-		}
+		if (units[i].isComponent<ComponentUnicorn>())
+			switch (units[i].getLastMoving()) {
+				case Moving::Left: laserfix = { -23, -25 }; break;
+				case Moving::Right: laserfix = { 23, -25 }; break;
+				case Moving::Up: laserfix = { 0, -30 }; break;
+				case Moving::Down: laserfix = { 0, -20 }; break;
+				case Moving::LeftUp: laserfix = { -17, -26 }; break;
+				case Moving::RightUp: laserfix = { 17, -26 }; break;
+				case Moving::LeftDown: laserfix = { -16, -8 }; break;
+				case Moving::RightDown: laserfix = { 17, -8 }; break;
+			}
+		else
+			laserfix = { -10, -30 };
 		if (const auto* harvester = units[i].getComponent<ComponentHarvester>()) {
 			if (((!units[i].isWorkingTask()) || allowworkinaction) && (!units[i].isTargeted())) {
 				FinderByBestDistance finder(harvester->getHarvestDistance(), units[i].getView());
@@ -619,7 +617,7 @@ void Game::update(float dt)
 				if (auto res_idx = finder.getBestIndex()) {
 					energy += harvester->getHarvestRate() * units[*res_idx].getComponent<ComponentResource>()->getResourceEfficient() * dt;
 					units[*res_idx].decHealth(harvester->getHarvestRate() * dt);
-					lasers.push_back({ units[i].getView() + (units[i].isUnitRotatedLeft() ? laserfixleft : laserfixright),
+					lasers.push_back({ units[i].getView() + laserfix,
 						units[*res_idx].getView(), LaserType::Harvest, SeedStore::getSeedByUIDAndLaserType(units[i].getUID(),LaserType::Harvest) });
 				}
 			}
@@ -638,7 +636,7 @@ void Game::update(float dt)
 							energy -= healer->getHealerEnergyCost() * dt;
 							healer->setActive(true);
 							units[*res_idx].incHealth(healer->getHealerRate() * dt);
-							lasers.push_back({ units[i].getView() + (units[i].isUnitRotatedLeft() ? laserfixleft : laserfixright),
+							lasers.push_back({ units[i].getView() + laserfix,
 								units[*res_idx].getView(), LaserType::Heal, SeedStore::getSeedByUIDAndLaserType(units[i].getUID(),LaserType::Heal) });
 						}
 					}
@@ -666,7 +664,7 @@ void Game::update(float dt)
 				// После этого, уже пытаемся атаковать
 				if (auto res_idx = finder.getBestIndex()) {
 					units[*res_idx].decHealth(attacker->getAttackValue() * dt);
-					lasers.push_back({ units[i].getView() + (units[i].isUnitRotatedLeft() ? laserfixleft : laserfixright),
+					lasers.push_back({ units[i].getView() + laserfix,
 						units[*res_idx].getView(), LaserType::Attack, SeedStore::getSeedByUIDAndLaserType(units[i].getUID(),LaserType::Attack) });
 					if (auto* meleeenemy = units[*res_idx].getComponent<ComponentMeleeEnemy>())
 						meleeenemy->setTargetToUnit(units[i].getUID());
@@ -683,7 +681,7 @@ void Game::update(float dt)
 							finder.addPos(sf::Vector2f(BLOCKW * x + m.x, BLOCKH * y + m.y), m.index);
 				if (auto res_idx = finder.getBestIndex()) {
 					mushrooms.attackMushrooms(*res_idx, detoxer->getDetoxValue()* dt);
-					lasers.push_back({ units[i].getView() + (units[i].isUnitRotatedLeft() ? laserfixleft : laserfixright),
+					lasers.push_back({ units[i].getView() + laserfix,
 						*finder.getBestPos(), LaserType::Detox, SeedStore::getSeedByUIDAndLaserType(units[i].getUID(),LaserType::Detox) });
 				}
 			}
