@@ -227,7 +227,7 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
             if (spr_units.count(game.getUnit(i).getCode()) > 0) {
                 bool movleft = game.getUnit(i).isUnitRotatedLeft();
                 std::string sprcode = game.getUnit(i).getCode();
-                if (game.getUnit(i).isComponent<ComponentMovable>()) {
+                if (game.getUnit(i).isComponent<ComponentMovable>() || (game.getUnit(i).getCode() == "monster_dragon")) {
                     std::string dirsuff = "";
                     if (game.getUnit(i).getLastMoving() == Moving::Up) dirsuff = "_t";
                     if ((game.getUnit(i).getLastMoving() == Moving::LeftUp) ||
@@ -807,6 +807,33 @@ void SceneGame::Init() {
 
     spr_units["unicorn_rt"] = loadSprite(source, 1 * unitsize, 0, unitsize, unitsize);
     spr_units["unicorn_rt"]->setOrigin({ unitsize / 2 , unitsize / 2 });
+
+    // Догрузка дракона по направлениям (вынести в процедуру)
+    source.loadFromFile("images/dragon.png");
+
+    const int unitsize2 = 128;
+    spr_units["monster_dragon"] = loadSprite(source, 0, 0, unitsize2, unitsize2);
+    spr_units["monster_dragon"]->setOrigin({ unitsize2 / 2 , unitsize2 / 2 });
+
+    spr_icons["monster_dragon"] = loadSprite(source, 0, 0, unitsize2, unitsize2);
+    spr_icons["monster_dragon"]->setOrigin({ unitsize2 / 2 , unitsize2 / 2 });
+    spr_icons["monster_dragon"]->setScale({ 48.0f / unitsize2, 48.0f / unitsize2 });
+
+    spr_units["monster_dragon_b"] = loadSprite(source, 6 * unitsize2, 0, unitsize2, unitsize2);
+    spr_units["monster_dragon_b"]->setOrigin({ unitsize2 / 2 , unitsize2 / 2 });
+
+    spr_units["monster_dragon_t"] = loadSprite(source, 2 * unitsize2, 0, unitsize2, unitsize2);
+    spr_units["monster_dragon_t"]->setOrigin({ unitsize2 / 2 , unitsize2 / 2 });
+
+    spr_units["monster_dragon_rb"] = loadSprite(source, 7 * unitsize2, 0, unitsize2, unitsize2);
+    spr_units["monster_dragon_rb"]->setOrigin({ unitsize2 / 2 , unitsize2 / 2 });
+
+    spr_units["monster_dragon_rt"] = loadSprite(source, 1 * unitsize2, 0, unitsize2, unitsize2);
+    spr_units["monster_dragon_rt"]->setOrigin({ unitsize2 / 2 , unitsize2 / 2 });
+
+    // К дракону догружаем его останки
+    spr_decors["monster_dragon_corp"] = loadSprite(source, 0, 1 * unitsize2, unitsize2, unitsize2);
+    spr_decors["monster_dragon_corp"]->setOrigin({ unitsize2 / 2 , unitsize2 / 2 });
 
     // Используется загрузка каталога в целом, можно вынести как процедуру
     pathload = "images/actions/";
