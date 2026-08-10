@@ -154,8 +154,10 @@ int UnitFactory::addMachinary(int x, int y)
 
 int UnitFactory::addUnicorn(int x, int y, int hp)
 {
+    // Здесь нужно явно получать количество спрайтов у единорогов
+    std::string code = std::format("unicorn{:02}", rand() % 30);
     auto param = game->getConfigUnit()["Unicorn"];
-    GameUnit unit(x, y, 1, 1, "Unicorn", hp, "unicorn");
+    GameUnit unit(x, y, 1, 1, "Unicorn", hp, code);
     unit.setVelocity(param["InitialV"].asInt());
     unit.addComponent(new ComponentUnicorn(game));
     unit.addComponent(new ComponentEnemyTarget(game));

@@ -788,25 +788,57 @@ void SceneGame::Init() {
     sf::Image source;
     source.loadFromFile("images/unicorn.png");
 
+    std::vector<std::function<sf::Color(sf::Color)>> filters_mane;
+    filters_mane.push_back([](sf::Color c) { return sf::Color(c.r, c.g, c.b, c.a); });
+    filters_mane.push_back([](sf::Color c) { return sf::Color(c.r, c.b, c.g, c.a); });
+    filters_mane.push_back([](sf::Color c) { return sf::Color(c.g, c.r, c.b, c.a); });
+    filters_mane.push_back([](sf::Color c) { return sf::Color(c.g, c.b, c.r, c.a); });
+    filters_mane.push_back([](sf::Color c) { return sf::Color(c.b, c.r, c.g, c.a); });
+    filters_mane.push_back([](sf::Color c) { return sf::Color(c.b, c.g, c.r, c.a); });
+    std::vector<std::function<sf::Color(sf::Color)>> filters_body;
+    filters_body.push_back([](sf::Color c) { return sf::Color(c.r * 0.25, c.g * 0.25, c.b * 0.25, c.a); });
+    filters_body.push_back([](sf::Color c) { return sf::Color(c.r * 0.5, c.g * 0.5, c.b * 0.5, c.a); });
+    filters_body.push_back([](sf::Color c) { return sf::Color(c.r * 0.75, c.g * 0.75, c.b * 0.75, c.a); });
+    filters_body.push_back([](sf::Color c) { return sf::Color(c.r * 1, c.g * 1, c.b * 1, c.a); });
+    filters_body.push_back([](sf::Color c) { return sf::Color(std::min((int)(c.r * 1.25), 255),
+        std::min((int)(c.g * 1.25), 255), std::min((int)(c.b * 1.25), 255), c.a); });
+
     const int unitsize = 64;
-    spr_units["unicorn"] = loadSprite(source, 0, 0, unitsize, unitsize);
-    spr_units["unicorn"]->setOrigin({ unitsize / 2 , unitsize / 2 });
 
-    spr_icons["unicorn"] = loadSprite(source, 0, 0, unitsize, unitsize);
-    spr_icons["unicorn"]->setOrigin({ unitsize / 2 , unitsize / 2 });
-    spr_icons["unicorn"]->setScale({ 64.0f / unitsize, 64.0f / unitsize });
+    int sprp = 0;
+    for (int m = 0; m < filters_mane.size(); m++)
+        for (int b = 0; b < filters_body.size(); b++) {
+        sf::Image newsrc = source;
+        for (unsigned int i = 0; i < newsrc.getSize().x; i++)
+            for (unsigned int j = 0; j < newsrc.getSize().y; j++) {
+                sf::Color c = newsrc.getPixel({ i,j });
+                if ((c.b > 1.25 * c.g) && (c.b > 1.25 * c.r))
+                    newsrc.setPixel({ i,j }, filters_mane[m](c));
+                else
+                    if ((abs(c.b - c.g) < 100) && (abs(c.r - c.g) < 100) && (abs(c.r - c.b) < 100) && (c.a > 0))
+                        newsrc.setPixel({ i,j }, filters_body[b](c));
+            }
 
-    spr_units["unicorn_b"] = loadSprite(source, 6 * unitsize, 0, unitsize, unitsize);
-    spr_units["unicorn_b"]->setOrigin({ unitsize / 2 , unitsize / 2 });
+        std::string code = std::format("unicorn{:02}", sprp); sprp++;
+        spr_units[code] = loadSprite(newsrc, 0, 0, unitsize, unitsize);
+        spr_units[code]->setOrigin({ unitsize / 2 , unitsize / 2 });
 
-    spr_units["unicorn_t"] = loadSprite(source, 2 * unitsize, 0, unitsize, unitsize);
-    spr_units["unicorn_t"]->setOrigin({ unitsize / 2 , unitsize / 2 });
+        spr_icons[code] = loadSprite(newsrc, 0, 0, unitsize, unitsize);
+        spr_icons[code]->setOrigin({ unitsize / 2 , unitsize / 2 });
+        spr_icons[code]->setScale({ 64.0f / unitsize, 64.0f / unitsize });
 
-    spr_units["unicorn_rb"] = loadSprite(source, 7 * unitsize, 0, unitsize, unitsize);
-    spr_units["unicorn_rb"]->setOrigin({ unitsize / 2 , unitsize / 2 });
+        spr_units[code + "_b"] = loadSprite(newsrc, 6 * unitsize, 0, unitsize, unitsize);
+        spr_units[code + "_b"]->setOrigin({ unitsize / 2 , unitsize / 2 });
 
-    spr_units["unicorn_rt"] = loadSprite(source, 1 * unitsize, 0, unitsize, unitsize);
-    spr_units["unicorn_rt"]->setOrigin({ unitsize / 2 , unitsize / 2 });
+        spr_units[code + "_t"] = loadSprite(newsrc, 2 * unitsize, 0, unitsize, unitsize);
+        spr_units[code + "_t"]->setOrigin({ unitsize / 2 , unitsize / 2 });
+
+        spr_units[code + "_rb"] = loadSprite(newsrc, 7 * unitsize, 0, unitsize, unitsize);
+        spr_units[code + "_rb"]->setOrigin({ unitsize / 2 , unitsize / 2 });
+
+        spr_units[code + "_rt"] = loadSprite(newsrc, 1 * unitsize, 0, unitsize, unitsize);
+        spr_units[code + "_rt"]->setOrigin({ unitsize / 2 , unitsize / 2 });
+    }
 
     // Догрузка дракона по направлениям (вынести в процедуру)
     source.loadFromFile("images/dragon.png");
