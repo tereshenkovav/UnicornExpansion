@@ -18,6 +18,7 @@
 #include "ComponentPortal.h"
 #include "ComponentMachine.h"
 #include "ComponentAcademy.h"
+#include "ComponentEnemyLair.h"
 #include "FinderByBestDistance.h"
 #include "UnitFactory.h"
 #include "SeedStore.h"
@@ -738,7 +739,12 @@ void Game::update(float dt)
 			}
 			else {
 				decors.push_back({{ unit.getView().x, unit.getView().y}, unit.getCode()+"_corp", 30.0f, false});
-				if (unit.isComponent<ComponentEnemy>()) addGameEvent(AudioEffect::MonsterKilled, unit.getView());
+				if (unit.isComponent<ComponentEnemy>()) {
+					if (unit.isComponent<ComponentEnemyLair>())
+						addGameEvent(AudioEffect::LairKilled, unit.getView());
+					else
+						addGameEvent(AudioEffect::MonsterKilled, unit.getView());
+				}
 				if (unit.isComponent<ComponentHarvesterTower>()) addGameEvent(AudioEffect::TowerKilled, unit.getView());
 				if (unit.isComponent<ComponentAttackerTower>()) addGameEvent(AudioEffect::TowerKilled, unit.getView());
 				if (unit.isComponent<ComponentHealerTower>()) addGameEvent(AudioEffect::TowerKilled, unit.getView());

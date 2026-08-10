@@ -947,6 +947,7 @@ void SceneGame::Init() {
     snd_audioeffects_buffer[AudioEffect::MonsterKilled] = loadSoundBuffer("sounds/monster_killed.ogg");
     snd_audioeffects_buffer[AudioEffect::TowerKilled] = loadSoundBuffer("sounds/tower_killed.ogg");
     snd_audioeffects_buffer[AudioEffect::CrystallKilled] = loadSoundBuffer("sounds/crystal_killed.ogg");
+    snd_audioeffects_buffer[AudioEffect::LairKilled] = loadSoundBuffer("sounds/lair_killed.ogg");
 
     spr_terrains[Terrain::Ground]=loadSprite("images/terrains/ground.png");
     spr_terrains[Terrain::Water]=loadSprite("images/terrains/water.png");
