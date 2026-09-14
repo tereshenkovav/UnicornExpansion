@@ -1,5 +1,9 @@
 # Игра "Экспансия единорогов", стратегия в реальном времени
 
+** Данная ветка содержит правки для выпуска финальной кампании **
+До слияния с main состояние ветки будет нестабильно, а код игры может быть
+несовместим со сценариями кампаний.
+
 [![YooMoney donation](https://img.shields.io/badge/Donation-Yoo.money-blue.svg)](https://yoomoney.ru/to/41001497003495)
 [![Boosty](https://img.shields.io/badge/Boosty-donate-orange.svg)](https://boosty.to/ponygames)
 [![Website](https://img.shields.io/badge/Website-tav--developer.itch.io-29a662.svg)](https://tav-developer.itch.io)

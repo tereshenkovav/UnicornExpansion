@@ -16,6 +16,8 @@
 #include "ComponentMultiselect.h"
 #include "ComponentClearFog.h"
 #include "ComponentMovable.h"
+#include "ComponentStore.h"
+#include "ComponentHouse.h"
 
 UnitFactory::UnitFactory(Game* game)
 {
@@ -124,6 +126,8 @@ int UnitFactory::addPortal(int x, int y)
     unit.addComponent(new ComponentEnemyTarget(game));
     unit.addComponent(new ComponentBuilding(game));
     unit.addComponent(new ComponentClearFog(game));
+    unit.addComponent(new ComponentStore(game, param["InitialCapacity"].asInt()));
+    unit.addComponent(new ComponentHouse(game, param["UnitSupport"].asInt()));
     game->addUnit(unit);
     return unit.getUID();
 }
@@ -152,6 +156,30 @@ int UnitFactory::addMachinary(int x, int y)
     return unit.getUID();
 }
 
+int UnitFactory::addHouse(int x, int y)
+{
+    auto param = game->getConfigUnit()["House"];
+    GameUnit unit(x, y, 1, 1, "House", param["HP"].asInt(), "house");
+    unit.addComponent(new ComponentEnemyTarget(game));
+    unit.addComponent(new ComponentBuilding(game));
+    unit.addComponent(new ComponentClearFog(game));
+    unit.addComponent(new ComponentHouse(game, param["UnitSupport"].asInt()));
+    game->addUnit(unit);
+    return unit.getUID();
+}
+
+int UnitFactory::addStore(int x, int y)
+{
+    auto param = game->getConfigUnit()["Store"];
+    GameUnit unit(x, y, 1, 1, "Store", param["HP"].asInt(), "store");
+    unit.addComponent(new ComponentEnemyTarget(game));
+    unit.addComponent(new ComponentBuilding(game));
+    unit.addComponent(new ComponentClearFog(game));
+    unit.addComponent(new ComponentStore(game, param["Capacity"].asInt()));
+    game->addUnit(unit);
+    return unit.getUID();
+}
+
 int UnitFactory::addUnicorn(int x, int y, int hp)
 {
     // Здесь нужно явно получать количество спрайтов у единорогов
@@ -164,6 +192,7 @@ int UnitFactory::addUnicorn(int x, int y, int hp)
     unit.addComponent(new ComponentMultiselect(game));
     unit.addComponent(new ComponentClearFog(game));
     unit.addComponent(new ComponentMovable(game));
+    unit.addComponent(new ComponentStore(game, param["Capacity"].asInt()));
     game->addUnit(unit);
     return unit.getUID();
 }

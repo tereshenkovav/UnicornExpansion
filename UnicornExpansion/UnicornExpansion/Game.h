@@ -151,8 +151,11 @@ public:
 	/* Этот блок функций подключен в скрипты */
 	// Работа с энергией
 	int getEnergy() const;
+	int getMaxEnergy() const;
 	bool decEnergy(int value);
 	bool incEnergy(int value);
+	// Получить информацию о магии текстовую
+	std::string getEnergyInfo() const;
 	int getTimer() const;
 	void startTimer(int value);
 	void startHiddenTimer(int value);
@@ -193,6 +196,7 @@ public:
 	std::string getUnicornCountInfo() const;
 
 	int getUnicornCount() const;
+	int getMaxUnicornCount() const;
 	// Добавить компонент для юнита
 	void addComponentToUnitByUID(int uid, UnitComponent* component);
 	// Установка щита для юнита

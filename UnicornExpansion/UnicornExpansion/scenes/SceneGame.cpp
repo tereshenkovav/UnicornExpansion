@@ -326,7 +326,7 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
     rendertarget.draw(textback);
 
     // Информация по ресурсам и танкам
-    text_resource->setString(sfge::SfmlTools::utf2text(getTexts().getStr("Text_Energy") + " " + std::to_string(game.getEnergy())));
+    text_resource->setString(sfge::SfmlTools::utf2text(getTexts().getStr("Text_Energy") + " " + game.getEnergyInfo()));
     text_resource->setPosition({ 10, 10 });
     text_resource->setFillColor(sf::Color{ 162, 231, 255 });
     rendertarget.draw(*text_resource);
