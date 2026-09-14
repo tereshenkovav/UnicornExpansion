@@ -19,5 +19,6 @@ ComponentResource.cpp
 ComponentUnicorn.cpp
 ComponentMachine.cpp
 ComponentMovable.cpp
+ComponentStore.cpp
 )
 target_include_directories(UnicornExpansion PUBLIC .)

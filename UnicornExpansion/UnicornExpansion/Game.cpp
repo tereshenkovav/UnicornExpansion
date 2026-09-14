@@ -19,6 +19,7 @@
 #include "ComponentMachine.h"
 #include "ComponentAcademy.h"
 #include "ComponentEnemyLair.h"
+#include "ComponentStore.h"
 #include "FinderByBestDistance.h"
 #include "UnitFactory.h"
 #include "SeedStore.h"
@@ -382,6 +383,14 @@ int Game::getEnergy() const
 	return (int)energy;
 }
 
+int Game::getMaxEnergy() const
+{
+	int max = 0;
+	for (int i = 0; i < units.size(); i++)
+		if (units[i].isComponent<ComponentStore>()) max += units[i].getComponent<ComponentStore>()->getCapacity();
+	return max;
+}
+
 bool Game::decEnergy(int value)
 {
 	if (getEnergy() < value) return false;
@@ -401,6 +410,11 @@ std::string Game::getUnicornCountInfo() const
 	for (int i = 0; i < units.size(); i++)
 		if (units[i].isComponent<ComponentPortal>()) max += units[i].getComponent<ComponentPortal>()->getMaxUnicornCount();
 	return std::format("{}/{}", getUnicornCount(), max);
+}
+
+std::string Game::getEnergyInfo() const
+{
+	return std::format("{}/{}", getEnergy(), getMaxEnergy());
 }
 
 int Game::getUnicornCount() const
@@ -761,6 +775,9 @@ void Game::update(float dt)
 
 	// Удаление просроченных декораций
 	std::erase_if(decors, [](const Decor& decor) { return decor.left<=0.0f; });
+
+	// Ограничение магии
+	if (energy > getMaxEnergy()) energy = getMaxEnergy();
 
 	try {
 		if (!isGameOver()) {

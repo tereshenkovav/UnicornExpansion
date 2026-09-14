@@ -2,7 +2,8 @@
   "Unicorn":
   {
     "InitialHP": 50,
-    "InitialV": 200
+    "InitialV": 200,
+    "Capacity": 100
   },
   "Machine":
   {
@@ -11,7 +12,8 @@
   },
   "Portal":
   {
-    "HP": 500
+    "HP": 500,
+    "InitialCapacity": 200
   },
   "Academy":
   {
@@ -27,7 +29,8 @@
   },
   "Store":
   {
-    "HP": 100
+    "HP": 100,
+    "Capacity":1000
   },
   "HealerTower":
   {
