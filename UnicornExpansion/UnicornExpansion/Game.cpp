@@ -20,7 +20,6 @@
 #include "ComponentAcademy.h"
 #include "ComponentEnemyLair.h"
 #include "ComponentStore.h"
-#include "ComponentHouse.h"
 #include "FinderByBestDistance.h"
 #include "UnitFactory.h"
 #include "SeedStore.h"
@@ -405,17 +404,12 @@ bool Game::incEnergy(int value)
 	return true;
 }
 
-int Game::getMaxUnicornCount() const
+std::string Game::getUnicornCountInfo() const
 {
 	int max = 0;
 	for (int i = 0; i < units.size(); i++)
-		if (units[i].isComponent<ComponentHouse>()) max += units[i].getComponent<ComponentHouse>()->getUnitSupport();
-	return max;
-}
-
-std::string Game::getUnicornCountInfo() const
-{
-	return std::format("{}/{}", getUnicornCount(), getMaxUnicornCount());
+		if (units[i].isComponent<ComponentPortal>()) max += units[i].getComponent<ComponentPortal>()->getMaxUnicornCount();
+	return std::format("{}/{}", getUnicornCount(), max);
 }
 
 std::string Game::getEnergyInfo() const

@@ -8,6 +8,7 @@ private:
 	int unicorn_hp;
 	int tek_upgrade_pos;
 	int tek_increase_pos;
+	int max_unicorn_count;
 	int max_building_count;
 	bool fastbuild;
 public:
@@ -16,5 +17,7 @@ public:
 	virtual bool applyAction(const UnitAction& action);
 	virtual bool canApplyAction(const UnitAction& action, std::string* msgcode) const;
 	virtual std::string getComponentInfo() const;
+	// —колько единорогов может быть создано на карте
+	int getMaxUnicornCount() const;
 };
 

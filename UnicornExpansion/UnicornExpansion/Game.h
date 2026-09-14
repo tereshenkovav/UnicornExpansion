@@ -196,7 +196,6 @@ public:
 	std::string getUnicornCountInfo() const;
 
 	int getUnicornCount() const;
-	int getMaxUnicornCount() const;
 	// Добавить компонент для юнита
 	void addComponentToUnitByUID(int uid, UnitComponent* component);
 	// Установка щита для юнита
