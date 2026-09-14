@@ -20,8 +20,6 @@ std::vector<UnitAction> ComponentPortal::getActions() const
 	addActionIfAllowed(&actions,"build", "BuildUnicorn",fastbuild?0.67f:1.0f);
 	addActionIfAllowed(&actions, "build_academy", "BuildAcademy");
 	addActionIfAllowed(&actions, "build_machinary", "BuildMachinary");
-	addActionIfAllowed(&actions, "build_house", "BuildHouse");
-	addActionIfAllowed(&actions, "build_store", "BuildStore");
 	addActionIfAllowed(&actions, "upgrade_hp", "UpgradeUnicornHP", tek_upgrade_pos);
 	addActionIfAllowed(&actions, "upgrade_count", "IncreaseUnicornCount", tek_increase_pos);
 	if (!fastbuild) addActionIfAllowed(&actions, "fastbuild", "ResearchFastBuild");
@@ -59,26 +57,6 @@ bool ComponentPortal::applyAction(const UnitAction& action)
 		if (pos) {
 			UnitFactory factory(game);
 			factory.addMachinary((*pos).x, (*pos).y);
-			game->addGameEvent(AudioEffect::FinishBuilding, unit.getView());
-		}
-		return true;
-	}
-	if (action.code == "build_house") {
-		const GameUnit& unit = game->getUnitByUID(unit_id);
-		auto pos = game->getFirstFreePosFor2x2Building(unit);
-		if (pos) {
-			UnitFactory factory(game);
-			factory.addHouse((*pos).x, (*pos).y);
-			game->addGameEvent(AudioEffect::FinishBuilding, unit.getView());
-		}
-		return true;
-	}
-	if (action.code == "build_store") {
-		const GameUnit& unit = game->getUnitByUID(unit_id);
-		auto pos = game->getFirstFreePosFor2x2Building(unit);
-		if (pos) {
-			UnitFactory factory(game);
-			factory.addStore((*pos).x, (*pos).y);
 			game->addGameEvent(AudioEffect::FinishBuilding, unit.getView());
 		}
 		return true;

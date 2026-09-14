@@ -21,14 +21,6 @@
         "Price": 250,
         "Time": 50
     },
-    "BuildHouse": {
-        "Price": 50,
-        "Time": 10
-    },
-    "BuildStore": {
-        "Price": 70,
-        "Time": 10
-    },
     "ResearchFastBuild": {
         "Price": 120,
         "Time": 40
