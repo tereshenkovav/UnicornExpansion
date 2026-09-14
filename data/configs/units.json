@@ -13,7 +13,8 @@
   "Portal":
   {
     "HP": 500,
-    "InitialCapacity": 200
+    "InitialCapacity": 200,
+    "UnitSupport": 1
   },
   "Academy":
   {
@@ -25,7 +26,8 @@
   },
   "House":
   {
-    "HP": 200
+    "HP": 200,
+    "UnitSupport": 3
   },
   "Store":
   {

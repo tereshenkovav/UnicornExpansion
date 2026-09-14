@@ -23,7 +23,6 @@
     "ViewDistance": 300
   },
   "Portal": {
-    "InitialUnicornCount": 3,
     "InitialBuildingCount": 2
   },
   "TowerAttacker": {

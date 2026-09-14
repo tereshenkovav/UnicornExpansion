@@ -12,4 +12,3 @@ public:
 	int getCapacity() const;
 	virtual std::string getComponentInfo() const;
 };
-

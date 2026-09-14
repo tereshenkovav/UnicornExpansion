@@ -10,7 +10,6 @@ ComponentPortal::ComponentPortal(Game* game): UnitComponent(game)
 	tek_upgrade_pos = 0;
 	tek_increase_pos = 0;
 	fastbuild = false;
-	max_unicorn_count = game->getConfigComponent()["Portal"]["InitialUnicornCount"].asInt();
 	max_building_count = game->getConfigComponent()["Portal"]["InitialBuildingCount"].asInt();
 }
 
@@ -95,7 +94,6 @@ bool ComponentPortal::applyAction(const UnitAction& action)
 		return true;
 	}
 	if (action.code == "upgrade_count") {
-		max_unicorn_count += game->getConfigAction()["IncreaseUnicornCount"]["Value"].asInt();
 		tek_increase_pos++;
 		game->addGameEvent(AudioEffect::FinishUpgrade, game->getUnitByUID(this->unit_id).getView());
 		return true;
@@ -113,7 +111,7 @@ bool ComponentPortal::canApplyAction(const UnitAction& action, std::string* msgc
 {
 	if (!UnitComponent::canApplyAction(action, msgcode)) return false;
 	if (action.code == "build")
-		if (game->getUnicornCount() >= max_unicorn_count) {
+		if (game->getUnicornCount() >= game->getMaxUnicornCount()) {
 			*msgcode = "Msg_NotEnoughControl";
 			return false;
 		}
@@ -137,9 +135,4 @@ std::string ComponentPortal::getComponentInfo() const
 		"$Info_MaxBuildingCount$: " + std::to_string(max_building_count);
 	if (fastbuild) str += "\n$Info_FastBuild$";
 	return str;
-}
-
-int ComponentPortal::getMaxUnicornCount() const
-{
-	return max_unicorn_count;
 }

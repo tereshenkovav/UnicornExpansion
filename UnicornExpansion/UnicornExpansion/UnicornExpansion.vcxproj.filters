@@ -371,6 +371,9 @@
     <ClInclude Include="components\ComponentStore.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="components\ComponentHouse.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
     <ClInclude Include="VolumeCalculator.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
