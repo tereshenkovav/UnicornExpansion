@@ -21,6 +21,14 @@
   {
     "HP": 400
   },
+  "House":
+  {
+    "HP": 200
+  },
+  "Store":
+  {
+    "HP": 100
+  },
   "HealerTower":
   {
     "HP": 70

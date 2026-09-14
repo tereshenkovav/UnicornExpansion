@@ -152,6 +152,28 @@ int UnitFactory::addMachinary(int x, int y)
     return unit.getUID();
 }
 
+int UnitFactory::addHouse(int x, int y)
+{
+    auto param = game->getConfigUnit()["House"];
+    GameUnit unit(x, y, 1, 1, "House", param["HP"].asInt(), "house");
+    unit.addComponent(new ComponentEnemyTarget(game));
+    unit.addComponent(new ComponentBuilding(game));
+    unit.addComponent(new ComponentClearFog(game));
+    game->addUnit(unit);
+    return unit.getUID();
+}
+
+int UnitFactory::addStore(int x, int y)
+{
+    auto param = game->getConfigUnit()["Store"];
+    GameUnit unit(x, y, 1, 1, "Store", param["HP"].asInt(), "store");
+    unit.addComponent(new ComponentEnemyTarget(game));
+    unit.addComponent(new ComponentBuilding(game));
+    unit.addComponent(new ComponentClearFog(game));
+    game->addUnit(unit);
+    return unit.getUID();
+}
+
 int UnitFactory::addUnicorn(int x, int y, int hp)
 {
     // Здесь нужно явно получать количество спрайтов у единорогов

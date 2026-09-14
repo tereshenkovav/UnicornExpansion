@@ -32,6 +32,18 @@ zetscript::zs_int Game_addMachinary(zetscript::ScriptEngine* _script_engine, Gam
 	return factory.addMachinary(x, y);
 }
 
+zetscript::zs_int Game_addHouse(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	UnitFactory factory(_this);
+	return factory.addHouse(x, y);
+}
+
+zetscript::zs_int Game_addStore(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	UnitFactory factory(_this);
+	return factory.addStore(x, y);
+}
+
 zetscript::zs_int Game_addEnemy1(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	UnitFactory factory(_this);
@@ -265,6 +277,8 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
 	engine.registerMemberFunction<Game>("addPortal", &Game_addPortal);
 	engine.registerMemberFunction<Game>("addAcademy", &Game_addAcademy);
 	engine.registerMemberFunction<Game>("addMachinary", &Game_addMachinary);
+	engine.registerMemberFunction<Game>("addHouse", &Game_addHouse);
+	engine.registerMemberFunction<Game>("addStore", &Game_addStore);
 	engine.registerMemberFunction<Game>("addEnemy1", &Game_addEnemy1);
 	engine.registerMemberFunction<Game>("addEnemy2", &Game_addEnemy2);
 	engine.registerMemberFunction<Game>("addEnemy3", &Game_addEnemy3);

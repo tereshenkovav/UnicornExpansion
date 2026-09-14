@@ -22,6 +22,8 @@ public:
 	int addPortal(int x, int y);
 	int addAcademy(int x, int y);
 	int addMachinary(int x, int y);
+	int addHouse(int x, int y);
+	int addStore(int x, int y);
 	int addUnicorn(int x, int y, int hp);
 	int addMachine(int x, int y);
 	int addHealerTower(int x, int y);
