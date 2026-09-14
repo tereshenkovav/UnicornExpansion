@@ -16,7 +16,6 @@
 #include "ComponentMultiselect.h"
 #include "ComponentClearFog.h"
 #include "ComponentMovable.h"
-#include "ComponentStore.h"
 
 UnitFactory::UnitFactory(Game* game)
 {
@@ -125,7 +124,6 @@ int UnitFactory::addPortal(int x, int y)
     unit.addComponent(new ComponentEnemyTarget(game));
     unit.addComponent(new ComponentBuilding(game));
     unit.addComponent(new ComponentClearFog(game));
-    unit.addComponent(new ComponentStore(game, param["InitialCapacity"].asInt()));
     game->addUnit(unit);
     return unit.getUID();
 }
@@ -172,7 +170,6 @@ int UnitFactory::addStore(int x, int y)
     unit.addComponent(new ComponentEnemyTarget(game));
     unit.addComponent(new ComponentBuilding(game));
     unit.addComponent(new ComponentClearFog(game));
-    unit.addComponent(new ComponentStore(game, param["Capacity"].asInt()));
     game->addUnit(unit);
     return unit.getUID();
 }
@@ -189,7 +186,6 @@ int UnitFactory::addUnicorn(int x, int y, int hp)
     unit.addComponent(new ComponentMultiselect(game));
     unit.addComponent(new ComponentClearFog(game));
     unit.addComponent(new ComponentMovable(game));
-    unit.addComponent(new ComponentStore(game, param["Capacity"].asInt()));
     game->addUnit(unit);
     return unit.getUID();
 }

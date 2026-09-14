@@ -64,7 +64,6 @@ Info_RichEfficient=Rich crystal,\nx2 harvest
 Info_WorkInAction=Unicorns can perform other actions\nwhile research new things
 Info_MagicEconomy=Unicorns save 20% magic\nwhen research spells
 Info_FastBuild=Teleportation unicorns 33% faster
-Info_StoreCapacity=Magic capacity
 Msg_Win=You win!
 Msg_Fail=You fail!
 Text_Timer=Time:

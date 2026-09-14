@@ -151,11 +151,8 @@ public:
 	/* Этот блок функций подключен в скрипты */
 	// Работа с энергией
 	int getEnergy() const;
-	int getMaxEnergy() const;
 	bool decEnergy(int value);
 	bool incEnergy(int value);
-	// Получить информацию о магии текстовую
-	std::string getEnergyInfo() const;
 	int getTimer() const;
 	void startTimer(int value);
 	void startHiddenTimer(int value);

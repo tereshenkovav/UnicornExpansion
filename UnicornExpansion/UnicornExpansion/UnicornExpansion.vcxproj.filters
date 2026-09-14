@@ -210,9 +210,6 @@
     <ClCompile Include="components\ComponentMovable.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="components\ComponentStore.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="VolumeCalculator.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -366,9 +363,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="components\ComponentMovable.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="components\ComponentStore.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="VolumeCalculator.h">

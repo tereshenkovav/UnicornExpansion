@@ -64,7 +64,6 @@ Info_RichEfficient=Богатое месторождение,\nx2 к добыч�
 Info_WorkInAction=Единороги могут совершать другие\nдействия в процессе\nизучения новых
 Info_MagicEconomy=Единороги экономят 20% магии\nпри изучении заклинаний
 Info_FastBuild=Призыв единорогов на 33% быстрее
-Info_StoreCapacity=Вместимость магии
 Msg_Win=Вы победили!
 Msg_Fail=Вы проиграли!
 Text_Timer=Время:
