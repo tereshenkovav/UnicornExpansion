@@ -86,6 +86,7 @@ public:
 	bool isWorkingTask(float* progress, std::string * actioncode) const;
 	bool isWorkingTask(float* progress) const;
 	bool isWorkingTask() const;
+	bool isCanActed(bool allowworkinaction, bool allowworkinmoving) const;
 	// Установка цели и сброс её
 	void setTarget(int x, int y) ;
 	void setSecondaryTarget(int x, int y);

@@ -27,6 +27,10 @@
         "Price": 200,
         "Time": 50
     },
+    "ResearchWorkInMoving": {
+        "Price": 150,
+        "Time": 40
+    },
     "ResearchMagicEconomy": {
         "Price": 250,
         "Time": 70

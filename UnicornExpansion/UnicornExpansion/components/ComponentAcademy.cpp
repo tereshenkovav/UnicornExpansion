@@ -4,6 +4,7 @@
 ComponentAcademy::ComponentAcademy(Game* game): UnitComponent(game)
 {
 	work_in_action = false;
+	work_in_moving = false;
     magic_economy = false;
 }
 
@@ -11,6 +12,7 @@ std::vector<UnitAction> ComponentAcademy::getActions() const
 {
 	std::vector<UnitAction> actions;
 	if (!work_in_action) addActionIfAllowed(&actions, "research_workinaction", "ResearchWorkInAction");
+	if (!work_in_moving) addActionIfAllowed(&actions, "research_workinmoving", "ResearchWorkInMoving");
 	if (!magic_economy) addActionIfAllowed(&actions, "research_magiceconomy", "ResearchMagicEconomy");
 	return actions;
 }
@@ -19,6 +21,11 @@ bool ComponentAcademy::applyAction(const UnitAction& action)
 {
 	if (action.code == "research_workinaction") {
 		work_in_action = true ;
+		game->addGameEvent(AudioEffect::FinishResearch, game->getUnitByUID(this->unit_id).getView());
+		return true;
+	}
+	if (action.code == "research_workinmoving") {
+		work_in_moving = true;
 		game->addGameEvent(AudioEffect::FinishResearch, game->getUnitByUID(this->unit_id).getView());
 		return true;
 	}
@@ -34,6 +41,7 @@ std::string ComponentAcademy::getComponentInfo() const
 {
 	std::string str = "";
 	if (work_in_action) str+="$Info_WorkInAction$\n" ;
+	if (work_in_moving) str += "$Info_WorkInMoving$\n";
 	if (magic_economy) str+="$Info_MagicEconomy$\n" ;
 	return str ;
 }
@@ -41,6 +49,11 @@ std::string ComponentAcademy::getComponentInfo() const
 bool ComponentAcademy::allowWorkWhileAction() const
 {
 	return work_in_action;
+}
+
+bool ComponentAcademy::allowWorkWhileMoving() const
+{
+	return work_in_moving;
 }
 
 bool ComponentAcademy::isMagicEconomy() const

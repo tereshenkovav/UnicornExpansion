@@ -19,6 +19,7 @@ function initMap() {
   game.allowAction("MakeTowerHarvest") ;
   game.allowAction("BuildUnicorn") ;
   game.allowAction("ResearchWorkInAction") ;
+  game.allowAction("ResearchWorkInMoving") ;
   game.allowAction("ResearchMagicEconomy") ;
   game.allowAction("ConstructMachine") ;
   game.allowAction("UpgradePortal") ;

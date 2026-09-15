@@ -392,6 +392,11 @@ bool GameUnit::isWorkingTask() const
 	return (worktek >= 0);
 }
 
+bool GameUnit::isCanActed(bool allowworkinaction, bool allowworkinmoving) const
+{
+	return ((!isWorkingTask()) || allowworkinaction) && ((!isTargeted()) || allowworkinmoving);
+}
+
 GameUnit::~GameUnit()
 {
 }

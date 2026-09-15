@@ -601,12 +601,14 @@ void Game::update(float dt)
 	for (int i = 0; i < history.size(); i++)
 		if (history[i].duration > 0) history[i].duration -= dt;
 
-	// Поиск изучения в академии
+	// Поиск академии
 	bool allowworkinaction = false;
+	bool allowworkinmoving = false;
 	magiceconomy = false;
 	for (int i = 0; i < units.size(); i++)
 		if (const auto* academy = units[i].getComponent<ComponentAcademy>()) {
 			if (academy->allowWorkWhileAction()) allowworkinaction = true;
+			if (academy->allowWorkWhileMoving()) allowworkinmoving = true;
 			if (academy->isMagicEconomy()) magiceconomy = true;
 		}
 
@@ -630,7 +632,7 @@ void Game::update(float dt)
 		else
 			laserfix = { -10, -30 };
 		if (const auto* harvester = units[i].getComponent<ComponentHarvester>()) {
-			if (((!units[i].isWorkingTask()) || allowworkinaction) && (!units[i].isTargeted())) {
+			if (units[i].isCanActed(allowworkinaction,allowworkinmoving)) {
 				FinderByBestDistance finder(harvester->getHarvestDistance(), units[i].getView());
 				for (int j = 0; j < units.size(); j++)
 					if (units[j].isComponent<ComponentResource>())
@@ -644,7 +646,7 @@ void Game::update(float dt)
 			}
 		}
 		if (auto* healer = units[i].getComponent<ComponentHealer>()) {
-			if (((!units[i].isWorkingTask()) || allowworkinaction) && (!units[i].isTargeted())) {
+			if (units[i].isCanActed(allowworkinaction, allowworkinmoving)) {
 				FinderByBestDistance finder(healer->getHealerDistance(), units[i].getView());
 				for (int j = 0; j < units.size(); j++)
 					if (units[j].isComponent<ComponentUnicorn>())
@@ -668,7 +670,7 @@ void Game::update(float dt)
 			}
 		}
 		if (const auto* attacker = units[i].getComponent<ComponentAttacker>()) {
-			if (((!units[i].isWorkingTask()) || allowworkinaction) && (!units[i].isTargeted())) {
+			if (units[i].isCanActed(allowworkinaction, allowworkinmoving)) {
 				FinderByBestDistance finder(attacker->getAttackDistance(), units[i].getView());
 				// Сначала ищем врагов, которые могут атаковать танк в ответ
 				for (int j = 0; j < units.size(); j++)
@@ -693,7 +695,7 @@ void Game::update(float dt)
 			}
 		}
 		if (const auto* detoxer = units[i].getComponent<ComponentDetoxer>()) {
-			if (((!units[i].isWorkingTask()) || allowworkinaction) && (!units[i].isTargeted())) {
+			if (units[i].isCanActed(allowworkinaction, allowworkinmoving)) {
 				FinderByBestDistance finder(detoxer->getDetoxDistance(), units[i].getView());
 				// Ищем грибные зоны
 				for (int x = 0; x < width; x++)
