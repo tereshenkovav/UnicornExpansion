@@ -3,6 +3,7 @@
 #include "ComponentBuilding.h"
 #include "ComponentMachinary.h"
 #include "ComponentAcademy.h"
+#include "ComponentProtectable.h"
 
 ComponentPortal::ComponentPortal(Game* game): UnitComponent(game)
 {
@@ -88,7 +89,7 @@ bool ComponentPortal::applyAction(const UnitAction& action)
 	}
 	if (action.code == "base_shield") {
 		for (int i=0; i<game->getUnitCount(); i++)
-			if (game->getUnit(i).isComponent<ComponentBuilding>())
+			if (game->getUnit(i).isComponent<ComponentProtectable>())
 				game->setShieldToUnit(game->getUnit(i).getUID(), game->getConfigAction()["SetupBaseShield"]["Amount"].asInt());
 		return true;
 	}
@@ -114,6 +115,12 @@ bool ComponentPortal::canApplyAction(const UnitAction& action, std::string* msgc
 			*msgcode = "Msg_OnlyOneAcademyAllowed";
 			return false;
 		}
+	if (action.code == "base_shield")
+		if (tek_level < 1) {
+			*msgcode = "Msg_NeedSecondLevelForBaseShield";
+			return false;
+		}
+
 	return true;
 }
 
