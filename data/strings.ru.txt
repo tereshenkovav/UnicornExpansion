@@ -63,6 +63,7 @@ Info_WorkInAction=Единороги могут совершать другие\
 Info_MagicEconomy=Единороги экономят 20% магии\nпри изучении заклинаний
 Info_StoreCapacity=Вместимость магии
 Info_UnitSupport=Поддержка единорогов
+Info_TeleportSpeedUp=Ускорение телепортации
 Msg_Win=Вы победили!
 Msg_Fail=Вы проиграли!
 Text_Timer=Время:

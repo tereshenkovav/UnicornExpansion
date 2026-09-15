@@ -7,17 +7,19 @@
 ComponentPortal::ComponentPortal(Game* game): UnitComponent(game)
 {
 	tek_level = 0;
+	teleport_speed_up = 0;
 	max_building_count = game->getConfigComponent()["Portal"]["InitialBuildingCount"].asInt();
 }
 
 std::vector<UnitAction> ComponentPortal::getActions() const
 {
+	float k = 1.0f - ((float)teleport_speed_up) / 100.f;
 	std::vector<UnitAction> actions;
-	addActionIfAllowed(&actions,"build", "BuildUnicorn",1.0f);
-	addActionIfAllowed(&actions, "build_academy", "BuildAcademy");
-	addActionIfAllowed(&actions, "build_machinary", "BuildMachinary");
-	addActionIfAllowed(&actions, "build_house", "BuildHouse");
-	addActionIfAllowed(&actions, "build_store", "BuildStore");
+	addActionIfAllowed(&actions,"build", "BuildUnicorn", k);
+	addActionIfAllowed(&actions, "build_academy", "BuildAcademy", k);
+	addActionIfAllowed(&actions, "build_machinary", "BuildMachinary", k);
+	addActionIfAllowed(&actions, "build_house", "BuildHouse", k);
+	addActionIfAllowed(&actions, "build_store", "BuildStore", k);
 	addActionIfAllowed(&actions, "upgrade_portal", "UpgradePortal", tek_level);
 	addActionIfAllowed(&actions, "base_shield", "SetupBaseShield");
 	return actions;
@@ -80,6 +82,7 @@ bool ComponentPortal::applyAction(const UnitAction& action)
 	if (action.code == "upgrade_portal") {
 		tek_level++;
 		max_building_count += game->getConfigComponent()["Portal"]["IncBuildingCount"].asInt();
+		teleport_speed_up += game->getConfigComponent()["Portal"]["SpeedUpTeleport"].asInt();
 		game->addGameEvent(AudioEffect::FinishUpgrade, game->getUnitByUID(this->unit_id).getView());
 		return true;
 	}
@@ -116,7 +119,8 @@ bool ComponentPortal::canApplyAction(const UnitAction& action, std::string* msgc
 
 std::string ComponentPortal::getComponentInfo() const
 {
-	std::string str = "$Info_PortalLevel$: " + std::to_string(tek_level+1)+"\n"+
-	"$Info_MaxBuildingCount$: " + std::to_string(max_building_count);
+	std::string str = "$Info_PortalLevel$: " + std::to_string(tek_level + 1) + "\n" +
+		"$Info_MaxBuildingCount$: " + std::to_string(max_building_count);
+	if (teleport_speed_up>0) str+= "\n$Info_TeleportSpeedUp$: " + std::to_string(teleport_speed_up)+"%";
 	return str;
 }
