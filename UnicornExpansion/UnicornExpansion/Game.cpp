@@ -605,11 +605,13 @@ void Game::update(float dt)
 	bool allowworkinaction = false;
 	bool allowworkinmoving = false;
 	magiceconomy = false;
+	float distk = 1.0f;
 	for (int i = 0; i < units.size(); i++)
 		if (const auto* academy = units[i].getComponent<ComponentAcademy>()) {
 			if (academy->allowWorkWhileAction()) allowworkinaction = true;
 			if (academy->allowWorkWhileMoving()) allowworkinmoving = true;
 			if (academy->isMagicEconomy()) magiceconomy = true;
+			if (academy->isLongDist()) distk = 1.5f;
 		}
 
 	// Временная поправка для позиции лазера
@@ -633,7 +635,7 @@ void Game::update(float dt)
 			laserfix = { -10, -30 };
 		if (const auto* harvester = units[i].getComponent<ComponentHarvester>()) {
 			if (units[i].isCanActed(allowworkinaction,allowworkinmoving)) {
-				FinderByBestDistance finder(harvester->getHarvestDistance(), units[i].getView());
+				FinderByBestDistance finder(harvester->getHarvestDistance() * distk, units[i].getView());
 				for (int j = 0; j < units.size(); j++)
 					if (units[j].isComponent<ComponentResource>())
 						finder.addPos(units[j].getView(), j);
@@ -647,7 +649,7 @@ void Game::update(float dt)
 		}
 		if (auto* healer = units[i].getComponent<ComponentHealer>()) {
 			if (units[i].isCanActed(allowworkinaction, allowworkinmoving)) {
-				FinderByBestDistance finder(healer->getHealerDistance(), units[i].getView());
+				FinderByBestDistance finder(healer->getHealerDistance() * distk, units[i].getView());
 				for (int j = 0; j < units.size(); j++)
 					if (units[j].isComponent<ComponentUnicorn>())
 						if (units[j].getHealthPerMax()<1.0) // Если юнит поврежден
@@ -671,7 +673,7 @@ void Game::update(float dt)
 		}
 		if (const auto* attacker = units[i].getComponent<ComponentAttacker>()) {
 			if (units[i].isCanActed(allowworkinaction, allowworkinmoving)) {
-				FinderByBestDistance finder(attacker->getAttackDistance(), units[i].getView());
+				FinderByBestDistance finder(attacker->getAttackDistance() * distk, units[i].getView());
 				// Сначала ищем врагов, которые могут атаковать танк в ответ
 				for (int j = 0; j < units.size(); j++)
 					if (units[j].isComponent<ComponentMeleeEnemy>())
@@ -696,7 +698,7 @@ void Game::update(float dt)
 		}
 		if (const auto* detoxer = units[i].getComponent<ComponentDetoxer>()) {
 			if (units[i].isCanActed(allowworkinaction, allowworkinmoving)) {
-				FinderByBestDistance finder(detoxer->getDetoxDistance(), units[i].getView());
+				FinderByBestDistance finder(detoxer->getDetoxDistance() * distk, units[i].getView());
 				// Ищем грибные зоны
 				for (int x = 0; x < width; x++)
 					for (int y = 0; y < height; y++)

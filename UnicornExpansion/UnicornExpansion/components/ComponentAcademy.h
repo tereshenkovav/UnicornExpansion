@@ -7,6 +7,7 @@ private:
 	bool work_in_action;
 	bool work_in_moving;
     bool magic_economy;
+	bool long_dist;
 public:
 	ComponentAcademy(Game* game);
 	virtual std::vector<UnitAction> getActions() const;
@@ -15,5 +16,6 @@ public:
 	bool allowWorkWhileAction() const;
 	bool allowWorkWhileMoving() const;
 	bool isMagicEconomy() const;
+	bool isLongDist() const;
 };
 

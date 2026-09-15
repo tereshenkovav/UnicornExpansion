@@ -35,6 +35,10 @@
         "Price": 250,
         "Time": 70
     },
+    "ResearchLongDist": {
+        "Price": 100,
+        "Time": 10
+    },
     "ConstructMachine": {
         "Price": 70,
         "Time": 60

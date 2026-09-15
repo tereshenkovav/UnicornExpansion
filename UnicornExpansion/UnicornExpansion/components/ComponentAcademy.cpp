@@ -6,6 +6,7 @@ ComponentAcademy::ComponentAcademy(Game* game): UnitComponent(game)
 	work_in_action = false;
 	work_in_moving = false;
     magic_economy = false;
+	long_dist = false;
 }
 
 std::vector<UnitAction> ComponentAcademy::getActions() const
@@ -14,6 +15,7 @@ std::vector<UnitAction> ComponentAcademy::getActions() const
 	if (!work_in_action) addActionIfAllowed(&actions, "research_workinaction", "ResearchWorkInAction");
 	if (!work_in_moving) addActionIfAllowed(&actions, "research_workinmoving", "ResearchWorkInMoving");
 	if (!magic_economy) addActionIfAllowed(&actions, "research_magiceconomy", "ResearchMagicEconomy");
+	if (!long_dist) addActionIfAllowed(&actions, "research_longdist", "ResearchLongDist");
 	return actions;
 }
 
@@ -34,6 +36,11 @@ bool ComponentAcademy::applyAction(const UnitAction& action)
 		game->addGameEvent(AudioEffect::FinishResearch, game->getUnitByUID(this->unit_id).getView());
 		return true;
 	}
+	if (action.code == "research_longdist") {
+		long_dist = true;
+		game->addGameEvent(AudioEffect::FinishResearch, game->getUnitByUID(this->unit_id).getView());
+		return true;
+	}
 	return false;
 }
 
@@ -43,6 +50,7 @@ std::string ComponentAcademy::getComponentInfo() const
 	if (work_in_action) str+="$Info_WorkInAction$\n" ;
 	if (work_in_moving) str += "$Info_WorkInMoving$\n";
 	if (magic_economy) str+="$Info_MagicEconomy$\n" ;
+	if (long_dist) str += "$Info_LongDist$\n";
 	return str ;
 }
 
@@ -59,4 +67,9 @@ bool ComponentAcademy::allowWorkWhileMoving() const
 bool ComponentAcademy::isMagicEconomy() const
 {
 	return magic_economy;
+}
+
+bool ComponentAcademy::isLongDist() const
+{
+	return long_dist;
 }
