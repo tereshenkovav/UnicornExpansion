@@ -4,6 +4,8 @@
 #include "ComponentMachinary.h"
 #include "ComponentAcademy.h"
 #include "ComponentProtectable.h"
+#include "ComponentHealer.h"
+#include "ComponentAttacker.h"
 
 bool ComponentPortal::isAutoShield() const
 {
@@ -90,6 +92,10 @@ bool ComponentPortal::applyAction(const UnitAction& action)
 		tek_level++;
 		max_building_count += game->getConfigComponent()["Portal"]["IncBuildingCount"].asInt();
 		teleport_speed_up += game->getConfigComponent()["Portal"]["SpeedUpTeleport"].asInt();
+		if (tek_level == 3) {
+			game->addComponentToUnitByUID(unit_id, new ComponentHealerTower(game));
+			game->addComponentToUnitByUID(unit_id, new ComponentAttackerTower(game));
+		}
 		game->incUnitMaxHealth(unit_id, game->getConfigComponent()["Portal"]["IncHP"].asInt());
 		game->addGameEvent(AudioEffect::FinishUpgrade, game->getUnitByUID(this->unit_id).getView());
 		return true;
