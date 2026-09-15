@@ -101,7 +101,7 @@ zetscript::zs_int Game_addEmptyUnit(zetscript::ScriptEngine* _script_engine, Gam
 zetscript::zs_int Game_addUnicorn(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	UnitFactory factory(_this);
-	return factory.addUnicorn(x, y, _this->getConfigUnit()["Unicorn"]["InitialHP"].asInt());
+	return factory.addUnicorn(x, y);
 }
 
 zetscript::zs_int Game_addMachine(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {

@@ -5,7 +5,6 @@
 class ComponentPortal: public UnitComponent
 {
 private:
-	int unicorn_hp;
 	int tek_upgrade_pos;
 	int tek_increase_pos;
 	int max_building_count;

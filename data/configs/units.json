@@ -1,8 +1,8 @@
 {
   "Unicorn":
   {
-    "InitialHP": 50,
-    "InitialV": 200,
+    "HP": 50,
+    "V": 200,
     "Capacity": 100
   },
   "Machine":

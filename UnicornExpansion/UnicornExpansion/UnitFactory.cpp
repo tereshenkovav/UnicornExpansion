@@ -180,13 +180,13 @@ int UnitFactory::addStore(int x, int y)
     return unit.getUID();
 }
 
-int UnitFactory::addUnicorn(int x, int y, int hp)
+int UnitFactory::addUnicorn(int x, int y)
 {
     // Здесь нужно явно получать количество спрайтов у единорогов
     std::string code = std::format("unicorn{:02}", rand() % 30);
     auto param = game->getConfigUnit()["Unicorn"];
-    GameUnit unit(x, y, 1, 1, "Unicorn", hp, code);
-    unit.setVelocity(param["InitialV"].asInt());
+    GameUnit unit(x, y, 1, 1, "Unicorn", param["HP"].asInt(), code);
+    unit.setVelocity(param["V"].asInt());
     unit.addComponent(new ComponentUnicorn(game));
     unit.addComponent(new ComponentEnemyTarget(game));
     unit.addComponent(new ComponentMultiselect(game));

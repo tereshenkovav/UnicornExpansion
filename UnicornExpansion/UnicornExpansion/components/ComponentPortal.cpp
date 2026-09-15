@@ -6,7 +6,6 @@
 
 ComponentPortal::ComponentPortal(Game* game): UnitComponent(game)
 {
-	unicorn_hp = game->getConfigUnit()["Unicorn"]["InitialHP"].asInt();
 	tek_upgrade_pos = 0;
 	tek_increase_pos = 0;
 	fastbuild = false;
@@ -21,7 +20,6 @@ std::vector<UnitAction> ComponentPortal::getActions() const
 	addActionIfAllowed(&actions, "build_machinary", "BuildMachinary");
 	addActionIfAllowed(&actions, "build_house", "BuildHouse");
 	addActionIfAllowed(&actions, "build_store", "BuildStore");
-	addActionIfAllowed(&actions, "upgrade_hp", "UpgradeUnicornHP", tek_upgrade_pos);
 	addActionIfAllowed(&actions, "upgrade_count", "IncreaseUnicornCount", tek_increase_pos);
 	if (!fastbuild) addActionIfAllowed(&actions, "fastbuild", "ResearchFastBuild");
 	addActionIfAllowed(&actions, "base_shield", "SetupBaseShield");
@@ -35,7 +33,7 @@ bool ComponentPortal::applyAction(const UnitAction& action)
 		auto pos = game->getFirstFreePosNear(unit);
 		if (pos) {
 			UnitFactory factory(game);
-			factory.addUnicorn((*pos).x, (*pos).y, unicorn_hp);
+			factory.addUnicorn((*pos).x, (*pos).y);
 			game->addTeleportationEffect((*pos).x * BLOCKW + BLOCKW / 2, (*pos).y * BLOCKH + BLOCKH / 2);
 			game->addGameEvent(AudioEffect::Teleport, unit.getView());
 			game->addGameEvent(AudioEffect::FinishTeleport, unit.getView());
@@ -87,12 +85,6 @@ bool ComponentPortal::applyAction(const UnitAction& action)
 		game->addGameEvent(AudioEffect::FinishResearch, game->getUnitByUID(this->unit_id).getView());
 		return true;
 	}
-	if (action.code == "upgrade_hp") {
-		unicorn_hp += game->getConfigAction()["UpgradeUnicornHP"]["Value"].asInt();
-		tek_upgrade_pos++;
-		game->addGameEvent(AudioEffect::FinishUpgrade, game->getUnitByUID(this->unit_id).getView());
-		return true;
-	}
 	if (action.code == "upgrade_count") {
 		tek_increase_pos++;
 		game->addGameEvent(AudioEffect::FinishUpgrade, game->getUnitByUID(this->unit_id).getView());
@@ -131,8 +123,7 @@ bool ComponentPortal::canApplyAction(const UnitAction& action, std::string* msgc
 
 std::string ComponentPortal::getComponentInfo() const
 {
-	std::string str = "$Info_HPNewUnicorn$: "+std::to_string(unicorn_hp)+"\n"+
-		"$Info_MaxBuildingCount$: " + std::to_string(max_building_count);
+	std::string str = "$Info_MaxBuildingCount$: " + std::to_string(max_building_count);
 	if (fastbuild) str += "\n$Info_FastBuild$";
 	return str;
 }
