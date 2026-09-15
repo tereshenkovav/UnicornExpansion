@@ -12,7 +12,6 @@ Action_BuildAcademy=Build a unicorn academy
 Action_BuildMachinary=Build a unicorn workshop
 Action_BuildHouse=Build a house
 Action_BuildStore=Build a magic store
-Action_ResearchFastBuild=Speedup unicorn teleportation
 Action_IncreaseUnicornCount=Upgrade allowed unicorn count
 Action_ResearchWorkInAction=Allows unicorns to perform other actions\nwhile research new things
 Action_ResearchMagicEconomy=Research economy of magic for unicorns

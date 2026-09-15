@@ -8,20 +8,18 @@ ComponentPortal::ComponentPortal(Game* game): UnitComponent(game)
 {
 	tek_upgrade_pos = 0;
 	tek_increase_pos = 0;
-	fastbuild = false;
 	max_building_count = game->getConfigComponent()["Portal"]["InitialBuildingCount"].asInt();
 }
 
 std::vector<UnitAction> ComponentPortal::getActions() const
 {
 	std::vector<UnitAction> actions;
-	addActionIfAllowed(&actions,"build", "BuildUnicorn",fastbuild?0.67f:1.0f);
+	addActionIfAllowed(&actions,"build", "BuildUnicorn",1.0f);
 	addActionIfAllowed(&actions, "build_academy", "BuildAcademy");
 	addActionIfAllowed(&actions, "build_machinary", "BuildMachinary");
 	addActionIfAllowed(&actions, "build_house", "BuildHouse");
 	addActionIfAllowed(&actions, "build_store", "BuildStore");
 	addActionIfAllowed(&actions, "upgrade_count", "IncreaseUnicornCount", tek_increase_pos);
-	if (!fastbuild) addActionIfAllowed(&actions, "fastbuild", "ResearchFastBuild");
 	addActionIfAllowed(&actions, "base_shield", "SetupBaseShield");
 	return actions;
 }
@@ -80,11 +78,6 @@ bool ComponentPortal::applyAction(const UnitAction& action)
 		}
 		return true;
 	}
-	if (action.code == "fastbuild") {
-		fastbuild = true;
-		game->addGameEvent(AudioEffect::FinishResearch, game->getUnitByUID(this->unit_id).getView());
-		return true;
-	}
 	if (action.code == "upgrade_count") {
 		tek_increase_pos++;
 		game->addGameEvent(AudioEffect::FinishUpgrade, game->getUnitByUID(this->unit_id).getView());
@@ -124,6 +117,5 @@ bool ComponentPortal::canApplyAction(const UnitAction& action, std::string* msgc
 std::string ComponentPortal::getComponentInfo() const
 {
 	std::string str = "$Info_MaxBuildingCount$: " + std::to_string(max_building_count);
-	if (fastbuild) str += "\n$Info_FastBuild$";
 	return str;
 }

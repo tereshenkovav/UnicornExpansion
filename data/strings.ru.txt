@@ -12,7 +12,6 @@ Action_BuildAcademy=Установить академию единорогов
 Action_BuildMachinary=Установить мастерскую единорогов
 Action_BuildHouse=Установить дом
 Action_BuildStore=Установить накопитель магии
-Action_ResearchFastBuild=Ускорить телепортацию единорогов
 Action_IncreaseUnicornCount=Увеличить число единорогов
 Action_ResearchWorkInAction=Позволит единорогу совершать другие действия\nв процессе изучения новых
 Action_ResearchMagicEconomy=Исследовать экономию магии для единорогов

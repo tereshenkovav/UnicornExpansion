@@ -24,10 +24,6 @@
         "Price": 70,
         "Time": 10
     },
-    "ResearchFastBuild": {
-        "Price": 120,
-        "Time": 40
-    },
     "ResearchWorkInAction": {
         "Price": 200,
         "Time": 50
