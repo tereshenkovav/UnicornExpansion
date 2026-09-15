@@ -65,6 +65,7 @@ Info_MagicEconomy=Единороги экономят 20% магии\nпри и�
 Info_StoreCapacity=Вместимость магии
 Info_UnitSupport=Поддержка единорогов
 Info_TeleportSpeedUp=Ускорение телепортации
+Info_AutoShield=Автоматический щит новым единорогам
 Msg_Win=Вы победили!
 Msg_Fail=Вы проиграли!
 Text_Timer=Время:

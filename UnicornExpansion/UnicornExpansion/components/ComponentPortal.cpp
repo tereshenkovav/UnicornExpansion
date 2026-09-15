@@ -5,6 +5,11 @@
 #include "ComponentAcademy.h"
 #include "ComponentProtectable.h"
 
+bool ComponentPortal::isAutoShield() const
+{
+	return tek_level>=2;
+}
+
 ComponentPortal::ComponentPortal(Game* game): UnitComponent(game)
 {
 	tek_level = 0;
@@ -33,7 +38,8 @@ bool ComponentPortal::applyAction(const UnitAction& action)
 		auto pos = game->getFirstFreePosNear(unit);
 		if (pos) {
 			UnitFactory factory(game);
-			factory.addUnicorn((*pos).x, (*pos).y);
+			int uid = factory.addUnicorn((*pos).x, (*pos).y);
+			if (isAutoShield()) game->setShieldToUnit(uid, game->getConfigComponent()["Portal"]["AutoShield"].asInt());
 			game->addTeleportationEffect((*pos).x * BLOCKW + BLOCKW / 2, (*pos).y * BLOCKH + BLOCKH / 2);
 			game->addGameEvent(AudioEffect::Teleport, unit.getView());
 			game->addGameEvent(AudioEffect::FinishTeleport, unit.getView());
@@ -130,5 +136,6 @@ std::string ComponentPortal::getComponentInfo() const
 	std::string str = "$Info_PortalLevel$: " + std::to_string(tek_level + 1) + "\n" +
 		"$Info_MaxBuildingCount$: " + std::to_string(max_building_count);
 	if (teleport_speed_up>0) str+= "\n$Info_TeleportSpeedUp$: " + std::to_string(teleport_speed_up)+"%";
+	if (isAutoShield()) str += "\n$Info_AutoShield$";
 	return str;
 }

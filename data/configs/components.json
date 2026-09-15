@@ -26,7 +26,8 @@
     "InitialBuildingCount": 3,
     "IncBuildingCount": 2,
     "IncHP": 200,
-    "SpeedUpTeleport": 25
+    "SpeedUpTeleport": 25,
+    "AutoShield": 40
   },
   "TowerAttacker": {
      "Value": 12,

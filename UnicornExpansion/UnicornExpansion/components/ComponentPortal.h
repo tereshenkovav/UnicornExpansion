@@ -8,6 +8,7 @@ private:
 	int tek_level;
 	int max_building_count;
 	int teleport_speed_up;
+	bool isAutoShield() const;
 public:
 	ComponentPortal(Game* game);
 	virtual std::vector<UnitAction> getActions() const;
