@@ -213,6 +213,9 @@
     <ClCompile Include="components\ComponentStore.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="components\ComponentProtectable.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
     <ClCompile Include="VolumeCalculator.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -372,6 +375,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="components\ComponentHouse.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="components\ComponentProtectable.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="VolumeCalculator.h">

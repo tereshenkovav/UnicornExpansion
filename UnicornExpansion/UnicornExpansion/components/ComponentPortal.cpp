@@ -6,8 +6,7 @@
 
 ComponentPortal::ComponentPortal(Game* game): UnitComponent(game)
 {
-	tek_upgrade_pos = 0;
-	tek_increase_pos = 0;
+	tek_level = 0;
 	max_building_count = game->getConfigComponent()["Portal"]["InitialBuildingCount"].asInt();
 }
 
@@ -19,7 +18,7 @@ std::vector<UnitAction> ComponentPortal::getActions() const
 	addActionIfAllowed(&actions, "build_machinary", "BuildMachinary");
 	addActionIfAllowed(&actions, "build_house", "BuildHouse");
 	addActionIfAllowed(&actions, "build_store", "BuildStore");
-	addActionIfAllowed(&actions, "upgrade_count", "IncreaseUnicornCount", tek_increase_pos);
+	addActionIfAllowed(&actions, "upgrade_portal", "UpgradePortal", tek_level);
 	addActionIfAllowed(&actions, "base_shield", "SetupBaseShield");
 	return actions;
 }
@@ -78,8 +77,9 @@ bool ComponentPortal::applyAction(const UnitAction& action)
 		}
 		return true;
 	}
-	if (action.code == "upgrade_count") {
-		tek_increase_pos++;
+	if (action.code == "upgrade_portal") {
+		tek_level++;
+		max_building_count += game->getConfigComponent()["Portal"]["IncBuildingCount"].asInt();
 		game->addGameEvent(AudioEffect::FinishUpgrade, game->getUnitByUID(this->unit_id).getView());
 		return true;
 	}
@@ -100,9 +100,9 @@ bool ComponentPortal::canApplyAction(const UnitAction& action, std::string* msgc
 			*msgcode = "Msg_NotEnoughControl";
 			return false;
 		}
-	if ((action.code == "build_academy")||(action.code == "build_machinary"))
-		if (game->getCountUnitWithComponent<ComponentAcademy>() +
-			game->getCountUnitWithComponent<ComponentMachinary>()>=max_building_count) {
+	if ((action.code == "build_academy")||(action.code == "build_machinary")||
+		(action.code == "build_house")|| (action.code == "build_store"))
+		if (game->getCountUnitWithComponent<ComponentBuilding>() >=max_building_count) {
 			*msgcode = "Msg_TooManyBuildings";
 			return false;
 		}
@@ -116,6 +116,7 @@ bool ComponentPortal::canApplyAction(const UnitAction& action, std::string* msgc
 
 std::string ComponentPortal::getComponentInfo() const
 {
-	std::string str = "$Info_MaxBuildingCount$: " + std::to_string(max_building_count);
+	std::string str = "$Info_PortalLevel$: " + std::to_string(tek_level+1)+"\n"+
+	"$Info_MaxBuildingCount$: " + std::to_string(max_building_count);
 	return str;
 }

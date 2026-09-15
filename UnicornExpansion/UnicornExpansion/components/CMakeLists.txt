@@ -21,5 +21,6 @@ ComponentMachine.cpp
 ComponentMovable.cpp
 ComponentStore.cpp
 ComponentHouse.cpp
+ComponentProtectable.cpp
 )
 target_include_directories(UnicornExpansion PUBLIC .)

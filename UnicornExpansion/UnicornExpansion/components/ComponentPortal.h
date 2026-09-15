@@ -5,8 +5,7 @@
 class ComponentPortal: public UnitComponent
 {
 private:
-	int tek_upgrade_pos;
-	int tek_increase_pos;
+	int tek_level;
 	int max_building_count;
 public:
 	ComponentPortal(Game* game);
