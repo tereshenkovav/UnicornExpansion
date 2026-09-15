@@ -971,3 +971,12 @@ int Game::getUnitHealth(int uid) const
 {
 	return getUnitByUID(uid).get1Health();
 }
+
+void Game::incUnitMaxHealth(int uid, int value)
+{
+	for (int i = 0; i < units.size(); i++)
+		if (units[i].getUID() == uid) {
+			units[i].incMaxHealth(value);
+			return;
+		}
+}

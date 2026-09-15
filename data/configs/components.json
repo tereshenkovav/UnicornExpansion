@@ -25,6 +25,7 @@
   "Portal": {
     "InitialBuildingCount": 3,
     "IncBuildingCount": 2,
+    "IncHP": 200,
     "SpeedUpTeleport": 25
   },
   "TowerAttacker": {

@@ -84,6 +84,7 @@ bool ComponentPortal::applyAction(const UnitAction& action)
 		tek_level++;
 		max_building_count += game->getConfigComponent()["Portal"]["IncBuildingCount"].asInt();
 		teleport_speed_up += game->getConfigComponent()["Portal"]["SpeedUpTeleport"].asInt();
+		game->incUnitMaxHealth(unit_id, game->getConfigComponent()["Portal"]["IncHP"].asInt());
 		game->addGameEvent(AudioEffect::FinishUpgrade, game->getUnitByUID(this->unit_id).getView());
 		return true;
 	}

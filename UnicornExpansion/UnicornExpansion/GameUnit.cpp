@@ -103,6 +103,12 @@ std::string GameUnit::getShieldInfo() const
 	return std::format("{}/{}", int_shield, *full_shield);
 }
 
+void GameUnit::incMaxHealth(int value)
+{
+	maxhealth += value;
+	incHealth(value);
+}
+
 void GameUnit::setRemoved()
 {
 	removed = true;

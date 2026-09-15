@@ -94,6 +94,7 @@ public:
 	std::string getCaption() const;
 	std::string getHealthInfo() const;
 	std::string getShieldInfo() const;
+	void incMaxHealth(int value);
 	void setRemoved();
 	bool isFullHealth() const;
 	float getHealthPerMax() const;

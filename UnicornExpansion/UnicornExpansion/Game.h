@@ -178,6 +178,7 @@ public:
 	bool isUnitNearXY(int uid, int x, int y) const;
 	bool isUnitNearXYDist(int uid, int x, int y, int dist) const;
 	int getUnitHealth(int uid) const;
+	void incUnitMaxHealth(int uid, int value);
 	bool isUnitExist(int uid) const;
 	void deleteUnitLater(int uid);
 	bool isHard1() const;
