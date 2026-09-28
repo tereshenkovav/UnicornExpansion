@@ -175,7 +175,36 @@ bool Game::loadScript(const std::string& filename) {
 	lasteventpos = std::nullopt;
 	// Очистка лазеров
 	lasers.clear();
-		
+
+	// Генерация декораций
+	// Вся карта с землей минус две клетки в стороны
+	Vector2D<bool> cells(width, height, true);
+	for (int x = 0; x < width; x++)
+		for (int y = 0; y < height; y++)
+			if (getMap(x, y) != Terrain::Ground)
+				for (int dx = -2; dx <= 2; dx++)
+					for (int dy = -2; dy <= 2; dy++)
+						cells.setValue(x + dx, y + dy, false);
+
+	// Строим список клеток подходящих
+	std::vector<sf::Vector2i> list;
+	for (int x = 0; x < width; x++)
+		for (int y = 0; y < height; y++)
+			if (cells.getValue(x, y)) list.push_back({ x,y });
+
+	// Повторяем на размер карты / 100
+	for (int i = 0; i < (width * height) / 100; i++) {
+		if (list.size() == 0) break;
+		int p = rand() % list.size();
+		int st = i % 7;
+		int px = list[p].x;
+		int py = list[p].y;
+		decors.push_back({ { (float)BLOCKW * px + BLOCKW/2, (float)BLOCKH * py + BLOCKH / 2}, "subground_" + std::to_string(st), 1.0f, true });
+		// Убираем клетки рядом и по совпадению x y
+		std::erase_if(list, [px, py](const sf::Vector2i& cell) { return (abs(cell.x - px) <= 2) && (abs(cell.y - py) <= 2); });
+		std::erase_if(list, [px, py](const sf::Vector2i& cell) { return (cell.x == px) || (cell.y == py) ; });
+	}
+
 	return true;
 }
 
