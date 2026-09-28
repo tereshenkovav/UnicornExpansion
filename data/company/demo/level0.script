@@ -7,6 +7,7 @@ var find_count ;
  
 function initMap() {
   game = new Game() ;
+  game.setSeed(18321736) ;
 
   game.allowAction("MakeHarvester") ;
   game.allowAction("MakeAttacker") ;

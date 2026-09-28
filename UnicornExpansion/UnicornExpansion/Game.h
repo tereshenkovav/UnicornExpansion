@@ -105,6 +105,7 @@ private:
 	std::set<int> new_attacked_units;
 	std::optional<sf::Vector2f> lasteventpos;
 	bool magiceconomy = false;
+	int seed;
 	std::optional<std::string> errmsg = std::nullopt;
 	void trySetUnderAttackEffect(const GameUnit& unit);
 	// Полезная функция, позволяет автоматически получать строки из внешнего файла, записывая их как $key, без использования game.getText
@@ -186,6 +187,7 @@ public:
 	// Установка цели для движения юнита
 	void setTargetToUnit(int uid, int targetx, int targety);
 	void clearFogAt(int x, int y, int dist);
+	void setSeed(int seed);
 	/* Конец скриптового блока */
 
 	void setSecondaryTargetToUnit(int uid, int targetx, int targety);

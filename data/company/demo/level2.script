@@ -3,6 +3,7 @@ var TIME_DEFEND ;
  
 function initMap() {
   game = new Game() ;
+  game.setSeed(53781589) ;
 
   game.allowAction("MakeHarvester") ;
   game.allowAction("MakeAttacker") ;

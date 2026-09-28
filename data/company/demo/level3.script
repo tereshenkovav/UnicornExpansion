@@ -3,6 +3,7 @@ var uidrich ;
  
 function initMap() {
   game = new Game() ;
+  game.setSeed(76531816) ;
 
   game.allowAction("MakeHarvester") ;
   game.allowAction("MakeAttacker") ;

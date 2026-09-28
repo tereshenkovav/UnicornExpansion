@@ -4,6 +4,7 @@ var TIME_LIMIT ;
  
 function initMap() {
   game = new Game() ;
+  game.setSeed(82734987) ;
 
   MANA_TASK = 2000;
   if (game.isHard1()) { MANA_TASK+=2000 ; }

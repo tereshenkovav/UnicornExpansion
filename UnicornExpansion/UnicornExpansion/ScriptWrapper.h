@@ -266,6 +266,11 @@ void Game_clearFogAt(zetscript::ScriptEngine* _script_engine, Game* _this, zetsc
 	_this->clearFogAt(x,y,dist);
 }
 
+void Game_setSeed(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int seed) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	_this->setSeed(seed);
+}
+
 void Game_delete(zetscript::ScriptEngine* _script_engine, Game* _this) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	// empty
@@ -321,4 +326,5 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
 		engine.registerMemberFunction<Game>("deleteUnitLater", &Game_deleteUnitLater);
 		engine.registerMemberFunction<Game>("setTargetToUnit", &Game_setTargetToUnit);
 	engine.registerMemberFunction<Game>("clearFogAt", &Game_clearFogAt);
+	engine.registerMemberFunction<Game>("setSeed", &Game_setSeed);
 }

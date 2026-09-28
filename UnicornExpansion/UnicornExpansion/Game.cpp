@@ -26,6 +26,7 @@
 #include "SeedStore.h"
 #include "ScriptWrapper.h"
 #include "ComponentClearFog.h"
+#include <random>
 
 GameUnit Game::staticemptyunit;
 
@@ -54,6 +55,7 @@ Game::Game() {
 	height = 0;
 	iswin = false;
 	isfail = false;
+	seed = 1029384756; // По умолчанию задано фиксированное число
 
 	current_game = this;
 	// Резервируем место для 1024 юнитов, чтобы они не перемещались в памяти
@@ -193,10 +195,13 @@ bool Game::loadScript(const std::string& filename) {
 			if (cells.getValue(x, y)) list.push_back({ x,y });
 
 	// Повторяем на размер карты / 100
+	std::mt19937 gen(seed);
 	for (int i = 0; i < (width * height) / 100; i++) {
 		if (list.size() == 0) break;
-		int p = rand() % list.size();
-		int st = i % 7;
+		std::uniform_int_distribution<> distrib(0,list.size()-1);
+
+		int p = distrib(gen);
+		int st = i % 7; // Выбор из семи доступных декораций
 		int px = list[p].x;
 		int py = list[p].y;
 		decors.push_back({ { (float)BLOCKW * px + BLOCKW/2, (float)BLOCKH * py + BLOCKH / 2}, "subground_" + std::to_string(st), 1.0f, true });
@@ -322,6 +327,11 @@ void Game::setSecondaryTargetToUnit(int uid, int targetx, int targety)
 void Game::clearFogAt(int x, int y, int dist)
 {
 	clearFogAt({ x,y }, dist);
+}
+
+void Game::setSeed(int seed)
+{
+	this->seed = seed;
 }
 
 bool Game::sendUnitAction(int uid, const UnitAction & action)

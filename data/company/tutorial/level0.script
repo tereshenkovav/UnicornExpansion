@@ -6,6 +6,7 @@ var uidenemy2 ;
 
 function initMap() {
   game = new Game() ;
+  game.setSeed(76531816) ;
 
   // Обязательный вызов инициализации системы событий
   initEvents() ;
