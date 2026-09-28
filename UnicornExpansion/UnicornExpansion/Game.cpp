@@ -37,7 +37,7 @@ std::string prepLine(const std::string& str) {
 bool Game::canWalkOnTerrain(Terrain terr)
 {
 	// Здесь можно расширить фунции территорий
-	return (terr==Terrain::Ground)||(terr==Terrain::Road);
+	return (terr == Terrain::Ground) || (terr == Terrain::Road) || (terr == Terrain::Mud);
 }
 
 void Game::trySetUnderAttackEffect(const GameUnit& unit)
@@ -75,6 +75,7 @@ bool Game::loadMap(const std::string& filename) {
 	mapchars['F'] = Terrain::Forest;
 	mapchars['W'] = Terrain::Water;
 	mapchars['R'] = Terrain::Road;
+	mapchars['M'] = Terrain::Mud;
 
 	std::string line;
 	std::ifstream fin(filename);
@@ -183,7 +184,7 @@ bool Game::loadScript(const std::string& filename) {
 	Vector2D<bool> cells(width, height, true);
 	for (int x = 0; x < width; x++)
 		for (int y = 0; y < height; y++)
-			if (getMap(x, y) != Terrain::Ground)
+			if ((getMap(x, y) != Terrain::Ground) && (getMap(x, y) != Terrain::Mud))
 				for (int dx = -2; dx <= 2; dx++)
 					for (int dy = -2; dy <= 2; dy++)
 						cells.setValue(x + dx, y + dy, false);

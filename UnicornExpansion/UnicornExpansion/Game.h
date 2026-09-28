@@ -16,7 +16,7 @@
 #include "SfmlGameEngine/Texts.h"
 
 // Перечисления территорий и типов лазера
-enum class Terrain { Ground, Forest, Water, Road };
+enum class Terrain { Ground, Forest, Water, Road, Mud };
 enum class LaserType { Harvest, Attack, Heal, Detox };
 enum class AudioEffect { Teleport, FinishTeleport, FinishResearch, FinishUpgrade, FinishBuilding, FinishConstruct, UnderAttack,
   MonsterKilled, TowerKilled, CrystallKilled, LairKilled};

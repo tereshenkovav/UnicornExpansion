@@ -985,6 +985,7 @@ void SceneGame::Init() {
     spr_terrains[Terrain::Water]=loadSprite("images/terrains/water.png");
     spr_terrains[Terrain::Forest]=loadSprite("images/terrains/forest.png");
     spr_terrains[Terrain::Road]=loadSprite("images/terrains/road.png");
+    spr_terrains[Terrain::Mud] = loadSprite("images/terrains/mud.png");
 
     spr_trees[TerrainSubType::TreeBottom] = loadSprite("images/subterrains/tree_bottom.png");
     spr_trees[TerrainSubType::TreeBottomLeft] = loadSprite("images/subterrains/tree_bottom_left.png");
@@ -1014,6 +1015,7 @@ void SceneGame::Init() {
     color_terrains[Terrain::Water] = sf::Color(0, 206, 228);
     color_terrains[Terrain::Forest] = sf::Color(25, 103, 39);
     color_terrains[Terrain::Road] = sf::Color(228, 218, 171);
+    color_terrains[Terrain::Mud] = sf::Color(108, 91, 29);
 
     color_lasers[LaserType::Harvest] = sf::Color(0, 255, 255);
     color_lasers[LaserType::Attack] = sf::Color(255, 0, 0);
