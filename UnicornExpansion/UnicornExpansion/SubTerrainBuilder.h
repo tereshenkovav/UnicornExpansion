@@ -6,6 +6,7 @@
 
 enum TerrainSubType { TreeBottom, TreeBottomLeft, TreeBottomRight, TreeTop, TreeTopLeft, TreeTopRight, TreeLeft, TreeRight,
   WaterTopLeft, WaterTop, WaterTopRight, WaterLeft, WaterRight, WaterBottomLeft, WaterBottom, WaterBottomRight,
+  MudTopLeft, MudTop, MudTopRight, MudLeft, MudRight, MudBottomLeft, MudBottom, MudBottomRight,
   RoadHorz, RoadVert, RoadTopLeft, RoadTopRight, RoadBottomLeft, RoadBottomRight};
 
 class SubTerrainBuilder {

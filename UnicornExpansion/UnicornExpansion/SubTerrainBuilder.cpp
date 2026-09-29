@@ -62,6 +62,28 @@ void SubTerrainBuilder::updateByGame(const Game & game) {
 				else
 				if (gright) map[i][j] = TerrainSubType::WaterRight;
 			}
+			// Логика построения дублируется с водой
+			if (game.getMap(i, j) == Terrain::Mud) {
+				bool gleft = (game.getMap(i - 1, j) == Terrain::Ground) && (i > 0);
+				bool gright = (game.getMap(i + 1, j) == Terrain::Ground) && (i < game.getWidth() - 1);
+				bool gtop = (game.getMap(i, j - 1) == Terrain::Ground) && (j > 0);
+				bool gbottom = (game.getMap(i, j + 1) == Terrain::Ground) && (j < game.getHeight() - 1);
+				if (gtop) {
+					if (gleft) map[i][j] = TerrainSubType::MudTopLeft; else
+						if (gright) map[i][j] = TerrainSubType::MudTopRight; else
+							map[i][j] = TerrainSubType::MudTop;
+				}
+				else
+				if (gbottom) {
+					if (gleft) map[i][j] = TerrainSubType::MudBottomLeft; else
+						if (gright) map[i][j] = TerrainSubType::MudBottomRight; else
+							map[i][j] = TerrainSubType::MudBottom;
+				}
+				else
+				if (gleft) map[i][j] = TerrainSubType::MudLeft;
+				else
+				if (gright) map[i][j] = TerrainSubType::MudRight;
+			}
 			if (game.getMap(i, j) == Terrain::Road) {
 				bool rleft = (game.getMap(i - 1, j) == Terrain::Road) || (i == 0);
 				bool rright = (game.getMap(i + 1, j) == Terrain::Road) || (i == game.getWidth() - 1);

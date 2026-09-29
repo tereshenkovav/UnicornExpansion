@@ -1003,6 +1003,14 @@ void SceneGame::Init() {
     spr_trees[TerrainSubType::WaterBottomLeft] = loadSprite("images/subterrains/water_bottom_left.png");
     spr_trees[TerrainSubType::WaterBottom] = loadSprite("images/subterrains/water_bottom.png");
     spr_trees[TerrainSubType::WaterBottomRight] = loadSprite("images/subterrains/water_bottom_right.png");
+    spr_trees[TerrainSubType::MudTopLeft] = loadSprite("images/subterrains/mud_top_left.png");
+    spr_trees[TerrainSubType::MudTop] = loadSprite("images/subterrains/mud_top.png");
+    spr_trees[TerrainSubType::MudTopRight] = loadSprite("images/subterrains/mud_top_right.png");
+    spr_trees[TerrainSubType::MudLeft] = loadSprite("images/subterrains/mud_left.png");
+    spr_trees[TerrainSubType::MudRight] = loadSprite("images/subterrains/mud_right.png");
+    spr_trees[TerrainSubType::MudBottomLeft] = loadSprite("images/subterrains/mud_bottom_left.png");
+    spr_trees[TerrainSubType::MudBottom] = loadSprite("images/subterrains/mud_bottom.png");
+    spr_trees[TerrainSubType::MudBottomRight] = loadSprite("images/subterrains/mud_bottom_right.png");
     spr_trees[TerrainSubType::RoadHorz] = loadSprite("images/subterrains/road_horz.png");
     spr_trees[TerrainSubType::RoadVert] = loadSprite("images/subterrains/road_vert.png");
     spr_trees[TerrainSubType::RoadTopLeft] = loadSprite("images/subterrains/road_top_left.png");
