@@ -239,7 +239,7 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
                 }
                 spr_units[sprcode]->setPosition(game.getUnit(i).getView());
                 spr_units[sprcode]->setScale({ movleft ? -1.0f : 1.0f,1 });
-                if (game.isUnitUnderAttack(game.getUnit(i).getUID()))
+                if (game.getUnit(i).isUnderAttack())
                     rendertarget.draw(*spr_units[sprcode], &shader_attack);
                 else
                     rendertarget.draw(*spr_units[sprcode]);

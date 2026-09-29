@@ -40,14 +40,13 @@ bool Game::canWalkOnTerrain(Terrain terr)
 	return (terr == Terrain::Ground) || (terr == Terrain::Road) || (terr == Terrain::Mud);
 }
 
-void Game::trySetUnderAttackEffect(const GameUnit& unit)
+void Game::trySetUnderAttackEffect(GameUnit& unit)
 {
-	new_attacked_units.insert(unit.getUID());
-	if (!counter_under_attack.isActive())
-		if (last_attacked_units.count(unit.getUID()) == 0) {
-			addGameEvent(AudioEffect::UnderAttack, unit.getView());
-			counter_under_attack.upset(5.0f);
-		}
+	unit.setUnderAttack();
+	if (!counter_under_attack.isActive()) {
+		addGameEvent(AudioEffect::UnderAttack, unit.getView());
+		counter_under_attack.upset(5.0f);
+	}
 }
 
 Game::Game() {
@@ -174,7 +173,6 @@ bool Game::loadScript(const std::string& filename) {
 	iswin = false;
 	isfail = false;
 	counter_under_attack.reset();
-	last_attacked_units.clear();
 	lasteventpos = std::nullopt;
 	// Очистка лазеров
 	lasers.clear();
@@ -555,11 +553,6 @@ void Game::setMushrooms(int x, int y, int cnt)
 	mushrooms.setMushrooms(x, y, cnt);
 }
 
-bool Game::isUnitUnderAttack(int uid) const
-{
-	return last_attacked_units.count(uid) > 0;
-}
-
 std::optional<sf::Vector2f> Game::getLastEventPos() const
 {
 	return lasteventpos;
@@ -610,9 +603,7 @@ void Game::update(float dt)
 {
 	// Сначала обновляем карту занятости ячеек
 	Vector2D<bool> busymap(width, height,false);
-	
-	new_attacked_units.clear();
-
+		
 	if (timerleft > 0.0f) timerleft -= dt;
 
 	for (int x = 0; x < width; x++)
@@ -802,8 +793,6 @@ void Game::update(float dt)
 				enemy->setTargetToUnit(units[*res_idx].getUID());
 		}
 	}
-
-	last_attacked_units = new_attacked_units;
 
 	// При удалении единорога дать эффект вспышки (обработка перед самым удалением)
 	// Для прочих юнитов добавить останки на 30 секунд

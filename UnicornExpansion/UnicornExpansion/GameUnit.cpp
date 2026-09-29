@@ -35,7 +35,7 @@ GameUnit::GameUnit(int unitx, int unity, int unitw, int unith, const std::string
 	tmoving = 0.0f ;
 	target = std::nullopt;
 	secondarytarget = std::nullopt;
-
+	underattackcounter = 0.0f;
 	removed = false;
 }
 
@@ -260,6 +260,7 @@ void GameUnit::update(float dt) {
 			}
 		}
 	}
+	if (underattackcounter > 0.0f) underattackcounter -= dt;
 	for (auto i = 0; i < components.size(); i++)
 		components[i]->update(dt);
 }
@@ -404,6 +405,16 @@ GameUnit::~GameUnit()
 const std::vector<std::string> & GameUnit::getPostfixes() const
 {
 	return postfixes;
+}
+
+bool GameUnit::isUnderAttack() const
+{
+	return underattackcounter>0.0f;
+}
+
+void GameUnit::setUnderAttack()
+{
+	underattackcounter = 0.5f;// Длина периода, когда маркер активен
 }
 
 std::string GameUnit::getCode() const

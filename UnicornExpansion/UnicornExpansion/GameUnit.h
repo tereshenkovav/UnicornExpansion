@@ -46,6 +46,7 @@ private:
 	float shield;
 	std::optional<int> full_shield;
 	bool removed;
+	float underattackcounter;
 
 	std::vector<UnitComponent*> components;
 	std::vector<std::string> postfixes;
@@ -118,6 +119,8 @@ public:
 	// Возможность вызвать действие
 	bool canSendAction(const UnitAction& action, std::string* msgcode) const;
 	const std::vector<std::string>& getPostfixes() const;
+	bool isUnderAttack() const;
+	void setUnderAttack();
 	// Работа с компонентами
 	void addComponent(UnitComponent* comp);
 	bool hasComponentByName(const std::string& code) const;

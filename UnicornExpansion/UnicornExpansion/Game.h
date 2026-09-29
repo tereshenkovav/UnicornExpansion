@@ -101,13 +101,11 @@ private:
 	std::optional<sf::Vector2f> teleportation_effect;
 	std::vector<AudioEffectPosed> audioeffects;
 	Countdown counter_under_attack;
-	std::set<int> last_attacked_units;
-	std::set<int> new_attacked_units;
 	std::optional<sf::Vector2f> lasteventpos;
 	bool magiceconomy = false;
 	int seed;
 	std::optional<std::string> errmsg = std::nullopt;
-	void trySetUnderAttackEffect(const GameUnit& unit);
+	void trySetUnderAttackEffect(GameUnit& unit);
 	// Полезная функция, позволяет автоматически получать строки из внешнего файла, записывая их как $key, без использования game.getText
 	std::string trText(const std::string& text) const;
 	static GameUnit staticemptyunit;
@@ -227,7 +225,6 @@ public:
 	std::vector<AudioEffectPosed> getOnceAudioEffects();
 	const std::vector<Mushroom> & getMushrooms(int x, int y) const;
 	bool isMushroomsAt(int x, int y) const;
-	bool isUnitUnderAttack(int uid) const;
 	std::optional<sf::Vector2f> getLastEventPos() const;
 	// Механизм сообщений
 	void skipTekMessage();
