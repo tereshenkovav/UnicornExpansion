@@ -4,6 +4,7 @@ ComponentMeleeEnemy::ComponentMeleeEnemy(Game* game, int attack_value): UnitComp
 {
 	this->attack_value = attack_value;
 	targeted_unit_id = std::nullopt;
+	counter_attack = 0.0f;
 }
 
 int ComponentMeleeEnemy::getAttackValue() const
@@ -26,6 +27,16 @@ void ComponentMeleeEnemy::setTargetToUnit(int uid)
 	targeted_unit_id = uid;
 }
 
+void ComponentMeleeEnemy::resetAttackCounter()
+{
+	counter_attack = 1.0f;
+}
+
+bool ComponentMeleeEnemy::isAttackReady() const
+{
+	return counter_attack<=0.0f;
+}
+
 std::string ComponentMeleeEnemy::getComponentInfo() const
 {
 	return std::format("$Info_AttackLevel$: {}\n$Info_MovementSpeed$: {}",attack_value,game->getUnitByUID(unit_id).getVelocity());
@@ -40,4 +51,5 @@ void ComponentMeleeEnemy::update(float dt)
 		else
 			targeted_unit_id = std::nullopt;
 	}
+	if (counter_attack > 0.0f) counter_attack -= dt;
 }

@@ -768,7 +768,7 @@ void Game::update(float dt)
 				if (units[j].isComponent<ComponentEnemyTarget>() && units[i].isUnitNearUnit(units[j]))
 					targets.push_back(j);
 
-			if (targets.size() > 0) {
+			if ((targets.size() > 0) && (enemy->isAttackReady())) {
 				std::optional<int> idx_attack = std::nullopt;
 				// Сначала пробуем атаковать именно те юниты, которые  могут атаковать в ответ
 				for (int j : targets)
@@ -776,7 +776,9 @@ void Game::update(float dt)
 				// И если танки не нашли, то все остальные цели, любая
 				if (!idx_attack) idx_attack = targets[0];
 
-				units[*idx_attack].decHealth(enemy->getAttackValue() * dt);
+				units[*idx_attack].decHealth(enemy->getAttackValue());
+				enemy->resetAttackCounter();
+				addGameEvent(AudioEffect::Hit, units[*idx_attack].getView());
 				// Экспресс-заплатка, чтобы не было сигнала об атаке по кристаллам в миссии с драконом
 				if (!units[*idx_attack].isComponent<ComponentResource>())
 					trySetUnderAttackEffect(units[*idx_attack]);

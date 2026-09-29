@@ -7,6 +7,7 @@ class ComponentMeleeEnemy: public UnitComponent
 {
 private:
 	int attack_value;
+	float counter_attack;
 	std::optional<int> targeted_unit_id;
 public:
 	ComponentMeleeEnemy(Game* game, int attack_value);
@@ -16,6 +17,8 @@ public:
 	// Установить цель для атаки - координаты или юнит
 	void setTargetToXY(int x, int y);
 	void setTargetToUnit(int uid);
+	void resetAttackCounter();
+	bool isAttackReady() const;
 	virtual std::string getComponentInfo() const;
 	virtual void update(float dt);
 };

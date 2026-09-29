@@ -19,7 +19,7 @@
 enum class Terrain { Ground, Forest, Water, Road, Mud };
 enum class LaserType { Harvest, Attack, Heal, Detox };
 enum class AudioEffect { Teleport, FinishTeleport, FinishResearch, FinishUpgrade, FinishBuilding, FinishConstruct, UnderAttack,
-  MonsterKilled, TowerKilled, CrystallKilled, LairKilled};
+  MonsterKilled, TowerKilled, CrystallKilled, LairKilled, Hit};
 
 enum class Difficulty { Easy, Norm, Hard };
 
