@@ -545,6 +545,16 @@ bool Game::isMushroomsExist() const
 	return mushrooms.isMushroomsExist();
 }
 
+void Game::setMushroomsPeriodGrown(int value)
+{
+	mushrooms.setPeriodGrown(value);
+}
+
+void Game::setMushrooms(int x, int y, int cnt)
+{
+	mushrooms.setMushrooms(x, y, cnt);
+}
+
 bool Game::isUnitUnderAttack(int uid) const
 {
 	return last_attacked_units.count(uid) > 0;

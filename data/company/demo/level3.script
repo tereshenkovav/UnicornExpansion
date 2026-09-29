@@ -41,6 +41,12 @@ function initMap() {
     game.addLair(16,8,"3a3a3a3b3b3c3c") ;
   }
 
+  game.setMushroomsPeriodGrown(5) ;
+  game.setMushrooms(30,40,1) ;
+  game.setMushrooms(31,41,2) ;
+  game.setMushrooms(32,42,3) ;
+  game.setMushrooms(33,43,4) ;
+
   game.incEnergy(400) ;
 
   game.setNewViewPoint(13,32) ;

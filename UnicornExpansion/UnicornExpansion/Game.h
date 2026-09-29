@@ -167,6 +167,8 @@ public:
 	// Вычисление количества по компонентам
 	int getCountByComponent(const std::string& compname) const;
 	bool isMushroomsExist() const;
+	void setMushroomsPeriodGrown(int value);
+	void setMushrooms(int x, int y, int cnt);
 	void setNewViewPoint(int x, int y);
 	void addMessage(const std::string& icon, int duration, const std::string& text);
 	void addMessageLater(const std::string& icon, int pause, int duration, const std::string& text);

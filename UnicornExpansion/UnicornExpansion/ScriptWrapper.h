@@ -181,6 +181,16 @@ bool Game_isMushroomsExist(zetscript::ScriptEngine* _script_engine, Game* _this)
 	return _this->isMushroomsExist();
 }
 
+void Game_setMushroomsPeriodGrown(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int value) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	_this->setMushroomsPeriodGrown(value);
+}
+
+void Game_setMushrooms(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y, zetscript::zs_int cnt) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	_this->setMushrooms(x, y, cnt);
+}
+
 void Game_setNewViewPoint(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	_this->setNewViewPoint(x,y);
@@ -305,6 +315,8 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
 	engine.registerMemberFunction<Game>("isTaskCompleted", &Game_isTaskCompleted);
 	engine.registerMemberFunction<Game>("getCountByComponent", &Game_getCountByComponent);
 	engine.registerMemberFunction<Game>("isMushroomsExist", &Game_isMushroomsExist);
+	engine.registerMemberFunction<Game>("setMushroomsPeriodGrown", &Game_setMushroomsPeriodGrown);
+	engine.registerMemberFunction<Game>("setMushrooms", &Game_setMushrooms);
 	engine.registerMemberFunction<Game>("getTimer", &Game_getTimer);
 	engine.registerMemberFunction<Game>("startTimer", &Game_startTimer);
 	engine.registerMemberFunction<Game>("startHiddenTimer", &Game_startHiddenTimer);

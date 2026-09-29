@@ -1,16 +1,8 @@
 #include "MushroomNet.h"
 #include "Game.h"
 
-// Часть параметров надо вынести в конфиг
-const int MUSHROOM_TYPES = 6;
-const int SHIFT = 8;
-const int PERIODGROWN = 20.0f;
+// HP грибов надо отправить в конфиг
 const float HEALTH = 10.0f;
-const int MUSHROOM_SIZE = 32;
-
-float genPeriod() {
-	return PERIODGROWN + 0.05f * (rand() % (10 * PERIODGROWN));
-}
 
 // Вместо этой упаковки и распаковки можно использовать параметризацию класса FinderByBestDistance, чтобы index был произвольного типа,
 // тогда можно будет передавать туда Mushroom вместо int
@@ -24,8 +16,19 @@ void unpackIndex(int index, int * x, int * y, int * p) {
 	*p = (index % 10000) % 10;
 }
 
+float MushroomNet::genPeriod() const {
+	return periodgrown + 0.05f * (rand() % (10 * periodgrown));
+}
+
 void MushroomNet::growMushrooms(int x, int y)
 {
+	// Случайный сдвиг гриба в ячейке
+	const int SHIFT = 8;
+	// Размер гриба в пикселях
+	const int MUSHROOM_SIZE = 32;
+	// Число типов спрайтов грибов
+	const int MUSHROOM_TYPES = 6;
+
 	if (net[x][y].values.size() >= MAX_MUSHROOMS) return;
 
 	std::vector<int> allposes{ 0, 1, 2, 3 };
@@ -39,6 +42,7 @@ void MushroomNet::growMushrooms(int x, int y)
 
 MushroomNet::MushroomNet()
 {
+	periodgrown = 20; // Значение периода роста грибов по умолчанию
 }
 
 void MushroomNet::initByGame(Game* game)
@@ -55,6 +59,11 @@ void MushroomNet::initByGame(Game* game)
 			net[i][j].values.clear();
 		}
 	}
+}
+
+void MushroomNet::setPeriodGrown(int value)
+{
+	periodgrown = value;
 }
 
 const std::vector<Mushroom> & MushroomNet::getMushrooms(int x, int y) const

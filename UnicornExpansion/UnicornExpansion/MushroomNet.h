@@ -3,6 +3,7 @@
 
 class Game;
 
+// Максимальное число грибов в клетке
 const int MAX_MUSHROOMS = 4;
 
 struct Mushroom {
@@ -24,12 +25,15 @@ class MushroomNet
 private:
 	int width;
 	int height;
+	int periodgrown;
 	std::vector<std::vector<MushroomCell>> net;
 	Game* game;
 	void growMushrooms(int x, int y);
+	float genPeriod() const;
 public:
 	MushroomNet();
 	void initByGame(Game * game);
+	void setPeriodGrown(int value);
 	const std::vector<Mushroom> & getMushrooms(int x, int y) const;
 	int getMushroomStage(int x, int y) const;
 	bool isMushroomsExist() const;
