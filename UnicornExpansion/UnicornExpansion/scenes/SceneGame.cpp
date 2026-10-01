@@ -10,6 +10,7 @@
 #include "SceneMsgBox.h"
 #include "CompanyInfo.h"
 #include "ComponentMovable.h"
+#include "ComponentAcidEnemy.h"
 #include "VolumeCalculator.h"
 
 // Размеры камеры и скорость прокрутки камеры
@@ -253,6 +254,12 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
                         rendertarget.draw(*marker);
                     }
                 }
+
+                if (game.getUnit(i).isComponent<ComponentAcidEnemy>()) {
+                    spr_poison->setPosition(game.getUnit(i).getView());
+                    rendertarget.draw(*spr_poison);
+                }
+
             }
 
     // И здесь вывод только верхних фрагментов леса
@@ -679,6 +686,12 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
     laser_apply->update(dt);
     aura->update(dt);
 
+    spr_poison->rotate(sf::radians(3*dt));
+    float sc = 0.2f + 1.8*(getEngine()->getAllTime()-(int)getEngine()->getAllTime());
+    spr_poison->setScale({ sc, sc });
+    int transp = 255 - 255 * (getEngine()->getAllTime() - (int)getEngine()->getAllTime());
+    spr_poison->setColor(sf::Color(255, 255, 255, transp));
+
     game.update(dt);
     if (game.getErrMsg()) {
         getEngine()->SwitchToScene(std::make_shared<SceneMsgBox>(*game.getErrMsg(), [this]() { getEngine()->doClose(); }));
@@ -761,6 +774,9 @@ void SceneGame::Init() {
 
     spr_cross = loadSprite("images/cross.png");
     spr_cross->setOrigin({ 16,16 });
+
+    spr_poison = loadSprite("images/poison.png");
+    spr_poison->setOrigin({ 128,128 });
 
     spr_but_action = loadSprite("images/button.png") ;
     undo = loadSprite("images/undo.png");

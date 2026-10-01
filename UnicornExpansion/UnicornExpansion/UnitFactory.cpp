@@ -19,6 +19,7 @@
 #include "ComponentStore.h"
 #include "ComponentHouse.h"
 #include "ComponentProtectable.h"
+#include "ComponentAcidEnemy.h"
 
 UnitFactory::UnitFactory(Game* game)
 {
@@ -105,6 +106,16 @@ int UnitFactory::addEnemy4(int x, int y)
     unit.addComponent(new ComponentMeleeEnemy(game, param["Attack"].asInt()));
     unit.addComponent(new ComponentEnemy(game));
     unit.setVelocity(param["Speed"].asInt());
+    game->addUnit(unit);
+    return unit.getUID();
+}
+
+int UnitFactory::addAcid(int x, int y)
+{
+    auto param = game->getConfigEnemy()["Acid"];
+    GameUnit unit(x, y, 1, 1, "Acid", param["HP"].asInt(), "acid");
+    unit.addComponent(new ComponentAcidEnemy(game, param["Attack"].asInt()));
+    unit.addComponent(new ComponentEnemy(game));
     game->addUnit(unit);
     return unit.getUID();
 }

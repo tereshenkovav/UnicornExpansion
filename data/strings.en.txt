@@ -50,6 +50,7 @@ Unit_Octopus=Octopus
 Unit_Bat=Bat
 Unit_Dragon=Dragon
 Unit_Lair=Other portal
+Unit_Acid=Acid mushroom
 Info_MovementSpeed=Movement
 Info_AttackLevel=Attack
 Info_DetoxLevel=Detoxer

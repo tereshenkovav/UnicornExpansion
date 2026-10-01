@@ -21,6 +21,7 @@
 #include "ComponentEnemyLair.h"
 #include "ComponentStore.h"
 #include "ComponentHouse.h"
+#include "ComponentAcidEnemy.h"
 #include "FinderByBestDistance.h"
 #include "UnitFactory.h"
 #include "SeedStore.h"
@@ -791,6 +792,16 @@ void Game::update(float dt)
 			}
 			if (auto res_idx = finder_view.getBestIndex())
 				enemy->setTargetToUnit(units[*res_idx].getUID());
+		}
+		if (auto* acid = units[i].getComponent<ComponentAcidEnemy>()) {
+			// Блок отвечает за отравление объектов
+			std::vector<int> targets;
+			for (int j = 0; j < units.size(); j++)
+				if (units[j].isComponent<ComponentEnemyTarget>())
+					if ((units[j].getView() - units[i].getView()).length() <= acid->getAttackDistance()) {
+						units[j].decHealth(acid->getAttackValue() * dt);
+						trySetUnderAttackEffect(units[j]);
+					}
 		}
 	}
 

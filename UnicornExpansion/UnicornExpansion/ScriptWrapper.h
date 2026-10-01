@@ -116,6 +116,12 @@ zetscript::zs_int Game_addLair(zetscript::ScriptEngine* _script_engine, Game* _t
 	return factory.addLair(x, y, seq->getConstChar());
 }
 
+zetscript::zs_int Game_addAcid(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	UnitFactory factory(_this);
+	return factory.addAcid(x, y);
+}
+
 void Game_deleteUnitLater(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int uid) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	_this->deleteUnitLater(uid);
@@ -306,6 +312,7 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
 	engine.registerMemberFunction<Game>("addUnicorn", &Game_addUnicorn);
 	engine.registerMemberFunction<Game>("addMachine", &Game_addMachine);
 	engine.registerMemberFunction<Game>("addLair", &Game_addLair);
+	engine.registerMemberFunction<Game>("addAcid", &Game_addAcid);
 	engine.registerMemberFunction<Game>("incEnergy", &Game_incEnergy);
 	engine.registerMemberFunction<Game>("decEnergy", &Game_decEnergy);
 	engine.registerMemberFunction<Game>("getEnergy", &Game_getEnergy);

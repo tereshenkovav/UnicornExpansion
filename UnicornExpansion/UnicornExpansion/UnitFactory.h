@@ -18,6 +18,7 @@ public:
 	int addEnemy2(int x, int y);
 	int addEnemy3(int x, int y);
 	int addEnemy4(int x, int y);
+	int addAcid(int x, int y);
 	int addLair(int x, int y, const std::string& spawnseq);
 	int addPortal(int x, int y);
 	int addAcademy(int x, int y);

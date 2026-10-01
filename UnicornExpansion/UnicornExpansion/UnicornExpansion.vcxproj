@@ -158,6 +158,7 @@
     <ClCompile Include="ClickerCounter.cpp" />
     <ClCompile Include="CompanyInfo.cpp" />
     <ClCompile Include="components\ComponentAcademy.cpp" />
+    <ClCompile Include="components\ComponentAcidEnemy.cpp" />
     <ClCompile Include="components\ComponentAttacker.cpp" />
     <ClCompile Include="components\ComponentBuilding.cpp" />
     <ClCompile Include="components\ComponentClearFog.cpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="ClickerCounter.h" />
     <ClInclude Include="CompanyInfo.h" />
     <ClInclude Include="components\ComponentAcademy.h" />
+    <ClInclude Include="components\ComponentAcidEnemy.h" />
     <ClInclude Include="components\ComponentAttacker.h" />
     <ClInclude Include="components\ComponentBuilding.h" />
     <ClInclude Include="components\ComponentClearFog.h" />

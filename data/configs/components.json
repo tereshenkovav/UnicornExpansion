@@ -22,6 +22,9 @@
   "MeleeEnemy": {
     "ViewDistance": 300
   },
+  "AcidEnemy": {
+    "AttackDistance": 300
+  },
   "Portal": {
     "InitialBuildingCount": 3,
     "IncBuildingCount": 2,

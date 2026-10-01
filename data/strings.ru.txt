@@ -50,6 +50,7 @@ Unit_Octopus=Октопус
 Unit_Bat=Нетопырь
 Unit_Dragon=Дракон
 Unit_Lair=Другой портал
+Unit_Acid=Ядовитый гриб
 Info_MovementSpeed=Скорость движения
 Info_AttackLevel=Сила атаки
 Info_DetoxLevel=Уровень очистки

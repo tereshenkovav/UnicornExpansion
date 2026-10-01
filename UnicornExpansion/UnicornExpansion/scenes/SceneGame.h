@@ -116,6 +116,8 @@ private:
 
     sfge::UniqueSprite spr_cross;
 
+    sfge::UniqueSprite spr_poison;
+
     void updateMiniMap();
     float getScale05per20();
     void drawLaserFromTo(sf::RenderTarget& rendertarget, sfge::UniqueSprite& spr_laz, const Laser& laz);
