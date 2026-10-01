@@ -151,6 +151,7 @@ void Engine::updateByProfile() {
     if (window) window->setVerticalSyncEnabled(profile->isVSync());
     sf::Listener::setGlobalVolume(profile->isSoundOn() ? 100.0f : 0.0f);
     if (isfullscr != profile->isFullScreen()) signal_rebuild = true;
+    setStopUpdatingForLostFocus(profile->isStopGameOnLostFocus());
 }
 
 void Engine::createWindow() {

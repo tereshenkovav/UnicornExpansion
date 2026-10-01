@@ -8,6 +8,7 @@ void SceneOptions::saveOptions() {
     userprofile->setHideFullHealthBar(cbhidefullhealthbar->isChecked());
     getProfile()->setFullScreen(cbfullscreen->isChecked());
     getProfile()->setVSync(cbvsync->isChecked());
+    getProfile()->setStopGameOnLostFocus(cbstopgameonlostfocus->isChecked());
     getEngine()->updateByProfile();
     getEngine()->ReplaceOverScene(std::make_shared<SceneStartMenu>());
     userprofile->saveProfile();
@@ -23,6 +24,7 @@ void SceneOptions::Render(sf::RenderTarget & rendertarget) {
     rendertarget.draw(*cbvsync);
 
     rendertarget.draw(*cbhidefullhealthbar);
+    rendertarget.draw(*cbstopgameonlostfocus);
 
     rendertarget.draw(*butsave);
     rendertarget.draw(*butcancel);
@@ -38,6 +40,7 @@ void SceneOptions::Update(float dt, const sf::Vector2i & mousePos, const std::ve
         cbfullscreen->processEvent(event);
         cbvsync->processEvent(event);
         cbhidefullhealthbar->processEvent(event);
+        cbstopgameonlostfocus->processEvent(event);
 
         cbvoice->setDisabled(!cbsound->isChecked());
 
@@ -84,4 +87,7 @@ void SceneOptions::Init() {
     cbhidefullhealthbar = std::make_unique<sfge::Checkbox>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Checkbox_HideFullHealthBar"), 18,
         512 - 160, 440, 24, 24);
     cbhidefullhealthbar->setChecked(userprofile->isHideFullHealthBar());
+    cbstopgameonlostfocus = std::make_unique<sfge::Checkbox>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Checkbox_StopGameOnLostFocus"), 18,
+        512 - 160, 480, 24, 24);
+    cbstopgameonlostfocus->setChecked(userprofile->isStopGameOnLostFocus());
 }

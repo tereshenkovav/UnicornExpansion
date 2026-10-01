@@ -19,6 +19,7 @@ private:
     sfge::UniqueCheckbox cbvsync;
     sfge::UniqueCheckbox cbvoice;
     sfge::UniqueCheckbox cbhidefullhealthbar;
+    sfge::UniqueCheckbox cbstopgameonlostfocus;
     void saveOptions();
     std::shared_ptr<UserProfile> userprofile;
 public:

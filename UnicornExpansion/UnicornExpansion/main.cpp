@@ -70,7 +70,7 @@ int main(int argc, char* argv[])
     engine.loadDefaultFont("arial.ttf");
     engine.loadDefaultCursor("images/cursor_def.png");
     engine.addCursor(1, "images/cursor_my.png");
-    engine.setStopUpdatingForLostFocus(true);
+    engine.setStopUpdatingForLostFocus(profile->isStopGameOnLostFocus());
     engine.setUserProfile(profile);
     engine.setCloseHandlerScene(std::make_shared<SceneCloseHandler>());
     engine.setUserLogger(std::make_shared<sfge::LoggerFile>(profiledir + "game.log"));

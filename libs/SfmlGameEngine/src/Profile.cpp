@@ -18,6 +18,10 @@ bool Profile::isVSync() const {
 	return vsync;
 }
 
+bool Profile::isStopGameOnLostFocus() const {
+	return stopgameonlostfocus;
+}
+
 std::string Profile::getLanguage() const
 {
 	return language;
@@ -37,6 +41,10 @@ void Profile::setFullScreen(bool value) {
 
 void Profile::setVSync(bool value) {
 	vsync = value;
+}
+
+void Profile::setStopGameOnLostFocus(bool value) {
+	stopgameonlostfocus = value;
 }
 
 void Profile::setLanguage(const std::string& value)

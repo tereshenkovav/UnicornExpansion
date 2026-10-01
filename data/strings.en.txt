@@ -100,6 +100,7 @@ Checkbox_Voice=Voice of units
 Checkbox_Fullscreen=Fullscreen
 Checkbox_VSync=VSync
 Checkbox_HideFullHealthBar=Hide indicators for healthy units
+Checkbox_StopGameOnLostFocus=Stop game if window lost focus
 Task_Completed=Completed
 Task_Cancelled=Cancelled
 Checkbox_Easy=Easy
