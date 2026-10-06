@@ -328,17 +328,17 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
 
     minimap.drawTo(&rendertarget);
 
-    textback.setPosition({ 6, 6 });
-    textback.setSize({ 130, 50 });
+    textback.setPosition({ 6, 4 });
+    textback.setSize({ 150, 40 });
     rendertarget.draw(textback);
 
     // Информация по ресурсам и танкам
     text_resource->setString(sfge::SfmlTools::utf2text(getTexts().getStr("Text_Energy") + " " + game.getEnergyInfo()));
-    text_resource->setPosition({ 10, 10 });
+    text_resource->setPosition({ 10, 6 });
     text_resource->setFillColor(sf::Color{ 162, 231, 255 });
     rendertarget.draw(*text_resource);
     text_resource->setString(sfge::SfmlTools::utf2text(getTexts().getStr("Text_UnicornCount") + " " + game.getUnicornCountInfo()));
-    text_resource->setPosition({ 10, 30 });
+    text_resource->setPosition({ 10, 24 });
     text_resource->setFillColor(sf::Color::White);
     rendertarget.draw(*text_resource);
 
@@ -439,8 +439,8 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
 
     // Вывод таймера, если он есть
     if (auto stimer = game.getTimerStr()) {
-        textback.setPosition({ 1024 - 144, 4 });
-        textback.setSize({ 140, 36 });
+        textback.setPosition({ 1024 - 156, 4 });
+        textback.setSize({ 150, 40 });
         rendertarget.draw(textback);
 
         text_timer->setString(sfge::SfmlTools::utf2text(getTexts().getStr("Text_Timer") + " " + *stimer));
@@ -932,7 +932,7 @@ void SceneGame::Init() {
     text_info = loadText(16,sf::Color::White);
 
     text_timer = loadText(20,sf::Color::White);
-    text_resource = loadText(18);
+    text_resource = loadText(16);
     text_progress = loadText(24, sf::Color::White);
     text_progress->setPosition({ 1024 - 400 / 2 - 16, VIEW_SIZE_Y + 132 });
 
