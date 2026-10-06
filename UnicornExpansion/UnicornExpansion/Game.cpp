@@ -819,6 +819,9 @@ void Game::update(float dt)
 					if (unit.isComponent<ComponentEnemyLair>())
 						addGameEvent(AudioEffect::LairKilled, unit.getView());
 					else
+					if (unit.isComponent<ComponentAcidEnemy>()) // «аплатка дл€ отравл€ющих грибных кристаллов
+						addGameEvent(AudioEffect::TowerKilled, unit.getView());
+					else
 						addGameEvent(AudioEffect::MonsterKilled, unit.getView());
 				}
 				if (unit.isComponent<ComponentHarvesterTower>()) addGameEvent(AudioEffect::TowerKilled, unit.getView());
