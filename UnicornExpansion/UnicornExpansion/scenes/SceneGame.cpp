@@ -346,13 +346,13 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
         // Информация по юниту
         // Здесь мы привязываем к позиции text_back без его вывода
         textback.setSize({ 240, 192 });
-        textback.setPosition({ 512 - textback.getSize().x / 2 - 64, 768 - textback.getSize().y });
+        textback.setPosition({ 512 - textback.getSize().x / 2 - 84, 768 - textback.getSize().y });
 
         const GameUnit& selunit = game.getUnitByUID(selector.getSelectedUID());
-        drawProgressRectsAt(rendertarget, selunit.getHealthPerMax(), 48, textback.getPosition().x + 12, textback.getPosition().y + 64,
+        drawProgressRectsAt(rendertarget, selunit.getHealthPerMax(), 48, textback.getPosition().x + 12, textback.getPosition().y + 60,
             getColorByHPNorm(selunit.getHealthPerMax()));
         if (selunit.getShieldPerMax() > 0.0f)
-            drawProgressRectsAt(rendertarget, selunit.getShieldPerMax(), 48, textback.getPosition().x + 12, textback.getPosition().y + 82,
+            drawProgressRectsAt(rendertarget, selunit.getShieldPerMax(), 48, textback.getPosition().x + 12, textback.getPosition().y + 64,
                 sf::Color(107, 230, 255));
 
         if (spr_icons.count(selunit.getCode()) > 0)
@@ -363,17 +363,19 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
         rendertarget.draw(*text_caption);
 
         text_hp->setString(selunit.getHealthInfo());
-        text_hp->setPosition({ textback.getPosition().x + 78, textback.getPosition().y + 54 });
+        text_hp->setPosition({ textback.getPosition().x + 78, textback.getPosition().y + 50 });
         text_hp->setFillColor(getColorByHPNorm(selunit.getHealthPerMax()));
         rendertarget.draw(*text_hp);
 
-        text_hp->setString(selunit.getShieldInfo());
-        text_hp->setPosition({ textback.getPosition().x + 78, textback.getPosition().y + 72 });
-        text_hp->setFillColor(sf::Color(107, 230, 255));
-        rendertarget.draw(*text_hp);
+        if (selunit.getShieldPerMax() > 0.0f) {
+            text_hp->setString(selunit.getShieldInfo());
+            text_hp->setPosition({ textback.getPosition().x + 158, textback.getPosition().y + 50 });
+            text_hp->setFillColor(sf::Color(107, 230, 255));
+            rendertarget.draw(*text_hp);
+        }
 
         text_info->setString(getTexts().getSfmlStrReplacedConsts(selunit.getComponentsInfo()));
-        text_info->setPosition({ textback.getPosition().x + 12, textback.getPosition().y + 92 });
+        text_info->setPosition({ textback.getPosition().x + 12, textback.getPosition().y + 72 });
         rendertarget.draw(*text_info);
 
         // Действия юнита
@@ -928,8 +930,8 @@ void SceneGame::Init() {
     text_caption = loadText(20,sf::Color::White);
     text_action = loadText(16);
     text_action->setPosition({ 1024 - 400 + 8, 712 });
-    text_hp = loadText(18);
-    text_info = loadText(16,sf::Color::White);
+    text_hp = loadText(16);
+    text_info = loadText(15,sf::Color::White);
 
     text_timer = loadText(20,sf::Color::White);
     text_resource = loadText(16);

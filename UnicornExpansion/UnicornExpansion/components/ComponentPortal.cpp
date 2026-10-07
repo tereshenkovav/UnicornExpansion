@@ -139,8 +139,7 @@ bool ComponentPortal::canApplyAction(const UnitAction& action, std::string* msgc
 
 std::string ComponentPortal::getComponentInfo() const
 {
-	std::string str = "$Info_PortalLevel$: " + std::to_string(tek_level + 1) + "\n" +
-		"$Info_MaxBuildingCount$: " + std::to_string(max_building_count);
+	std::string str = "$Info_MaxBuildingCount$: " + std::to_string(max_building_count);
 	if (teleport_speed_up>0) str+= "\n$Info_TeleportSpeedUp$: " + std::to_string(teleport_speed_up)+"%";
 	if (isAutoShield()) str += "\n$Info_AutoShield$";
 	return str;
