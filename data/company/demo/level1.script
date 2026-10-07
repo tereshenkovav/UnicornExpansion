@@ -71,7 +71,6 @@ function initMap() {
   game.setNewViewPoint(14,6) ;
 
   game.addMessage("unicorn",10,String::format(game.getText("Brief_1_1"),MANA_TASK)) ;
-  game.addMessageLater("unicorn",10,10,"$Brief_1_2") ;
   game.addNewTask("collect",String::format(game.getText("Task"),MANA_TASK,TIME_LIMIT)) ;
 
   return true ;

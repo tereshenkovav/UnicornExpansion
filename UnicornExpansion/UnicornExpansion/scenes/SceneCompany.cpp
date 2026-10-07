@@ -7,6 +7,14 @@
 #include "SceneGame.h"
 #include "CompanyInfo.h"
 
+void SceneCompany::doSelectLevel(int i)
+{
+    CompanyInfo comp(company, getEngine()->getLanguages().getCurrent());
+
+    selectedlevel = i;
+    companyinfo = companylevels[i] + "\\n\\n"+ readAllTextFromFile(comp.getLevelBriefFileName(selectedlevel), "Unknown briefing", "\\n");
+}
+
 SceneCompany::SceneCompany(const std::string& company)
 {
     this->company = company;
@@ -23,6 +31,7 @@ void SceneCompany::Render(sf::RenderTarget & rendertarget) {
     
     rendertarget.draw(*cbgroup);
     rendertarget.draw(*butcancel);
+    rendertarget.draw(*butplay);
     for (auto& button : buttons)
         rendertarget.draw(*button);
 }
@@ -31,6 +40,7 @@ void SceneCompany::Update(float dt, const sf::Vector2i & mousePos, const std::ve
     for (auto & event : events) {
                 
         butcancel->processEvent(event);
+        butplay->processEvent(event);
         cbgroup->processEvent(event);
 
         for (auto& button : buttons)
@@ -70,17 +80,20 @@ void SceneCompany::Init() {
     text_caption = loadText(readAllTextFromFile(comp.getNameFileName(), "Unknown company"), 24, sf::Color::White);
     text_caption->setPosition({ 16 + 300 - text_caption->getGlobalBounds().size.x / 2, 32 });
     
-    companyinfo = readAllTextFromFile(comp.getDescrFileName(), "Unknown description", "\\n");
     text_info = loadText(20, sf::Color(192, 192, 192));
     
     butcancel = std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_MainMenu"), 18,
         1024-116-16, 700, 100, 40);
     butcancel->setOnClick([this]() {getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>()); });
 
+    butplay = std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Text_PlayGame"), 18,
+       (600 + 16)/2-75, 700, 150, 40);
+    butplay->setOnClick([this]() {getEngine()->SwitchToScene(std::make_shared<SceneGame>(company, selectedlevel, userprofile->getLastDifficulty())); });
+
     cbgroup = std::make_unique<sfge::CheckboxGroup>();
-    cbgroup->addCheckbox(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Checkbox_Easy"), 18, 80, 700, 24, 24);
-    cbgroup->addCheckbox(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Checkbox_Norm"), 18, 240, 700, 24, 24);
-    cbgroup->addCheckbox(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Checkbox_Hard"), 18, 400, 700, 24, 24);
+    cbgroup->addCheckbox(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Checkbox_Easy"), 18, 80, 640, 24, 24);
+    cbgroup->addCheckbox(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Checkbox_Norm"), 18, 240, 640, 24, 24);
+    cbgroup->addCheckbox(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Checkbox_Hard"), 18, 400, 640, 24, 24);
     cbgroup->setCheckedIdx((int)userprofile->getLastDifficulty());
     
     companylevels.clear();
@@ -94,6 +107,12 @@ void SceneCompany::Init() {
         if (i<=userprofile->getNextLevel(company) || comp.isAllowedAllMaps()) {
             buttons.push_back(std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), sfge::SfmlTools::utf2text(companylevels[i]), 18,
                 600 + 16 + 16 + 38, 64 + i * 54, 300, 40));
-            buttons.back()->setOnClick([this, i]() {getEngine()->SwitchToScene(std::make_shared<SceneGame>(company, i, userprofile->getLastDifficulty())); });
+            buttons.back()->setOnClick([this, i]() { doSelectLevel(i); });
         }
+
+    if (userprofile->getNextLevel(company) >= comp.getLevelCount())
+        doSelectLevel(comp.getLevelCount() - 1);
+    else
+        doSelectLevel(userprofile->getNextLevel(company));
+
 }

@@ -20,6 +20,11 @@ std::string CompanyInfo::getLevelStringsFileName(int leveln) const
 	return std::format("company/{}/level{}.{}.strings", company, leveln, lang);
 }
 
+std::string CompanyInfo::getLevelBriefFileName(int leveln) const
+{
+	return std::format("company/{}/level{}.{}.brief", company, leveln, lang);
+}
+
 std::string CompanyInfo::getLevelMapFileName(int leveln) const
 {
 	return std::format("company/{}/level{}.map", company, leveln);
@@ -48,9 +53,4 @@ bool CompanyInfo::isAllowedAllMaps() const {
 bool CompanyInfo::isNoCompanyMenu() const {
 	// Обучение возвращаем в главное меню
 	return company == "tutorial";
-}
-
-bool CompanyInfo::isNoCompanySequence() const {
-	// Для испытаний не нужно переключаться к следующей карте
-	return company == "challenge";
 }

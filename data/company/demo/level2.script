@@ -56,7 +56,6 @@ function initMap() {
   game.setNewViewPoint(14,6) ;
 
   game.addMessage("unicorn",10,"$Brief_1_1") ;
-  game.addMessageLater("unicorn",10,10,"$Brief_1_2") ;
   game.addNewTask("defend","$Task") ;
 
   return true ;

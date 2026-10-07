@@ -16,15 +16,10 @@ void SceneEndGame::goNextLevel()
     LevelCode newlevel = levelcode;
     newlevel.level++;
     CompanyInfo comp(newlevel.company,getEngine()->getLanguages().getCurrent());
-    if (comp.isNoCompanySequence()) {
+    if (newlevel.level >= comp.getLevelCount())
+        getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>(newlevel.company));
+    else
         getEngine()->SwitchToScene(std::make_shared<SceneCompany>(levelcode.company));
-    }
-    else {
-        if (newlevel.level >= comp.getLevelCount())
-            getEngine()->SwitchToScene(std::make_shared<SceneMainMenu>(newlevel.company));
-        else
-            getEngine()->SwitchToScene(std::make_shared<SceneGame>(newlevel));
-    }
 }
 
 void SceneEndGame::goOutOfLevel()

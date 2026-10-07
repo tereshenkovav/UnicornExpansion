@@ -78,6 +78,7 @@ Msg_Fail=Вы проиграли!
 Text_Timer=Время:
 Text_Task=Задания миссии
 Text_Quit=Выход
+Text_PlayGame=Старт миссии
 Text_Training=Обучение
 Text_DemoCompany=Демо-кампания
 Text_Challenge=Испытания

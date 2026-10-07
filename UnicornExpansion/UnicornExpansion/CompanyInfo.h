@@ -11,6 +11,7 @@ public:
 	CompanyInfo(const std::string& company, const std::string& lang);
 	int getLevelCount() const;
 	std::string getLevelStringsFileName(int leveln) const;
+	std::string getLevelBriefFileName(int leveln) const;
 	std::string getLevelMapFileName(int leveln) const;
 	std::string getLevelScriptFileName(int leveln) const;
 	std::string getNameFileName() const;
@@ -21,7 +22,5 @@ public:
 	bool isAllowedAllMaps() const;
 	// У кампании нет меню - после завершения игры идти в главное меню всегда
 	bool isNoCompanyMenu() const;
-	// У кампании нет последовательности - после победы возвращаться в меню кампании вместо следующего уровня или постфикса
-	bool isNoCompanySequence() const;
 };
 

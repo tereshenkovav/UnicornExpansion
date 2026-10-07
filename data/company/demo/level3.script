@@ -51,13 +51,7 @@ function initMap() {
 
   game.setNewViewPoint(13,32) ;
 
-  if (game.isHard2()) {
-    game.addMessage("unicorn",10,"$Brief_1_1_Hard2") ;
-  }
-  else {
-    game.addMessage("unicorn",10,"$Brief_1_1") ;
-  }
-  game.addMessageLater("unicorn",10,10,"$Brief_1_2") ;
+  game.addMessage("unicorn",10,"$Brief_1_1") ;
 
   game.addNewTask("rich","$MainTask") ;
   if (game.isHard2()) {

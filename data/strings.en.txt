@@ -78,6 +78,7 @@ Msg_Fail=You fail!
 Text_Timer=Time:
 Text_Task=Mission tasks
 Text_Quit=Exit
+Text_PlayGame=Start mission
 Text_Training=Tutorial
 Text_DemoCompany=Demo-company
 Text_Challenge=Challenges

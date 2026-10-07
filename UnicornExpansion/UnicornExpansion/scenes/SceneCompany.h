@@ -17,12 +17,15 @@ private:
     sfge::UniqueText text_caption;
     sfge::UniqueText text_info;
     sfge::UniqueButton butcancel;
+    sfge::UniqueButton butplay;
     sfge::UniqueCheckboxGroup cbgroup;
     std::vector<sfge::UniqueButton> buttons;
     std::shared_ptr<UserProfile> userprofile;
     std::string company;
     std::vector<std::string> companylevels;
     std::string companyinfo;
+    int selectedlevel;
+    void doSelectLevel(int i);
 public:
     SceneCompany(const std::string& company);
     virtual void Render(sf::RenderTarget& rendertarget) override;
