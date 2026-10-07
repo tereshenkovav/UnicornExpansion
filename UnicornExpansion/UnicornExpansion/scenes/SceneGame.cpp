@@ -336,7 +336,10 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
     text_resource->setString(sfge::SfmlTools::utf2text(getTexts().getStr("Text_Energy") + " " + game.getEnergyInfo()));
     text_resource->setPosition({ 10, 6 });
     text_resource->setFillColor(sf::Color{ 162, 231, 255 });
-    rendertarget.draw(*text_resource);
+    if (game.getEnergy() >= game.getMaxEnergy())
+        rendertarget.draw(*text_resource, &shader_attack);
+    else
+        rendertarget.draw(*text_resource);
     text_resource->setString(sfge::SfmlTools::utf2text(getTexts().getStr("Text_UnicornCount") + " " + game.getUnicornCountInfo()));
     text_resource->setPosition({ 10, 24 });
     text_resource->setFillColor(sf::Color::White);
@@ -999,6 +1002,7 @@ void SceneGame::Init() {
     snd_audioeffects_buffer[AudioEffect::CrystallKilled] = loadSoundBuffer("sounds/crystal_killed.ogg");
     snd_audioeffects_buffer[AudioEffect::LairKilled] = loadSoundBuffer("sounds/lair_killed.ogg");
     snd_audioeffects_buffer[AudioEffect::Hit] = loadSoundBuffer("sounds/hit.ogg");
+    snd_audioeffects_buffer[AudioEffect::MagicOverfill] = loadSoundBuffer("sounds/magic_overfill.ogg");
 
     spr_terrains[Terrain::Ground]=loadSprite("images/terrains/ground.png");
     spr_terrains[Terrain::Water]=loadSprite("images/terrains/water.png");
@@ -1076,7 +1080,7 @@ void SceneGame::Init() {
     shader_bright.setUniform("texture", sf::Shader::CurrentTexture);
     shader_attack.setUniform("texture", sf::Shader::CurrentTexture);
 
-    effects_posed = { AudioEffect::Teleport, AudioEffect::MonsterKilled, AudioEffect::TowerKilled };
+    effects_posed = { AudioEffect::Teleport, AudioEffect::MonsterKilled, AudioEffect::TowerKilled, AudioEffect::LairKilled, AudioEffect::Hit };
 
     if (std::filesystem::exists(getEngine()->getExeDir() + "/developer.json"))
         game.loadDeveloperConfig(getEngine()->getExeDir() + "/developer.json");

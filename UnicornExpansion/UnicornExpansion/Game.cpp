@@ -174,6 +174,7 @@ bool Game::loadScript(const std::string& filename) {
 	iswin = false;
 	isfail = false;
 	counter_under_attack.reset();
+	counter_magic_overfill.reset();
 	lasteventpos = std::nullopt;
 	// Очистка лазеров
 	lasers.clear();
@@ -639,6 +640,7 @@ void Game::update(float dt)
 
 	mushrooms.update(dt);
 	counter_under_attack.update(dt);
+	counter_magic_overfill.update(dt);
 	
 	for (int i = 0; i < history.size(); i++)
 		if (history[i].duration > 0) history[i].duration -= dt;
@@ -842,7 +844,13 @@ void Game::update(float dt)
 	std::erase_if(decors, [](const Decor& decor) { return decor.left<=0.0f; });
 
 	// Ограничение магии
-	if (energy > getMaxEnergy()) energy = getMaxEnergy();
+	if (energy > getMaxEnergy()) {
+		energy = getMaxEnergy();
+		if (!counter_magic_overfill.isActive()) {
+			addGameEvent(AudioEffect::MagicOverfill, sf::Vector2f{ 0,0 });
+			counter_magic_overfill.upset(10.0f);
+		}
+	}
 
 	try {
 		if (!isGameOver()) {

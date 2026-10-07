@@ -19,7 +19,7 @@
 enum class Terrain { Ground, Forest, Water, Road, Mud };
 enum class LaserType { Harvest, Attack, Heal, Detox };
 enum class AudioEffect { Teleport, FinishTeleport, FinishResearch, FinishUpgrade, FinishBuilding, FinishConstruct, UnderAttack,
-  MonsterKilled, TowerKilled, CrystallKilled, LairKilled, Hit};
+  MonsterKilled, TowerKilled, CrystallKilled, LairKilled, Hit, MagicOverfill};
 
 enum class Difficulty { Easy, Norm, Hard };
 
@@ -101,6 +101,7 @@ private:
 	std::optional<sf::Vector2f> teleportation_effect;
 	std::vector<AudioEffectPosed> audioeffects;
 	Countdown counter_under_attack;
+	Countdown counter_magic_overfill;
 	std::optional<sf::Vector2f> lasteventpos;
 	bool magiceconomy = false;
 	int seed;
