@@ -219,7 +219,11 @@ void GameUnit::setSecondaryTarget(int x, int y) {
 
 std::string GameUnit::getCaption() const
 {
-	return caption;
+	std::string r = caption;
+	for (auto i = 0; i < components.size(); i++)
+		if (auto str = components[i]->appendUnitCaption())
+			r += *str;
+	return r;
 }
 
 int GameUnit::getVelocity() const

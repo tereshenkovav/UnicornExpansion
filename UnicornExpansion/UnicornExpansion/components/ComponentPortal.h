@@ -15,5 +15,6 @@ public:
 	virtual bool applyAction(const UnitAction& action);
 	virtual bool canApplyAction(const UnitAction& action, std::string* msgcode) const;
 	virtual std::string getComponentInfo() const;
+	virtual std::optional<std::string> appendUnitCaption() const;
 };
 

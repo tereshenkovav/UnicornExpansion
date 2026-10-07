@@ -87,6 +87,11 @@ std::string UnitComponent::getComponentInfo() const
     return std::string();
 }
 
+std::optional<std::string> UnitComponent::appendUnitCaption() const
+{
+    return std::nullopt;
+}
+
 std::string UnitComponent::getCodePostfix() const
 {
     return std::string();

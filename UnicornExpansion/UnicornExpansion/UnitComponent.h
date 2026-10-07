@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <optional>
 
 class UnitComponent;
 class Game;
@@ -41,6 +42,8 @@ public:
 	virtual bool undoAction(const UnitAction& action);
 	// Получение свойств компонента
 	virtual std::string getComponentInfo() const;
+	// Дополнение названия юнита
+	virtual std::optional<std::string> appendUnitCaption() const;
 	// Расширение кода объекта по компоненту - для перекраски танков
 	virtual std::string getCodePostfix() const;
 	// Получение порядка компонент при необходимости

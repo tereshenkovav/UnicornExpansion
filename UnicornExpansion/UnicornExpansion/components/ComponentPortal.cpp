@@ -144,3 +144,8 @@ std::string ComponentPortal::getComponentInfo() const
 	if (isAutoShield()) str += "\n$Info_AutoShield$";
 	return str;
 }
+
+std::optional<std::string> ComponentPortal::appendUnitCaption() const
+{
+	return std::to_string(tek_level+1);
+}
