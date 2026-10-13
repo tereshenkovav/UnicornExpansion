@@ -17,7 +17,7 @@
      "Value": 1,
      "UpgradeStep": 1,
      "Distance": 200,
-     "Cost": 0.5
+     "Cost": 0.0
    },
   "MeleeEnemy": {
     "ViewDistance": 300
@@ -43,7 +43,7 @@
   "TowerHealer": {
      "Value": 2,
      "Distance": 300,
-     "Cost": 0.5
+     "Cost": 0.0
    },
   "Resource": {
      "PoorEfficient": 0.5,
