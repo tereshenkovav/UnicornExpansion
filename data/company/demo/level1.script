@@ -35,6 +35,13 @@ function initMap() {
   game.addPortal(14,4) ;
   game.addAcademy(18,5) ;
   game.addMachinary(10,6) ;
+  game.addStore(11,4) ;
+  game.addStore(15,2) ;
+  game.addStore(18,3) ;
+  game.addStore(12,9) ;
+  game.addStore(15,10) ;
+  game.addStore(17,8) ;
+  game.addHouse(21,4) ;
   game.addUnicorn(14,7) ;
   game.addCrystal(10,12,300) ;
   game.addCrystal(20,13,450) ;
