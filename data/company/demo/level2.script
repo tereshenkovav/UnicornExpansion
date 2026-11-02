@@ -25,14 +25,23 @@ function initMap() {
   game.allowAction("ResearchLongDist") ;
   game.allowAction("ConstructMachine") ;
   game.allowAction("UpgradePortal") ;
+  game.allowAction("BuildHouse") ;
+  game.allowAction("BuildStore") ;
+  game.allowAction("BuildAcademy") ;
+  game.allowAction("BuildMachinary") ;
   game.allowAction("SetupBaseShield") ;
 
   game.addPortal(14,4) ;
   game.addAcademy(18,5) ;
   game.addMachinary(10,6) ;
+  game.addStore(11,4) ;
+  game.addStore(18,3) ;
+  game.addStore(12,9) ;
+  game.addStore(17,8) ;
+  game.addHouse(21,4) ;
   game.addUnicorn(14,7) ;
   game.addUnicorn(16,8) ;
-  game.addUnicorn(12,9) ;
+  game.addUnicorn(12,6) ;
   game.addCrystalPoor(35,14,80) ;
   game.addCrystalPoor(38,20,85) ;
   game.addCrystalPoor(34,25,55) ;
@@ -45,8 +54,9 @@ function initMap() {
   game.addCrystalPoor(39,31,44) ;
   game.addCrystal(41,35,60) ;
   game.addCrystal(38,38,65) ;
+  game.addCrystal(6,37,420) ;
 
-  game.incEnergy(1000) ;
+  game.incEnergy(500) ;
 
   TIME_DEFEND = 2;
   if (game.isHard1()) { TIME_DEFEND+=2 ; }
