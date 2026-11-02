@@ -1,9 +1,10 @@
 MapName=Magic must flow
 MainTask=Completely extract the rich crystal
-ManaTask=Harvest at least 10,000 magic
+ManaTask=Harvest at least 5,000 magic
 SecondTask=Destroy mysterious portals (optional)
 Brief_1_1=Wait. They look a lot like our portals, but the monsters that previously attacked us are teleporting from them. If possible, try to destroy these portals.
 Brief_2=Great, the monsters won't bother us anymore. We continue to mine the crystal!
 Brief_3=The crystal has been completely extracted. The task is completed!
 Brief_3_Win=The crystal has been completely extracted and we have harvest enough magic. The task is completed!
 Brief_3_Fail=The crystal is completely extracted, but there is too little magic. Our mission is a failure.
+Brief_Alert=It looks like crystal mining attracts enemies. Be ready.

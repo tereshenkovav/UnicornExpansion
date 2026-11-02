@@ -5,6 +5,41 @@ function initMap() {
   game = new Game() ;
   game.setSeed(76531816) ;
 
+  // Обязательный вызов инициализации системы событий
+  initEvents() ;
+
+  addEvent(function() { return game.getUnitHealth(uidrich)<3000 },
+    function() {
+      game.setNewViewPoint(37,37) ;
+      game.addMessage("unicorn",10,"$Brief_Alert") ;
+      game.addEnemy1(35,35) ;
+      game.addEnemy1(39,35) ;
+      game.addEnemy1(35,39) ;
+      game.addEnemy1(39,39) ;
+    }) ;
+
+  if (game.isHard1()) {
+  addEvent(function() { return game.getUnitHealth(uidrich)<2000 },
+    function() {
+      game.setNewViewPoint(37,37) ;
+      game.addEnemy1(35,35) ;
+      game.addEnemy1(39,35) ;
+      game.addEnemy2(35,39) ;
+      game.addEnemy2(39,39) ;
+    }) ;
+  }
+
+  if (game.isHard2()) {
+  addEvent(function() { return game.getUnitHealth(uidrich)<1000 },
+    function() {
+      game.setNewViewPoint(37,37) ;
+      game.addEnemy3(35,35) ;
+      game.addEnemy3(39,35) ;
+      game.addEnemy2(35,39) ;
+      game.addEnemy2(39,39) ;
+    }) ;
+  }
+
   game.allowAction("MakeHarvester") ;
   game.allowAction("MakeAttacker") ;
   game.allowAction("MakeHealer") ;
@@ -20,36 +55,32 @@ function initMap() {
   game.allowAction("MakeTowerHarvest") ;
   game.allowAction("BuildUnicorn") ;
   game.allowAction("ResearchWorkInAction") ;
-  game.allowAction("ResearchMagicEconomy") ;
   game.allowAction("ResearchWorkInMoving") ;
+  game.allowAction("ResearchMagicEconomy") ;
   game.allowAction("ResearchLongDist") ;
   game.allowAction("ConstructMachine") ;
   game.allowAction("UpgradePortal") ;
-  game.allowAction("SetupBaseShield") ;
+  game.allowAction("BuildHouse") ;
+  game.allowAction("BuildStore") ;
   game.allowAction("BuildAcademy") ;
   game.allowAction("BuildMachinary") ;
+  game.allowAction("SetupBaseShield") ;
 
   game.addPortal(13,32) ;
   game.clearFogAt(13,32,7) ;
   game.clearFogAt(37,37,7) ;
   game.clearFogAt(13,9,7) ;
 
-  uidrich = game.addCrystalRich(37,37,6000) ;
-  game.addLair(10,6,"4a") ;
-  game.addLair(11,11,"3a3a3b") ;
+  uidrich = game.addCrystalRich(37,37,4000) ;
+  game.addLair(10,6,"6a") ;
+  game.addLair(39,41,"5a5a5b") ;
   if (game.isHard1()) {
-    game.addLair(16,8,"3a3a3a3b3b3c3c") ;
+    game.addLair(42,3,"4a4a4a4b4b4c4c") ;
   }
 
-  game.setMushroomsPeriodGrown(5) ;
-  game.setMushrooms(30,40,1) ;
-  game.setMushrooms(31,41,2) ;
-  game.setMushrooms(32,42,3) ;
-  game.setMushrooms(33,43,4) ;
+  game.incEnergy(190) ;
 
-  game.incEnergy(400) ;
-
-  game.setNewViewPoint(13,32) ;
+  game.setNewViewPoint(37,39) ;
 
   game.addMessage("unicorn",10,"$Brief_1_1") ;
 
@@ -63,6 +94,8 @@ function initMap() {
 }
 
 function Update() {
+  processEvents() ;
+
   if ((game.getCountByComponent("EnemyLair")==0)&&
      (!game.isFlag("nocaves"))) {
      game.setFlag("nocaves") ;
@@ -73,7 +106,7 @@ function Update() {
   if ((!game.isUnitExist(uidrich))&&(!game.isFlag("rich"))) {
      game.setFlag("rich") ;
      if (game.isHard2()) {
-       if (game.getEnergy()>=10000) {
+       if (game.getEnergy()>=5000) {
          game.setFlag("win") ;
          game.addMessage("unicorn",10,"$Brief_3_Win") ;
        }
