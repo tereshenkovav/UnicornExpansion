@@ -6,7 +6,7 @@ var uidenemy2 ;
 
 function initMap() {
   game = new Game() ;
-  game.setSeed(76531816) ;
+  game.setSeed(53175916) ;
 
   // Обязательный вызов инициализации системы событий
   initEvents() ;
@@ -26,11 +26,12 @@ function initMap() {
         game.addMessage("unicorn",10,"$Brief_3") ;
       }) ;
 
-  addEvent(function() { return game.getEnergy()>=100 },
+  addEvent(function() { return game.getEnergy()>=150 },
       function() {
         game.setTaskCompleted("harvest") ;
         game.addNewTask("makeunicorn","$Task_MakeUnicorn") ;
         game.addMessage("unicorn",10,"$Brief_4") ;
+        game.allowAction("BuildHouse") ;
         game.allowAction("BuildUnicorn") ;
       }) ;
 
@@ -54,6 +55,7 @@ function initMap() {
             },
             function() {
               game.setTaskCompleted("battle") ;
+              game.allowAction("BuildStore") ;
               game.addNewTask("harvestfinal","$Task_HarvestFinal") ;
               game.addMessage("unicorn",10,"$Brief_7_1") ;
               game.addMessageLater("unicorn",10,10,"$Brief_7_2") ;
@@ -77,7 +79,7 @@ function initMap() {
   uidcrystall = game.addCrystal(9,18,1500) ;
   uid1 = game.addUnicorn(7,14) ;
 
-  game.incEnergy(80) ;
+  game.incEnergy(100) ;
 
   game.setNewViewPoint(9,15) ;
 
