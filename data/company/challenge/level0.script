@@ -5,10 +5,14 @@ function initMap() {
   game = new Game() ;
 
   game.allowAction("MakeTowerAttack") ;
-  game.allowAction("MakeTowerHealer") ;
   game.allowAction("MakeTowerHarvest") ;
   game.allowAction("ConstructMachine") ;
+  game.allowAction("BuildStore") ;
+  game.allowAction("UpgradePortal") ;
+  game.allowAction("BuildMachinary") ;
+  game.allowAction("SetupBaseShield") ;
 
+  game.addStore(4,4) ;
   game.addPortal(6,6) ;
   game.addMachinary(10,6) ;
   game.addMachinary(6,10) ;
