@@ -539,6 +539,12 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
             }
 
             if (keyPressed->scancode == sf::Keyboard::Scancode::F) showfps = !showfps;
+            if (keyPressed->scancode == sf::Keyboard::Scancode::E) {
+                selector.unSelectAll();
+                for (int i = 0; i < game.getUnitCount(); i++)
+                    if (game.getUnit(i).isComponent<ComponentMultiselect>())
+                        selector.invertUnit(game.getUnit(i).getUID());
+            }
             if (keyPressed->scancode == sf::Keyboard::Scancode::Tab) showterrain = !showterrain;
             if (keyPressed->scancode == sf::Keyboard::Scancode::Enter) {
                 game.skipAllMessages();
