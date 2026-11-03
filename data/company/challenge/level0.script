@@ -12,7 +12,10 @@ function initMap() {
   game.allowAction("BuildMachinary") ;
   game.allowAction("SetupBaseShield") ;
 
-  game.addStore(4,4) ;
+  game.addStore(3,7) ;
+  game.addStore(5,4) ;
+  game.addStore(4,5) ;
+  game.addStore(7,3) ;
   game.addPortal(6,6) ;
   game.addMachinary(10,6) ;
   game.addMachinary(6,10) ;
@@ -25,14 +28,14 @@ function initMap() {
     game.addMachine(12,13) ;
   }
 
-  game.addCrystal(20,19,150) ;
-  game.addCrystal(25,19,210) ;
-  game.addCrystal(17,23,430) ;
-  game.addCrystal(17,14,760) ;
-  game.addCrystal(30,19,870) ;
-  game.addCrystal(23,22,1000) ;
-  game.addCrystal(21,24,1100) ;
-  game.addCrystal(22,13,1200) ;
+  game.addCrystal(20,19,190) ;
+  game.addCrystal(25,19,280) ;
+  game.addCrystal(17,23,470) ;
+  game.addCrystal(17,14,770) ;
+  game.addCrystal(30,19,890) ;
+  game.addCrystal(23,22,1030) ;
+  game.addCrystal(21,24,1170) ;
+  game.addCrystal(22,13,1250) ;
 
   game.incEnergy(300) ;
 
