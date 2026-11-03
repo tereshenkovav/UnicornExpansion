@@ -174,6 +174,11 @@ void Engine::setCloseHandlerScene(std::shared_ptr<Scene> scene)
     closehandlerscene = scene;
 }
 
+bool Engine::isWindowHasFocus() const
+{
+    return window->hasFocus();
+}
+
 void Engine::Run(std::shared_ptr<Scene> scene)
 {
     createWindow();

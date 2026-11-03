@@ -107,6 +107,8 @@ public:
     // Обновить параметры окна по профилю
     void updateByProfile();
     void setCloseHandlerScene(std::shared_ptr<Scene> scene);
+    // Проверка, есть ли фокус у окна
+    bool isWindowHasFocus() const;
 };
 
 };

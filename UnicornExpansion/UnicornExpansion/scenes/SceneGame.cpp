@@ -664,29 +664,32 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
         }
     } // Конец проверки событий
 
-    // Прокрутка карты
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Left)) {
-        view.move({ -SCROLLSPEED * BLOCKW * getScale05per20() * dt, 0 });
-        fixCameraPosition();
+    // Прокрутка карты только если окно активно
+    if (getEngine()->isWindowHasFocus()) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Left)) {
+            view.move({ -SCROLLSPEED * BLOCKW * getScale05per20() * dt, 0 });
+            fixCameraPosition();
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Right)) {
+            view.move({ +SCROLLSPEED * BLOCKW * getScale05per20() * dt, 0 });
+            fixCameraPosition();
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up)) {
+            view.move({ 0, -SCROLLSPEED * BLOCKH * getScale05per20() * dt });
+            fixCameraPosition();
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Down)) {
+            view.move({ 0, SCROLLSPEED * BLOCKH * getScale05per20() * dt });
+            fixCameraPosition();
+        }
+        // Отдельно движение по карте зажатой мышкой, тоже для активного окна
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && mouseholdedonmap) {
+            view.setCenter(minimap.getWorldPosByMapPos(mousePos.x, mousePos.y));
+            fixCameraPosition();
+        }
+        else
+            mouseholdedonmap = false;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Right)) {
-        view.move({ +SCROLLSPEED * BLOCKW * getScale05per20() * dt, 0 });
-        fixCameraPosition();
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up)) {
-        view.move({ 0, -SCROLLSPEED * BLOCKH * getScale05per20() * dt });
-        fixCameraPosition();
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Down)) {
-        view.move({ 0, SCROLLSPEED * BLOCKH * getScale05per20() * dt });
-        fixCameraPosition();
-    }
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && mouseholdedonmap) {
-        view.setCenter(minimap.getWorldPosByMapPos(mousePos.x, mousePos.y));
-        fixCameraPosition();
-    }
-    else
-        mouseholdedonmap = false;
 
     laser_apply->update(dt);
     aura->update(dt);
