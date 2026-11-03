@@ -3,6 +3,7 @@ var waven ;
  
 function initMap() {
   game = new Game() ;
+  game.setSeed(67868123) ;
 
   game.allowAction("MakeTowerAttack") ;
   game.allowAction("MakeTowerHarvest") ;
