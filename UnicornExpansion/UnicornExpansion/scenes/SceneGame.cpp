@@ -449,7 +449,7 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
         rendertarget.draw(textback);
 
         text_timer->setString(sfge::SfmlTools::utf2text(getTexts().getStr("Text_Timer") + " " + *stimer));
-        text_timer->setPosition({ 1024 - 144 + 10, 8 });
+        text_timer->setPosition({ 1024 - 144, 8 });
         rendertarget.draw(*text_timer);
     }
 
