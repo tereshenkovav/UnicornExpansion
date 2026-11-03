@@ -336,7 +336,7 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
     text_resource->setString(sfge::SfmlTools::utf2text(getTexts().getStr("Text_Energy") + " " + game.getEnergyInfo()));
     text_resource->setPosition({ 10, 6 });
     text_resource->setFillColor(sf::Color{ 162, 231, 255 });
-    if (game.getEnergy() >= game.getMaxEnergy())
+    if ((game.getEnergy() >= game.getMaxEnergy()) && (game.getMaxEnergy() > 0))
         rendertarget.draw(*text_resource, &shader_attack);
     else
         rendertarget.draw(*text_resource);

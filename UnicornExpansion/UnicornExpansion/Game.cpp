@@ -846,7 +846,7 @@ void Game::update(float dt)
 	// Ограничение магии
 	if (energy > getMaxEnergy()) {
 		energy = getMaxEnergy();
-		if (!counter_magic_overfill.isActive()) {
+		if ((!counter_magic_overfill.isActive()) && (getMaxEnergy() > 0)) {
 			addGameEvent(AudioEffect::MagicOverfill, sf::Vector2f{ 0,0 });
 			counter_magic_overfill.upset(10.0f);
 		}
