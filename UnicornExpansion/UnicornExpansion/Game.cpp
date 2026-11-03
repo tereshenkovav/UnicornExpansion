@@ -396,7 +396,7 @@ std::optional<sf::Vector2i> Game::getFirstFreePosFor2x2Building(const GameUnit& 
 	}
 
 	Vector2D<bool> busymap(width, height, false);
-	busymap.setOutboundValue(false);
+	busymap.setOutboundValue(true); // «десь используетс€ true, чтобы здани€ не спавнились за краем карты
 
 	// Ќужно вынести в отдельный блок построени€ полной карты зан€тости
 	for (int x = 0; x < width; x++)
