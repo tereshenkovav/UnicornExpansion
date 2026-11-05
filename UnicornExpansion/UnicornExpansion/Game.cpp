@@ -695,6 +695,7 @@ void Game::update(float dt)
 
 	// Построение лазеров для рендера и действия с ними
 	lasers.clear();
+	int cached_maxenergy = getMaxEnergy(); // Временный механизм кэширования
 	for (int i = 0; i < units.size(); i++) {
 		if (units[i].isComponent<ComponentUnicorn>())
 			switch (units[i].getLastMoving()) {
@@ -714,15 +715,17 @@ void Game::update(float dt)
 			laserfix = { -10, -30 };
 		if (const auto* harvester = units[i].getComponent<ComponentHarvester>()) {
 			if (units[i].isCanActed(allowworkinaction,allowworkinmoving)) {
-				FinderByBestDistance finder(harvester->getHarvestDistance() * distk, units[i].getView());
-				for (int j = 0; j < units.size(); j++)
-					if (units[j].isComponent<ComponentResource>())
-						finder.addPos(units[j].getView(), j);
-				if (auto res_idx = finder.getBestIndex()) {
-					energy += harvester->getHarvestRate() * units[*res_idx].getComponent<ComponentResource>()->getResourceEfficient() * dt;
-					units[*res_idx].decHealth(harvester->getHarvestRate() * dt);
-					lasers.push_back({ units[i].getView() + laserfix,
-						units[*res_idx].getView(), LaserType::Harvest, SeedStore::getSeedByUIDAndLaserType(units[i].getUID(),LaserType::Harvest) });
+				if (energy < cached_maxenergy) {
+					FinderByBestDistance finder(harvester->getHarvestDistance() * distk, units[i].getView());
+					for (int j = 0; j < units.size(); j++)
+						if (units[j].isComponent<ComponentResource>())
+							finder.addPos(units[j].getView(), j);
+					if (auto res_idx = finder.getBestIndex()) {
+						energy += harvester->getHarvestRate() * units[*res_idx].getComponent<ComponentResource>()->getResourceEfficient() * dt;
+						units[*res_idx].decHealth(harvester->getHarvestRate() * dt);
+						lasers.push_back({ units[i].getView() + laserfix,
+							units[*res_idx].getView(), LaserType::Harvest, SeedStore::getSeedByUIDAndLaserType(units[i].getUID(),LaserType::Harvest) });
+					}
 				}
 			}
 		}
