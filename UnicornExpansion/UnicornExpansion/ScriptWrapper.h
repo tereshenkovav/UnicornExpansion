@@ -68,6 +68,46 @@ zetscript::zs_int Game_addEnemy4(zetscript::ScriptEngine* _script_engine, Game* 
 	return factory.addEnemy4(x, y);
 }
 
+zetscript::zs_int Game_spawnEnemy1(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	UnitFactory factory(_this);
+	auto pos = _this->getFirstFreePosNearPoint(x, y);
+	if (pos)
+		return factory.addEnemy1((*pos).x, (*pos).y);
+	else
+		return -1;
+}
+
+zetscript::zs_int Game_spawnEnemy2(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	UnitFactory factory(_this);
+	auto pos = _this->getFirstFreePosNearPoint(x, y);
+	if (pos)
+		return factory.addEnemy2((*pos).x, (*pos).y);
+	else
+		return -1;
+}
+
+zetscript::zs_int Game_spawnEnemy3(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	UnitFactory factory(_this);
+	auto pos = _this->getFirstFreePosNearPoint(x, y);
+	if (pos)
+		return factory.addEnemy3((*pos).x, (*pos).y);
+	else
+		return -1;
+}
+
+zetscript::zs_int Game_spawnEnemy4(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	UnitFactory factory(_this);
+	auto pos = _this->getFirstFreePosNearPoint(x, y);
+	if (pos)
+		return factory.addEnemy4((*pos).x, (*pos).y);
+	else
+		return -1;
+}
+
 zetscript::zs_int Game_addCrystal(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y, zetscript::zs_int hp) {
 	ZS_UNUSUED_PARAM(_script_engine);
 	UnitFactory factory(_this);
@@ -102,6 +142,16 @@ zetscript::zs_int Game_addUnicorn(zetscript::ScriptEngine* _script_engine, Game*
 	ZS_UNUSUED_PARAM(_script_engine);
 	UnitFactory factory(_this);
 	return factory.addUnicorn(x, y);
+}
+
+zetscript::zs_int Game_spawnUnicorn(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
+	ZS_UNUSUED_PARAM(_script_engine);
+	UnitFactory factory(_this);
+	auto pos = _this->getFirstFreePosNearPoint(x,y);
+	if (pos)
+		return factory.addUnicorn((*pos).x, (*pos).y);
+	else
+		return -1 ;
 }
 
 zetscript::zs_int Game_addMachine(zetscript::ScriptEngine* _script_engine, Game* _this, zetscript::zs_int x, zetscript::zs_int y) {
@@ -304,12 +354,17 @@ void registerTypeGameInScript(zetscript::ScriptEngine & engine) {
 	engine.registerMemberFunction<Game>("addEnemy2", &Game_addEnemy2);
 	engine.registerMemberFunction<Game>("addEnemy3", &Game_addEnemy3);
 	engine.registerMemberFunction<Game>("addEnemy4", &Game_addEnemy4);
+	engine.registerMemberFunction<Game>("spawnEnemy1", &Game_spawnEnemy1);
+	engine.registerMemberFunction<Game>("spawnEnemy2", &Game_spawnEnemy2);
+	engine.registerMemberFunction<Game>("spawnEnemy3", &Game_spawnEnemy3);
+	engine.registerMemberFunction<Game>("spawnEnemy4", &Game_spawnEnemy4);
 	engine.registerMemberFunction<Game>("addCrystal", &Game_addCrystal);
 	engine.registerMemberFunction<Game>("addCrystalEnemyTargeted", &Game_addCrystalEnemyTargeted);
 	engine.registerMemberFunction<Game>("addCrystalRich", &Game_addCrystalRich);
 	engine.registerMemberFunction<Game>("addCrystalPoor", &Game_addCrystalPoor);
 	engine.registerMemberFunction<Game>("addEmptyUnit", &Game_addEmptyUnit);
 	engine.registerMemberFunction<Game>("addUnicorn", &Game_addUnicorn);
+	engine.registerMemberFunction<Game>("spawnUnicorn", &Game_spawnUnicorn);
 	engine.registerMemberFunction<Game>("addMachine", &Game_addMachine);
 	engine.registerMemberFunction<Game>("addLair", &Game_addLair);
 	engine.registerMemberFunction<Game>("addAcid", &Game_addAcid);

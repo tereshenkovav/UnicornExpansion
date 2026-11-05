@@ -381,6 +381,38 @@ std::optional<sf::Vector2i> Game::getFirstFreePosNear(const GameUnit & unit) con
 	return std::nullopt;
 }
 
+// Много дублирования с аналогичными процедурами
+// Не учитывает случаи, когда уже нет свободных клетов рядом и надо искать дальше
+std::optional<sf::Vector2i> Game::getFirstFreePosNearPoint(int px, int py) const
+{
+	// Повтор универсального набора смежных точек
+	std::array<sf::Vector2i,8> nears;
+	nears[0].x = -1; nears[0].y = -1;
+	nears[1].x = 0; nears[1].y = -1;
+	nears[2].x = 1; nears[2].y = -1;
+	nears[3].x = 1; nears[3].y = 0;
+	nears[4].x = 1; nears[4].y = 1;
+	nears[5].x = 0; nears[5].y = 1;
+	nears[6].x = -1; nears[6].y = 1;
+	nears[7].x = -1; nears[7].y = 0;
+
+	Vector2D<bool> busymap(width, height, false);
+	busymap.setOutboundValue(true); // Обязательно true, чтобы не ставило за границу экрана
+
+	// Нужно вынести в отдельный блок построения полной карты занятости
+	for (int x = 0; x < width; x++)
+		for (int y = 0; y < height; y++)
+			if (!canWalkOnTerrain(getMap(x, y))) busymap.setValue(x, y, true);
+	for (int j = 0; j < units.size(); j++)
+		units[j].updateBusyMap(busymap);
+
+	for (auto i = 0; i < nears.size(); i++)
+		if (!busymap.getValue(px + nears[i].x, py + nears[i].y))
+			return sf::Vector2i({ px + nears[i].x, py + nears[i].y });
+
+	return std::nullopt;
+}
+
 // Грубая и неточная реализация
 std::optional<sf::Vector2i> Game::getFirstFreePosFor2x2Building(const GameUnit& unit) const
 {

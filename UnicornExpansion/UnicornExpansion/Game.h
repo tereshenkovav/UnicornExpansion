@@ -143,6 +143,7 @@ public:
 	bool cancelUnitWorkingAction(int uid);
 	// Искать первую свободную точку рядом с юнитом
 	std::optional<sf::Vector2i> getFirstFreePosNear(const GameUnit & unit) const;
+	std::optional<sf::Vector2i> getFirstFreePosNearPoint(int px, int py) const;
 
 	// Декорации
 	int getDecorCount() const;

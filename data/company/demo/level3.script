@@ -12,20 +12,20 @@ function initMap() {
     function() {
       game.setNewViewPoint(37,37) ;
       game.addMessage("unicorn",10,"$Brief_Alert") ;
-      game.addEnemy1(35,35) ;
-      game.addEnemy1(39,35) ;
-      game.addEnemy1(35,39) ;
-      game.addEnemy1(39,39) ;
+      game.spawnEnemy1(35,35) ;
+      game.spawnEnemy1(39,35) ;
+      game.spawnEnemy1(35,39) ;
+      game.spawnEnemy1(39,39) ;
     }) ;
 
   if (game.isHard1()) {
   addEvent(function() { return game.getUnitHealth(uidrich)<2000 },
     function() {
       game.setNewViewPoint(37,37) ;
-      game.addEnemy1(35,35) ;
-      game.addEnemy1(39,35) ;
-      game.addEnemy2(35,39) ;
-      game.addEnemy2(39,39) ;
+      game.spawnEnemy1(35,35) ;
+      game.spawnEnemy1(39,35) ;
+      game.spawnEnemy2(35,39) ;
+      game.spawnEnemy2(39,39) ;
     }) ;
   }
 
@@ -33,10 +33,10 @@ function initMap() {
   addEvent(function() { return game.getUnitHealth(uidrich)<1000 },
     function() {
       game.setNewViewPoint(37,37) ;
-      game.addEnemy3(35,35) ;
-      game.addEnemy3(39,35) ;
-      game.addEnemy2(35,39) ;
-      game.addEnemy2(39,39) ;
+      game.spawnEnemy3(35,35) ;
+      game.spawnEnemy3(39,35) ;
+      game.spawnEnemy2(35,39) ;
+      game.spawnEnemy2(39,39) ;
     }) ;
   }
 

@@ -47,8 +47,8 @@ function initMap() {
 
         addEvent(function() { return game.getTimer()<=0 },
           function() {
-            uidenemy1 = game.addEnemy1(5,12) ;
-            uidenemy2 = game.addEnemy1(8,16) ;
+            uidenemy1 = game.spawnEnemy1(5,12) ;
+            uidenemy2 = game.spawnEnemy1(8,16) ;
 
             addEvent(function() {
               return (!game.isUnitExist(uidenemy1))&&(!game.isUnitExist(uidenemy2))
@@ -70,8 +70,8 @@ function initMap() {
       game.addMessageLater("unicorn",10,10,"$Brief_8_2") ;
       game.addMessageLater("unicorn",10,20,"$Brief_8_3") ;
       game.allowAction("MakeHealer") ;
-      game.addEnemy2(16,1) ;
-      game.addEnemy1(17,7) ;
+      game.spawnEnemy2(16,1) ;
+      game.spawnEnemy1(17,7) ;
     }) ;
 
   game.addPortal(2,15) ;

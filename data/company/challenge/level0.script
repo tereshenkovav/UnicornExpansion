@@ -58,20 +58,20 @@ function Update() {
 
     var uids = [] ;
     if (waven==0) {
-      uids.push(game.addEnemy1(39,29)) ;
+      uids.push(game.spawnEnemy1(39,29)) ;
       if (game.isHard2()) {
-        uids.push(game.addEnemy1(30,29)) ;
-        uids.push(game.addEnemy1(20,29)) ;
+        uids.push(game.spawnEnemy1(30,29)) ;
+        uids.push(game.spawnEnemy1(20,29)) ;
       }
     }
     if (waven==1) {
-      uids.push(game.addEnemy2(39,2)) ;
+      uids.push(game.spawnEnemy2(39,2)) ;
       if (game.isHard2()) {
-        uids.push(game.addEnemy2(39,29)) ;
+        uids.push(game.spawnEnemy2(39,29)) ;
       }
     }
     if (waven==2) {
-      uids.push(game.addEnemy3(2,29)) ;
+      uids.push(game.spawnEnemy3(2,29)) ;
     }
 
     for (var uid in uids) {

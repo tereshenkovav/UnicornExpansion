@@ -77,17 +77,17 @@ function Update() {
      game.setFlag("wave1") ;
 
      var uids = [] ;
-     uids.push(game.addEnemy1(39,10)) ;
-     uids.push(game.addEnemy1(39,11)) ;
-     uids.push(game.addEnemy1(39,13)) ;
+     uids.push(game.spawnEnemy1(39,10)) ;
+     uids.push(game.spawnEnemy1(39,11)) ;
+     uids.push(game.spawnEnemy1(39,13)) ;
 
-     uids.push(game.addEnemy1(1,39)) ;
-     uids.push(game.addEnemy1(2,39)) ;
-     uids.push(game.addEnemy1(4,39)) ;
+     uids.push(game.spawnEnemy1(1,39)) ;
+     uids.push(game.spawnEnemy1(2,39)) ;
+     uids.push(game.spawnEnemy1(4,39)) ;
 
-     uids.push(game.addEnemy1(39,25)) ;
-     uids.push(game.addEnemy2(38,26)) ;
-     uids.push(game.addEnemy1(36,28)) ;
+     uids.push(game.spawnEnemy1(39,25)) ;
+     uids.push(game.spawnEnemy2(38,26)) ;
+     uids.push(game.spawnEnemy1(36,28)) ;
 
      for (var uid in uids) {
        game.setTargetToUnit(uid,14,4) ;
@@ -99,17 +99,17 @@ function Update() {
      game.setFlag("wave2") ;
 
      var uids = [] ;
-     uids.push(game.addEnemy3(39,10)) ;
-     uids.push(game.addEnemy2(39,11)) ;
-     uids.push(game.addEnemy2(39,12)) ;
+     uids.push(game.spawnEnemy3(39,10)) ;
+     uids.push(game.spawnEnemy2(39,11)) ;
+     uids.push(game.spawnEnemy2(39,12)) ;
 
-     uids.push(game.addEnemy1(1,39)) ;
-     uids.push(game.addEnemy2(2,39)) ;
-     uids.push(game.addEnemy1(4,39)) ;
+     uids.push(game.spawnEnemy1(1,39)) ;
+     uids.push(game.spawnEnemy2(2,39)) ;
+     uids.push(game.spawnEnemy1(4,39)) ;
 
-     uids.push(game.addEnemy1(39,25)) ;
-     uids.push(game.addEnemy2(38,26)) ;
-     uids.push(game.addEnemy1(36,28)) ;
+     uids.push(game.spawnEnemy1(39,25)) ;
+     uids.push(game.spawnEnemy2(38,26)) ;
+     uids.push(game.spawnEnemy1(36,28)) ;
 
      for (var uid in uids) {
        game.setTargetToUnit(uid,14,4) ;
@@ -121,17 +121,17 @@ function Update() {
      game.setFlag("wave3") ;
 
      var uids = [] ;
-     uids.push(game.addEnemy3(39,10)) ;
-     uids.push(game.addEnemy3(39,11)) ;
-     uids.push(game.addEnemy3(39,12)) ;
+     uids.push(game.spawnEnemy3(39,10)) ;
+     uids.push(game.spawnEnemy3(39,11)) ;
+     uids.push(game.spawnEnemy3(39,12)) ;
 
-     uids.push(game.addEnemy2(2,39)) ;
-     uids.push(game.addEnemy2(3,39)) ;
-     uids.push(game.addEnemy3(4,39)) ;
+     uids.push(game.spawnEnemy2(2,39)) ;
+     uids.push(game.spawnEnemy2(3,39)) ;
+     uids.push(game.spawnEnemy3(4,39)) ;
 
-     uids.push(game.addEnemy2(38,26)) ;
-     uids.push(game.addEnemy2(37,27)) ;
-     uids.push(game.addEnemy3(36,28)) ;
+     uids.push(game.spawnEnemy2(38,26)) ;
+     uids.push(game.spawnEnemy2(37,27)) ;
+     uids.push(game.spawnEnemy3(36,28)) ;
 
      for (var uid in uids) {
        game.setTargetToUnit(uid,14,4) ;
@@ -139,9 +139,9 @@ function Update() {
   }
 
   if ((game.getTimer()<1)&&(!game.isFlag("final"))) {
-     game.addUnicorn(13,3) ;
-     game.addUnicorn(14,3) ;
-     game.addUnicorn(13,4) ;
+     game.spawnUnicorn(13,3) ;
+     game.spawnUnicorn(14,3) ;
+     game.spawnUnicorn(13,4) ;
      game.setNewViewPoint(14,6) ;
      game.addMessage("unicorn",10,"$Brief_Final") ;
      game.setFlag("final") ;
