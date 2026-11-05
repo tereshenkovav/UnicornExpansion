@@ -111,6 +111,7 @@ private:
     sf::Shader shader_gray;
     sf::Shader shader_bright;
     sf::Shader shader_attack;
+    sf::Shader shader_magicoverflow;
 
     sf::RectangleShape rect_pblocks;
 

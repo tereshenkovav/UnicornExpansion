@@ -337,7 +337,7 @@ void SceneGame::Render(sf::RenderTarget & rendertarget) {
     text_resource->setPosition({ 10, 6 });
     text_resource->setFillColor(sf::Color{ 162, 231, 255 });
     if ((game.getEnergy() >= game.getMaxEnergy()) && (game.getMaxEnergy() > 0))
-        rendertarget.draw(*text_resource, &shader_attack);
+        rendertarget.draw(*text_resource, &shader_magicoverflow);
     else
         rendertarget.draw(*text_resource);
     text_resource->setString(sfge::SfmlTools::utf2text(getTexts().getStr("Text_UnicornCount") + " " + game.getUnicornCountInfo()));
@@ -767,6 +767,7 @@ void SceneGame::Update(float dt, const sf::Vector2i & mousePos, const std::vecto
     fogbuilder.updateByGame(game);
 
     shader_attack.setUniform("stage", (float)(0.25f + 0.25f * sin(4.0f * M_PI * getEngine()->getAllTime())));
+    shader_magicoverflow.setUniform("stage", (float)(0.25f + 0.25f * sin(1.0f * M_PI * getEngine()->getAllTime())));
 
     if (game.isGameOver()) {
         if (!counter_endgame.isActive()) {
@@ -1083,11 +1084,13 @@ void SceneGame::Init() {
 
     shader_gray.loadFromFile("shaders/gray.frag", sf::Shader::Type::Fragment);
     shader_bright.loadFromFile("shaders/bright.frag", sf::Shader::Type::Fragment);
-    shader_attack.loadFromFile("shaders/attack.frag", sf::Shader::Type::Fragment);
+    shader_attack.loadFromFile("shaders/red.frag", sf::Shader::Type::Fragment);
+    shader_magicoverflow.loadFromFile("shaders/red.frag", sf::Shader::Type::Fragment);
 
     shader_gray.setUniform("texture", sf::Shader::CurrentTexture);
     shader_bright.setUniform("texture", sf::Shader::CurrentTexture);
     shader_attack.setUniform("texture", sf::Shader::CurrentTexture);
+    shader_magicoverflow.setUniform("texture", sf::Shader::CurrentTexture);
 
     effects_posed = { AudioEffect::Teleport, AudioEffect::MonsterKilled, AudioEffect::TowerKilled, AudioEffect::LairKilled, AudioEffect::Hit };
 
