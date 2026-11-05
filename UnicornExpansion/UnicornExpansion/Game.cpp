@@ -708,6 +708,9 @@ void Game::update(float dt)
 				case Moving::RightDown: laserfix = { 17, -8 }; break;
 			}
 		else
+		if (units[i].isComponent<ComponentPortal>())
+			laserfix = { 0, -63 };
+		else
 			laserfix = { -10, -30 };
 		if (const auto* harvester = units[i].getComponent<ComponentHarvester>()) {
 			if (units[i].isCanActed(allowworkinaction,allowworkinmoving)) {
