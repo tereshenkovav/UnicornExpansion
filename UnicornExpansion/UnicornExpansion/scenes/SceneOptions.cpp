@@ -8,10 +8,16 @@ void SceneOptions::saveOptions() {
     userprofile->setHideFullHealthBar(cbhidefullhealthbar->isChecked());
     getProfile()->setFullScreen(cbfullscreen->isChecked());
     getProfile()->setVSync(cbvsync->isChecked());
+    getProfile()->setFPS(fps);
     getProfile()->setStopGameOnLostFocus(cbstopgameonlostfocus->isChecked());
     getEngine()->updateByProfile();
     getEngine()->ReplaceOverScene(std::make_shared<SceneStartMenu>());
     userprofile->saveProfile();
+}
+
+void SceneOptions::updateFPSText()
+{
+    text_fps->setString("FPS: " + std::to_string(fps));
 }
 
 void SceneOptions::Render(sf::RenderTarget & rendertarget) {
@@ -23,6 +29,10 @@ void SceneOptions::Render(sf::RenderTarget & rendertarget) {
     rendertarget.draw(*cbfullscreen);
     rendertarget.draw(*cbvsync);
 
+    rendertarget.draw(*butincfps);
+    rendertarget.draw(*butdecfps);
+    rendertarget.draw(*text_fps);
+
     rendertarget.draw(*cbhidefullhealthbar);
     rendertarget.draw(*cbstopgameonlostfocus);
 
@@ -31,6 +41,11 @@ void SceneOptions::Render(sf::RenderTarget & rendertarget) {
 }
 
 void SceneOptions::Update(float dt, const sf::Vector2i & mousePos, const std::vector<sf::Event>& events) {
+    cbvoice->setDisabled(!cbsound->isChecked());
+    butdecfps->setDisabled(cbvsync->isChecked());
+    butincfps->setDisabled(cbvsync->isChecked());
+    text_fps->setFillColor(cbvsync->isChecked() ? sf::Color({ 128, 128, 128 }) : sf::Color::White);
+
     for (auto & event : events) {
 
         butsave->processEvent(event);
@@ -41,8 +56,8 @@ void SceneOptions::Update(float dt, const sf::Vector2i & mousePos, const std::ve
         cbvsync->processEvent(event);
         cbhidefullhealthbar->processEvent(event);
         cbstopgameonlostfocus->processEvent(event);
-
-        cbvoice->setDisabled(!cbsound->isChecked());
+        butincfps->processEvent(event);
+        butdecfps->processEvent(event);
 
         if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
         {
@@ -85,9 +100,20 @@ void SceneOptions::Init() {
         512 - 160, 400, 24, 24);
     cbvsync->setChecked(getProfile()->isVSync());
     cbhidefullhealthbar = std::make_unique<sfge::Checkbox>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Checkbox_HideFullHealthBar"), 18,
-        512 - 160, 440, 24, 24);
+        512 - 160, 480, 24, 24);
     cbhidefullhealthbar->setChecked(userprofile->isHideFullHealthBar());
     cbstopgameonlostfocus = std::make_unique<sfge::Checkbox>(*getEngine()->getDefaultFont(), getTexts().getSfmlStr("Checkbox_StopGameOnLostFocus"), 18,
-        512 - 160, 480, 24, 24);
+        512 - 160, 520, 24, 24);
     cbstopgameonlostfocus->setChecked(userprofile->isStopGameOnLostFocus());
+
+    fps = getProfile()->getFPS();
+    text_fps = loadText("", 18, sf::Color::White);
+    text_fps->setPosition({ 512 - 80, 440 });
+
+    updateFPSText();
+
+    butdecfps = std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), "-", 18, 512 - 120, 440, 24, 24);
+    butdecfps->setOnClick([this]() { if (fps > 10) fps--; updateFPSText(); });
+    butincfps = std::make_unique<sfge::Button>(*getEngine()->getDefaultFont(), "+", 18, 512, 440, 24, 24);
+    butincfps->setOnClick([this]() { if (fps < 500) fps++; updateFPSText(); });
 }

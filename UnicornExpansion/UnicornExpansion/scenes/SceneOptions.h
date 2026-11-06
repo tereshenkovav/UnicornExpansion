@@ -20,7 +20,12 @@ private:
     sfge::UniqueCheckbox cbvoice;
     sfge::UniqueCheckbox cbhidefullhealthbar;
     sfge::UniqueCheckbox cbstopgameonlostfocus;
+    sfge::UniqueButton butdecfps;
+    sfge::UniqueButton butincfps;
+    sfge::UniqueText text_fps;
+    int fps;
     void saveOptions();
+    void updateFPSText();
     std::shared_ptr<UserProfile> userprofile;
 public:
     virtual void Render(sf::RenderTarget& rendertarget) override;

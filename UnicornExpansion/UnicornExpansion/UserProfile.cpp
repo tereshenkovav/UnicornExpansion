@@ -44,6 +44,8 @@ void UserProfile::loadProfile(const std::string& filename)
 	setMusicOn(jsonProfile["options"]["musicon"].asBool());
 	setFullScreen(jsonProfile["options"]["fullscreen"].asBool());
 	setVSync(jsonProfile["options"]["vsync"].asBool());
+	if (jsonProfile["options"]["fps"].isInt())
+		setFPS(jsonProfile["options"]["fps"].asInt());
 	if (jsonProfile["options"]["stopgameonlostfocus"].isBool())
 		setStopGameOnLostFocus(jsonProfile["options"]["stopgameonlostfocus"].asBool());
 	setLanguage(jsonProfile["options"]["language"].asString());
@@ -71,6 +73,7 @@ void UserProfile::saveProfile() const
 	jsonProfile["options"]["musicon"] = isMusicOn();
 	jsonProfile["options"]["fullscreen"] = isFullScreen();
 	jsonProfile["options"]["vsync"] = isVSync();
+	jsonProfile["options"]["fps"] = getFPS();
 	jsonProfile["options"]["stopgameonlostfocus"] = isStopGameOnLostFocus();
 	jsonProfile["options"]["language"] = getLanguage();
 	// Далее уже специфичные для игры

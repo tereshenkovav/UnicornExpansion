@@ -10,12 +10,14 @@ private:
 	sf::Text caption;
 	sf::RectangleShape shape;
 	std::function<void()> clickfunc;
+	bool disabled;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 public:
 	Button(const sf::Font& font, const sf::String & text, int size, int x, int y, int w, int h);
 	bool isMouseOver(sf::Vector2i mousePos) const;
 	void setOnClick(std::function<void()> clickfunc);
 	void processEvent(const sf::Event& event);
+	void setDisabled(bool value);
 };
 
 using UniqueButton = std::unique_ptr<Button>;

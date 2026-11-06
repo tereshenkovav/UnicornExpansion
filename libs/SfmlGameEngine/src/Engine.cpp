@@ -148,7 +148,13 @@ Languages& Engine::getLanguages() {
 }
 
 void Engine::updateByProfile() {
-    if (window) window->setVerticalSyncEnabled(profile->isVSync());
+    if (window) {
+        window->setVerticalSyncEnabled(profile->isVSync());
+        if (profile->isVSync())
+            window->setFramerateLimit(0);
+        else
+            window->setFramerateLimit(profile->getFPS());
+    }
     sf::Listener::setGlobalVolume(profile->isSoundOn() ? 100.0f : 0.0f);
     if (isfullscr != profile->isFullScreen()) signal_rebuild = true;
     setStopUpdatingForLostFocus(profile->isStopGameOnLostFocus());

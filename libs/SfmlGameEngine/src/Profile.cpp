@@ -18,6 +18,10 @@ bool Profile::isVSync() const {
 	return vsync;
 }
 
+int Profile::getFPS() const {
+	return fps;
+}
+
 bool Profile::isStopGameOnLostFocus() const {
 	return stopgameonlostfocus;
 }
@@ -41,6 +45,10 @@ void Profile::setFullScreen(bool value) {
 
 void Profile::setVSync(bool value) {
 	vsync = value;
+}
+
+void Profile::setFPS(int value) {
+	fps = value;
 }
 
 void Profile::setStopGameOnLostFocus(bool value) {

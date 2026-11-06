@@ -5,8 +5,10 @@ const sf::Color COLNORM = sf::Color({ 40, 40, 40, 192 });
 const sf::Color COLOVER = sf::Color({ 80, 80, 80, 192 });
 const sf::Color COLBORDERNORM = sf::Color({ 208, 0, 220 });
 const sf::Color COLBORDEROVER = sf::Color({ 228, 0, 255 });
+const sf::Color COLBORDERDISABLED = sf::Color({ 128, 128, 128 });
 const sf::Color COLFONTNORM = sf::Color({ 192, 192, 192 });
 const sf::Color COLFONTOVER = sf::Color::White;
+const sf::Color COLFONTDISABLED = sf::Color({ 128, 128, 128 });
 const sf::Vector2f SHIFT = sf::Vector2f({ -3.0f,-3.0f });
 
 namespace sfge {
@@ -25,7 +27,8 @@ namespace sfge {
 		shape.setFillColor(COLNORM);
 
 		caption.setFillColor(COLFONTNORM);
-		caption.setPosition({ x + w/2 - caption.getLocalBounds().size.x / 2, y + 8.0f});
+		caption.setPosition({ x + w/2 - caption.getLocalBounds().size.x / 2, y + h/2 - (float)size/2 - 2.0f }); // Позиционирование подгоняется
+		disabled = false;
 	}
 
 	bool Button::isMouseOver(sf::Vector2i mousePos) const {
@@ -36,7 +39,16 @@ namespace sfge {
 		this->clickfunc = clickfunc;
 	}
 
+	void Button::setDisabled(bool value)
+	{
+		disabled = value;
+		shape.setOutlineColor(disabled ? COLBORDERDISABLED : COLBORDERNORM);
+		caption.setFillColor(disabled ? COLFONTDISABLED : COLFONTNORM);
+	}
+
 	void Button::processEvent(const sf::Event& event) {
+		if (disabled) return;
+
 		if (const auto* mousePressed = event.getIf<sf::Event::MouseButtonReleased>()) {
 			shape.setOrigin({ 0.0f, 0.0f });
 			caption.setOrigin({ 0.0f, 0.0f });
